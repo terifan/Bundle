@@ -1,0 +1,5363 @@
+<OmsRequest>
+  <requestId>4eed40a8-eb8e-4609-acc2-daef9b9a30ed</requestId>
+  <userId>SEEENBE</userId>
+  <userName>Enel Bernard</userName>
+  <userEmail>enel.bernard@dbschenker.com</userEmail>
+  <trigger>USER</trigger>
+  <trip>
+    <transportMovementId>TLLX60820</transportMovementId>
+    <loadingUnitType>U09</loadingUnitType>
+    <equipment>
+      <id>344BLB</id>
+      <primaryType>UNIT</primaryType>
+      <type>U09</type>
+      <licensePlateNumber></licensePlateNumber>
+      <gpsId></gpsId>
+    </equipment>
+    <equipment>
+      <id>EE0023</id>
+      <primaryType>GPS_DEVICE</primaryType>
+      <type>GPS</type>
+      <gpsId>359359053231095</gpsId>
+      <appCapable>true</appCapable>
+      <owner>UNIT</owner>
+    </equipment>
+    <maxLoadWeight>0</maxLoadWeight>
+    <weightUnit></weightUnit>
+    <maxLoadVolume>0.0</maxLoadVolume>
+    <volumeUnit></volumeUnit>
+    <maxLoadSpace>0.00</maxLoadSpace>
+    <loadSpaceUnit></loadSpaceUnit>
+    <haulier>
+      <name>KUUSTOR OÜ</name>
+      <phoneNumber>.</phoneNumber>
+      <emailAddress></emailAddress>
+    </haulier>
+    <startDate>2015-05-12</startDate>
+    <departureDate>2015-05-12</departureDate>
+    <arrivalDate>2015-05-12</arrivalDate>
+    <freeDate>2015-05-12</freeDate>
+    <freeTime>18:00:00</freeTime>
+    <consignment>
+      <freightMovementId>SEE004522832</freightMovementId>
+      <shipmentRef></shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-11</expectedLoadDate>
+      <expectedLoadTime>17:22:00</expectedLoadTime>
+      <expectedUnloadDate>2015-05-11</expectedUnloadDate>
+      <expectedUnloadTime>17:22:00</expectedUnloadTime>
+      <grossWeight>3</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>10</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>31</loadStopId>
+      <unloadStopId>32</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>LINUS MEDICAL OÜ / SCHENKER LADU</address>
+        <street>KAABLI 13</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10617</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>LÄÄNE-TALLINNA KESKHAIGLA APTEEK</address>
+        <street>PALDISKI MNT.68</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference></loadReference>
+      <unloadReference>0001924482</unloadReference>
+      <shipperAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10117</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>LINUS MEDICAL OÜ</address>
+        <street>NARVA MNT 5</street>
+        <city>TALLINN</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10617</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>LÄÄNE-TALLINNA KESKHAIGLA APTEEK</address>
+        <street>PALDISKI MNT.68</street>
+        <city>TALLINN</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>12</serviceLevel>
+      <goods>
+        <description></description>
+        <type>KAST</type>
+        <quantity>1</quantity>
+      </goods>
+      <unloadInstructions>TEL.6507237 APTEEK</unloadInstructions>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004523007</freightMovementId>
+      <shipmentRef>&gt;&gt;HEL5098081</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-11</expectedLoadDate>
+      <shipmentCollectDate>2015-05-11</shipmentCollectDate>
+      <grossWeight>2</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>2</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>43</loadStopId>
+      <unloadStopId>44</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>12618</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>KARL STORZ VIDEO ENDOSCOPY</address>
+        <street>AKADEEMIA TEE 21/2</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference></loadReference>
+      <unloadReference>2500098647</unloadReference>
+      <shipperAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>Schenker Cargo Express</address>
+        <street></street>
+        <city></city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>Schenker EE PARCEL</address>
+        <street></street>
+        <city></city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>88</serviceLevel>
+      <goods>
+        <description>KIINNITYSTARV.</description>
+        <type>PA</type>
+        <quantity>1</quantity>
+      </goods>
+      <goods>
+        <description>KIINNITYSTARV.</description>
+        <type>PA</type>
+        <quantity>1</quantity>
+      </goods>
+      <dimensions>
+        <packageType>PA</packageType>
+        <packageQuantity>1</packageQuantity>
+        <grossWeight>1.00</grossWeight>
+      </dimensions>
+      <dimensions>
+        <packageType>PA</packageType>
+        <packageQuantity>1</packageQuantity>
+        <grossWeight>1.00</grossWeight>
+      </dimensions>
+      <clioReference>FIHEL400124830</clioReference>
+      <package>Package IDs  . . . . . . . :  00164381900007875100</package>
+      <package>                              00164381900007875490</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004522988</freightMovementId>
+      <shipmentRef>&gt;&gt;HEL5098084</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-11</expectedLoadDate>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <expectedUnloadTime>08:00:00</expectedUnloadTime>
+      <expectedUnloadTimeEnd>12:00:00</expectedUnloadTimeEnd>
+      <shipmentCollectDate>2015-05-11</shipmentCollectDate>
+      <shipmentDeliveryDate>2015-05-12</shipmentDeliveryDate>
+      <shipmentDeliveryTime>08:00:00</shipmentDeliveryTime>
+      <shipmentDeliveryTimeEnd>12:00:00</shipmentDeliveryTimeEnd>
+      <grossWeight>3</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>3</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>49</loadStopId>
+      <unloadStopId>50</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10621</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>FERROMETAL BALTIC OÜ</address>
+        <street>LAKI 14A</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>0000090006</loadReference>
+      <unloadReference>2000169753</unloadReference>
+      <shipperAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>Schenker Cargo Express</address>
+        <street></street>
+        <city></city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>Schenker EE PARCEL</address>
+        <street></street>
+        <city></city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>88</serviceLevel>
+      <goods>
+        <description></description>
+        <type>BX</type>
+        <quantity>1</quantity>
+      </goods>
+      <dimensions>
+        <packageType>BX</packageType>
+        <packageQuantity>1</packageQuantity>
+        <grossWeight>3.00</grossWeight>
+      </dimensions>
+      <clioReference>FIHEL400124848</clioReference>
+      <package>Package IDs  . . . . . . . :  00164179260012479432</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004522995</freightMovementId>
+      <shipmentRef>&gt;&gt;HEL5098084</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-11</expectedLoadDate>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <expectedUnloadTime>08:00:00</expectedUnloadTime>
+      <expectedUnloadTimeEnd>12:00:00</expectedUnloadTimeEnd>
+      <shipmentCollectDate>2015-05-11</shipmentCollectDate>
+      <shipmentDeliveryDate>2015-05-12</shipmentDeliveryDate>
+      <shipmentDeliveryTime>08:00:00</shipmentDeliveryTime>
+      <shipmentDeliveryTimeEnd>12:00:00</shipmentDeliveryTimeEnd>
+      <grossWeight>8</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>8</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>85</loadStopId>
+      <unloadStopId>86</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>76915</postalCode>
+        <latitude>59.3663889</latitude>
+        <longitude>25.1830556</longitude>
+        <address>IRON BALTIC Oü</address>
+        <street>ANTSU 4, VATSLA</street>
+        <city>SAUE VALD, HARJUMA</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>0000900105</loadReference>
+      <unloadReference>2000169747</unloadReference>
+      <shipperAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>Schenker Cargo Express</address>
+        <street></street>
+        <city></city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>Schenker EE PARCEL</address>
+        <street></street>
+        <city></city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>88</serviceLevel>
+      <goods>
+        <description></description>
+        <type>BX</type>
+        <quantity>1</quantity>
+      </goods>
+      <dimensions>
+        <packageType>BX</packageType>
+        <packageQuantity>1</packageQuantity>
+        <grossWeight>8.00</grossWeight>
+      </dimensions>
+      <clioReference>FIHEL400124842</clioReference>
+      <package>Package IDs  . . . . . . . :  00164179260012479043</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004523322</freightMovementId>
+      <shipmentRef>&gt;&gt;KOL5052097</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-08</expectedLoadDate>
+      <shipmentCollectDate>2015-05-08</shipmentCollectDate>
+      <grossWeight>11</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>32</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>59</loadStopId>
+      <unloadStopId>60</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>12918</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>ESVIKA ELEKTER AS</address>
+        <street>TAMMSAARE TEE 118</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>3430052012</loadReference>
+      <unloadReference>3430052012</unloadReference>
+      <shipperAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>DANFOSS ELECTRIC HEATING SYSTEMS AS</address>
+        <street></street>
+        <city></city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>DANFOSS AS</address>
+        <street></street>
+        <city></city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>88</serviceLevel>
+      <goods>
+        <description>HEATING EQUIPMENT</description>
+        <type>CT</type>
+        <quantity>2</quantity>
+      </goods>
+      <clioReference>DKCKOL01430207</clioReference>
+      <package>Package IDs  . . . . . . . :  000000000024970110</package>
+      <package>                              00000000000024970112</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004521443</freightMovementId>
+      <shipmentRef>&gt;&gt;RIX8548917</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-06-12</expectedLoadDate>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <expectedUnloadTime>17:00:00</expectedUnloadTime>
+      <shipmentDeliveryDate>2015-05-12</shipmentDeliveryDate>
+      <shipmentDeliveryTime>17:00:00</shipmentDeliveryTime>
+      <grossWeight>5</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>81</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>15</loadStopId>
+      <unloadStopId>16</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>12617</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>PINTAVA RI EESTI OA</address>
+        <street>VILDE TEE 150</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>TDAB645945</loadReference>
+      <unloadReference>ST0000883703101</unloadReference>
+      <shipperAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>3M POLAND SP. Z.O.O.</address>
+        <street></street>
+        <city></city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>3M EESTI OÜ</address>
+        <street></street>
+        <city></city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>88</serviceLevel>
+      <goods>
+        <description>DIVERS</description>
+        <type>CT</type>
+        <quantity>1</quantity>
+      </goods>
+      <goods>
+        <description>DIVERS</description>
+        <type>CT</type>
+        <quantity>1</quantity>
+      </goods>
+      <dimensions>
+        <packageType>CT</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>0.10</length>
+        <width>0.10</width>
+        <height>0.10</height>
+        <grossWeight>0.62</grossWeight>
+      </dimensions>
+      <dimensions>
+        <packageType>CT</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>0.96</length>
+        <width>0.50</width>
+        <height>0.50</height>
+        <grossWeight>4.83</grossWeight>
+      </dimensions>
+      <clioReference>LVRIX400161393</clioReference>
+      <package>Package IDs  . . . . . . . :  00159032921013785705</package>
+      <package>                              00159032921013784616</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004521456</freightMovementId>
+      <shipmentRef>&gt;&gt;RIX8548917</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-06-12</expectedLoadDate>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <shipmentDeliveryDate>2015-05-12</shipmentDeliveryDate>
+      <shipmentDeliveryTime>17:00:00</shipmentDeliveryTime>
+      <grossWeight>4</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>5</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>61</loadStopId>
+      <unloadStopId>62</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>13414</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>YEINTERNATIONAL AS</address>
+        <street>SA PRUSE PST 259</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>TDAB645945</loadReference>
+      <unloadReference>ST0000891700501</unloadReference>
+      <shipperAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>3M POLAND SP. Z.O.O.</address>
+        <street></street>
+        <city></city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>3M EESTI OÜ</address>
+        <street></street>
+        <city></city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>88</serviceLevel>
+      <goods>
+        <description>DIVERS</description>
+        <type>CT</type>
+        <quantity>1</quantity>
+      </goods>
+      <dimensions>
+        <packageType>PAL</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>0.01</length>
+        <width>0.01</width>
+        <height>0.01</height>
+        <grossWeight>3.50</grossWeight>
+      </dimensions>
+      <clioReference>LVRIX400161352</clioReference>
+      <package>Package IDs  . . . . . . . :  00159032921013769613</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004521462</freightMovementId>
+      <shipmentRef>&gt;&gt;RIX8548917</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-06-12</expectedLoadDate>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <expectedUnloadTime>17:00:00</expectedUnloadTime>
+      <shipmentDeliveryDate>2015-05-12</shipmentDeliveryDate>
+      <shipmentDeliveryTime>17:00:00</shipmentDeliveryTime>
+      <grossWeight>5</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>11</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>75</loadStopId>
+      <unloadStopId>76</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>12618</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>EBETA AS</address>
+        <street>KADAKA TEE 76 G</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>TDAB645945</loadReference>
+      <unloadReference>ST0000869003101</unloadReference>
+      <shipperAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>3M POLAND SP. Z.O.O.</address>
+        <street></street>
+        <city></city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>3M EESTI OÜ</address>
+        <street></street>
+        <city></city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>88</serviceLevel>
+      <goods>
+        <description>DIVERS</description>
+        <type>CT</type>
+        <quantity>1</quantity>
+      </goods>
+      <dimensions>
+        <packageType>CT</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>3.20</length>
+        <width>0.10</width>
+        <height>0.10</height>
+        <grossWeight>4.61</grossWeight>
+      </dimensions>
+      <clioReference>LVRIX400161317</clioReference>
+      <package>Package IDs  . . . . . . . :  00159032921013779094</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004523358</freightMovementId>
+      <shipmentRef>&gt;&gt;RIX8549071</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-12</expectedLoadDate>
+      <shipmentCollectDate>2015-05-11</shipmentCollectDate>
+      <grossWeight>13</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>13</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>45</loadStopId>
+      <unloadStopId>46</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10621</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>MEGASPORT GROUP OÜ</address>
+        <street>Laki tn 5</street>
+        <city>07.05.2015 Tallinn</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>3300</loadReference>
+      <unloadReference>0400156506</unloadReference>
+      <shipperAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>TYRE EXPERT OÜ (372 5451441)</address>
+        <street></street>
+        <city></city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>TYRE EXPERT OÜ (372 5451441)</address>
+        <street></street>
+        <city></city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>88</serviceLevel>
+      <goods>
+        <description>2 Tyres;</description>
+        <type>PC</type>
+        <quantity>2</quantity>
+      </goods>
+      <dimensions>
+        <packageType>PC</packageType>
+        <packageQuantity>2</packageQuantity>
+        <grossWeight>12.60</grossWeight>
+      </dimensions>
+      <clioReference>LVRIX400161554</clioReference>
+      <package>Package IDs  . . . . . . . :  663300151301110092</package>
+      <package>                              663300151301110093</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004523354</freightMovementId>
+      <shipmentRef>&gt;&gt;RIX8549071</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-12</expectedLoadDate>
+      <shipmentCollectDate>2015-05-11</shipmentCollectDate>
+      <grossWeight>35</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>107</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>87</loadStopId>
+      <unloadStopId>88</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>76902</postalCode>
+        <latitude>59.3663889</latitude>
+        <longitude>25.1830556</longitude>
+        <address>BALTI REALISEERIMISKESKUS OU</address>
+        <street>Paldiski mnt 251 Harku alevik Harku</street>
+        <city>HARKU VALD</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>3300</loadReference>
+      <unloadReference>0400157475</unloadReference>
+      <shipperAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>TYRE EXPERT OÜ (372 5451441)</address>
+        <street></street>
+        <city></city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>TYRE EXPERT OÜ (372 5451441)</address>
+        <street></street>
+        <city></city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>88</serviceLevel>
+      <goods>
+        <description>4 Tyres;</description>
+        <type>PC</type>
+        <quantity>4</quantity>
+      </goods>
+      <dimensions>
+        <packageType>PC</packageType>
+        <packageQuantity>4</packageQuantity>
+        <grossWeight>35.20</grossWeight>
+      </dimensions>
+      <clioReference>LVRIX400161559</clioReference>
+      <package>Package IDs  . . . . . . . :  663300151301110079</package>
+      <package>                              663300151301110080</package>
+      <package>                              663300151301110081</package>
+      <package>                              663300151301110082</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004523290</freightMovementId>
+      <shipmentRef>&gt;&gt;RIX8549147</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-12</expectedLoadDate>
+      <shipmentCollectDate>2015-05-11</shipmentCollectDate>
+      <grossWeight>42</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>120</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>67</loadStopId>
+      <unloadStopId>68</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>11316</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>VIKING MOTORS AS</address>
+        <street>Tammsaare tee 51, Tallinn</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>1120</loadReference>
+      <unloadReference>0500001326</unloadReference>
+      <shipperAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>TYRE EXPERT OÜ (372 5451441)</address>
+        <street></street>
+        <city></city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>TYRE EXPERT OÜ (372 5451441)</address>
+        <street></street>
+        <city></city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>88</serviceLevel>
+      <goods>
+        <description>3 Tyres;</description>
+        <type>PC</type>
+        <quantity>3</quantity>
+      </goods>
+      <dimensions>
+        <packageType>PC</packageType>
+        <packageQuantity>3</packageQuantity>
+        <grossWeight>42.12</grossWeight>
+      </dimensions>
+      <clioReference>LVRIX400161606</clioReference>
+      <package>Package IDs  . . . . . . . :  661120151301110042</package>
+      <package>                              661120151301110043</package>
+      <package>                              661120151301110044</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004523574</freightMovementId>
+      <shipmentRef>&gt;&gt;STO5046313</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-08</expectedLoadDate>
+      <shipmentCollectDate>2015-05-07</shipmentCollectDate>
+      <grossWeight>1</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>1</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>101</loadStopId>
+      <unloadStopId>102</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>76901</postalCode>
+        <latitude>59.3663889</latitude>
+        <longitude>25.1830556</longitude>
+        <address>Metus-Est AS</address>
+        <street>Ranna Tee 18, TABASALU</street>
+        <city>HARKU VALD</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>6364667136</loadReference>
+      <unloadReference>6364667136</unloadReference>
+      <shipperAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>SCHENKER AB PARCEL UTRIKES</address>
+        <street></street>
+        <city></city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>EPS SE PARCEL DELIVERY/ SCHENKER EE</address>
+        <street></street>
+        <city></city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>88</serviceLevel>
+      <goods>
+        <description></description>
+        <type>PA</type>
+        <quantity>1</quantity>
+      </goods>
+      <dimensions>
+        <packageType>PA</packageType>
+        <packageQuantity>1</packageQuantity>
+        <grossWeight>1.00</grossWeight>
+      </dimensions>
+      <clioReference>SESTO500232247</clioReference>
+      <package>Package IDs  . . . . . . . :  00373323995515528299</package>
+      <unloadInstructions>P</unloadInstructions>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004524453</freightMovementId>
+      <shipmentRef>&gt;&gt;STO5046328</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-09</expectedLoadDate>
+      <shipmentCollectDate>2015-05-08</shipmentCollectDate>
+      <grossWeight>1</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>1</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>105</loadStopId>
+      <unloadStopId>106</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10621</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Bioexpert AS</address>
+        <street>Liimi 1</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>6051335104</loadReference>
+      <unloadReference>6051335104</unloadReference>
+      <shipperAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>SCHENKER AB PARCEL UTRIKES</address>
+        <street></street>
+        <city></city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>EPS SE PARCEL DELIVERY/ SCHENKER EE</address>
+        <street></street>
+        <city></city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>88</serviceLevel>
+      <goods>
+        <description></description>
+        <type>PA</type>
+        <quantity>1</quantity>
+      </goods>
+      <dimensions>
+        <packageType>PA</packageType>
+        <packageQuantity>1</packageQuantity>
+        <grossWeight>1.00</grossWeight>
+      </dimensions>
+      <clioReference>SESTO500232938</clioReference>
+      <package>Package IDs  . . . . . . . :  00373325380633422501</package>
+      <unloadInstructions>P</unloadInstructions>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004523102</freightMovementId>
+      <shipmentRef>&gt;&gt;TLL5110331</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-11</expectedLoadDate>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-11</shipmentCollectDate>
+      <shipmentDeliveryDate>2015-05-12</shipmentDeliveryDate>
+      <grossWeight>1</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>1</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>89</loadStopId>
+      <unloadStopId>90</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>76901</postalCode>
+        <latitude>59.3663889</latitude>
+        <longitude>25.1830556</longitude>
+        <address>SOOSING OU Tabasalu</address>
+        <street>Ranna tee 13, Tabasalu</street>
+        <city>Harku vald</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>SHP034584</loadReference>
+      <unloadReference>WHOLESALE</unloadReference>
+      <shipperAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>MECRO AS</address>
+        <street></street>
+        <city></city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>MECRO AS</address>
+        <street></street>
+        <city></city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>88</serviceLevel>
+      <goods>
+        <description>Box</description>
+        <type>BX</type>
+        <quantity>1</quantity>
+      </goods>
+      <dimensions>
+        <packageType>BX</packageType>
+        <packageQuantity>1</packageQuantity>
+        <grossWeight>1.00</grossWeight>
+      </dimensions>
+      <clioReference>EETLL400110334</clioReference>
+      <package>Package IDs  . . . . . . . :  00347414388000393939</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004525570</freightMovementId>
+      <shipmentRef>&gt;&gt;TLL5110477</shipmentRef>
+      <orderType>*CO</orderType>
+      <expectedLoadDate>2015-05-12</expectedLoadDate>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-12</shipmentCollectDate>
+      <grossWeight>12</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>12</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>27</loadStopId>
+      <unloadStopId>28</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>11312</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>KAARDIEKSPERT OÜ</address>
+        <street>KOTKA 26</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference></loadReference>
+      <unloadReference>ups shipment</unloadReference>
+      <shipperAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>Schenker EE PARCEL</address>
+        <street></street>
+        <city></city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>SCHENKER ELC</address>
+        <street></street>
+        <city></city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>88</serviceLevel>
+      <goods>
+        <description>OLYMPIC CASINO SLOVAKIA</description>
+        <type>CT</type>
+        <quantity>1</quantity>
+      </goods>
+      <dimensions>
+        <packageType>CT</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>0.60</length>
+        <width>0.40</width>
+        <height>0.15</height>
+      </dimensions>
+      <clioReference>EETLL400110870</clioReference>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004522809</freightMovementId>
+      <shipmentRef>&gt;&gt;TLL5111445</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-11</shipmentCollectDate>
+      <shipmentDeliveryDate>2015-05-12</shipmentDeliveryDate>
+      <grossWeight>31</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>108</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>63</loadStopId>
+      <unloadStopId>64</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>13417</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>ASCAR AUTO AS</address>
+        <street>SOPRUSE PST 151</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>EE</loadReference>
+      <unloadReference>4016248890</unloadReference>
+      <shipperAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address></address>
+        <street></street>
+        <city></city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>GOODYEAR DUNLOP TIRES OPERATIONS SA</address>
+        <street></street>
+        <city></city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>88</serviceLevel>
+      <goods>
+        <description>205/55R16 91V EFFIGRIP PER</description>
+        <type>NE</type>
+        <quantity>4</quantity>
+      </goods>
+      <clioReference>EETLL400110488</clioReference>
+      <package>Package IDs  . . . . . . . :  00473313430315720981</package>
+      <package>                              00473313430315720998</package>
+      <package>                              00473313430315721001</package>
+      <package>                              00473313430315721018</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004522821</freightMovementId>
+      <shipmentRef>&gt;&gt;TLL5111445</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-14</expectedLoadDate>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-11</shipmentCollectDate>
+      <shipmentDeliveryDate>2015-05-12</shipmentDeliveryDate>
+      <grossWeight>12</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>40</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>69</loadStopId>
+      <unloadStopId>70</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>11316</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>SAKSTE AUTO OÜ</address>
+        <street>TAMMSAARE TEE 62</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>EE</loadReference>
+      <unloadReference>4016209500</unloadReference>
+      <shipperAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>GOODYEAR DUNLOP TIRES OPERATIONS SA</address>
+        <street></street>
+        <city></city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>GOODYEAR DUNLOP TIRES OPERATIONS SA</address>
+        <street></street>
+        <city></city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>88</serviceLevel>
+      <goods>
+        <description>175/65R14 82T PASSIO 2</description>
+        <type>PCS</type>
+        <quantity>2</quantity>
+      </goods>
+      <dimensions>
+        <packageType>PCS</packageType>
+        <packageQuantity>2</packageQuantity>
+      </dimensions>
+      <clioReference>EETLL400109614</clioReference>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004522810</freightMovementId>
+      <shipmentRef>&gt;&gt;TLL5111445</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-11</shipmentCollectDate>
+      <shipmentDeliveryDate>2015-05-12</shipmentDeliveryDate>
+      <grossWeight>56</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>123</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>91</loadStopId>
+      <unloadStopId>92</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10617</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>ABC MOTORS AS</address>
+        <street>PALDISKI MNT. 105</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>EE</loadReference>
+      <unloadReference>4016243866</unloadReference>
+      <shipperAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address></address>
+        <street></street>
+        <city></city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>GOODYEAR DUNLOP TIRES OPERATIONS SA</address>
+        <street></street>
+        <city></city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>88</serviceLevel>
+      <goods>
+        <description>205/65R16C CARGO UG 2 107/</description>
+        <type>NE</type>
+        <quantity>4</quantity>
+      </goods>
+      <clioReference>EETLL400110363</clioReference>
+      <package>Package IDs  . . . . . . . :  00473313430315715413</package>
+      <package>                              00473313430315715420</package>
+      <package>                              00473313430315715437</package>
+      <package>                              00473313430315715444</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004522154</freightMovementId>
+      <shipmentRef>HEL5096381</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-12</expectedLoadDate>
+      <expectedLoadTime>01:05:00</expectedLoadTime>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-08</shipmentCollectDate>
+      <grossWeight>24</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>24</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>33</loadStopId>
+      <unloadStopId>34</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10617</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>LOCK FORCE OÜ</address>
+        <street>Mustamäe tee 18</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>10004036240</loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>FI</countryCode>
+        <locationCode>HEL</locationCode>
+        <postalCode>80100</postalCode>
+        <latitude>62.6172</latitude>
+        <longitude>29.7785</longitude>
+        <address>ABLOY OY</address>
+        <street>WAHLFORSSINKATU</street>
+        <city>JOENSUU</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>11216</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>ASSA ABLOY BALTIC AS</address>
+        <street>VALDEKU 132</street>
+        <city>TALLINN</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>01</serviceLevel>
+      <goods>
+        <description>ABLOY Products</description>
+        <type>CT</type>
+        <quantity>1</quantity>
+      </goods>
+      <package>Package IDs  . . . . . . . :  00370716485540449713</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004522968</freightMovementId>
+      <shipmentRef>HEL5097673</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-12</expectedLoadDate>
+      <expectedLoadTime>00:35:00</expectedLoadTime>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-11</shipmentCollectDate>
+      <grossWeight>22</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>22</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>83</loadStopId>
+      <unloadStopId>84</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>13516</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>SUNOREK AS</address>
+        <street>TÖÖSTUSE 10, LAABI KÜLA</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>7000383030</loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>FI</countryCode>
+        <locationCode>HEL</locationCode>
+        <postalCode>07810</postalCode>
+        <latitude>60.631</latitude>
+        <longitude>26.1208</longitude>
+        <address>CARLO CASAGRANDE &amp; CO OY</address>
+        <street>PORLAMMINTIE 5</street>
+        <city>INGERMANNINKYLÄ</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>13516</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>SUNOREK AS</address>
+        <street>VABAÕHUMUUSEUMI TEE 97</street>
+        <city>TALLINN</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>01</serviceLevel>
+      <goods>
+        <description>STRING</description>
+        <type>PK</type>
+        <quantity>1</quantity>
+      </goods>
+      <dimensions>
+        <packageType>PK</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>0.50</length>
+        <width>0.50</width>
+        <height>0.20</height>
+        <grossWeight>22.00</grossWeight>
+      </dimensions>
+      <package>Package IDs  . . . . . . . :  00473313430129061775</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004522529</freightMovementId>
+      <shipmentRef>HEL5097927</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-11</expectedLoadDate>
+      <expectedLoadTime>23:45:00</expectedLoadTime>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <expectedUnloadTime>08:00:00</expectedUnloadTime>
+      <expectedUnloadTimeEnd>10:00:00</expectedUnloadTimeEnd>
+      <shipmentCollectDate>2015-05-11</shipmentCollectDate>
+      <shipmentDeliveryDate>2015-05-12</shipmentDeliveryDate>
+      <shipmentDeliveryTime>08:00:00</shipmentDeliveryTime>
+      <shipmentDeliveryTimeEnd>10:00:00</shipmentDeliveryTimeEnd>
+      <grossWeight>8</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>56</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>65</loadStopId>
+      <unloadStopId>66</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>11316</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>METRO AUTO OÜ</address>
+        <street>TAMMSAARE TEE 53</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference></loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>NL</countryCode>
+        <locationCode>EDE</locationCode>
+        <postalCode>1044A</postalCode>
+        <latitude>52.4025</latitude>
+        <longitude>4.8121</longitude>
+        <address>NISSAN MOTOR PARTS B.V.</address>
+        <street>HORNWEG 32</street>
+        <city>AMSTERDAM</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>13811</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>NISSAN NORDIC EUROPE OY EESTI FILIA</address>
+        <street>OSMUSSAARE TEE 10</street>
+        <city>TALLINN</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>01</serviceLevel>
+      <goods>
+        <description>VARAOSIA/SPARE PARTS</description>
+        <type>BX</type>
+        <quantity>1</quantity>
+      </goods>
+      <goods>
+        <description>VARAOSIA/SPARE PARTS</description>
+        <type>BX</type>
+        <quantity>1</quantity>
+      </goods>
+      <goods>
+        <description>VARAOSIA/SPARE PARTS</description>
+        <type>BX</type>
+        <quantity>1</quantity>
+      </goods>
+      <dimensions>
+        <packageType>BX</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>0.45</length>
+        <width>0.32</width>
+        <height>0.30</height>
+        <grossWeight>5.00</grossWeight>
+      </dimensions>
+      <dimensions>
+        <packageType>BX</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>0.60</length>
+        <width>0.40</width>
+        <height>0.50</height>
+        <grossWeight>2.00</grossWeight>
+      </dimensions>
+      <dimensions>
+        <packageType>BX</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>0.20</length>
+        <width>0.15</width>
+        <height>0.12</height>
+        <grossWeight>1.00</grossWeight>
+      </dimensions>
+      <package>Package IDs  . . . . . . . :  00164300543200080930</package>
+      <package>                              00164300543200082705</package>
+      <package>                              00164300543200082293</package>
+      <unloadInstructions>S10</unloadInstructions>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004523165</freightMovementId>
+      <shipmentRef>RIX8548930</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-12</expectedLoadDate>
+      <expectedLoadTime>01:53:00</expectedLoadTime>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-11</shipmentCollectDate>
+      <grossWeight>2</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>5</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>53</loadStopId>
+      <unloadStopId>54</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>11314</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>SCANMED GROUP</address>
+        <street>A.H.TAMMSAARE 47</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference></loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIX</locationCode>
+        <postalCode>1048</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCANMED SIA</address>
+        <street>NOMETNU 13-3</street>
+        <city>RIGA</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>11316</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>SCANMED GROUP OÜ</address>
+        <street>A.H.TAMMSAARE TEE 47</street>
+        <city>TALLINN</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>01</serviceLevel>
+      <goods>
+        <description>GOODS</description>
+        <type>BX</type>
+        <quantity>1</quantity>
+      </goods>
+      <dimensions>
+        <packageType>BX</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>0.25</length>
+        <width>0.40</width>
+        <height>0.15</height>
+      </dimensions>
+      <package>Package IDs  . . . . . . . :  00473313430331857470</package>
+      <unloadInstructions>58604557</unloadInstructions>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004519065</freightMovementId>
+      <shipmentRef>TLL5110205</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-11</expectedLoadDate>
+      <expectedLoadTime>08:55:00</expectedLoadTime>
+      <expectedUnloadDate>2015-05-11</expectedUnloadDate>
+      <grossWeight>16</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>68</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>13</loadStopId>
+      <unloadStopId>14</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10621</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>GALADOR GRUPP OÜ</address>
+        <street>LAKI 3A</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference></loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>DE</countryCode>
+        <locationCode>FRV</locationCode>
+        <postalCode>61169</postalCode>
+        <latitude>50.3236</latitude>
+        <longitude>8.7395</longitude>
+        <address>COMPUTERUNIVERSE.NET</address>
+        <street>GRNER WEG 14</street>
+        <city>FRIEDBERG</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10621</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>GALADOR GRUPP OÜ</address>
+        <street>LAKI 3A</street>
+        <city>TALLINN</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>01</serviceLevel>
+      <goods>
+        <description>TV 55</description>
+        <type>BX</type>
+        <quantity>1</quantity>
+      </goods>
+      <dimensions>
+        <packageType>BX</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>1.39</length>
+        <width>0.81</width>
+        <height>0.18</height>
+      </dimensions>
+      <agentWaybillInstructions>PLEASE CALL BEFORE PICK UP: +49 6031 7910-0</agentWaybillInstructions>
+      <package>Package IDs  . . . . . . . :  40167575919348900007001001</package>
+      <unloadInstructions>6590488 6551300</unloadInstructions>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004519279</freightMovementId>
+      <shipmentRef>TLL5110283</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-11</expectedLoadDate>
+      <expectedLoadTime>18:00:00</expectedLoadTime>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-11</shipmentCollectDate>
+      <grossWeight>6</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>6</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>23</loadStopId>
+      <unloadStopId>24</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10621</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>STOKKER FORELLI</address>
+        <street>FORELLI 8</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>KT369702</loadReference>
+      <unloadReference>FORELLI STOKKER</unloadReference>
+      <shipperAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>11415</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>MECRO AS</address>
+        <street>PETERBURI TEE 44</street>
+        <city>TALLINN</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10621</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>STOKKER FORELLI</address>
+        <street>FORELLI 8</street>
+        <city>TALLINN</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>70</serviceLevel>
+      <goods>
+        <description>SAAG</description>
+        <type>PA</type>
+        <quantity>1</quantity>
+      </goods>
+      <package>Package IDs  . . . . . . . :  00473313430259151698</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004519326</freightMovementId>
+      <shipmentRef>TLL5110296</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-11</expectedLoadDate>
+      <expectedLoadTime>23:00:00</expectedLoadTime>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-11</shipmentCollectDate>
+      <grossWeight>1</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>1</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>23</loadStopId>
+      <unloadStopId>24</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10621</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>STOKKER FORELLI</address>
+        <street>FORELLI 8</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>KT369690_1/1</loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>11415</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>MECRO AS</address>
+        <street>PETERBURI TEE 44</street>
+        <city>TALLINN</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10621</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>STOKKER FORELLI</address>
+        <street>FORELLI 8</street>
+        <city>TALLINN</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>70</serviceLevel>
+      <goods>
+        <description>KÕRGUSE REGULEERKANGI KATE</description>
+        <type>CT</type>
+        <quantity>1</quantity>
+      </goods>
+      <dimensions>
+        <packageType>CT</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>0.10</length>
+      </dimensions>
+      <package>Package IDs  . . . . . . . :  00473313430259151988</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004519366</freightMovementId>
+      <shipmentRef>TLL5110299</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-11</expectedLoadDate>
+      <expectedLoadTime>21:00:00</expectedLoadTime>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-11</shipmentCollectDate>
+      <grossWeight>28</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>28</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>9</loadStopId>
+      <unloadStopId>10</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10617</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>A-SELVER AS   MARIENTHALI SELVER</address>
+        <street>MUSTAMÄE TEE 16</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference></loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>PNU</locationCode>
+        <postalCode>86502</postalCode>
+        <latitude>58.3765</latitude>
+        <longitude>24.4886</longitude>
+        <address>JÕUMEES OÜ</address>
+        <street>UULU</street>
+        <city>TAHKURANNA VALD</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10617</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>A-SELVER AS   MARIENTHALI SELVER</address>
+        <street>MUSTAMÄE TEE 16</street>
+        <city>TALLINN</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>70</serviceLevel>
+      <goods>
+        <description>MESI</description>
+        <type>PK</type>
+        <quantity>2</quantity>
+      </goods>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004519342</freightMovementId>
+      <shipmentRef>TLL5110300</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-11</expectedLoadDate>
+      <expectedLoadTime>18:00:00</expectedLoadTime>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-11</shipmentCollectDate>
+      <grossWeight>16</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>16</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>5</loadStopId>
+      <unloadStopId>6</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10618</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>ANGELIKA  RUMESSEN</address>
+        <street>PIIBELEHE  10</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>4740359</loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>46607</postalCode>
+        <latitude>59.29263885</latitude>
+        <longitude>26.4145833</longitude>
+        <address>REMEDIUM AS</address>
+        <street>NEFFI 4 PIIRA</street>
+        <city>VINNI VALD</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10618</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>ANGELIKA  RUMESSEN</address>
+        <street>PIIBELEHE  10</street>
+        <city>TALLINN</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>70</serviceLevel>
+      <goods>
+        <description>INTER.KOERATOIT</description>
+        <type>CT</type>
+        <quantity>2</quantity>
+      </goods>
+      <package>Package IDs  . . . . . . . :  00473313430259152176</package>
+      <package>                              00473313430259152183</package>
+      <unloadInstructions>HEL.ETTE 5384 0183</unloadInstructions>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004519377</freightMovementId>
+      <shipmentRef>TLL5110310</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-11</expectedLoadDate>
+      <expectedLoadTime>23:00:00</expectedLoadTime>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-11</shipmentCollectDate>
+      <grossWeight>1</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>1</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>23</loadStopId>
+      <unloadStopId>24</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10621</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>STOKKER FORELLI</address>
+        <street>FORELLI 8</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>KT369681</loadReference>
+      <unloadReference>SCTARTU</unloadReference>
+      <shipperAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>11415</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>MECRO AS</address>
+        <street>PETERBURI TEE 44</street>
+        <city>TALLINN</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10621</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>STOKKER FORELLI</address>
+        <street>FORELLI 8</street>
+        <city>TALLINN</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>70</serviceLevel>
+      <goods>
+        <description>MULTSIKATE</description>
+        <type>CT</type>
+        <quantity>1</quantity>
+      </goods>
+      <package>Package IDs  . . . . . . . :  00473313430259152251</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004520050</freightMovementId>
+      <shipmentRef>TLL5110537</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-11</expectedLoadDate>
+      <expectedLoadTime>23:00:00</expectedLoadTime>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-11</shipmentCollectDate>
+      <grossWeight>1</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>1</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>23</loadStopId>
+      <unloadStopId>24</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10621</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>STOKKER FORELLI</address>
+        <street>FORELLI 8</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>KT369697</loadReference>
+      <unloadReference>SCTARTU</unloadReference>
+      <shipperAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>11415</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>MECRO AS</address>
+        <street>PETERBURI TEE 44</street>
+        <city>TALLINN</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10621</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>STOKKER FORELLI</address>
+        <street>FORELLI 8</street>
+        <city>TALLINN</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>70</serviceLevel>
+      <goods>
+        <description>JD RIHM X304</description>
+        <type>CT</type>
+        <quantity>1</quantity>
+      </goods>
+      <package>Package IDs  . . . . . . . :  00473313430259162366</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004520415</freightMovementId>
+      <shipmentRef>TLL5110649</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-11</expectedLoadDate>
+      <expectedLoadTime>21:00:00</expectedLoadTime>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-11</shipmentCollectDate>
+      <grossWeight>40</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>40</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>21</loadStopId>
+      <unloadStopId>22</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>13516</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>RIMI EESTI FOOD - HAABERSTI</address>
+        <street>HAABERSTI 1</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>4741456</loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>PNU</locationCode>
+        <postalCode>80037</postalCode>
+        <latitude>58.3765</latitude>
+        <longitude>24.4886</longitude>
+        <address>VEIKAND AS</address>
+        <street>KAEVU 10</street>
+        <city>PÄRNU</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>13516</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>RIMI EESTI FOOD - HAABERSTI</address>
+        <street>HAABERSTI 1</street>
+        <city>TALLINN</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>70</serviceLevel>
+      <goods>
+        <description>MAITSEAINED</description>
+        <type>CS</type>
+        <quantity>1</quantity>
+      </goods>
+      <goods>
+        <description>MAITSEAINED</description>
+        <type>CS</type>
+        <quantity>1</quantity>
+      </goods>
+      <goods>
+        <description>MAITSEAINED</description>
+        <type>CS</type>
+        <quantity>1</quantity>
+      </goods>
+      <dimensions>
+        <packageType>CS</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>0.04</length>
+        <grossWeight>15.00</grossWeight>
+      </dimensions>
+      <dimensions>
+        <packageType>CS</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>0.04</length>
+        <grossWeight>20.00</grossWeight>
+      </dimensions>
+      <dimensions>
+        <packageType>CS</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>0.04</length>
+        <grossWeight>5.00</grossWeight>
+      </dimensions>
+      <package>Package IDs  . . . . . . . :  00473313430259166241</package>
+      <package>                              00473313430259166258</package>
+      <package>                              00473313430259166265</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004520475</freightMovementId>
+      <shipmentRef>TLL5110666</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-11</expectedLoadDate>
+      <expectedLoadTime>18:00:00</expectedLoadTime>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-11</shipmentCollectDate>
+      <grossWeight>7</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>7</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>1</loadStopId>
+      <unloadStopId>2</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>76901</postalCode>
+        <latitude>59.3663889</latitude>
+        <longitude>25.1830556</longitude>
+        <address>BRIMAR PR OÜ</address>
+        <street>TEENUSTE 2 TABASALU HARJUMAA</street>
+        <city>HARKU VALD</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>4741534</loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>46607</postalCode>
+        <latitude>59.29263885</latitude>
+        <longitude>26.4145833</longitude>
+        <address>REMEDIUM AS</address>
+        <street>NEFFI 4 PIIRA</street>
+        <city>VINNI VALD</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>76901</postalCode>
+        <latitude>59.3663889</latitude>
+        <longitude>25.1830556</longitude>
+        <address>BRIMAR PR OÜ</address>
+        <street>TEENUSTE 2 TABASALU HARJUMAA</street>
+        <city>HARKU VALD</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>70</serviceLevel>
+      <goods>
+        <description>VET.KAUP</description>
+        <type>CT</type>
+        <quantity>1</quantity>
+      </goods>
+      <package>Package IDs  . . . . . . . :  00473313430259166975</package>
+      <unloadInstructions>HEL.ETTE 502 9384</unloadInstructions>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004520681</freightMovementId>
+      <shipmentRef>TLL5110739</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-11</expectedLoadDate>
+      <expectedLoadTime>21:00:00</expectedLoadTime>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-11</shipmentCollectDate>
+      <grossWeight>11</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>11</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>3</loadStopId>
+      <unloadStopId>4</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>11316</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>A-SELVER TONDI</address>
+        <street>TAMMSAARE TEE 62</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference></loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>PNU</locationCode>
+        <postalCode>86502</postalCode>
+        <latitude>58.3765</latitude>
+        <longitude>24.4886</longitude>
+        <address>JÕUMEES OÜ</address>
+        <street>UULU</street>
+        <city>TAHKURANNA VALD</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>11316</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>A-SELVER TONDI</address>
+        <street>TAMMSAARE TEE 62</street>
+        <city>TALLINN</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>70</serviceLevel>
+      <goods>
+        <description>MESI</description>
+        <type>PK</type>
+        <quantity>1</quantity>
+      </goods>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004520743</freightMovementId>
+      <shipmentRef>TLL5110760</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-11</expectedLoadDate>
+      <expectedLoadTime>23:00:00</expectedLoadTime>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-11</shipmentCollectDate>
+      <grossWeight>19</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>19</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>11</loadStopId>
+      <unloadStopId>12</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10621</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>LOOMADE KIIRABI KLIINIK OÜ</address>
+        <street>MUSTAMAE TEE 44</street>
+        <city>TALLINN / HARJUMAA</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>4742054</loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TAY</locationCode>
+        <postalCode>51008</postalCode>
+        <latitude>58.3723</latitude>
+        <longitude>26.7135</longitude>
+        <address>DIMELA AS</address>
+        <street>EMAJÕE 1A</street>
+        <city>TARTU</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10621</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>LOOMADE KIIRABI KLIINIK OÜ</address>
+        <street>MUSTAMAE TEE 44</street>
+        <city>TALLINN / HARJUMAA</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>70</serviceLevel>
+      <goods>
+        <description>VET</description>
+        <type>CT</type>
+        <quantity>1</quantity>
+      </goods>
+      <package>Package IDs  . . . . . . . :  00473313430259173201</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004520819</freightMovementId>
+      <shipmentRef>TLL5110784</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-11</expectedLoadDate>
+      <expectedLoadTime>23:00:00</expectedLoadTime>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-11</shipmentCollectDate>
+      <grossWeight>29</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>29</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>17</loadStopId>
+      <unloadStopId>18</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>11312</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>V_STRIKU APTEEGI O</address>
+        <street>V_STRIKU 2A</street>
+        <city>TALLINN HARJUMAA</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>4742114</loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TAY</locationCode>
+        <postalCode>51008</postalCode>
+        <latitude>58.3723</latitude>
+        <longitude>26.7135</longitude>
+        <address>DIMELA AS</address>
+        <street>EMAJÕE 1A</street>
+        <city>TARTU</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>11312</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>V_STRIKU APTEEGI O</address>
+        <street>V_STRIKU 2A</street>
+        <city>TALLINN HARJUMAA</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>70</serviceLevel>
+      <goods>
+        <description>VET</description>
+        <type>CT</type>
+        <quantity>1</quantity>
+      </goods>
+      <package>Package IDs  . . . . . . . :  00473313430259174000</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004520853</freightMovementId>
+      <shipmentRef>TLL5110791</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-11</expectedLoadDate>
+      <expectedLoadTime>23:00:00</expectedLoadTime>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-11</shipmentCollectDate>
+      <grossWeight>58</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>58</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>25</loadStopId>
+      <unloadStopId>26</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>12615</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>BILLY LOOMAKLIINIK OÜ</address>
+        <street>EHITAJATE TEE 103A</street>
+        <city>TALLINN / HARJUMAA</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>4742136</loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TAY</locationCode>
+        <postalCode>51008</postalCode>
+        <latitude>58.3723</latitude>
+        <longitude>26.7135</longitude>
+        <address>DIMELA AS</address>
+        <street>EMAJÕE 1A</street>
+        <city>TARTU</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>12615</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>BILLY LOOMAKLIINIK OÜ</address>
+        <street>EHITAJATE TEE 103A</street>
+        <city>TALLINN / HARJUMAA</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>70</serviceLevel>
+      <goods>
+        <description>VET</description>
+        <type>CT</type>
+        <quantity>2</quantity>
+      </goods>
+      <package>Package IDs  . . . . . . . :  00473313430259174246</package>
+      <package>                              00473313430259174253</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004521155</freightMovementId>
+      <shipmentRef>TLL5110884</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-11</expectedLoadDate>
+      <expectedLoadTime>21:00:00</expectedLoadTime>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-11</shipmentCollectDate>
+      <grossWeight>0</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>1</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>19</loadStopId>
+      <unloadStopId>20</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>12915</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>MASINAELEMENDID OÜ</address>
+        <street>LAKI 26</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>4742499</loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>PNU</locationCode>
+        <postalCode>88317</postalCode>
+        <latitude>58.4074</latitude>
+        <longitude>24.3874</longitude>
+        <address>OPTITRANS OÜ</address>
+        <street>KAUBASADAMA TEE 18/2-11 PAPSAARE</street>
+        <city>AUDRU VALD</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>12915</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>MASINAELEMENDID OÜ</address>
+        <street>LAKI 26</street>
+        <city>TALLINN</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>70</serviceLevel>
+      <goods>
+        <description>KAUP</description>
+        <type>PA</type>
+        <quantity>1</quantity>
+      </goods>
+      <package>Package IDs  . . . . . . . :  00473313430259181756</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004521599</freightMovementId>
+      <shipmentRef>TLL5111028</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-11</expectedLoadDate>
+      <expectedLoadTime>18:00:00</expectedLoadTime>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-11</shipmentCollectDate>
+      <grossWeight>4</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>4</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>47</loadStopId>
+      <unloadStopId>48</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>12918</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>BAUHOF GROUP AS/ MUSTIKA</address>
+        <street>A.H. TAMMSAARE TEE 116</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>4742919</loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>11317</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>VALNES AS</address>
+        <street>PÄRNU MNT 139E</street>
+        <city>TALLINN</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>12918</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>BAUHOF GROUP AS/ MUSTIKA</address>
+        <street>A.H. TAMMSAARE TEE 116</street>
+        <city>TALLINN</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>70</serviceLevel>
+      <goods>
+        <description>LUKUKAUBAD</description>
+        <type>BX</type>
+        <quantity>1</quantity>
+      </goods>
+      <package>Package IDs  . . . . . . . :  00473313430259186546</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004522487</freightMovementId>
+      <shipmentRef>TLL5111293</shipmentRef>
+      <orderType>*CO</orderType>
+      <expectedLoadDate>2015-05-12</expectedLoadDate>
+      <expectedLoadTime>09:00:00</expectedLoadTime>
+      <expectedLoadTimeEnd>12:00:00</expectedLoadTimeEnd>
+      <shipmentCollectDate>2015-05-12</shipmentCollectDate>
+      <shipmentCollectTime>09:00:00</shipmentCollectTime>
+      <shipmentCollectTimeEnd>12:00:00</shipmentCollectTimeEnd>
+      <grossWeight>60</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>60</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>27</loadStopId>
+      <unloadStopId>28</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>11312</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>KAARDIEKSPERT OÜ</address>
+        <street>KOTKA 26</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference></loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>11312</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>KAARDIEKSPERT OÜ</address>
+        <street>KOTKA 26</street>
+        <city>TALLINN</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>SE</countryCode>
+        <locationCode>STO</locationCode>
+        <postalCode>85238</postalCode>
+        <latitude>62.3809</latitude>
+        <longitude>17.312</longitude>
+        <address>Hotell Södra Berget</address>
+        <street>Södra Stadsberget 1</street>
+        <city>Sundsvall</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>01</serviceLevel>
+      <goods>
+        <description>goods</description>
+        <type>CT</type>
+        <quantity>4</quantity>
+      </goods>
+      <loadInstructions>51 26 202</loadInstructions>
+      <dimensions>
+        <packageType>CT</packageType>
+        <packageQuantity>4</packageQuantity>
+        <length>0.24</length>
+        <width>0.48</width>
+        <height>0.14</height>
+      </dimensions>
+      <agentWaybillInstructions>46(0)8 555 68500</agentWaybillInstructions>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004522872</freightMovementId>
+      <shipmentRef>TLL5111456</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-11</expectedLoadDate>
+      <expectedLoadTime>22:00:00</expectedLoadTime>
+      <expectedUnloadDate>2015-05-11</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-11</shipmentCollectDate>
+      <shipmentDeliveryDate>2015-05-11</shipmentDeliveryDate>
+      <grossWeight>15</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>15</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>81</loadStopId>
+      <unloadStopId>82</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>12618</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>SIDMETALL OÜ</address>
+        <street>KADAKA TEE 74</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>171071</loadReference>
+      <unloadReference>171071</unloadReference>
+      <shipperAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>75306</postalCode>
+        <latitude>59.3858333</latitude>
+        <longitude>24.8830556</longitude>
+        <address>ALAS-KUUL AS</address>
+        <street>LOOMÄE TEE 1 LEHMJA KÜLA</street>
+        <city>RAE VALD</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>12618</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>SIDMETALL OÜ</address>
+        <street>KADAKA TEE 74</street>
+        <city>TALLINN</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>90</serviceLevel>
+      <goods>
+        <description>PAKK</description>
+        <type>PA</type>
+        <quantity>1</quantity>
+      </goods>
+      <package>Package IDs  . . . . . . . :  00473313430315721452</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004523633</freightMovementId>
+      <shipmentRef>TLL5111650</shipmentRef>
+      <orderType>*CO</orderType>
+      <expectedLoadDate>2015-05-12</expectedLoadDate>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <expectedUnloadTime>18:00:00</expectedUnloadTime>
+      <shipmentCollectDate>2015-05-12</shipmentCollectDate>
+      <grossWeight>16</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>16</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>93</loadStopId>
+      <unloadStopId>94</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>12915</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>HALS INTERIORS OÜ</address>
+        <street>KADAKA TEE 42H</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>4744985</loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>12915</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>HALS INTERIORS OÜ</address>
+        <street>KADAKA TEE 42H</street>
+        <city>TALLINN</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TAY</locationCode>
+        <postalCode>65608</postalCode>
+        <latitude>57.8442</latitude>
+        <longitude>27.0141</longitude>
+        <address>FOREST STOCK OÜ</address>
+        <street>JÜRI 24</street>
+        <city>VÕRU</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>70</serviceLevel>
+      <goods>
+        <description>SAN-TEHNIKA</description>
+        <type>PA</type>
+        <quantity>1</quantity>
+      </goods>
+      <package>Package IDs  . . . . . . . :  00473313430259214225</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004524185</freightMovementId>
+      <shipmentRef>TLL5111831</shipmentRef>
+      <orderType>*CO</orderType>
+      <expectedLoadDate>2015-05-12</expectedLoadDate>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <expectedUnloadTime>18:00:00</expectedUnloadTime>
+      <shipmentCollectDate>2015-05-12</shipmentCollectDate>
+      <grossWeight>1</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>1</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>95</loadStopId>
+      <unloadStopId>96</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>12915</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>TEVAL ELEKTROONIKA OÜ</address>
+        <street>KADAKA TEE 113A</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>4745475</loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>12915</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>TEVAL ELEKTROONIKA OÜ</address>
+        <street>KADAKA TEE 113a</street>
+        <city>TALLINN</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TAY</locationCode>
+        <postalCode>50303</postalCode>
+        <latitude>58.3723</latitude>
+        <longitude>26.7135</longitude>
+        <address>HANZA MECHANCS TARTU AS</address>
+        <street>MIHKEL MARTSON</street>
+        <city>TARTU</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>70</serviceLevel>
+      <goods>
+        <description>ELEKTROONIKA</description>
+        <type>PA</type>
+        <quantity>1</quantity>
+      </goods>
+      <package>Package IDs  . . . . . . . :  00473313430259220967</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004524337</freightMovementId>
+      <shipmentRef>TLL5111877</shipmentRef>
+      <orderType>*CO</orderType>
+      <expectedLoadDate>2015-05-12</expectedLoadDate>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <expectedUnloadTime>18:00:00</expectedUnloadTime>
+      <shipmentCollectDate>2015-05-12</shipmentCollectDate>
+      <grossWeight>15</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>15</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>97</loadStopId>
+      <unloadStopId>98</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>76905</postalCode>
+        <latitude>59.3663889</latitude>
+        <longitude>25.1830556</longitude>
+        <address>HARJU TARBIJATE ÜHISTU</address>
+        <street>LEE TEE 1</street>
+        <city>MURASTE</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>4745661</loadReference>
+      <unloadReference>WHOLESALE</unloadReference>
+      <shipperAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>11415</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>MECRO AS</address>
+        <street>PETERBURI TEE 44</street>
+        <city>TALLINN</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>11415</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>MECRO AS</address>
+        <street>PETERBURI TEE 44</street>
+        <city>TALLINN</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>70</serviceLevel>
+      <goods>
+        <description>TAGASTUS</description>
+        <type>CT</type>
+        <quantity>2</quantity>
+      </goods>
+      <package>Package IDs  . . . . . . . :  00473313430259224088</package>
+      <package>                              00473313430259224095</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004524526</freightMovementId>
+      <shipmentRef>TLL5111923</shipmentRef>
+      <orderType>*CO</orderType>
+      <expectedLoadDate>2015-05-12</expectedLoadDate>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <expectedUnloadTime>18:00:00</expectedUnloadTime>
+      <shipmentCollectDate>2015-05-12</shipmentCollectDate>
+      <grossWeight>2</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>2</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>99</loadStopId>
+      <unloadStopId>100</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>13418</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>SIGNITI OÜ</address>
+        <street>KÄNNU 72</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>4745771</loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>13418</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>SIGNITI OÜ</address>
+        <street>KÄNNU 72</street>
+        <city>TALLINN</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>75301</postalCode>
+        <latitude>59.3858333</latitude>
+        <longitude>24.8830556</longitude>
+        <address>ABB - LOW VOLTAGE DRIVES FACTORY</address>
+        <street>ARUKÜLA TEE 59</street>
+        <city>JÜRI ALEVIK, RAE VALD,HARJUMAA</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>70</serviceLevel>
+      <goods>
+        <description>KLEEBISED</description>
+        <type>BX</type>
+        <quantity>1</quantity>
+      </goods>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004524997</freightMovementId>
+      <shipmentRef>TLL5112078</shipmentRef>
+      <orderType>*CO</orderType>
+      <expectedLoadDate>2015-05-12</expectedLoadDate>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <expectedUnloadTime>18:00:00</expectedUnloadTime>
+      <shipmentCollectDate>2015-05-12</shipmentCollectDate>
+      <grossWeight>40</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>40</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>103</loadStopId>
+      <unloadStopId>104</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10621</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>KOHV ON KUNST OÜ</address>
+        <street>FORELLI 10</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference></loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10621</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>KOHV ON KUNST OÜ</address>
+        <street>FORELLI 10</street>
+        <city>TALLINN</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>PNU</locationCode>
+        <postalCode>86001</postalCode>
+        <latitude>58.0717</latitude>
+        <longitude>24.5054</longitude>
+        <address>SELMA PAGAR OÜ</address>
+        <street>KOOLI 11 / HÄÄDEMEESTE</street>
+        <city>HÄÄDEMEESTE VALD</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>70</serviceLevel>
+      <goods>
+        <description>KAUP</description>
+        <type>PK</type>
+        <quantity>1</quantity>
+      </goods>
+      <loadInstructions>MAHA 55920838</loadInstructions>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004525012</freightMovementId>
+      <shipmentRef>TLL5112084</shipmentRef>
+      <orderType>*CO</orderType>
+      <expectedLoadDate>2015-05-12</expectedLoadDate>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <expectedUnloadTime>18:00:00</expectedUnloadTime>
+      <shipmentCollectDate>2015-05-12</shipmentCollectDate>
+      <grossWeight>40</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>40</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>103</loadStopId>
+      <unloadStopId>104</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10621</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>KOHV ON KUNST OÜ</address>
+        <street>FORELLI 10</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference></loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10621</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>KOHV ON KUNST OÜ</address>
+        <street>FORELLI 10</street>
+        <city>TALLINN</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>PNU</locationCode>
+        <postalCode>80012</postalCode>
+        <latitude>58.3765</latitude>
+        <longitude>24.4886</longitude>
+        <address>JUNGENT</address>
+        <street>ESPLANAADI 24</street>
+        <city>PÄRNU</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>70</serviceLevel>
+      <goods>
+        <description>PAKK</description>
+        <type>PK</type>
+        <quantity>1</quantity>
+      </goods>
+      <loadInstructions>MAHA 5137976,HELISTADA 30 MINUTIT ETTE !!</loadInstructions>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004525024</freightMovementId>
+      <shipmentRef>TLL5112089</shipmentRef>
+      <orderType>*CO</orderType>
+      <expectedLoadDate>2015-05-12</expectedLoadDate>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <expectedUnloadTime>18:00:00</expectedUnloadTime>
+      <shipmentCollectDate>2015-05-12</shipmentCollectDate>
+      <grossWeight>36</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>36</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>103</loadStopId>
+      <unloadStopId>104</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10621</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>KOHV ON KUNST OÜ</address>
+        <street>FORELLI 10</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference></loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10621</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>KOHV ON KUNST OÜ</address>
+        <street>FORELLI 10</street>
+        <city>TALLINN</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>PNU</locationCode>
+        <postalCode>80041</postalCode>
+        <latitude>58.3765</latitude>
+        <longitude>24.4886</longitude>
+        <address>U &amp; A AS</address>
+        <street>SAVI 15</street>
+        <city>PÄRNU</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>70</serviceLevel>
+      <goods>
+        <description>PAKID</description>
+        <type>PK</type>
+        <quantity>2</quantity>
+      </goods>
+      <loadInstructions>MAHA 5273959</loadInstructions>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004526098</freightMovementId>
+      <shipmentRef>TLL5112426</shipmentRef>
+      <orderType>*CO</orderType>
+      <expectedLoadDate>2015-05-12</expectedLoadDate>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <expectedUnloadTime>18:00:00</expectedUnloadTime>
+      <shipmentCollectDate>2015-05-12</shipmentCollectDate>
+      <grossWeight>1</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>1</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>95</loadStopId>
+      <unloadStopId>96</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>12915</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>TEVAL ELEKTROONIKA OÜ</address>
+        <street>KADAKA TEE 113A</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>4747628</loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>12915</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>TEVAL ELEKTROONIKA OÜ</address>
+        <street>KADAKA TEE 113a</street>
+        <city>TALLINN</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TAY</locationCode>
+        <postalCode>71023</postalCode>
+        <latitude>58.3822</latitude>
+        <longitude>25.5701</longitude>
+        <address>BESTRA ENGINEERING AS</address>
+        <street>PARI, PARSTI VALD</street>
+        <city>VILJANDIMAA</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>70</serviceLevel>
+      <goods>
+        <description>ELEKTROONIKA</description>
+        <type>PA</type>
+        <quantity>1</quantity>
+      </goods>
+      <package>Package IDs  . . . . . . . :  00473313430259258526</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004526148</freightMovementId>
+      <shipmentRef>TLL5112444</shipmentRef>
+      <orderType>*CO</orderType>
+      <expectedLoadDate>2015-05-12</expectedLoadDate>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <expectedUnloadTime>18:00:00</expectedUnloadTime>
+      <shipmentCollectDate>2015-05-12</shipmentCollectDate>
+      <grossWeight>1</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>1</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>95</loadStopId>
+      <unloadStopId>96</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>12915</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>TEVAL ELEKTROONIKA OÜ</address>
+        <street>KADAKA TEE 113A</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>4747706</loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>12915</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>TEVAL ELEKTROONIKA OÜ</address>
+        <street>KADAKA TEE 113a</street>
+        <city>TALLINN</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>TECH GROUP AS</address>
+        <street>KAABLI 11</street>
+        <city>TALLINN</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>70</serviceLevel>
+      <goods>
+        <description>ELEKTROONIKA</description>
+        <type>PA</type>
+        <quantity>1</quantity>
+      </goods>
+      <package>Package IDs  . . . . . . . :  00473313430259259318</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004526178</freightMovementId>
+      <shipmentRef>TLL5112454</shipmentRef>
+      <orderType>*CO</orderType>
+      <expectedLoadDate>2015-05-12</expectedLoadDate>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <expectedUnloadTime>18:00:00</expectedUnloadTime>
+      <shipmentCollectDate>2015-05-12</shipmentCollectDate>
+      <grossWeight>1</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>1</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>99</loadStopId>
+      <unloadStopId>100</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>13418</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>SIGNITI OÜ</address>
+        <street>KÄNNU 72</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>4747734</loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>13418</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>SIGNITI OÜ</address>
+        <street>KÄNNU 72</street>
+        <city>TALLINN</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>75301</postalCode>
+        <latitude>59.3858333</latitude>
+        <longitude>24.8830556</longitude>
+        <address>ABB AS - PTPM CSS TEHAS</address>
+        <street>ARUKÜLA TEE 83</street>
+        <city>JÜRI ALEVIK, RAE VALD,HARJUMAA</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>70</serviceLevel>
+      <goods>
+        <description>LOTO</description>
+        <type>BX</type>
+        <quantity>1</quantity>
+      </goods>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004526200</freightMovementId>
+      <shipmentRef>TLL5112458</shipmentRef>
+      <orderType>*CO</orderType>
+      <expectedLoadDate>2015-05-12</expectedLoadDate>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <expectedUnloadTime>18:00:00</expectedUnloadTime>
+      <shipmentCollectDate>2015-05-12</shipmentCollectDate>
+      <grossWeight>1</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>1</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>99</loadStopId>
+      <unloadStopId>100</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>13418</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>SIGNITI OÜ</address>
+        <street>KÄNNU 72</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>4747763</loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>13418</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>SIGNITI OÜ</address>
+        <street>KÄNNU 72</street>
+        <city>TALLINN</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>JVI</locationCode>
+        <postalCode>30328</postalCode>
+        <latitude>59.3837</latitude>
+        <longitude>27.2361</longitude>
+        <address>EASTMAN SPECIALITIES OÜ</address>
+        <street>UUS TEHASE 8</street>
+        <city>KOHTLA-JARVE</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>70</serviceLevel>
+      <goods>
+        <description>KLEEBISED</description>
+        <type>BX</type>
+        <quantity>1</quantity>
+      </goods>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004526214</freightMovementId>
+      <shipmentRef>TLL5112463</shipmentRef>
+      <orderType>*CO</orderType>
+      <expectedLoadDate>2015-05-12</expectedLoadDate>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <expectedUnloadTime>18:00:00</expectedUnloadTime>
+      <shipmentCollectDate>2015-05-12</shipmentCollectDate>
+      <grossWeight>1</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>2</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>99</loadStopId>
+      <unloadStopId>100</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>13418</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>SIGNITI OÜ</address>
+        <street>KÄNNU 72</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>4747788</loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>13418</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>SIGNITI OÜ</address>
+        <street>KÄNNU 72</street>
+        <city>TALLINN</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TAY</locationCode>
+        <postalCode>51014</postalCode>
+        <latitude>58.3723</latitude>
+        <longitude>26.7135</longitude>
+        <address>PALMAKO OÜ</address>
+        <street>BETOONI 9</street>
+        <city>TARTU</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>70</serviceLevel>
+      <goods>
+        <description>KLEEBISED</description>
+        <type>BX</type>
+        <quantity>1</quantity>
+      </goods>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004526244</freightMovementId>
+      <shipmentRef>TLL5112471</shipmentRef>
+      <orderType>*CO</orderType>
+      <expectedLoadDate>2015-05-12</expectedLoadDate>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <expectedUnloadTime>18:00:00</expectedUnloadTime>
+      <shipmentCollectDate>2015-05-12</shipmentCollectDate>
+      <grossWeight>3</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>3</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>99</loadStopId>
+      <unloadStopId>100</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>13418</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>SIGNITI OÜ</address>
+        <street>KÄNNU 72</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>4747861</loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>13418</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>SIGNITI OÜ</address>
+        <street>KÄNNU 72</street>
+        <city>TALLINN</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>93822</postalCode>
+        <latitude>58.6575</latitude>
+        <longitude>26.795</longitude>
+        <address>BALTIC WORKBOATS OÜ</address>
+        <street>NASVA KÜLA</street>
+        <city>KAARMA VALD, SAAREMAA</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>70</serviceLevel>
+      <goods>
+        <description>KLEEBISED</description>
+        <type>BX</type>
+        <quantity>1</quantity>
+      </goods>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004526327</freightMovementId>
+      <shipmentRef>TLL5112496</shipmentRef>
+      <orderType>*CO</orderType>
+      <expectedLoadDate>2015-05-12</expectedLoadDate>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <expectedUnloadTime>18:00:00</expectedUnloadTime>
+      <shipmentCollectDate>2015-05-12</shipmentCollectDate>
+      <grossWeight>16</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>16</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>93</loadStopId>
+      <unloadStopId>94</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>12915</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>HALS INTERIORS OÜ</address>
+        <street>KADAKA TEE 42H</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>4747967</loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>12915</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>HALS INTERIORS OÜ</address>
+        <street>KADAKA TEE 42H</street>
+        <city>TALLINN</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>PNU</locationCode>
+        <postalCode>80042</postalCode>
+        <latitude>58.3723</latitude>
+        <longitude>24.6459</longitude>
+        <address>OPTIMERA ESTONIA AS PARNU</address>
+        <street>RIIA MNT. 108B</street>
+        <city>PARNU</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>70</serviceLevel>
+      <goods>
+        <description>SAN-TEHNIKA</description>
+        <type>PA</type>
+        <quantity>2</quantity>
+      </goods>
+      <package>Package IDs  . . . . . . . :  00473313430259262165</package>
+      <package>                              00473313430259262172</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004526420</freightMovementId>
+      <shipmentRef>TLL5112524</shipmentRef>
+      <orderType>*CO</orderType>
+      <expectedLoadDate>2015-05-12</expectedLoadDate>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <expectedUnloadTime>18:00:00</expectedUnloadTime>
+      <shipmentCollectDate>2015-05-12</shipmentCollectDate>
+      <grossWeight>5</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>5</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>99</loadStopId>
+      <unloadStopId>100</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>13418</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>SIGNITI OÜ</address>
+        <street>KÄNNU 72</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>4748103</loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>13418</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>SIGNITI OÜ</address>
+        <street>KÄNNU 72</street>
+        <city>TALLINN</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>75301</postalCode>
+        <latitude>59.3858333</latitude>
+        <longitude>24.8830556</longitude>
+        <address>ABB AS - LOW VOLTAGE SYSTEMS FACTOR</address>
+        <street>ARUKÜLA TEE 83</street>
+        <city>JÜRI ALEVIK, RAE VALD,HARJUMAA</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>70</serviceLevel>
+      <goods>
+        <description>KLEEBISED</description>
+        <type>BX</type>
+        <quantity>1</quantity>
+      </goods>
+    </consignment>
+    <consignment>
+      <freightMovementId>SEE004526724</freightMovementId>
+      <shipmentRef>TLL5112623</shipmentRef>
+      <orderType>*CO</orderType>
+      <expectedLoadDate>2015-05-12</expectedLoadDate>
+      <expectedUnloadDate>2015-05-12</expectedUnloadDate>
+      <expectedUnloadTime>18:00:00</expectedUnloadTime>
+      <shipmentCollectDate>2015-05-12</shipmentCollectDate>
+      <grossWeight>50</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>50</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>95</loadStopId>
+      <unloadStopId>96</unloadStopId>
+      <loadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>12915</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>TEVAL ELEKTROONIKA OÜ</address>
+        <street>KADAKA TEE 113A</street>
+        <city>TALLINN</city>
+      </loadAddress>
+      <loadPlanArea>TLLT</loadPlanArea>
+      <unloadAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </unloadAddress>
+      <unloadPlanArea>TLLT</unloadPlanArea>
+      <loadReference>4748440</loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>12915</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>TEVAL ELEKTROONIKA OÜ</address>
+        <street>KADAKA TEE 113a</street>
+        <city>TALLINN</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TAY</locationCode>
+        <postalCode>61504</postalCode>
+        <latitude>58.2192</latitude>
+        <longitude>26.3876</longitude>
+        <address>ENICS EESTI AS</address>
+        <street>SIGRIT HIRSCH 7337560</street>
+        <city>ELVA</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>70</serviceLevel>
+      <goods>
+        <description>ELEKTROONIKA</description>
+        <type>PA</type>
+        <quantity>9</quantity>
+      </goods>
+      <package>Package IDs  . . . . . . . :  00473313430259268044</package>
+      <package>                              00473313430259268051</package>
+      <package>                              00473313430259268068</package>
+      <package>                              00473313430259268075</package>
+      <package>                              00473313430259268082</package>
+      <package>                              00473313430259268099</package>
+      <package>                              00473313430259268105</package>
+      <package>                              00473313430259268112</package>
+      <package>                              00473313430259268129</package>
+    </consignment>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>1</stopId>
+      <stopSequence>300</stopSequence>
+      <stopNumber>1</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>3</stopId>
+      <stopSequence>300</stopSequence>
+      <stopNumber>2</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>5</stopId>
+      <stopSequence>300</stopSequence>
+      <stopNumber>3</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>9</stopId>
+      <stopSequence>300</stopSequence>
+      <stopNumber>4</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>11</stopId>
+      <stopSequence>300</stopSequence>
+      <stopNumber>5</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>13</stopId>
+      <stopSequence>300</stopSequence>
+      <stopNumber>6</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>15</stopId>
+      <stopSequence>300</stopSequence>
+      <stopNumber>7</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>17</stopId>
+      <stopSequence>300</stopSequence>
+      <stopNumber>8</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>19</stopId>
+      <stopSequence>300</stopSequence>
+      <stopNumber>9</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>21</stopId>
+      <stopSequence>300</stopSequence>
+      <stopNumber>10</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>23</stopId>
+      <stopSequence>300</stopSequence>
+      <stopNumber>11</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>25</stopId>
+      <stopSequence>300</stopSequence>
+      <stopNumber>12</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>33</stopId>
+      <stopSequence>300</stopSequence>
+      <stopNumber>13</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>43</stopId>
+      <stopSequence>300</stopSequence>
+      <stopNumber>14</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>45</stopId>
+      <stopSequence>300</stopSequence>
+      <stopNumber>15</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>47</stopId>
+      <stopSequence>300</stopSequence>
+      <stopNumber>16</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>49</stopId>
+      <stopSequence>300</stopSequence>
+      <stopNumber>17</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>53</stopId>
+      <stopSequence>300</stopSequence>
+      <stopNumber>18</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>59</stopId>
+      <stopSequence>300</stopSequence>
+      <stopNumber>19</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>61</stopId>
+      <stopSequence>300</stopSequence>
+      <stopNumber>20</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>63</stopId>
+      <stopSequence>300</stopSequence>
+      <stopNumber>21</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>65</stopId>
+      <stopSequence>300</stopSequence>
+      <stopNumber>22</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>67</stopId>
+      <stopSequence>300</stopSequence>
+      <stopNumber>23</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>69</stopId>
+      <stopSequence>300</stopSequence>
+      <stopNumber>24</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>75</stopId>
+      <stopSequence>300</stopSequence>
+      <stopNumber>25</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>81</stopId>
+      <stopSequence>300</stopSequence>
+      <stopNumber>26</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>83</stopId>
+      <stopSequence>300</stopSequence>
+      <stopNumber>27</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>85</stopId>
+      <stopSequence>300</stopSequence>
+      <stopNumber>28</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>87</stopId>
+      <stopSequence>300</stopSequence>
+      <stopNumber>29</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>89</stopId>
+      <stopSequence>300</stopSequence>
+      <stopNumber>30</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>91</stopId>
+      <stopSequence>300</stopSequence>
+      <stopNumber>31</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>101</stopId>
+      <stopSequence>300</stopSequence>
+      <stopNumber>32</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>105</stopId>
+      <stopSequence>300</stopSequence>
+      <stopNumber>33</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>27</stopId>
+      <stopSequence>305</stopSequence>
+      <stopNumber>34</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>11312</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>KAARDIEKSPERT OÜ</address>
+        <street>KOTKA 26</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>31</stopId>
+      <stopSequence>310</stopSequence>
+      <stopNumber>35</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>LINUS MEDICAL OÜ / SCHENKER LADU</address>
+        <street>KAABLI 13</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>93</stopId>
+      <stopSequence>315</stopSequence>
+      <stopNumber>36</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>12915</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>HALS INTERIORS OÜ</address>
+        <street>KADAKA TEE 42H</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>95</stopId>
+      <stopSequence>320</stopSequence>
+      <stopNumber>37</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>12915</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>TEVAL ELEKTROONIKA OÜ</address>
+        <street>KADAKA TEE 113A</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>97</stopId>
+      <stopSequence>325</stopSequence>
+      <stopNumber>38</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>76905</postalCode>
+        <latitude>59.3663889</latitude>
+        <longitude>25.1830556</longitude>
+        <address>HARJU TARBIJATE ÜHISTU</address>
+        <street>LEE TEE 1</street>
+        <city>MURASTE</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>99</stopId>
+      <stopSequence>330</stopSequence>
+      <stopNumber>39</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>13418</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>SIGNITI OÜ</address>
+        <street>KÄNNU 72</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>103</stopId>
+      <stopSequence>335</stopSequence>
+      <stopNumber>40</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10621</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>KOHV ON KUNST OÜ</address>
+        <street>FORELLI 10</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>106</stopId>
+      <stopSequence>570</stopSequence>
+      <stopNumber>41</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10621</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Bioexpert AS</address>
+        <street>Liimi 1</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>102</stopId>
+      <stopSequence>575</stopSequence>
+      <stopNumber>42</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>76901</postalCode>
+        <latitude>59.3663889</latitude>
+        <longitude>25.1830556</longitude>
+        <address>Metus-Est AS</address>
+        <street>Ranna Tee 18, TABASALU</street>
+        <city>HARKU VALD</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>92</stopId>
+      <stopSequence>580</stopSequence>
+      <stopNumber>43</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10617</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>ABC MOTORS AS</address>
+        <street>PALDISKI MNT. 105</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>90</stopId>
+      <stopSequence>585</stopSequence>
+      <stopNumber>44</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>76901</postalCode>
+        <latitude>59.3663889</latitude>
+        <longitude>25.1830556</longitude>
+        <address>SOOSING OU Tabasalu</address>
+        <street>Ranna tee 13, Tabasalu</street>
+        <city>Harku vald</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>88</stopId>
+      <stopSequence>590</stopSequence>
+      <stopNumber>45</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>76902</postalCode>
+        <latitude>59.3663889</latitude>
+        <longitude>25.1830556</longitude>
+        <address>BALTI REALISEERIMISKESKUS OU</address>
+        <street>Paldiski mnt 251 Harku alevik Harku</street>
+        <city>HARKU VALD</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>86</stopId>
+      <stopSequence>595</stopSequence>
+      <stopNumber>46</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>76915</postalCode>
+        <latitude>59.3663889</latitude>
+        <longitude>25.1830556</longitude>
+        <address>IRON BALTIC Oü</address>
+        <street>ANTSU 4, VATSLA</street>
+        <city>SAUE VALD, HARJUMA</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>84</stopId>
+      <stopSequence>600</stopSequence>
+      <stopNumber>47</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>13516</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>SUNOREK AS</address>
+        <street>TÖÖSTUSE 10, LAABI KÜLA</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>82</stopId>
+      <stopSequence>605</stopSequence>
+      <stopNumber>48</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>12618</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>SIDMETALL OÜ</address>
+        <street>KADAKA TEE 74</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>76</stopId>
+      <stopSequence>620</stopSequence>
+      <stopNumber>49</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>12618</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>EBETA AS</address>
+        <street>KADAKA TEE 76 G</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>70</stopId>
+      <stopSequence>635</stopSequence>
+      <stopNumber>50</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>11316</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>SAKSTE AUTO OÜ</address>
+        <street>TAMMSAARE TEE 62</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>68</stopId>
+      <stopSequence>640</stopSequence>
+      <stopNumber>51</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>11316</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>VIKING MOTORS AS</address>
+        <street>Tammsaare tee 51, Tallinn</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>66</stopId>
+      <stopSequence>645</stopSequence>
+      <stopNumber>52</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>11316</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>METRO AUTO OÜ</address>
+        <street>TAMMSAARE TEE 53</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>64</stopId>
+      <stopSequence>650</stopSequence>
+      <stopNumber>53</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>13417</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>ASCAR AUTO AS</address>
+        <street>SOPRUSE PST 151</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>62</stopId>
+      <stopSequence>655</stopSequence>
+      <stopNumber>54</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>13414</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>YEINTERNATIONAL AS</address>
+        <street>SA PRUSE PST 259</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>60</stopId>
+      <stopSequence>660</stopSequence>
+      <stopNumber>55</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>12918</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>ESVIKA ELEKTER AS</address>
+        <street>TAMMSAARE TEE 118</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>54</stopId>
+      <stopSequence>675</stopSequence>
+      <stopNumber>56</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>11314</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>SCANMED GROUP</address>
+        <street>A.H.TAMMSAARE 47</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>50</stopId>
+      <stopSequence>685</stopSequence>
+      <stopNumber>57</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10621</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>FERROMETAL BALTIC OÜ</address>
+        <street>LAKI 14A</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>48</stopId>
+      <stopSequence>690</stopSequence>
+      <stopNumber>58</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>12918</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>BAUHOF GROUP AS/ MUSTIKA</address>
+        <street>A.H. TAMMSAARE TEE 116</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>46</stopId>
+      <stopSequence>695</stopSequence>
+      <stopNumber>59</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10621</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>MEGASPORT GROUP OÜ</address>
+        <street>Laki tn 5</street>
+        <city>07.05.2015 Tallinn</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>44</stopId>
+      <stopSequence>700</stopSequence>
+      <stopNumber>60</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>12618</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>KARL STORZ VIDEO ENDOSCOPY</address>
+        <street>AKADEEMIA TEE 21/2</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>34</stopId>
+      <stopSequence>720</stopSequence>
+      <stopNumber>61</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10617</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>LOCK FORCE OÜ</address>
+        <street>Mustamäe tee 18</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>32</stopId>
+      <stopSequence>725</stopSequence>
+      <stopNumber>62</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10617</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>LÄÄNE-TALLINNA KESKHAIGLA APTEEK</address>
+        <street>PALDISKI MNT.68</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>26</stopId>
+      <stopSequence>735</stopSequence>
+      <stopNumber>63</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>12615</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>BILLY LOOMAKLIINIK OÜ</address>
+        <street>EHITAJATE TEE 103A</street>
+        <city>TALLINN / HARJUMAA</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>24</stopId>
+      <stopSequence>740</stopSequence>
+      <stopNumber>64</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10621</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>STOKKER FORELLI</address>
+        <street>FORELLI 8</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>22</stopId>
+      <stopSequence>745</stopSequence>
+      <stopNumber>65</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>13516</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>RIMI EESTI FOOD - HAABERSTI</address>
+        <street>HAABERSTI 1</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>20</stopId>
+      <stopSequence>750</stopSequence>
+      <stopNumber>66</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>12915</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>MASINAELEMENDID OÜ</address>
+        <street>LAKI 26</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>18</stopId>
+      <stopSequence>755</stopSequence>
+      <stopNumber>67</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>11312</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>V_STRIKU APTEEGI O</address>
+        <street>V_STRIKU 2A</street>
+        <city>TALLINN HARJUMAA</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>16</stopId>
+      <stopSequence>760</stopSequence>
+      <stopNumber>68</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>12617</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>PINTAVA RI EESTI OA</address>
+        <street>VILDE TEE 150</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>14</stopId>
+      <stopSequence>765</stopSequence>
+      <stopNumber>69</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10621</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>GALADOR GRUPP OÜ</address>
+        <street>LAKI 3A</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>12</stopId>
+      <stopSequence>770</stopSequence>
+      <stopNumber>70</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10621</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>LOOMADE KIIRABI KLIINIK OÜ</address>
+        <street>MUSTAMAE TEE 44</street>
+        <city>TALLINN / HARJUMAA</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>10</stopId>
+      <stopSequence>775</stopSequence>
+      <stopNumber>71</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10617</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>A-SELVER AS   MARIENTHALI SELVER</address>
+        <street>MUSTAMÄE TEE 16</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>6</stopId>
+      <stopSequence>785</stopSequence>
+      <stopNumber>72</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10618</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>ANGELIKA  RUMESSEN</address>
+        <street>PIIBELEHE  10</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>4</stopId>
+      <stopSequence>790</stopSequence>
+      <stopNumber>73</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>11316</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>A-SELVER TONDI</address>
+        <street>TAMMSAARE TEE 62</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>2</stopId>
+      <stopSequence>795</stopSequence>
+      <stopNumber>74</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>76901</postalCode>
+        <latitude>59.3663889</latitude>
+        <longitude>25.1830556</longitude>
+        <address>BRIMAR PR OÜ</address>
+        <street>TEENUSTE 2 TABASALU HARJUMAA</street>
+        <city>HARKU VALD</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>28</stopId>
+      <stopSequence>800</stopSequence>
+      <stopNumber>75</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>94</stopId>
+      <stopSequence>800</stopSequence>
+      <stopNumber>76</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>96</stopId>
+      <stopSequence>800</stopSequence>
+      <stopNumber>77</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>98</stopId>
+      <stopSequence>800</stopSequence>
+      <stopNumber>78</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>100</stopId>
+      <stopSequence>800</stopSequence>
+      <stopNumber>79</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>104</stopId>
+      <stopSequence>800</stopSequence>
+      <stopNumber>80</stopNumber>
+      <address>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>10112</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>Terminal Schenker</address>
+        <street>Kaabli 13</street>
+        <city>TALLINN</city>
+      </address>
+    </stop>
+  </trip>
+</OmsRequest>

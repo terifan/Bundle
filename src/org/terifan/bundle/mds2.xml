@@ -1,0 +1,3639 @@
+<OmsRequest>
+  <requestId>f24611e5-f1c9-46c9-bba7-1450f7479845</requestId>
+  <userId>SLVKRME</userId>
+  <userName>Kristaps Medins</userName>
+  <userEmail>lv.dl.rix.itmsapp@dbschenker.com</userEmail>
+  <trigger>USER</trigger>
+  <trip>
+    <transportMovementId>RIXX23032</transportMovementId>
+    <loadingUnitType>U11</loadingUnitType>
+    <equipment>
+      <id>FD3749</id>
+      <primaryType>UNIT</primaryType>
+      <type>U11</type>
+      <licensePlateNumber>FD3749</licensePlateNumber>
+      <gpsId>LV0006</gpsId>
+    </equipment>
+    <equipment>
+      <id>LV0006</id>
+      <primaryType>GPS_DEVICE</primaryType>
+      <type>GPS</type>
+      <gpsId>352991068993033</gpsId>
+      <appCapable>true</appCapable>
+      <owner>UNIT</owner>
+    </equipment>
+    <maxLoadWeight>16000</maxLoadWeight>
+    <weightUnit>KGS</weightUnit>
+    <maxLoadVolume>41.0</maxLoadVolume>
+    <volumeUnit>CBM</volumeUnit>
+    <maxLoadSpace>18.75</maxLoadSpace>
+    <loadSpaceUnit>MTR</loadSpaceUnit>
+    <haulier>
+      <name>DAILY TRUCK SIA</name>
+      <phoneNumber>.</phoneNumber>
+      <emailAddress></emailAddress>
+    </haulier>
+    <startDate>2015-05-19</startDate>
+    <departureDate>2015-05-19</departureDate>
+    <departureTime>07:00:00</departureTime>
+    <freeDate>2015-05-19</freeDate>
+    <freeTime>10:00:00</freeTime>
+    <consignment>
+      <freightMovementId>SLV002639330</freightMovementId>
+      <shipmentRef>&gt;&gt;KOL5054753</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-18</expectedLoadDate>
+      <expectedUnloadDate>2015-05-19</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-15</shipmentCollectDate>
+      <shipmentDeliveryDate>2015-05-19</shipmentDeliveryDate>
+      <grossWeight>106</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>107</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>12</loadStopId>
+      <unloadStopId>13</unloadStopId>
+      <loadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </loadAddress>
+      <loadPlanArea>LV121</loadPlanArea>
+      <unloadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1004</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SIA MAX COOL</address>
+        <street>ULMANA GATVE 2</street>
+        <city>R?GA</city>
+      </unloadAddress>
+      <unloadPlanArea>LV181</unloadPlanArea>
+      <loadReference>0001273075</loadReference>
+      <unloadReference>0001273075</unloadReference>
+      <shipperAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>DANFOSS DISTRIBUTION SERVICES</address>
+        <street></street>
+        <city></city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>DANFOSS SIA t.7339166</address>
+        <street></street>
+        <city></city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>88</serviceLevel>
+      <goods>
+        <description>HEATING EQUIPMENT</description>
+        <type>CT</type>
+        <quantity>3</quantity>
+      </goods>
+      <clioReference>DKCKOL01436563</clioReference>
+      <package>Package IDs  . . . . . . . :  00057005800233919785</package>
+      <package>                              00157005800233920429</package>
+      <package>                              00157005800233925196</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SLV002638290</freightMovementId>
+      <shipmentRef>&gt;&gt;RIX8550792</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-16</expectedLoadDate>
+      <expectedUnloadDate>2015-05-18</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-13</shipmentCollectDate>
+      <shipmentDeliveryDate>2015-05-18</shipmentDeliveryDate>
+      <grossWeight>22</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>64</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>60</loadStopId>
+      <unloadStopId>61</unloadStopId>
+      <loadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </loadAddress>
+      <loadPlanArea>LV121</loadPlanArea>
+      <unloadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1004</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>3M LATVIJA SIA</address>
+        <street>K  ULMANA GATVE 5</street>
+        <city>RIGA</city>
+      </unloadAddress>
+      <unloadPlanArea>LV181</unloadPlanArea>
+      <loadReference>8005053967</loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>3M Dabrowa Gornicza EDC on behalf</address>
+        <street></street>
+        <city></city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>3M LATVIJA SIA</address>
+        <street></street>
+        <city></city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>88</serviceLevel>
+      <goods>
+        <description></description>
+        <type>SP</type>
+        <quantity>1</quantity>
+      </goods>
+      <dimensions>
+        <packageType>SP</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>1.20</length>
+        <width>0.80</width>
+        <height>0.20</height>
+        <grossWeight>22.00</grossWeight>
+      </dimensions>
+      <clioReference>LVRIX400163250</clioReference>
+    </consignment>
+    <consignment>
+      <freightMovementId>SLV002639271</freightMovementId>
+      <shipmentRef>&gt;&gt;RIX8551161</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-06-19</expectedLoadDate>
+      <expectedUnloadDate>2015-05-19</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-15</shipmentCollectDate>
+      <shipmentDeliveryDate>2015-05-19</shipmentDeliveryDate>
+      <grossWeight>144</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>144</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>10</loadStopId>
+      <unloadStopId>11</unloadStopId>
+      <loadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </loadAddress>
+      <loadPlanArea>LV121</loadPlanArea>
+      <unloadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1046</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>ELEKTRIKA SIA</address>
+        <street>JA RKALNES IELA 15/25</street>
+        <city>RAYGA</city>
+      </unloadAddress>
+      <unloadPlanArea>LV171</unloadPlanArea>
+      <loadReference>TDAB648044</loadReference>
+      <unloadReference>LA0000739200601</unloadReference>
+      <shipperAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>3M Dabrowa Gornicza EDC on behalf</address>
+        <street></street>
+        <city></city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>3M LATVIJA SIA</address>
+        <street></street>
+        <city></city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>88</serviceLevel>
+      <goods>
+        <description>DIVERS</description>
+        <type>PAL</type>
+        <quantity>1</quantity>
+      </goods>
+      <dimensions>
+        <packageType>PAL</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>0.01</length>
+        <width>0.01</width>
+        <height>0.01</height>
+        <grossWeight>143.90</grossWeight>
+      </dimensions>
+      <clioReference>LVRIX500000074</clioReference>
+      <package>Package IDs  . . . . . . . :  00059032921014013756</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SLV002639270</freightMovementId>
+      <shipmentRef>&gt;&gt;RIX8551161</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-06-19</expectedLoadDate>
+      <expectedUnloadDate>2015-05-19</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-15</shipmentCollectDate>
+      <shipmentDeliveryDate>2015-05-19</shipmentDeliveryDate>
+      <grossWeight>3</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>4</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>14</loadStopId>
+      <unloadStopId>15</unloadStopId>
+      <loadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </loadAddress>
+      <loadPlanArea>LV121</loadPlanArea>
+      <unloadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>2167</postalCode>
+        <latitude>56.907959</latitude>
+        <longitude>24.06044</longitude>
+        <address>ROLLING SIA</address>
+        <street>PLIENCIEMA IELA 37</street>
+        <city>MARUPE</city>
+      </unloadAddress>
+      <unloadPlanArea>LV182</unloadPlanArea>
+      <loadReference>TDAB648077</loadReference>
+      <unloadReference>LA0000737300201</unloadReference>
+      <shipperAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>3M Dabrowa Gornicza EDC on behalf</address>
+        <street></street>
+        <city></city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>3M LATVIJA SIA</address>
+        <street></street>
+        <city></city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>88</serviceLevel>
+      <goods>
+        <description>DIVERS</description>
+        <type>CT</type>
+        <quantity>1</quantity>
+      </goods>
+      <dimensions>
+        <packageType>CT</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>1.20</length>
+        <width>0.10</width>
+        <height>0.10</height>
+        <grossWeight>3.12</grossWeight>
+      </dimensions>
+      <clioReference>LVRIX500000075</clioReference>
+      <package>Package IDs  . . . . . . . :  00159032921013976530</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SLV002639255</freightMovementId>
+      <shipmentRef>&gt;&gt;RIX8551161</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-06-19</expectedLoadDate>
+      <expectedUnloadDate>2015-05-19</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-15</shipmentCollectDate>
+      <shipmentDeliveryDate>2015-05-19</shipmentDeliveryDate>
+      <grossWeight>6</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>50</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>20</loadStopId>
+      <unloadStopId>21</unloadStopId>
+      <loadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </loadAddress>
+      <loadPlanArea>LV121</loadPlanArea>
+      <unloadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1004</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>3M LATVIJA SIA</address>
+        <street>K. ULMANA GATVE 5 .</street>
+        <city>RIGA</city>
+      </unloadAddress>
+      <unloadPlanArea>LV181</unloadPlanArea>
+      <loadReference>TDAB648044</loadReference>
+      <unloadReference>LA0000735700201</unloadReference>
+      <shipperAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>3M Dabrowa Gornicza EDC on behalf</address>
+        <street></street>
+        <city></city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>3M LATVIJA SIA</address>
+        <street></street>
+        <city></city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>88</serviceLevel>
+      <goods>
+        <description>DIVERS</description>
+        <type>CT</type>
+        <quantity>1</quantity>
+      </goods>
+      <goods>
+        <description>DIVERS</description>
+        <type>CT</type>
+        <quantity>1</quantity>
+      </goods>
+      <goods>
+        <description>DIVERS</description>
+        <type>CT</type>
+        <quantity>1</quantity>
+      </goods>
+      <dimensions>
+        <packageType>CT</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>0.90</length>
+        <width>0.10</width>
+        <height>0.10</height>
+        <grossWeight>2.05</grossWeight>
+      </dimensions>
+      <dimensions>
+        <packageType>CT</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>0.42</length>
+        <width>0.50</width>
+        <height>0.50</height>
+        <grossWeight>2.97</grossWeight>
+      </dimensions>
+      <dimensions>
+        <packageType>CT</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>3.60</length>
+        <width>0.10</width>
+        <height>0.10</height>
+        <grossWeight>1.38</grossWeight>
+      </dimensions>
+      <clioReference>LVRIX500000147</clioReference>
+      <package>Package IDs  . . . . . . . :  00159032921014015238</package>
+      <package>                              00159032921014012879</package>
+      <package>                              00159032921014013067</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SLV002639666</freightMovementId>
+      <shipmentRef>&gt;&gt;RIX8551358</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-19</expectedLoadDate>
+      <expectedUnloadDate>2015-05-19</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-18</shipmentCollectDate>
+      <shipmentDeliveryDate>2015-05-19</shipmentDeliveryDate>
+      <grossWeight>69</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>174</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>16</loadStopId>
+      <unloadStopId>17</unloadStopId>
+      <loadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </loadAddress>
+      <loadPlanArea>LV121</loadPlanArea>
+      <unloadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>2011</postalCode>
+        <latitude>56.951771</latitude>
+        <longitude>23.588449</longitude>
+        <address>JURMALAS RIEPU CENTRS SIA</address>
+        <street>Raina iela 31,</street>
+        <city>Jurmala</city>
+      </unloadAddress>
+      <unloadPlanArea>LV182</unloadPlanArea>
+      <loadReference>3150</loadReference>
+      <unloadReference>0100050625</unloadReference>
+      <shipperAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>LATAKKO SIA</address>
+        <street></street>
+        <city></city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>LATAKKO SIA (RANKAS)</address>
+        <street></street>
+        <city></city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>88</serviceLevel>
+      <goods>
+        <description>4 ;</description>
+        <type>PC</type>
+        <quantity>4</quantity>
+      </goods>
+      <dimensions>
+        <packageType>PC</packageType>
+        <packageQuantity>4</packageQuantity>
+        <grossWeight>68.64</grossWeight>
+      </dimensions>
+      <clioReference>LVRIX500000305</clioReference>
+      <package>Package IDs  . . . . . . . :  663150151371110039</package>
+      <package>                              663150151371110040</package>
+      <package>                              663150151371110041</package>
+      <package>                              663150151371110042</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SLV002640055</freightMovementId>
+      <shipmentRef>&gt;&gt;TLL5117083</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-16</expectedLoadDate>
+      <expectedUnloadDate>2015-05-19</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-15</shipmentCollectDate>
+      <shipmentDeliveryDate>2015-05-19</shipmentDeliveryDate>
+      <grossWeight>74</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>84</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>56</loadStopId>
+      <unloadStopId>57</unloadStopId>
+      <loadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </loadAddress>
+      <loadPlanArea>LV121</loadPlanArea>
+      <unloadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>2167</postalCode>
+        <latitude>56.907959</latitude>
+        <longitude>24.06044</longitude>
+        <address>Forum Auto SIA</address>
+        <street>K Ulmana gatve 101 Marupe</street>
+        <city>RIGA</city>
+      </unloadAddress>
+      <unloadPlanArea>LV182</unloadPlanArea>
+      <loadReference>SE1505014451</loadReference>
+      <unloadReference>6367457683</unloadReference>
+      <shipperAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>HYUNDAI MOBIS PARTS EUROPE N.V. (BE</address>
+        <street></street>
+        <city></city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>KIA AUTO AS</address>
+        <street></street>
+        <city></city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>88</serviceLevel>
+      <goods>
+        <description>Car parts</description>
+        <type>PC</type>
+        <quantity>1</quantity>
+      </goods>
+      <goods>
+        <description>Car parts</description>
+        <type>PC</type>
+        <quantity>1</quantity>
+      </goods>
+      <goods>
+        <description>Car parts</description>
+        <type>PC</type>
+        <quantity>1</quantity>
+      </goods>
+      <goods>
+        <description>Car parts</description>
+        <type>PC</type>
+        <quantity>1</quantity>
+      </goods>
+      <goods>
+        <description>Car parts</description>
+        <type>PC</type>
+        <quantity>1</quantity>
+      </goods>
+      <goods>
+        <description>Car parts</description>
+        <type>PC</type>
+        <quantity>1</quantity>
+      </goods>
+      <goods>
+        <description>Car parts</description>
+        <type>PC</type>
+        <quantity>1</quantity>
+      </goods>
+      <goods>
+        <description>Car parts</description>
+        <type>PC</type>
+        <quantity>1</quantity>
+      </goods>
+      <goods>
+        <description>Car parts</description>
+        <type>PC</type>
+        <quantity>1</quantity>
+      </goods>
+      <goods>
+        <description>Car parts</description>
+        <type>PC</type>
+        <quantity>1</quantity>
+      </goods>
+      <goods>
+        <description>Car parts</description>
+        <type>PC</type>
+        <quantity>1</quantity>
+      </goods>
+      <goods>
+        <description>Car parts</description>
+        <type>PC</type>
+        <quantity>1</quantity>
+      </goods>
+      <goods>
+        <description>Car parts</description>
+        <type>PC</type>
+        <quantity>1</quantity>
+      </goods>
+      <goods>
+        <description>Car parts</description>
+        <type>PC</type>
+        <quantity>1</quantity>
+      </goods>
+      <goods>
+        <description>Car parts</description>
+        <type>PC</type>
+        <quantity>1</quantity>
+      </goods>
+      <dimensions>
+        <packageType>PC</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>0.10</length>
+        <width>0.20</width>
+        <height>0.30</height>
+        <grossWeight>4.70</grossWeight>
+      </dimensions>
+      <dimensions>
+        <packageType>PC</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>0.10</length>
+        <width>0.20</width>
+        <height>0.30</height>
+        <grossWeight>4.00</grossWeight>
+      </dimensions>
+      <dimensions>
+        <packageType>PC</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>0.10</length>
+        <width>0.20</width>
+        <height>0.30</height>
+        <grossWeight>3.00</grossWeight>
+      </dimensions>
+      <dimensions>
+        <packageType>PC</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>0.10</length>
+        <width>0.20</width>
+        <height>0.30</height>
+        <grossWeight>1.80</grossWeight>
+      </dimensions>
+      <dimensions>
+        <packageType>PC</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>0.10</length>
+        <width>0.20</width>
+        <height>0.30</height>
+        <grossWeight>4.00</grossWeight>
+      </dimensions>
+      <dimensions>
+        <packageType>PC</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>0.10</length>
+        <width>0.20</width>
+        <height>0.30</height>
+        <grossWeight>4.00</grossWeight>
+      </dimensions>
+      <dimensions>
+        <packageType>PC</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>0.62</length>
+        <width>0.33</width>
+        <height>0.37</height>
+        <grossWeight>7.00</grossWeight>
+      </dimensions>
+      <dimensions>
+        <packageType>PC</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>0.62</length>
+        <width>0.33</width>
+        <height>0.20</height>
+        <grossWeight>13.00</grossWeight>
+      </dimensions>
+      <dimensions>
+        <packageType>PC</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>0.10</length>
+        <width>0.20</width>
+        <height>0.30</height>
+        <grossWeight>4.00</grossWeight>
+      </dimensions>
+      <dimensions>
+        <packageType>PC</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>0.10</length>
+        <width>0.20</width>
+        <height>0.30</height>
+        <grossWeight>0.96</grossWeight>
+      </dimensions>
+      <dimensions>
+        <packageType>PC</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>0.10</length>
+        <width>0.20</width>
+        <height>0.30</height>
+        <grossWeight>4.00</grossWeight>
+      </dimensions>
+      <dimensions>
+        <packageType>PC</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>0.10</length>
+        <width>0.20</width>
+        <height>0.30</height>
+        <grossWeight>1.68</grossWeight>
+      </dimensions>
+      <dimensions>
+        <packageType>PC</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>0.10</length>
+        <width>0.20</width>
+        <height>0.30</height>
+        <grossWeight>8.46</grossWeight>
+      </dimensions>
+      <dimensions>
+        <packageType>PC</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>0.10</length>
+        <width>0.20</width>
+        <height>0.30</height>
+        <grossWeight>8.46</grossWeight>
+      </dimensions>
+      <dimensions>
+        <packageType>PC</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>0.10</length>
+        <width>0.20</width>
+        <height>0.30</height>
+        <grossWeight>4.92</grossWeight>
+      </dimensions>
+      <clioReference>SEJKG500244031</clioReference>
+      <package>Package IDs  . . . . . . . :  SE1505014451</package>
+      <package>                              SE1505014504</package>
+      <package>                              SE1505014506</package>
+      <package>                              SE1505014524</package>
+      <package>                              SE1505014528</package>
+      <package>                              SE1505014610</package>
+      <package>                              SE1505014640</package>
+      <package>                              SE1505014669</package>
+      <package>                              SE1505014728</package>
+      <package>                              SE1505014784</package>
+      <package>                              SE1505014728</package>
+      <package>                              SE1505014790</package>
+      <package>                              SE1505014793</package>
+      <package>                              SE1505014794</package>
+      <package>                              SE1505014799</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SLV002640050</freightMovementId>
+      <shipmentRef>&gt;&gt;TLL5117280</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-19</expectedLoadDate>
+      <expectedUnloadDate>2015-05-19</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-18</shipmentCollectDate>
+      <shipmentCollectTime>15:00:00</shipmentCollectTime>
+      <shipmentDeliveryDate>2015-05-19</shipmentDeliveryDate>
+      <grossWeight>4</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>4</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>28</loadStopId>
+      <unloadStopId>29</unloadStopId>
+      <loadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </loadAddress>
+      <loadPlanArea>LV121</loadPlanArea>
+      <unloadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1046</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>PLOCKMATIC RIGA</address>
+        <street>SAMPETERA IELA 2</street>
+        <city>RIGA</city>
+      </unloadAddress>
+      <unloadPlanArea>LV171</unloadPlanArea>
+      <loadReference>4759259</loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>BUFAB BALTIC OU</address>
+        <street></street>
+        <city></city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>BUFAB BALTIC OU</address>
+        <street></street>
+        <city></city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>88</serviceLevel>
+      <goods>
+        <description>FASTENERS</description>
+        <type>CT</type>
+        <quantity>1</quantity>
+      </goods>
+      <dimensions>
+        <packageType>CT</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>0.17</length>
+        <width>0.15</width>
+        <height>0.15</height>
+      </dimensions>
+      <clioReference>EETLL500000170</clioReference>
+      <package>Package IDs  . . . . . . . :  00473313430259428585</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SLV002640038</freightMovementId>
+      <shipmentRef>&gt;&gt;TLL5117619</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-16</expectedLoadDate>
+      <expectedUnloadDate>2015-05-19</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-15</shipmentCollectDate>
+      <shipmentDeliveryDate>2015-05-19</shipmentDeliveryDate>
+      <grossWeight>25</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>25</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>26</loadStopId>
+      <unloadStopId>27</unloadStopId>
+      <loadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </loadAddress>
+      <loadPlanArea>LV121</loadPlanArea>
+      <unloadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1046</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>PLOCKMATIC RIGA SIA</address>
+        <street>SAMPETERA IELA 2</street>
+        <city>RIGA</city>
+      </unloadAddress>
+      <unloadPlanArea>LV171</unloadPlanArea>
+      <loadReference>6367014575</loadReference>
+      <unloadReference>6367014575</unloadReference>
+      <shipperAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>SCHENKER AB (PARCEL UTRIKES)</address>
+        <street></street>
+        <city></city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>EPS SE PARCEL DELIVERY/ SCHENKER LV</address>
+        <street></street>
+        <city></city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>88</serviceLevel>
+      <goods>
+        <description></description>
+        <type>PA</type>
+        <quantity>1</quantity>
+      </goods>
+      <goods>
+        <description></description>
+        <type>PA</type>
+        <quantity>1</quantity>
+      </goods>
+      <dimensions>
+        <packageType>PA</packageType>
+        <packageQuantity>1</packageQuantity>
+        <grossWeight>1.00</grossWeight>
+      </dimensions>
+      <dimensions>
+        <packageType>PA</packageType>
+        <packageQuantity>1</packageQuantity>
+        <grossWeight>24.00</grossWeight>
+      </dimensions>
+      <clioReference>SESTO500245797</clioReference>
+      <clioReference>SESTO500245800</clioReference>
+      <package>Package IDs  . . . . . . . :  00373323995526814442</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SLV002640042</freightMovementId>
+      <shipmentRef>&gt;&gt;TLL5117619</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-16</expectedLoadDate>
+      <expectedUnloadDate>2015-05-19</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-15</shipmentCollectDate>
+      <shipmentDeliveryDate>2015-05-19</shipmentDeliveryDate>
+      <grossWeight>22</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>22</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>36</loadStopId>
+      <unloadStopId>37</unloadStopId>
+      <loadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </loadAddress>
+      <loadPlanArea>LV121</loadPlanArea>
+      <unloadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1046</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>Plockmatic RIGA SIA</address>
+        <street>Sampetera iela 2</street>
+        <city>Riga</city>
+      </unloadAddress>
+      <unloadPlanArea>LV171</unloadPlanArea>
+      <loadReference>6367156459</loadReference>
+      <unloadReference>6367156459</unloadReference>
+      <shipperAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>SCHENKER AB (PARCEL UTRIKES)</address>
+        <street></street>
+        <city></city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>EPS SE PARCEL DELIVERY/ SCHENKER LV</address>
+        <street></street>
+        <city></city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>88</serviceLevel>
+      <goods>
+        <description></description>
+        <type>PA</type>
+        <quantity>1</quantity>
+      </goods>
+      <dimensions>
+        <packageType>PA</packageType>
+        <packageQuantity>1</packageQuantity>
+        <grossWeight>22.00</grossWeight>
+      </dimensions>
+      <clioReference>SESTO500245795</clioReference>
+      <package>Package IDs  . . . . . . . :  00373313430037149452</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SLV002640031</freightMovementId>
+      <shipmentRef>&gt;&gt;TLL5117870</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-19</expectedLoadDate>
+      <expectedUnloadDate>2015-05-19</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-19</shipmentCollectDate>
+      <shipmentDeliveryDate>2015-05-19</shipmentDeliveryDate>
+      <grossWeight>32</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>104</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>32</loadStopId>
+      <unloadStopId>33</unloadStopId>
+      <loadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </loadAddress>
+      <loadPlanArea>LV121</loadPlanArea>
+      <unloadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1046</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>MOLLER AUTO LATVIA SIA</address>
+        <street>K. ULMANA GATVE 86</street>
+        <city>RIGA</city>
+      </unloadAddress>
+      <unloadPlanArea>LV171</unloadPlanArea>
+      <loadReference>LV</loadReference>
+      <unloadReference>4016290684</unloadReference>
+      <shipperAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>GOOD YEAR DUNLOP TYRES BALTIC AS</address>
+        <street></street>
+        <city></city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>GOODYEAR DUNLOP C/O SCHENKER SIA</address>
+        <street></street>
+        <city></city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>88</serviceLevel>
+      <goods>
+        <description>195/65R15 91T UG 9 MS</description>
+        <type>NE</type>
+        <quantity>4</quantity>
+      </goods>
+      <clioReference>EETLL500000100</clioReference>
+      <package>Package IDs  . . . . . . . :  00473313430315797877</package>
+      <package>                              00473313430315797884</package>
+      <package>                              00473313430315797891</package>
+      <package>                              00473313430315797907</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SLV002640026</freightMovementId>
+      <shipmentRef>&gt;&gt;TLL5117870</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-19</expectedLoadDate>
+      <expectedUnloadDate>2015-05-19</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-19</shipmentCollectDate>
+      <shipmentDeliveryDate>2015-05-19</shipmentDeliveryDate>
+      <grossWeight>35</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>108</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>46</loadStopId>
+      <unloadStopId>47</unloadStopId>
+      <loadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </loadAddress>
+      <loadPlanArea>LV121</loadPlanArea>
+      <unloadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>2167</postalCode>
+        <latitude>56.907959</latitude>
+        <longitude>24.06044</longitude>
+        <address>WESS AS</address>
+        <street>ULMANA GATVE MARUPES PAG. 125</street>
+        <city>RIGAS RAJONS</city>
+      </unloadAddress>
+      <unloadPlanArea>LV182</unloadPlanArea>
+      <loadReference>LV</loadReference>
+      <unloadReference>4016286199</unloadReference>
+      <shipperAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>GOOD YEAR DUNLOP TYRES BALTIC AS</address>
+        <street></street>
+        <city></city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>GOODYEAR DUNLOP C/O SCHENKER SIA</address>
+        <street></street>
+        <city></city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>88</serviceLevel>
+      <goods>
+        <description>205/55R16 94T UG ICE 2 MS</description>
+        <type>NE</type>
+        <quantity>4</quantity>
+      </goods>
+      <clioReference>EETLL500000297</clioReference>
+      <package>Package IDs  . . . . . . . :  00473313430315807026</package>
+      <package>                              00473313430315807033</package>
+      <package>                              00473313430315807040</package>
+      <package>                              00473313430315807057</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SLV002640035</freightMovementId>
+      <shipmentRef>&gt;&gt;TLL5117870</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-19</expectedLoadDate>
+      <expectedUnloadDate>2015-05-19</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-19</shipmentCollectDate>
+      <shipmentDeliveryDate>2015-05-19</shipmentDeliveryDate>
+      <grossWeight>57</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>156</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>58</loadStopId>
+      <unloadStopId>59</unloadStopId>
+      <loadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </loadAddress>
+      <loadPlanArea>LV121</loadPlanArea>
+      <unloadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>2167</postalCode>
+        <latitude>56.907959</latitude>
+        <longitude>24.06044</longitude>
+        <address>GROS AUTO GRUPA SIA</address>
+        <street>ZEMZARU IELA 3</street>
+        <city>MARUPE</city>
+      </unloadAddress>
+      <unloadPlanArea>LV182</unloadPlanArea>
+      <loadReference>LV</loadReference>
+      <unloadReference>4016265358</unloadReference>
+      <shipperAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>GOOD YEAR DUNLOP TYRES BALTIC AS</address>
+        <street></street>
+        <city></city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode></countryCode>
+        <locationCode></locationCode>
+        <postalCode></postalCode>
+        <latitude></latitude>
+        <longitude></longitude>
+        <address>GOODYEAR DUNLOP C/O SCHENKER SIA</address>
+        <street></street>
+        <city></city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>88</serviceLevel>
+      <goods>
+        <description>225/70R16 103T GRANDTREK A</description>
+        <type>PCS</type>
+        <quantity>4</quantity>
+      </goods>
+      <dimensions>
+        <packageType>PCS</packageType>
+        <packageQuantity>4</packageQuantity>
+      </dimensions>
+      <clioReference>EETLL400112185</clioReference>
+      <package>Package IDs  . . . . . . . :  00473313430315794005</package>
+      <package>                              00473313430315794012</package>
+      <package>                              00473313430315794029</package>
+      <package>                              00473313430315794036</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SLV002637861</freightMovementId>
+      <shipmentRef>BLQ5374961</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-17</expectedLoadDate>
+      <expectedLoadTime>23:00:00</expectedLoadTime>
+      <expectedUnloadDate>2015-05-19</expectedUnloadDate>
+      <shipmentDeliveryDate>2015-05-19</shipmentDeliveryDate>
+      <grossWeight>39</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>39</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>6</loadStopId>
+      <unloadStopId>7</unloadStopId>
+      <loadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </loadAddress>
+      <loadPlanArea>LV121</loadPlanArea>
+      <unloadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1046</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SIA DEPO DIY,K.ULMANA GATVE 96,RIGA</address>
+        <street>K.ULMANA GATVE 96</street>
+        <city>RIGA</city>
+      </unloadAddress>
+      <unloadPlanArea>LV171</unloadPlanArea>
+      <loadReference>009048</loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>IT</countryCode>
+        <locationCode>MIL</locationCode>
+        <postalCode>47852</postalCode>
+        <latitude>43.9833333</latitude>
+        <longitude>12.5333333</longitude>
+        <address>ALBINI &amp; FONTANOT S.P.A</address>
+        <street>VIA P.PAOLO PASOLINI 6</street>
+        <city>CERASOLO AUSA</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>2130</postalCode>
+        <latitude>56.920212</latitude>
+        <longitude>24.24765</longitude>
+        <address>DEPO DIY SIA</address>
+        <street>JAUNBUMANI,DREILINI</street>
+        <city>STOPINU NOVADS</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>01</serviceLevel>
+      <goods>
+        <description>BALUSTRADE KLAN</description>
+        <type>PC</type>
+        <quantity>3</quantity>
+      </goods>
+      <agentWaybillInstructions>17064127 PLEASE AGREE THE DELIVERYBY PHONE</agentWaybillInstructions>
+      <agentWaybillInstructions>P2003362-1</agentWaybillInstructions>
+      <package>Package IDs  . . . . . . . :  00330604012125160352</package>
+      <package>                              00330604012125160369</package>
+      <package>                              00330604012125160376</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SLV002639975</freightMovementId>
+      <shipmentRef>HEL5099111</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-19</expectedLoadDate>
+      <expectedLoadTime>06:00:00</expectedLoadTime>
+      <expectedUnloadDate>2015-05-19</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-13</shipmentCollectDate>
+      <shipmentDeliveryDate>2015-05-19</shipmentDeliveryDate>
+      <grossWeight>22</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>22</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>34</loadStopId>
+      <unloadStopId>35</unloadStopId>
+      <loadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </loadAddress>
+      <loadPlanArea>LV121</loadPlanArea>
+      <unloadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1046</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>*L* SKANDI MOTORS SIA  10.00-12.00</address>
+        <street>LIELIRBES IELA 32</street>
+        <city>RIGA</city>
+      </unloadAddress>
+      <unloadPlanArea>LV171</unloadPlanArea>
+      <loadReference></loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>NL</countryCode>
+        <locationCode>EDE</locationCode>
+        <postalCode>1044A</postalCode>
+        <latitude>52.4025</latitude>
+        <longitude>4.8121</longitude>
+        <address>NISSAN MOTOR PARTS B.V.</address>
+        <street>HORNWEG 32</street>
+        <city>AMSTERDAM</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1009</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SKANDI MOTORS SIA</address>
+        <street>KURBADA IELA 4</street>
+        <city>RIGA</city>
+      </consigneeAddress>
+      <hazardous>true</hazardous>
+      <serviceLevel>01</serviceLevel>
+      <goods>
+        <description>VARAOSIA/SPARE PARTS</description>
+        <type>BX</type>
+        <quantity>1</quantity>
+      </goods>
+      <dimensions>
+        <packageType>BX</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>0.25</length>
+        <width>0.18</width>
+        <height>0.24</height>
+        <grossWeight>22.00</grossWeight>
+      </dimensions>
+      <adrText>1 BX 22.000 KGS, 3</adrText>
+      <adrText>UN2794,BATTERIES, WET, FILLED WITH ACID . (BATTERIES, WET, FILLED WITH ACID, 8),</adrText>
+      <adrText>8,(E)</adrText>
+      <package>Package IDs  . . . . . . . :  00164300543200087021</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SLV002639993</freightMovementId>
+      <shipmentRef>HEL5103018</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-19</expectedLoadDate>
+      <expectedLoadTime>06:00:00</expectedLoadTime>
+      <expectedUnloadDate>2015-05-19</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-18</shipmentCollectDate>
+      <shipmentDeliveryDate>2015-05-19</shipmentDeliveryDate>
+      <grossWeight>24</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>152</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>34</loadStopId>
+      <unloadStopId>35</unloadStopId>
+      <loadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </loadAddress>
+      <loadPlanArea>LV121</loadPlanArea>
+      <unloadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1046</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>*L* SKANDI MOTORS SIA  10.00-12.00</address>
+        <street>LIELIRBES IELA 32</street>
+        <city>RIGA</city>
+      </unloadAddress>
+      <unloadPlanArea>LV171</unloadPlanArea>
+      <loadReference></loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>NL</countryCode>
+        <locationCode>EDE</locationCode>
+        <postalCode>1044A</postalCode>
+        <latitude>52.4025</latitude>
+        <longitude>4.8121</longitude>
+        <address>NISSAN MOTOR PARTS B.V.</address>
+        <street>HORNWEG 32</street>
+        <city>AMSTERDAM</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1009</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SKANDI MOTORS SIA</address>
+        <street>KURBADA IELA 4</street>
+        <city>RIGA</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>01</serviceLevel>
+      <goods>
+        <description>VARAOSIA/SPARE PARTS</description>
+        <type>BX</type>
+        <quantity>1</quantity>
+      </goods>
+      <goods>
+        <description>VARAOSIA/SPARE PARTS</description>
+        <type>BX</type>
+        <quantity>1</quantity>
+      </goods>
+      <goods>
+        <description>VARAOSIA/SPARE PARTS</description>
+        <type>BX</type>
+        <quantity>1</quantity>
+      </goods>
+      <goods>
+        <description>VARAOSIA/SPARE PARTS</description>
+        <type>BX</type>
+        <quantity>1</quantity>
+      </goods>
+      <dimensions>
+        <packageType>BX</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>0.85</length>
+        <width>0.31</width>
+        <height>0.22</height>
+        <grossWeight>2.00</grossWeight>
+      </dimensions>
+      <dimensions>
+        <packageType>BX</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>1.20</length>
+        <width>0.20</width>
+        <height>1.25</height>
+        <grossWeight>16.00</grossWeight>
+      </dimensions>
+      <dimensions>
+        <packageType>BX</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>1.00</length>
+        <width>0.10</width>
+        <height>0.56</height>
+        <grossWeight>2.00</grossWeight>
+      </dimensions>
+      <dimensions>
+        <packageType>BX</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>0.49</length>
+        <width>0.39</width>
+        <height>0.22</height>
+        <grossWeight>4.00</grossWeight>
+      </dimensions>
+      <package>Package IDs  . . . . . . . :  00164300543200093329</package>
+      <package>                              00164300543200093336</package>
+      <package>                              00164300543200093374</package>
+      <package>                              00164300543200093596</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SLV002639178</freightMovementId>
+      <shipmentRef>KOL5957588</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-18</expectedLoadDate>
+      <expectedLoadTime>11:00:00</expectedLoadTime>
+      <expectedUnloadDate>2015-05-19</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-15</shipmentCollectDate>
+      <shipmentDeliveryDate>2015-05-19</shipmentDeliveryDate>
+      <grossWeight>442</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>443</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>4</loadStopId>
+      <unloadStopId>5</unloadStopId>
+      <loadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </loadAddress>
+      <loadPlanArea>LV121</loadPlanArea>
+      <unloadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1046</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>EVA-SAT SIA</address>
+        <street>JAUNMOKU IELA 26</street>
+        <city>RIGA</city>
+      </unloadAddress>
+      <unloadPlanArea>LV171</unloadPlanArea>
+      <loadReference>8509054808</loadReference>
+      <unloadReference>0001273047</unloadReference>
+      <shipperAddress>
+        <countryCode>DK</countryCode>
+        <locationCode>KOL</locationCode>
+        <postalCode>6230</postalCode>
+        <latitude>55.07</latitude>
+        <longitude>9.3351</longitude>
+        <address>DANFOSS DISTRIBUTION SERVICES</address>
+        <street>KOMETVEJ 40</street>
+        <city>R@DEKRO</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1003</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>EVA-SAT SIA</address>
+        <street>KRASTA IELA 44</street>
+        <city>RIGA</city>
+      </consigneeAddress>
+      <hazardous>true</hazardous>
+      <serviceLevel>01</serviceLevel>
+      <goods>
+        <description>HEATING EQUIPMENT</description>
+        <type>CT</type>
+        <quantity>6</quantity>
+      </goods>
+      <adrText>1 CT 0.400 KGS, -</adrText>
+      <adrText>UN3363,Dangerous goods in apparatus (Not Dangerous Goods according to ADR/RID),9</adrText>
+      <package>Package IDs  . . . . . . . :  00057005800233977303</package>
+      <package>                              00057005800233980303</package>
+      <package>                              00057005800233988699</package>
+      <package>                              00157005800233978727</package>
+      <package>                              00157005800233981512</package>
+      <package>                              00157005800233982212</package>
+      <unloadInstructions>T:MERIT</unloadInstructions>
+    </consignment>
+    <consignment>
+      <freightMovementId>SLV002639971</freightMovementId>
+      <shipmentRef>RIX8549209</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-19</expectedLoadDate>
+      <expectedLoadTime>06:00:00</expectedLoadTime>
+      <expectedUnloadDate>2015-05-19</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-12</shipmentCollectDate>
+      <shipmentCollectTime>00:00:00</shipmentCollectTime>
+      <shipmentCollectTimeEnd>16:00:00</shipmentCollectTimeEnd>
+      <shipmentDeliveryDate>2015-05-19</shipmentDeliveryDate>
+      <grossWeight>330</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>750</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>24</loadStopId>
+      <unloadStopId>25</unloadStopId>
+      <loadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </loadAddress>
+      <loadPlanArea>LV121</loadPlanArea>
+      <unloadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1045</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>EVA-SAT SIA</address>
+        <street>Jaunmoku iela 26</street>
+        <city>Riga</city>
+      </unloadAddress>
+      <unloadPlanArea>LV141</unloadPlanArea>
+      <loadReference></loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>FI</countryCode>
+        <locationCode>HEL</locationCode>
+        <postalCode>28101</postalCode>
+        <latitude>61.4893</latitude>
+        <longitude>21.786</longitude>
+        <address>CUPORI OY/VIENTI</address>
+        <street>KUPARITIE</street>
+        <city>PORI</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1003</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>EVA-SAT SIA</address>
+        <street>KRASTA IELA 44</street>
+        <city>RIGA</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>01</serviceLevel>
+      <goods>
+        <description>UNSTACKABLE equipment for</description>
+        <type>XP</type>
+        <quantity>1</quantity>
+      </goods>
+      <dimensions>
+        <packageType>XP</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>3.00</length>
+        <width>0.45</width>
+        <height>0.55</height>
+        <grossWeight>330.00</grossWeight>
+      </dimensions>
+      <agentWaybillInstructions>UNSTACKABLE</agentWaybillInstructions>
+      <package>Package IDs  . . . . . . . :  00473313430129068941</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SLV002639448</freightMovementId>
+      <shipmentRef>RIX8551276</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-18</expectedLoadDate>
+      <expectedUnloadDate>2015-05-19</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-18</shipmentCollectDate>
+      <shipmentCollectTime>16:00:00</shipmentCollectTime>
+      <shipmentCollectTimeEnd>16:45:00</shipmentCollectTimeEnd>
+      <shipmentDeliveryDate>2015-05-19</shipmentDeliveryDate>
+      <grossWeight>250</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>740</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.40</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>8</loadStopId>
+      <unloadStopId>9</unloadStopId>
+      <loadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </loadAddress>
+      <loadPlanArea>LV121</loadPlanArea>
+      <unloadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1029</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>K-RAUTA</address>
+        <street>PRIEDAINES 37</street>
+        <city>RIGA</city>
+      </unloadAddress>
+      <unloadPlanArea>LV171</unloadPlanArea>
+      <loadReference>4759398</loadReference>
+      <unloadReference>4501402174</unloadReference>
+      <shipperAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1004</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHETELIG LV SIA</address>
+        <street>MUKUSALAS IELA 41B</street>
+        <city>RIGA</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1029</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>K-RAUTA</address>
+        <street>PRIEDAINES 37</street>
+        <city>RIGA</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>70</serviceLevel>
+      <goods>
+        <description>DARZA PRECES</description>
+        <type>EP</type>
+        <quantity>1</quantity>
+      </goods>
+      <package>Package IDs  . . . . . . . :  00473313430259431004</package>
+      <unloadInstructions>PANEMT PPR</unloadInstructions>
+    </consignment>
+    <consignment>
+      <freightMovementId>SLV002639611</freightMovementId>
+      <shipmentRef>RIX8551339</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-18</expectedLoadDate>
+      <expectedUnloadDate>2015-05-19</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-18</shipmentCollectDate>
+      <shipmentCollectTime>12:00:00</shipmentCollectTime>
+      <shipmentCollectTimeEnd>18:00:00</shipmentCollectTimeEnd>
+      <shipmentDeliveryDate>2015-05-19</shipmentDeliveryDate>
+      <grossWeight>100</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>257</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>18</loadStopId>
+      <unloadStopId>19</unloadStopId>
+      <loadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </loadAddress>
+      <loadPlanArea>LV121</loadPlanArea>
+      <unloadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>2107</postalCode>
+        <latitude>56.87925</latitude>
+        <longitude>23.8074</longitude>
+        <address>DOTNUVOS PROJEKTAI SIA</address>
+        <street>BABITES NOVADS</street>
+        <city>JURMALAS IELA 13C</city>
+      </unloadAddress>
+      <unloadPlanArea>LV182</unloadPlanArea>
+      <loadReference>DOTNUVOS</loadReference>
+      <unloadReference>DOTNUVOS</unloadReference>
+      <shipperAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>3002</postalCode>
+        <latitude>56.648418</latitude>
+        <longitude>23.71394</longitude>
+        <address>BALTYRE LATVIA SIA</address>
+        <street>AVIACIJAS IELA 8</street>
+        <city>JELGAVA</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>2107</postalCode>
+        <latitude>56.87925</latitude>
+        <longitude>23.8074</longitude>
+        <address>DOTNUVOS PROJEKTAI SIA</address>
+        <street>BABITES NOVADS</street>
+        <city>JURMALAS IELA 13C</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>70</serviceLevel>
+      <goods>
+        <description>RIEPAS</description>
+        <type>PK</type>
+        <quantity>2</quantity>
+      </goods>
+      <dimensions>
+        <packageType>PK</packageType>
+        <packageQuantity>2</packageQuantity>
+        <length>1.10</length>
+        <width>0.35</width>
+        <height>1.00</height>
+        <grossWeight>100.00</grossWeight>
+      </dimensions>
+      <package>Package IDs  . . . . . . . :  00473313430259441102</package>
+      <package>                              00473313430259441119</package>
+      <unloadInstructions>LUDZU ATGRIZT PAVADZIMI NR.15-3202</unloadInstructions>
+    </consignment>
+    <consignment>
+      <freightMovementId>SLV002639761</freightMovementId>
+      <shipmentRef>RIX8551384</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-18</expectedLoadDate>
+      <expectedUnloadDate>2015-05-19</expectedUnloadDate>
+      <expectedUnloadTime>00:00:00</expectedUnloadTime>
+      <expectedUnloadTimeEnd>16:00:00</expectedUnloadTimeEnd>
+      <shipmentCollectDate>2015-05-18</shipmentCollectDate>
+      <shipmentDeliveryDate>2015-05-19</shipmentDeliveryDate>
+      <shipmentDeliveryTime>00:00:00</shipmentDeliveryTime>
+      <shipmentDeliveryTimeEnd>16:00:00</shipmentDeliveryTimeEnd>
+      <grossWeight>155</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>740</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.40</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>22</loadStopId>
+      <unloadStopId>23</unloadStopId>
+      <loadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </loadAddress>
+      <loadPlanArea>LV121</loadPlanArea>
+      <unloadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>2011</postalCode>
+        <latitude>56.951771</latitude>
+        <longitude>23.588449</longitude>
+        <address>BV KURSI SIA</address>
+        <street>SLOKA, VENTSPILS SOSEJA 70</street>
+        <city>JURMALA</city>
+      </unloadAddress>
+      <unloadPlanArea>LV182</unloadPlanArea>
+      <loadReference></loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1009</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>COLOR EXPERT-STORCH LV SIA</address>
+        <street>GERTRUDES IELA 66-61</street>
+        <city>Riga</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1009</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>COLOR EXPERT-STORCH LV SIA</address>
+        <street>GERTRUDES IELA 66-61</street>
+        <city>Riga</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>70</serviceLevel>
+      <goods>
+        <description>TOOLS</description>
+        <type>XP</type>
+        <quantity>1</quantity>
+      </goods>
+      <package>Package IDs  . . . . . . . :  00473313430331876846</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SLV002639908</freightMovementId>
+      <shipmentRef>RIX8551421</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-19</expectedLoadDate>
+      <expectedLoadTime>01:45:00</expectedLoadTime>
+      <expectedUnloadDate>2015-05-19</expectedUnloadDate>
+      <shipmentDeliveryDate>2015-05-19</shipmentDeliveryDate>
+      <grossWeight>4</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>4</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>38</loadStopId>
+      <unloadStopId>39</unloadStopId>
+      <loadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </loadAddress>
+      <loadPlanArea>LV121</loadPlanArea>
+      <unloadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1046</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>MODULS INTERJERS SIA</address>
+        <street>KULDIGAS IELA 49/5</street>
+        <city>RIGA</city>
+      </unloadAddress>
+      <unloadPlanArea>LV171</unloadPlanArea>
+      <loadReference>309379994</loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>DE</countryCode>
+        <locationCode>FRV</locationCode>
+        <postalCode>86167</postalCode>
+        <latitude>48.3922</latitude>
+        <longitude>10.928</longitude>
+        <address>OSRAM GMBH(BALTIKUM)</address>
+        <street>STEINERNE FURT 62</street>
+        <city>AUGSBURG</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1046</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>MODULS INTERJERS SIA</address>
+        <street>AGENSKALNA 33</street>
+        <city>RIGA</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>01</serviceLevel>
+      <goods>
+        <description>EL.GLUEHLA</description>
+        <type>CT</type>
+        <quantity>3</quantity>
+      </goods>
+      <agentWaybillInstructions>TERMIN:    BIS 20.05.15</agentWaybillInstructions>
+      <agentWaybillInstructions>NULL</agentWaybillInstructions>
+      <package>Package IDs  . . . . . . . :  00040503003776839728</package>
+      <package>                              00040503003776839735</package>
+      <package>                              00040503003776839742</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SLV002639910</freightMovementId>
+      <shipmentRef>RIX8551422</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-19</expectedLoadDate>
+      <expectedLoadTime>01:45:00</expectedLoadTime>
+      <expectedUnloadDate>2015-05-19</expectedUnloadDate>
+      <shipmentDeliveryDate>2015-05-19</shipmentDeliveryDate>
+      <grossWeight>15</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>15</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>30</loadStopId>
+      <unloadStopId>31</unloadStopId>
+      <loadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </loadAddress>
+      <loadPlanArea>LV121</loadPlanArea>
+      <unloadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1046</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>ELEKTRIKA SIA</address>
+        <street>JURKALNES IELA 15/2</street>
+        <city>RIGA</city>
+      </unloadAddress>
+      <unloadPlanArea>LV171</unloadPlanArea>
+      <loadReference>309378799</loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>DE</countryCode>
+        <locationCode>FRV</locationCode>
+        <postalCode>86167</postalCode>
+        <latitude>48.3922</latitude>
+        <longitude>10.928</longitude>
+        <address>OSRAM GMBH(BALTIKUM)</address>
+        <street>STEINERNE FURT 62</street>
+        <city>AUGSBURG</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1046</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>ELEKTRIKA SIA</address>
+        <street>JURKALNES IELA 15/25</street>
+        <city>RIGA</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>01</serviceLevel>
+      <goods>
+        <description>EL.GLUEHLA</description>
+        <type>CT</type>
+        <quantity>4</quantity>
+      </goods>
+      <agentWaybillInstructions>TERMIN:    BIS 20.05.15</agentWaybillInstructions>
+      <agentWaybillInstructions>NULL</agentWaybillInstructions>
+      <package>Package IDs  . . . . . . . :  00040503003776828722</package>
+      <package>                              00040503003776828739</package>
+      <package>                              00040503003776828746</package>
+      <package>                              00040503003776828753</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SLV002640507</freightMovementId>
+      <shipmentRef>RIX8551648</shipmentRef>
+      <orderType>*CO</orderType>
+      <expectedLoadDate>2015-05-19</expectedLoadDate>
+      <shipmentCollectDate>2015-05-19</shipmentCollectDate>
+      <grossWeight>9360</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>9400</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>1.60</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>62</loadStopId>
+      <unloadStopId>63</unloadStopId>
+      <loadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1067</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>DAW Baltica SIA</address>
+        <street>MELLUZU 15-4</street>
+        <city>RIGA</city>
+      </loadAddress>
+      <loadPlanArea>LV161</loadPlanArea>
+      <unloadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </unloadAddress>
+      <unloadPlanArea>LV121</unloadPlanArea>
+      <loadReference></loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1067</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>DAW Baltica SIA</address>
+        <street>MELLUZU 17-2</street>
+        <city>RIGA</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1067</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>DAW Baltica SIA</address>
+        <street>MELLUZU 17-2</street>
+        <city>RIGA</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>01</serviceLevel>
+      <goods>
+        <description>KRAVA</description>
+        <type>NE</type>
+        <quantity>22</quantity>
+      </goods>
+      <clioReference>LVRIX500000724</clioReference>
+      <clioReference>LVRIX500000725</clioReference>
+      <clioReference>LVRIX500000726</clioReference>
+      <clioReference>LVRIX500000727</clioReference>
+      <clioReference>LVRIX500000728</clioReference>
+      <clioReference>LVRIX500000738</clioReference>
+      <clioReference>LVRIX500000744</clioReference>
+      <clioReference>LVRIX500000763</clioReference>
+      <clioReference>LVRIX500000764</clioReference>
+      <clioReference>LVRIX500000782</clioReference>
+    </consignment>
+    <consignment>
+      <freightMovementId>SLV002640004</freightMovementId>
+      <shipmentRef>TLL5115061</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-19</expectedLoadDate>
+      <expectedLoadTime>00:20:00</expectedLoadTime>
+      <expectedUnloadDate>2015-05-19</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-14</shipmentCollectDate>
+      <shipmentDeliveryDate>2015-05-19</shipmentDeliveryDate>
+      <grossWeight>28</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>60</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>52</loadStopId>
+      <unloadStopId>53</unloadStopId>
+      <loadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </loadAddress>
+      <loadPlanArea>LV121</loadPlanArea>
+      <unloadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>2107</postalCode>
+        <latitude>56.87925</latitude>
+        <longitude>23.8074</longitude>
+        <address>Tibnor SIA</address>
+        <street>Vecpagrabs&quot;, Babites pagasts</street>
+        <city>Pinki</city>
+      </unloadAddress>
+      <unloadPlanArea>LV182</unloadPlanArea>
+      <loadReference></loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>87701</postalCode>
+        <latitude>58.4917</latitude>
+        <longitude>24.851</longitude>
+        <address>LSAB V#NDRA AS</address>
+        <street>ALLIKÕNNU KÜLA</street>
+        <city>V#NDRA VALD</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>2107</postalCode>
+        <latitude>56.87925</latitude>
+        <longitude>23.8074</longitude>
+        <address>TIBNOR SIA</address>
+        <street>&quot;VECPAGRABS&quot;,PINKI</street>
+        <city>BABITES PAGASTS</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>01</serviceLevel>
+      <goods>
+        <description>GOODS</description>
+        <type>OP</type>
+        <quantity>1</quantity>
+      </goods>
+      <dimensions>
+        <packageType>OP</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>0.60</length>
+        <width>0.60</width>
+        <height>0.50</height>
+      </dimensions>
+      <package>Package IDs  . . . . . . . :  00473313430315782286</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SLV002640009</freightMovementId>
+      <shipmentRef>TLL5117159</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-19</expectedLoadDate>
+      <expectedLoadTime>00:20:00</expectedLoadTime>
+      <expectedUnloadDate>2015-05-19</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-18</shipmentCollectDate>
+      <shipmentDeliveryDate>2015-05-19</shipmentDeliveryDate>
+      <grossWeight>50</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>160</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>44</loadStopId>
+      <unloadStopId>45</unloadStopId>
+      <loadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </loadAddress>
+      <loadPlanArea>LV121</loadPlanArea>
+      <unloadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>2008</postalCode>
+        <latitude>56.964249</latitude>
+        <longitude>23.700569</longitude>
+        <address>Andris Berzins</address>
+        <street>Gertrudes avenue 2</street>
+        <city>Jurmala</city>
+      </unloadAddress>
+      <unloadPlanArea>LV182</unloadPlanArea>
+      <loadReference></loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>11622</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>INTERCOM GROUP OÜ</address>
+        <street>P#RNU MNT 232/9</street>
+        <city>TALLINN</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>2008</postalCode>
+        <latitude>56.964249</latitude>
+        <longitude>23.700569</longitude>
+        <address>Andris Berzins</address>
+        <street>Gertrudes avenue 2</street>
+        <city>Jurmala</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>01</serviceLevel>
+      <goods>
+        <description>SAUNA GOODS</description>
+        <type>BX</type>
+        <quantity>1</quantity>
+      </goods>
+      <dimensions>
+        <packageType>BX</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>2.00</length>
+        <width>0.80</width>
+        <height>0.30</height>
+      </dimensions>
+      <package>Package IDs  . . . . . . . :  00473313430315800577</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SLV002640019</freightMovementId>
+      <shipmentRef>TLL5117672</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-19</expectedLoadDate>
+      <expectedLoadTime>00:20:00</expectedLoadTime>
+      <expectedUnloadDate>2015-05-19</expectedUnloadDate>
+      <shipmentCollectDate>2015-05-18</shipmentCollectDate>
+      <shipmentDeliveryDate>2015-05-19</shipmentDeliveryDate>
+      <grossWeight>21</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>21</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>54</loadStopId>
+      <unloadStopId>55</unloadStopId>
+      <loadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </loadAddress>
+      <loadPlanArea>LV121</loadPlanArea>
+      <unloadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>2107</postalCode>
+        <latitude>56.87925</latitude>
+        <longitude>23.8074</longitude>
+        <address>Lindstrom SIA</address>
+        <street>Babotes pagasts</street>
+        <city>Babotes novads</city>
+      </unloadAddress>
+      <unloadPlanArea>LV182</unloadPlanArea>
+      <loadReference></loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>13418</postalCode>
+        <latitude>59.4497</latitude>
+        <longitude>24.8116</longitude>
+        <address>SIGNITI OÜ</address>
+        <street>K#NNU 72</street>
+        <city>TALLINN</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>2107</postalCode>
+        <latitude>56.87925</latitude>
+        <longitude>23.8074</longitude>
+        <address>LINDSTROM SIA</address>
+        <street>&quot;ABELES&quot;, P.N. PINKI</street>
+        <city>BABITES PAGASTS, BABITES NOVADS</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>01</serviceLevel>
+      <goods>
+        <description>GOODS</description>
+        <type>BX</type>
+        <quantity>1</quantity>
+      </goods>
+      <dimensions>
+        <packageType>BX</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>0.60</length>
+        <width>0.36</width>
+        <height>0.20</height>
+      </dimensions>
+      <package>Package IDs  . . . . . . . :  00473313430315806159</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SLV002640538</freightMovementId>
+      <shipmentRef>TLL5118857</shipmentRef>
+      <orderType>*CO</orderType>
+      <expectedLoadDate>2015-05-19</expectedLoadDate>
+      <shipmentCollectDate>2015-05-19</shipmentCollectDate>
+      <grossWeight>16</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>16</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>64</loadStopId>
+      <unloadStopId>65</unloadStopId>
+      <loadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1067</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>IunA GULTNI SIA</address>
+        <street>KURZEMES PROSPEKTS 164a</street>
+        <city>RIGA</city>
+      </loadAddress>
+      <loadPlanArea>LV161</loadPlanArea>
+      <unloadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </unloadAddress>
+      <unloadPlanArea>LV121</unloadPlanArea>
+      <loadReference></loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1029</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>IunA GULTNI SIA</address>
+        <street>KURZEMES PROSPEKTS 164a</street>
+        <city>RIGA</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>EE</countryCode>
+        <locationCode>TLL</locationCode>
+        <postalCode>41531</postalCode>
+        <latitude>59.36107318</latitude>
+        <longitude>27.42124921</longitude>
+        <address>IUNA OÜ</address>
+        <street>LINDA 15D</street>
+        <city>JÕHVI</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>01</serviceLevel>
+      <goods>
+        <description>GOODS</description>
+        <type>CT</type>
+        <quantity>3</quantity>
+      </goods>
+      <loadInstructions>55515780/S12</loadInstructions>
+      <loadInstructions>T:MERIT</loadInstructions>
+      <agentWaybillInstructions>+37127542777</agentWaybillInstructions>
+    </consignment>
+    <consignment>
+      <freightMovementId>SLV002640066</freightMovementId>
+      <shipmentRef>VNO1527516</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-19</expectedLoadDate>
+      <expectedLoadTime>01:45:00</expectedLoadTime>
+      <expectedUnloadDate>2015-05-19</expectedUnloadDate>
+      <shipmentDeliveryDate>2015-05-19</shipmentDeliveryDate>
+      <grossWeight>25</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>90</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>50</loadStopId>
+      <unloadStopId>51</unloadStopId>
+      <loadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </loadAddress>
+      <loadPlanArea>LV121</loadPlanArea>
+      <unloadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1004</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>MOTOFAVORITS LTD.</address>
+        <street>K. ULMANA AVENUE 21</street>
+        <city>RIGA</city>
+      </unloadAddress>
+      <unloadPlanArea>LV181</unloadPlanArea>
+      <loadReference></loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>DE</countryCode>
+        <locationCode>FRV</locationCode>
+        <postalCode>54332</postalCode>
+        <latitude>49.6986</latitude>
+        <longitude>6.5399</longitude>
+        <address>PARTS EUROPE GMBH</address>
+        <street>C.-ROENTGEN-STR. 2</street>
+        <city>WASSERLIESCH</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1004</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>MOTOFAVORITS SIA</address>
+        <street>K.ULMANA GATVE 21</street>
+        <city>RIGA</city>
+      </consigneeAddress>
+      <hazardous>true</hazardous>
+      <serviceLevel>01</serviceLevel>
+      <goods>
+        <description>PARTS FOR</description>
+        <type>CT</type>
+        <quantity>1</quantity>
+      </goods>
+      <goods>
+        <description>PARTS FOR</description>
+        <type>CT</type>
+        <quantity>1</quantity>
+      </goods>
+      <adrText>1 JC 5.000 KGS</adrText>
+      <adrText>UN1805,,PHOSPHORIC ACID, SOLUTION (.),8,III,(E)</adrText>
+      <package>Package IDs  . . . . . . . :  04644860919347710015002001</package>
+      <package>                              04644860919347710015002002</package>
+    </consignment>
+    <consignment>
+      <freightMovementId>SLV002640078</freightMovementId>
+      <shipmentRef>VNO1527581</shipmentRef>
+      <orderType>*DE</orderType>
+      <expectedLoadDate>2015-05-19</expectedLoadDate>
+      <expectedLoadTime>01:45:00</expectedLoadTime>
+      <expectedUnloadDate>2015-05-19</expectedUnloadDate>
+      <shipmentDeliveryDate>2015-05-19</shipmentDeliveryDate>
+      <grossWeight>96</grossWeight>
+      <grossWeightUnit>KGS</grossWeightUnit>
+      <taxWeight>653</taxWeight>
+      <taxWeightUnit>KGS</taxWeightUnit>
+      <loadSpace>0.00</loadSpace>
+      <loadSpaceUnit>MTR</loadSpaceUnit>
+      <loadStopId>48</loadStopId>
+      <unloadStopId>49</unloadStopId>
+      <loadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </loadAddress>
+      <loadPlanArea>LV121</loadPlanArea>
+      <unloadAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>2167</postalCode>
+        <latitude>56.907959</latitude>
+        <longitude>24.06044</longitude>
+        <address>INTER CARS LATVIA SI</address>
+        <street>PLIECIEMA IELA 35</street>
+        <city>MARUPE</city>
+      </unloadAddress>
+      <unloadPlanArea>LV182</unloadPlanArea>
+      <loadReference>309380188</loadReference>
+      <unloadReference></unloadReference>
+      <shipperAddress>
+        <countryCode>DE</countryCode>
+        <locationCode>FRV</locationCode>
+        <postalCode>86167</postalCode>
+        <latitude>48.3922</latitude>
+        <longitude>10.928</longitude>
+        <address>OSRAM GMBH(BALTIKUM)</address>
+        <street>STEINERNE FURT 62</street>
+        <city>AUGSBURG</city>
+      </shipperAddress>
+      <consigneeAddress>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1004</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>INTER CARS LATVIJA SIA</address>
+        <street>DIKA IELA 44</street>
+        <city>RIGA</city>
+      </consigneeAddress>
+      <hazardous>false</hazardous>
+      <serviceLevel>01</serviceLevel>
+      <goods>
+        <description>EL.GLUEHLA</description>
+        <type>EP</type>
+        <quantity>2</quantity>
+      </goods>
+      <dimensions>
+        <packageType>EP</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>1.20</length>
+        <width>0.80</width>
+        <height>1.66</height>
+      </dimensions>
+      <dimensions>
+        <packageType>EP</packageType>
+        <packageQuantity>1</packageQuantity>
+        <length>1.20</length>
+        <width>0.80</width>
+        <height>0.38</height>
+      </dimensions>
+      <agentWaybillInstructions>TERMIN:    BIS 20.05.15</agentWaybillInstructions>
+      <agentWaybillInstructions>NULL</agentWaybillInstructions>
+      <package>Package IDs  . . . . . . . :  00140503003139908594</package>
+      <package>                              00140503003139909638</package>
+    </consignment>
+    <stop>
+      <stopType>*SP</stopType>
+      <stopId>1</stopId>
+      <stopSequence>1</stopSequence>
+      <stopNumber>1</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIX</locationCode>
+        <postalCode>1046</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>RIGA</address>
+        <city>Riga</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>4</stopId>
+      <stopSequence>305</stopSequence>
+      <stopNumber>2</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>6</stopId>
+      <stopSequence>310</stopSequence>
+      <stopNumber>3</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>8</stopId>
+      <stopSequence>315</stopSequence>
+      <stopNumber>4</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>10</stopId>
+      <stopSequence>320</stopSequence>
+      <stopNumber>5</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>12</stopId>
+      <stopSequence>325</stopSequence>
+      <stopNumber>6</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>14</stopId>
+      <stopSequence>330</stopSequence>
+      <stopNumber>7</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>16</stopId>
+      <stopSequence>335</stopSequence>
+      <stopNumber>8</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>18</stopId>
+      <stopSequence>340</stopSequence>
+      <stopNumber>9</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>20</stopId>
+      <stopSequence>345</stopSequence>
+      <stopNumber>10</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>22</stopId>
+      <stopSequence>350</stopSequence>
+      <stopNumber>11</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>24</stopId>
+      <stopSequence>355</stopSequence>
+      <stopNumber>12</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>26</stopId>
+      <stopSequence>360</stopSequence>
+      <stopNumber>13</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>28</stopId>
+      <stopSequence>365</stopSequence>
+      <stopNumber>14</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>30</stopId>
+      <stopSequence>370</stopSequence>
+      <stopNumber>15</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>32</stopId>
+      <stopSequence>375</stopSequence>
+      <stopNumber>16</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>34</stopId>
+      <stopSequence>380</stopSequence>
+      <stopNumber>17</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>36</stopId>
+      <stopSequence>385</stopSequence>
+      <stopNumber>18</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>38</stopId>
+      <stopSequence>390</stopSequence>
+      <stopNumber>19</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>44</stopId>
+      <stopSequence>405</stopSequence>
+      <stopNumber>20</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>46</stopId>
+      <stopSequence>410</stopSequence>
+      <stopNumber>21</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>48</stopId>
+      <stopSequence>415</stopSequence>
+      <stopNumber>22</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>50</stopId>
+      <stopSequence>420</stopSequence>
+      <stopNumber>23</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>52</stopId>
+      <stopSequence>425</stopSequence>
+      <stopNumber>24</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>54</stopId>
+      <stopSequence>430</stopSequence>
+      <stopNumber>25</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>56</stopId>
+      <stopSequence>435</stopSequence>
+      <stopNumber>26</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>58</stopId>
+      <stopSequence>440</stopSequence>
+      <stopNumber>27</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>60</stopId>
+      <stopSequence>445</stopSequence>
+      <stopNumber>28</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>62</stopId>
+      <stopSequence>450</stopSequence>
+      <stopNumber>29</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1067</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>DAW Baltica SIA</address>
+        <street>MELLUZU 15-4</street>
+        <city>RIGA</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*LD</stopType>
+      <stopId>64</stopId>
+      <stopSequence>455</stopSequence>
+      <stopNumber>30</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1067</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>IunA GULTNI SIA</address>
+        <street>KURZEMES PROSPEKTS 164a</street>
+        <city>RIGA</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>65</stopId>
+      <stopSequence>645</stopSequence>
+      <stopNumber>31</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>63</stopId>
+      <stopSequence>650</stopSequence>
+      <stopNumber>32</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1073</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SCHENKER SIA</address>
+        <street>Katlakalna 11C</street>
+        <city>RIGA Plavnieki, Mezciems</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>61</stopId>
+      <stopSequence>655</stopSequence>
+      <stopNumber>33</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1004</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>3M LATVIJA SIA</address>
+        <street>K  ULMANA GATVE 5</street>
+        <city>RIGA</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>59</stopId>
+      <stopSequence>660</stopSequence>
+      <stopNumber>34</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>2167</postalCode>
+        <latitude>56.907959</latitude>
+        <longitude>24.06044</longitude>
+        <address>GROS AUTO GRUPA SIA</address>
+        <street>ZEMZARU IELA 3</street>
+        <city>MARUPE</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>57</stopId>
+      <stopSequence>665</stopSequence>
+      <stopNumber>35</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>2167</postalCode>
+        <latitude>56.907959</latitude>
+        <longitude>24.06044</longitude>
+        <address>Forum Auto SIA</address>
+        <street>K Ulmana gatve 101 Marupe</street>
+        <city>RIGA</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>55</stopId>
+      <stopSequence>670</stopSequence>
+      <stopNumber>36</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>2107</postalCode>
+        <latitude>56.87925</latitude>
+        <longitude>23.8074</longitude>
+        <address>Lindstrom SIA</address>
+        <street>Babotes pagasts</street>
+        <city>Babotes novads</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>53</stopId>
+      <stopSequence>675</stopSequence>
+      <stopNumber>37</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>2107</postalCode>
+        <latitude>56.87925</latitude>
+        <longitude>23.8074</longitude>
+        <address>Tibnor SIA</address>
+        <street>Vecpagrabs&quot;, Babites pagasts</street>
+        <city>Pinki</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>51</stopId>
+      <stopSequence>680</stopSequence>
+      <stopNumber>38</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1004</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>MOTOFAVORITS LTD.</address>
+        <street>K. ULMANA AVENUE 21</street>
+        <city>RIGA</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>49</stopId>
+      <stopSequence>685</stopSequence>
+      <stopNumber>39</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>2167</postalCode>
+        <latitude>56.907959</latitude>
+        <longitude>24.06044</longitude>
+        <address>INTER CARS LATVIA SI</address>
+        <street>PLIECIEMA IELA 35</street>
+        <city>MARUPE</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>47</stopId>
+      <stopSequence>690</stopSequence>
+      <stopNumber>40</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>2167</postalCode>
+        <latitude>56.907959</latitude>
+        <longitude>24.06044</longitude>
+        <address>WESS AS</address>
+        <street>ULMANA GATVE MARUPES PAG. 125</street>
+        <city>RIGAS RAJONS</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>45</stopId>
+      <stopSequence>695</stopSequence>
+      <stopNumber>41</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>2008</postalCode>
+        <latitude>56.964249</latitude>
+        <longitude>23.700569</longitude>
+        <address>Andris Berzins</address>
+        <street>Gertrudes avenue 2</street>
+        <city>Jurmala</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>39</stopId>
+      <stopSequence>710</stopSequence>
+      <stopNumber>42</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1046</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>MODULS INTERJERS SIA</address>
+        <street>KULDIGAS IELA 49/5</street>
+        <city>RIGA</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>37</stopId>
+      <stopSequence>715</stopSequence>
+      <stopNumber>43</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1046</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>Plockmatic RIGA SIA</address>
+        <street>Sampetera iela 2</street>
+        <city>Riga</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>35</stopId>
+      <stopSequence>720</stopSequence>
+      <stopNumber>44</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1046</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>*L* SKANDI MOTORS SIA  10.00-12.00</address>
+        <street>LIELIRBES IELA 32</street>
+        <city>RIGA</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>33</stopId>
+      <stopSequence>725</stopSequence>
+      <stopNumber>45</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1046</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>MOLLER AUTO LATVIA SIA</address>
+        <street>K. ULMANA GATVE 86</street>
+        <city>RIGA</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>31</stopId>
+      <stopSequence>730</stopSequence>
+      <stopNumber>46</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1046</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>ELEKTRIKA SIA</address>
+        <street>JURKALNES IELA 15/2</street>
+        <city>RIGA</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>29</stopId>
+      <stopSequence>735</stopSequence>
+      <stopNumber>47</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1046</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>PLOCKMATIC RIGA</address>
+        <street>SAMPETERA IELA 2</street>
+        <city>RIGA</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>27</stopId>
+      <stopSequence>740</stopSequence>
+      <stopNumber>48</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1046</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>PLOCKMATIC RIGA SIA</address>
+        <street>SAMPETERA IELA 2</street>
+        <city>RIGA</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>25</stopId>
+      <stopSequence>745</stopSequence>
+      <stopNumber>49</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1045</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>EVA-SAT SIA</address>
+        <street>Jaunmoku iela 26</street>
+        <city>Riga</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>23</stopId>
+      <stopSequence>750</stopSequence>
+      <stopNumber>50</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>2011</postalCode>
+        <latitude>56.951771</latitude>
+        <longitude>23.588449</longitude>
+        <address>BV KURSI SIA</address>
+        <street>SLOKA, VENTSPILS SOSEJA 70</street>
+        <city>JURMALA</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>21</stopId>
+      <stopSequence>755</stopSequence>
+      <stopNumber>51</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1004</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>3M LATVIJA SIA</address>
+        <street>K. ULMANA GATVE 5 .</street>
+        <city>RIGA</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>19</stopId>
+      <stopSequence>760</stopSequence>
+      <stopNumber>52</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>2107</postalCode>
+        <latitude>56.87925</latitude>
+        <longitude>23.8074</longitude>
+        <address>DOTNUVOS PROJEKTAI SIA</address>
+        <street>BABITES NOVADS</street>
+        <city>JURMALAS IELA 13C</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>17</stopId>
+      <stopSequence>765</stopSequence>
+      <stopNumber>53</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>2011</postalCode>
+        <latitude>56.951771</latitude>
+        <longitude>23.588449</longitude>
+        <address>JURMALAS RIEPU CENTRS SIA</address>
+        <street>Raina iela 31,</street>
+        <city>Jurmala</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>15</stopId>
+      <stopSequence>770</stopSequence>
+      <stopNumber>54</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>2167</postalCode>
+        <latitude>56.907959</latitude>
+        <longitude>24.06044</longitude>
+        <address>ROLLING SIA</address>
+        <street>PLIENCIEMA IELA 37</street>
+        <city>MARUPE</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>13</stopId>
+      <stopSequence>775</stopSequence>
+      <stopNumber>55</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1004</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SIA MAX COOL</address>
+        <street>ULMANA GATVE 2</street>
+        <city>R?GA</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>11</stopId>
+      <stopSequence>780</stopSequence>
+      <stopNumber>56</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1046</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>ELEKTRIKA SIA</address>
+        <street>JA RKALNES IELA 15/25</street>
+        <city>RAYGA</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>9</stopId>
+      <stopSequence>785</stopSequence>
+      <stopNumber>57</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1029</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>K-RAUTA</address>
+        <street>PRIEDAINES 37</street>
+        <city>RIGA</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>7</stopId>
+      <stopSequence>790</stopSequence>
+      <stopNumber>58</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1046</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>SIA DEPO DIY,K.ULMANA GATVE 96,RIGA</address>
+        <street>K.ULMANA GATVE 96</street>
+        <city>RIGA</city>
+      </address>
+    </stop>
+    <stop>
+      <stopType>*UL</stopType>
+      <stopId>5</stopId>
+      <stopSequence>795</stopSequence>
+      <stopNumber>59</stopNumber>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIQ</locationCode>
+        <postalCode>1046</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>EVA-SAT SIA</address>
+        <street>JAUNMOKU IELA 26</street>
+        <city>RIGA</city>
+      </address>
+    </stop>
+    <activity>
+      <activityCode>*DL</activityCode>
+      <activityDate>2015-05-19</activityDate>
+      <activityTime>09:51:00</activityTime>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIX</locationCode>
+        <postalCode>1045</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>EVA-SAT SIA</address>
+        <city>Riga</city>
+      </address>
+      <consignmentList>
+        <shipmentRef>RIX8549209</shipmentRef>
+      </consignmentList>
+    </activity>
+    <activity>
+      <activityCode>*DL</activityCode>
+      <activityDate>2015-05-19</activityDate>
+      <activityTime>10:22:00</activityTime>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIX</locationCode>
+        <postalCode>1046</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>*L* SKANDI MOTORS SIA  10.00-12.00</address>
+        <city>RIGA</city>
+      </address>
+      <consignmentList>
+        <shipmentRef>HEL5099111</shipmentRef>
+      </consignmentList>
+    </activity>
+    <activity>
+      <activityCode>*DL</activityCode>
+      <activityDate>2015-05-19</activityDate>
+      <activityTime>10:22:00</activityTime>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIX</locationCode>
+        <postalCode>1046</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>*L* SKANDI MOTORS SIA  10.00-12.00</address>
+        <city>RIGA</city>
+      </address>
+      <consignmentList>
+        <shipmentRef>HEL5103018</shipmentRef>
+      </consignmentList>
+    </activity>
+    <activity>
+      <activityCode>*DL</activityCode>
+      <activityDate>2015-05-19</activityDate>
+      <activityTime>10:40:00</activityTime>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIX</locationCode>
+        <postalCode>1046</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <city>RIGA</city>
+      </address>
+      <consignmentList>
+        <shipmentRef>ITBLQ00537</shipmentRef>
+      </consignmentList>
+    </activity>
+    <activity>
+      <activityCode>*DL</activityCode>
+      <activityDate>2015-05-19</activityDate>
+      <activityTime>14:19:00</activityTime>
+      <address>
+        <countryCode>LV</countryCode>
+        <locationCode>RIX</locationCode>
+        <postalCode>1029</postalCode>
+        <latitude>56.946541</latitude>
+        <longitude>24.104851</longitude>
+        <address>K-RAUTA</address>
+        <city>RIGA</city>
+      </address>
+      <consignmentList>
+        <shipmentRef>RIX8551276</shipmentRef>
+      </consignmentList>
+    </activity>
+  </trip>
+</OmsRequest>
