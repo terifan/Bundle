@@ -22,11 +22,11 @@ public class BundleNGTest
 
 		assertEquals(bundle, unbundled);
 
-		System.out.println(new JSONEncoder().marshal(bundle));
+//		System.out.println(new JSONEncoder().marshal(bundle));
 	}
 
 
-	private static Bundle createSimpleBundle()
+	static Bundle createSimpleBundle()
 	{
 		Random r = new Random();
 
@@ -43,8 +43,8 @@ public class BundleNGTest
 			.putString("string", "string")
 			.putString("null", null)
 			.putBundle("bundle", new Bundle()
-				.putByte("a", r.nextInt())
-				.putByte("b", r.nextInt())
+				.putByte("one", r.nextInt())
+				.putByte("two", r.nextInt())
 			)
 			.putIntArray("ints", r.nextInt(), r.nextInt(), r.nextInt())
 			.putByteArray("bytes", (byte)r.nextInt(), (byte)r.nextInt(), (byte)r.nextInt())

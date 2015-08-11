@@ -1661,61 +1661,17 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	@Override
 	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException
 	{
-		int size = in.readInt();
-
-		for (int i = 0; i < size; i++)
-		{
-			String key = in.readUTF();
-
-			Object value;
-
-			switch (in.read())
-			{
-				case 'S':
-					value = in.readUTF();
-					break;
-				case 'x':
-					value = in.readBoolean();
-					break;
-				case 'b':
-					value = in.readByte();
-					break;
-				case 's':
-					value = in.readShort();
-					break;
-				case 'c':
-					value = in.readChar();
-					break;
-				case 'i':
-					value = in.readInt();
-					break;
-				case 'l':
-					value = in.readLong();
-					break;
-				case 'f':
-					value = in.readFloat();
-					break;
-				case 'd':
-					value = in.readDouble();
-					break;
-				case 'n':
-					value = null;
-					break;
-				case 'O':
-					value = in.readObject();
-					break;
-				default:
-					throw new IOException();
-			}
-
-			put(key, value);
-		}
+		byte[] buf = new byte[in.readInt()];
+		in.read(buf);
+		new BinaryDecoder().unmarshal(this, buf);
 	}
 
 
 	@Override
 	public void writeExternal(ObjectOutput out) throws IOException
 	{
-		out.write(new FastEncoder().marshal(this));
+		byte[] buf = new BinaryEncoder().marshal(this);
+		out.writeInt(buf.length);
+		out.write(buf);
 	}
 }
