@@ -365,9 +365,9 @@ public class JSONDecoder
 	{
 		Class type = null;
 		boolean toDouble = false;
-		for (int i = 0; i < list.size(); i++)
+
+		for (Object value : list)
 		{
-			Object value = list.get(i);
 			if (value != null)
 			{
 				Class other = value.getClass();
