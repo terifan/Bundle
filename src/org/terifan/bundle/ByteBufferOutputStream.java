@@ -5,7 +5,7 @@ import java.io.OutputStream;
 import java.nio.ByteBuffer;
 
 
-public class ByteBufferOutputStream extends OutputStream
+class ByteBufferOutputStream extends OutputStream
 {
 	private ByteBuffer mByteBuffer;
 

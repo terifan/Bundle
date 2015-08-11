@@ -3,7 +3,7 @@ package org.terifan.bundle;
 import java.util.Arrays;
 
 
-public class Convert
+class Convert
 {
 	public static byte [] encodeUTF8(String aInput)
 	{

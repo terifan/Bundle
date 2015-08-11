@@ -7,7 +7,7 @@ import java.io.OutputStream;
 /**
  * BitOutputStream writes bits to the underlying byte stream.
  */
-public class BitOutputStream extends OutputStream
+class BitOutputStream extends OutputStream
 {
 	private OutputStream mOutputStream;
 	private int mBitsToGo;
