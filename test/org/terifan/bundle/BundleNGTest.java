@@ -22,6 +22,8 @@ public class BundleNGTest
 
 		assertEquals(bundle, unbundled);
 
+		Log.hexDump(out);
+
 //		System.out.println(new JSONEncoder().marshal(bundle));
 	}
 

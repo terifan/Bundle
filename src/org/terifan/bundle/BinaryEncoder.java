@@ -46,6 +46,8 @@ public class BinaryEncoder implements Encoder
 		writeBundle(aBundle);
 
 		mOutput.finish();
+		mOutput = null;
+		mKeys = null;
 	}
 
 
