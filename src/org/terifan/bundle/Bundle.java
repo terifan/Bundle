@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 
@@ -1673,5 +1674,58 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		byte[] buf = new BinaryEncoder().marshal(this);
 		out.writeInt(buf.length);
 		out.write(buf);
+	}
+
+
+	public static Bundle createBundle(Map<String,?> aMap, ConvertValue aConvertValue)
+	{
+		return createBundle(aMap, null, aConvertValue);
+	}
+
+
+	public static Bundle createBundle(Map<?,?> aMap, ConvertValue aConvertKey, ConvertValue aConvertValue)
+	{
+		Bundle bundle = new Bundle();
+
+		for (Entry entry : aMap.entrySet())
+		{
+			Object key = entry.getKey();
+			Object value = entry.getValue();
+
+			if (aConvertKey != null)
+			{
+				key = aConvertKey.process(key);
+			}
+			if (aConvertValue != null)
+			{
+				value = aConvertValue.process(value);
+			}
+
+			if (key != null)
+			{
+				if (!(key instanceof String))
+				{
+					throw new IllegalStateException("A key was not converted to String: " + entry.getKey());
+				}
+
+				bundle.put((String)key, value);
+			}
+		}
+
+		return bundle;
+	}
+
+	
+	public interface ConvertValue
+	{
+		/**
+		 * Return the value as a standard type.
+		 * 
+		 * @param aValue
+		 *   a java object.
+		 * @return 
+		 *   a standard java type supported the Bundle implementation.
+		 */
+		Object process(Object aValue);
 	}
 }
