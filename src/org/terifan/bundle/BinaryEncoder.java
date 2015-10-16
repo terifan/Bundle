@@ -120,19 +120,58 @@ public class BinaryEncoder implements Encoder
 
 	private void writeMatrix(FieldType aFieldType, Object aValue) throws ArrayIndexOutOfBoundsException, IOException, IllegalArgumentException
 	{
-		int len = Array.getLength(aValue);
-		mOutput.writeVariableInt(len, 3, 4, false);
-		for (int i = 0; i < len; i++)
+		int rows = Array.getLength(aValue);
+		boolean full = true;
+
+		for (int i = 0, j = 0; i < rows; i++)
 		{
-			Object v = Array.get(aValue, i);
-			if (v == null)
+			Object arr = Array.get(aValue, i);
+			if (arr == null || i > 0 && Array.getLength(arr) != j)
 			{
-				mOutput.writeBit(1);
+				full = false;
+				break;
 			}
-			else
+			else if (i == 0)
 			{
-				mOutput.writeBit(0);
-				writeList(aFieldType, v);
+				j = Array.getLength(arr);
+			}
+		}
+
+		if (full)
+		{
+			mOutput.writeBit(0);
+			mOutput.writeVariableInt(rows, 3, 4, false);
+			if (rows > 0)
+			{
+				int cols = Array.getLength(Array.get(aValue, 0));
+				mOutput.writeVariableInt(cols, 3, 4, false);
+				mOutput.align();
+				for (int i = 0; i < rows; i++)
+				{
+					Object arr = Array.get(aValue, i);
+					for (int j = 0; j < cols; j++)
+					{
+						writeValue(aFieldType, Array.get(arr, j));
+					}
+				}
+			}
+		}
+		else
+		{
+			int len = Array.getLength(aValue);
+			mOutput.writeVariableInt(len, 3, 4, false);
+			for (int i = 0; i < len; i++)
+			{
+				Object v = Array.get(aValue, i);
+				if (v == null)
+				{
+					mOutput.writeBit(1);
+				}
+				else
+				{
+					mOutput.writeBit(0);
+					writeList(aFieldType, v);
+				}
 			}
 		}
 	}
