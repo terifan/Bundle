@@ -222,7 +222,9 @@ public class TextDecoder
 		}
 		if (c == '[' || c == '<')
 		{
-			return readArray(aReader, c == '[');
+			Object arr = readArray(aReader, c == '[');
+			replaceNullMatrix(arr);
+			return arr;
 		}
 		if (c == '\"' || c == '\'')
 		{
@@ -243,6 +245,39 @@ public class TextDecoder
 		}
 
 		return processValue(sb);
+	}
+
+
+	private void replaceNullMatrix(Object aArr)
+	{
+		if (aArr != null && aArr.getClass().getComponentType().isArray())
+		{
+			Class type = null;
+			boolean hasNull = false;
+			for (int i = 0; i < Array.getLength(aArr); i++)
+			{
+				Object v = Array.get(aArr, i);
+				if (v == null)
+				{
+					hasNull = true;
+				}
+				else
+				{
+					type = v.getClass().getComponentType();
+				}
+			}
+			if (hasNull)
+			{
+				for (int i = 0; i < Array.getLength(aArr); i++)
+				{
+					Object v = Array.get(aArr, i);
+					if (v == null)
+					{
+						Array.set(aArr, i, Array.newInstance(type, 0));
+					}
+				}
+			}
+		}
 	}
 
 
@@ -363,11 +398,6 @@ public class TextDecoder
 				{
 					throw new IOException("Array contains mixed types: expected=" + type + ", found=" + other);
 				}
-
-//				if (value instanceof String)
-//				{
-//					value = processValue((String)value);
-//				}
 			}
 
 			list.add(value);
@@ -381,7 +411,6 @@ public class TextDecoder
 		{
 			return null;
 		}
-
 		Object array = Array.newInstance(getPrimitiveType(type), list.size());
 
 		for (int i = 0; i < list.size(); i++)

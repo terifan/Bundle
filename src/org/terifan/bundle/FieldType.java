@@ -93,6 +93,10 @@ enum FieldType
 		if (cls.isArray())
 		{
 			cls = cls.getComponentType();
+			if (cls.isArray())
+			{
+				cls = cls.getComponentType();
+			}
 		}
 		for (FieldType fieldType : values())
 		{

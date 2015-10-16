@@ -3,8 +3,6 @@ package org.terifan.bundle;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,6 +11,8 @@ import java.util.List;
 
 public class TextEncoder
 {
+	private final static int SIMPLE_OBJECT_MAX_ELEMENTS = 5;
+
 	private SimpleDateFormat mDateFormatter;
 	private Appendable mAppendable;
 	private boolean mFlat;
@@ -131,52 +131,8 @@ public class TextEncoder
 					if (cls.isArray() || isList)
 					{
 						mAppendable.append("\"").append(key).append("\": ");
-						if (isList)
-						{
-							value = ((List)value).toArray();
-							mAppendable.append("<");
-						}
-						else
-						{
-							mAppendable.append("[");
-						}
-						int len = Array.getLength(value);
-						if (len > 0)
-						{
-							boolean simpleArray = isSimple(len, value);
 
-							if (!mFlat && !simpleArray)
-							{
-								mAppendable.append("\n");
-								mIndent++;
-							}
-							for (int i = 0; i < len; i++)
-							{
-								if (i > 0)
-								{
-									if (mFlat || simpleArray)
-									{
-										mAppendable.append(", ");
-									}
-									else
-									{
-										mAppendable.append(",\n");
-									}
-								}
-								if (!simpleArray)
-								{
-									indent();
-								}
-								writeValue(Array.get(value, i));
-							}
-							if (!mFlat && !simpleArray)
-							{
-								mIndent--;
-								mAppendable.append("\n");
-								indent();
-							}
-						}
-						mAppendable.append(isList ? ">" : "]");
+						writeArray(isList, value);
 					}
 					else
 					{
@@ -197,16 +153,82 @@ public class TextEncoder
 	}
 
 
+	private void writeArray(boolean aIsList, Object aValue) throws IOException
+	{
+		if (aIsList)
+		{
+			aValue = ((List)aValue).toArray();
+			mAppendable.append("<");
+		}
+		else
+		{
+			mAppendable.append("[");
+		}
+
+		int len = Array.getLength(aValue);
+
+		if (len > 0)
+		{
+			boolean simpleArray = isSimple(len, aValue);
+			if (!mFlat && !simpleArray)
+			{
+				mAppendable.append("\n");
+				mIndent++;
+			}
+			for (int i = 0; i < len; i++)
+			{
+				if (i > 0)
+				{
+					if (mFlat || simpleArray)
+					{
+						mAppendable.append(", ");
+					}
+					else
+					{
+						mAppendable.append(",\n");
+					}
+				}
+				if (!simpleArray)
+				{
+					indent();
+				}
+
+				Object v = Array.get(aValue, i);
+				if (v != null && v.getClass().isArray())
+				{
+					writeArray(false, v);
+				}
+				else
+				{
+					writeValue(v);
+				}
+			}
+
+			if (!mFlat && !simpleArray)
+			{
+				mIndent--;
+				mAppendable.append("\n");
+				indent();
+			}
+		}
+
+		mAppendable.append(aIsList ? ">" : "]");
+	}
+
+
 	private boolean isSimple(int aLen, Object aValue) throws ArrayIndexOutOfBoundsException, IllegalArgumentException
 	{
-		boolean simpleArray = true;
-		for (int i = 0; i < aLen; i++)
+		boolean simpleArray = aLen < SIMPLE_OBJECT_MAX_ELEMENTS;
+		if (simpleArray)
 		{
-			Object v = Array.get(aValue, i);
-			if (v != null && (v instanceof Bundle || v.getClass().isArray() || List.class.isAssignableFrom(v.getClass())))
+			for (int i = 0; i < aLen; i++)
 			{
-				simpleArray = false;
-				break;
+				Object v = Array.get(aValue, i);
+				if (v != null && (v instanceof Bundle || v.getClass().isArray() || List.class.isAssignableFrom(v.getClass())))
+				{
+					simpleArray = false;
+					break;
+				}
 			}
 		}
 		return simpleArray;
@@ -215,15 +237,18 @@ public class TextEncoder
 
 	private boolean isSimple(Bundle aBundle)
 	{
-		boolean simple = true;
-		for (String key : aBundle.keySet())
+		boolean simple = aBundle.size() < SIMPLE_OBJECT_MAX_ELEMENTS;
+		if (simple)
 		{
-			Object value = aBundle.get(key);
-			FieldType fieldType = FieldType.valueOf(value);
-			if (value != null && (fieldType == FieldType.BUNDLE || value.getClass().isArray() || List.class.isAssignableFrom(value.getClass())))
+			for (String key : aBundle.keySet())
 			{
-				simple = false;
-				break;
+				Object value = aBundle.get(key);
+				FieldType fieldType = FieldType.valueOf(value);
+				if (value != null && (fieldType == FieldType.BUNDLE || value.getClass().isArray() || List.class.isAssignableFrom(value.getClass())))
+				{
+					simple = false;
+					break;
+				}
 			}
 		}
 		return simple;

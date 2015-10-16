@@ -154,6 +154,24 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 * Returns the value associated with the given key, or null if no mapping of the desired type exists for the given key or a null value
 	 * is explicitly associated with the key.
 	 */
+	public Bundle[][] getBundleMatrix(String aKey)
+	{
+		Object o = mValues.get(aKey);
+		try
+		{
+			return (Bundle[][])o;
+		}
+		catch (ClassCastException e)
+		{
+			return (Bundle[][])typeWarning(aKey, o, "Bundle[][]", null, e);
+		}
+	}
+
+
+	/**
+	 * Returns the value associated with the given key, or null if no mapping of the desired type exists for the given key or a null value
+	 * is explicitly associated with the key.
+	 */
 	public ArrayList<Bundle> getBundleArrayList(String aKey)
 	{
 		Object o = mValues.get(aKey);
@@ -236,6 +254,44 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	}
 
 
+	public <T extends Bundlable> T[][] getBundlableMatrix(String aKey, Class<T> aType) throws IOException
+	{
+		try
+		{
+			Bundle[][] bundles = getBundleMatrix(aKey);
+
+			if (bundles == null)
+			{
+				return null;
+			}
+
+			Object items = Array.newInstance(aType, bundles.length);
+
+			for (int i = 0; i < bundles.length; i++)
+			{
+				Object items2 = Array.newInstance(aType, bundles[i].length);
+
+				for (int j = 0; j < bundles[i].length; j++)
+				{
+					T instance = aType.newInstance();
+
+					instance.readExternal(bundles[i][j]);
+
+					Array.set(items2, j, (T)instance);
+				}
+
+				Array.set(items, i, items2);
+			}
+
+			return (T[][])items;
+		}
+		catch (InstantiationException | IllegalAccessException e)
+		{
+			throw new IOException(e);
+		}
+	}
+
+
 	public <T extends Bundlable> T[] getBundlableArray(String aKey, Class<T> aType, BundlableObjectFactory<T> aFactory) throws IOException
 	{
 		Bundle[] bundles = getBundleArray(aKey);
@@ -257,6 +313,37 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 
 		return (T[])items;
+	}
+
+
+	public <T extends Bundlable> T[][] getBundlableMatrix(String aKey, Class<T> aType, BundlableObjectFactory<T> aFactory) throws IOException
+	{
+		Bundle[][] bundles = getBundleMatrix(aKey);
+
+		if (bundles == null)
+		{
+			return null;
+		}
+
+		Object items = Array.newInstance(aType, bundles.length);
+
+		for (int i = 0; i < bundles.length; i++)
+		{
+			Object items2 = Array.newInstance(aType, bundles[i].length);
+
+			for (int j = 0; j < bundles.length; j++)
+			{
+				T instance = aFactory.newInstance();
+
+				instance.readExternal(bundles[i][j]);
+
+				Array.set(items2, j, (T)instance);
+			}
+
+			Array.set(items, i, items2);
+		}
+
+		return (T[][])items;
 	}
 
 
@@ -315,63 +402,6 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	}
 
 
-//	/**
-//	 * Returns the value associated with the given key, or aDefaultValue if no mapping of the desired type exists for the given key.
-//	 */
-//	public Bundle getBundle(String aKey, Bundle aDefaultValue)
-//	{
-//		Object o = mValues.get(aKey);
-//		if (o == null)
-//		{
-//			return aDefaultValue;
-//		}
-//		try
-//		{
-//			return ((Bundle)o).setStrict(mStrict);
-//		}
-//		catch (ClassCastException e)
-//		{
-//			return (Bundle)typeWarning(aKey, o, "Bundle", aDefaultValue, e);
-//		}
-//	}
-//
-//
-//	/**
-//	 * Returns the value associated with the given key, or null if no mapping of the desired type exists for the given key or a null value
-//	 * is explicitly associated with the key.
-//	 */
-//	public Bundle[] getBundleArray(String aKey)
-//	{
-//		Object o = mValues.get(aKey);
-//		try
-//		{
-//			return (Bundle[])o;
-//		}
-//		catch (ClassCastException e)
-//		{
-//			return (Bundle[])typeWarning(aKey, o, "Bundle[]", null, e);
-//		}
-//	}
-//
-//
-//	/**
-//	 * Returns the value associated with the given key, or null if no mapping of the desired type exists for the given key or a null value
-//	 * is explicitly associated with the key.
-//	 */
-//	public ArrayList<Bundle> getBundleArrayList(String aKey)
-//	{
-//		Object o = mValues.get(aKey);
-//		try
-//		{
-//			return (ArrayList<Bundle>)o;
-//		}
-//		catch (ClassCastException e)
-//		{
-//			return (ArrayList<Bundle>)typeWarning(aKey, o, "ArrayList<Bundle>", null, e);
-//		}
-//	}
-
-
 	/**
 	 * Returns the value associated with the given key, or false if no mapping of the desired type exists for the given key.
 	 */
@@ -420,6 +450,24 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		catch (ClassCastException e)
 		{
 			return (boolean[])typeWarning(aKey, o, "boolean[]", null, e);
+		}
+	}
+
+
+	/**
+	 * Returns the value associated with the given key, or null if no mapping of the desired type exists for the given key or a null value
+	 * is explicitly associated with the key.
+	 */
+	public boolean[][] getBooleanMatrix(String aKey)
+	{
+		Object o = mValues.get(aKey);
+		try
+		{
+			return (boolean[][])o;
+		}
+		catch (ClassCastException e)
+		{
+			return (boolean[][])typeWarning(aKey, o, "boolean[][]", null, e);
 		}
 	}
 
@@ -498,6 +546,24 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 * Returns the value associated with the given key, or null if no mapping of the desired type exists for the given key or a null value
 	 * is explicitly associated with the key.
 	 */
+	public byte[][] getByteMatrix(String aKey)
+	{
+		Object o = mValues.get(aKey);
+		try
+		{
+			return (byte[][])o;
+		}
+		catch (ClassCastException e)
+		{
+			return (byte[][])typeWarning(aKey, o, "byte[][]", null, e);
+		}
+	}
+
+
+	/**
+	 * Returns the value associated with the given key, or null if no mapping of the desired type exists for the given key or a null value
+	 * is explicitly associated with the key.
+	 */
 	public ArrayList<Byte> getByteArrayList(String aKey)
 	{
 		Object o = mValues.get(aKey);
@@ -560,6 +626,24 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		catch (ClassCastException e)
 		{
 			return (char[])typeWarning(aKey, o, "char[]", null, e);
+		}
+	}
+
+
+	/**
+	 * Returns the value associated with the given key, or null if no mapping of the desired type exists for the given key or a null value
+	 * is explicitly associated with the key.
+	 */
+	public char[][] getCharMatrix(String aKey)
+	{
+		Object o = mValues.get(aKey);
+		try
+		{
+			return (char[][])o;
+		}
+		catch (ClassCastException e)
+		{
+			return (char[][])typeWarning(aKey, o, "char[][]", null, e);
 		}
 	}
 
@@ -638,6 +722,24 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 * Returns the value associated with the given key, or null if no mapping of the desired type exists for the given key or a null value
 	 * is explicitly associated with the key.
 	 */
+	public double[][] getDoubleMatrix(String aKey)
+	{
+		Object o = mValues.get(aKey);
+		try
+		{
+			return (double[][])o;
+		}
+		catch (ClassCastException e)
+		{
+			return (double[][])typeWarning(aKey, o, "double[][]", null, e);
+		}
+	}
+
+
+	/**
+	 * Returns the value associated with the given key, or null if no mapping of the desired type exists for the given key or a null value
+	 * is explicitly associated with the key.
+	 */
 	public ArrayList<Double> getDoubleArrayList(String aKey)
 	{
 		Object o = mValues.get(aKey);
@@ -700,6 +802,24 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		catch (ClassCastException e)
 		{
 			return (float[])typeWarning(aKey, o, "float[]", null, e);
+		}
+	}
+
+
+	/**
+	 * Returns the value associated with the given key, or null if no mapping of the desired type exists for the given key or a null value
+	 * is explicitly associated with the key.
+	 */
+	public float[][] getFloatMatrix(String aKey)
+	{
+		Object o = mValues.get(aKey);
+		try
+		{
+			return (float[][])o;
+		}
+		catch (ClassCastException e)
+		{
+			return (float[][])typeWarning(aKey, o, "float[][]", null, e);
 		}
 	}
 
@@ -778,6 +898,24 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 * Returns the value associated with the given key, or null if no mapping of the desired type exists for the given key or a null value
 	 * is explicitly associated with the key.
 	 */
+	public int[][] getIntMatrix(String aKey)
+	{
+		Object o = mValues.get(aKey);
+		try
+		{
+			return (int[][])o;
+		}
+		catch (ClassCastException e)
+		{
+			return (int[][])typeWarning(aKey, o, "int[][]", null, e);
+		}
+	}
+
+
+	/**
+	 * Returns the value associated with the given key, or null if no mapping of the desired type exists for the given key or a null value
+	 * is explicitly associated with the key.
+	 */
 	public ArrayList<Integer> getIntArrayList(String aKey)
 	{
 		Object o = mValues.get(aKey);
@@ -840,6 +978,24 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		catch (ClassCastException e)
 		{
 			return (long[])typeWarning(aKey, o, "long[]", null, e);
+		}
+	}
+
+
+	/**
+	 * Returns the value associated with the given key, or null if no mapping of the desired type exists for the given key or a null value
+	 * is explicitly associated with the key.
+	 */
+	public long[][] getLongMatrix(String aKey)
+	{
+		Object o = mValues.get(aKey);
+		try
+		{
+			return (long[][])o;
+		}
+		catch (ClassCastException e)
+		{
+			return (long[][])typeWarning(aKey, o, "long[][]", null, e);
 		}
 	}
 
@@ -918,6 +1074,24 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 * Returns the value associated with the given key, or null if no mapping of the desired type exists for the given key or a null value
 	 * is explicitly associated with the key.
 	 */
+	public short[][] getShortMatrix(String aKey)
+	{
+		Object o = mValues.get(aKey);
+		try
+		{
+			return (short[][])o;
+		}
+		catch (ClassCastException e)
+		{
+			return (short[][])typeWarning(aKey, o, "short[][]", null, e);
+		}
+	}
+
+
+	/**
+	 * Returns the value associated with the given key, or null if no mapping of the desired type exists for the given key or a null value
+	 * is explicitly associated with the key.
+	 */
 	public ArrayList<Short> getShortArrayList(String aKey)
 	{
 		Object o = mValues.get(aKey);
@@ -977,6 +1151,24 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		catch (ClassCastException e)
 		{
 			return (String[])typeWarning(aKey, o, "String[]", null, e);
+		}
+	}
+
+
+	/**
+	 * Returns the value associated with the given key, or null if no mapping of the desired type exists for the given key or a null value
+	 * is explicitly associated with the key.
+	 */
+	public String[][] getStringMatrix(String aKey)
+	{
+		Object o = mValues.get(aKey);
+		try
+		{
+			return (String[][])o;
+		}
+		catch (ClassCastException e)
+		{
+			return (String[][])typeWarning(aKey, o, "String[][]", null, e);
 		}
 	}
 
@@ -1063,6 +1255,24 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 * Returns the value associated with the given key, or null if no mapping of the desired type exists for the given key or a null value
 	 * is explicitly associated with the key.
 	 */
+	public Date[][] getDateMatrix(String aKey)
+	{
+		Object o = mValues.get(aKey);
+		try
+		{
+			return (Date[][])o;
+		}
+		catch (ClassCastException e)
+		{
+			return (Date[][])typeWarning(aKey, o, "Date[][]", null, e);
+		}
+	}
+
+
+	/**
+	 * Returns the value associated with the given key, or null if no mapping of the desired type exists for the given key or a null value
+	 * is explicitly associated with the key.
+	 */
 	public ArrayList<Date> getDateArrayList(String aKey)
 	{
 		Object o = mValues.get(aKey);
@@ -1134,6 +1344,13 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	}
 
 
+	public Bundle putBundleMatrix(String aKey, Bundle[][] aValue)
+	{
+		put(aKey, aValue);
+		return this;
+	}
+
+
 	public Bundle putBundleArrayList(String aKey, ArrayList<Bundle> aValue)
 	{
 		put(aKey, aValue);
@@ -1173,6 +1390,32 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 			{
 				bundles[i] = new Bundle();
 				aValues[i].writeExternal(bundles[i]);
+			}
+		}
+		put(aKey, bundles);
+		return this;
+	}
+
+
+	public Bundle putBundlableMatrix(String aKey, Bundlable[][] aValues) throws IOException
+	{
+		Bundle[][] bundles;
+
+		if (aValues == null)
+		{
+			bundles = null;
+		}
+		else
+		{
+			bundles = new Bundle[aValues.length][];
+			for (int i = 0; i < aValues.length; i++)
+			{
+				bundles[i] = new Bundle[aValues[i].length];
+				for (int j = 0; j < aValues[i].length; j++)
+				{
+					bundles[i][j] = new Bundle();
+					aValues[i][j].writeExternal(bundles[i][j]);
+				}
 			}
 		}
 		put(aKey, bundles);
@@ -1226,6 +1469,16 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	/**
 	 * Inserts a boolean array value into the mapping of this Bundle, replacing any existing value for the given key.
 	 */
+	public Bundle putBooleanMatrix(String aKey, boolean[][] aValue)
+	{
+		put(aKey, aValue);
+		return this;
+	}
+
+
+	/**
+	 * Inserts a boolean array value into the mapping of this Bundle, replacing any existing value for the given key.
+	 */
 	public Bundle putBooleanArrayList(String aKey, ArrayList<Boolean> aValue)
 	{
 		put(aKey, aValue);
@@ -1265,6 +1518,16 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	/**
 	 * Inserts a byte array value into the mapping of this Bundle, replacing any existing value for the given key.
 	 */
+	public Bundle putByteMatrix(String aKey, byte[][] aValue)
+	{
+		put(aKey, aValue);
+		return this;
+	}
+
+
+	/**
+	 * Inserts a byte array value into the mapping of this Bundle, replacing any existing value for the given key.
+	 */
 	public Bundle putByteArrayList(String aKey, ArrayList<Byte> aValue)
 	{
 		put(aKey, aValue);
@@ -1295,6 +1558,16 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	/**
 	 * Inserts a char array value into the mapping of this Bundle, replacing any existing value for the given key.
 	 */
+	public Bundle putCharMatrix(String aKey, char[][] aValue)
+	{
+		put(aKey, aValue);
+		return this;
+	}
+
+
+	/**
+	 * Inserts a char array value into the mapping of this Bundle, replacing any existing value for the given key.
+	 */
 	public Bundle putCharArrayList(String aKey, ArrayList<Character> aValue)
 	{
 		put(aKey, aValue);
@@ -1316,6 +1589,16 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 * Inserts a double array value into the mapping of this Bundle, replacing any existing value for the given key.
 	 */
 	public Bundle putDoubleArray(String aKey, double... aValue)
+	{
+		put(aKey, aValue);
+		return this;
+	}
+
+
+	/**
+	 * Inserts a double array value into the mapping of this Bundle, replacing any existing value for the given key.
+	 */
+	public Bundle putDoubleArray(String aKey, double[][] aValue)
 	{
 		put(aKey, aValue);
 		return this;
@@ -1355,6 +1638,16 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	/**
 	 * Inserts a float array value into the mapping of this Bundle, replacing any existing value for the given key.
 	 */
+	public Bundle putFloatMatrix(String aKey, float[][] aValue)
+	{
+		put(aKey, aValue);
+		return this;
+	}
+
+
+	/**
+	 * Inserts a float array value into the mapping of this Bundle, replacing any existing value for the given key.
+	 */
 	public Bundle putFloatArrayList(String aKey, ArrayList<Float> aValue)
 	{
 		put(aKey, aValue);
@@ -1376,6 +1669,16 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 * Inserts an int array value into the mapping of this Bundle, replacing any existing value for the given key.
 	 */
 	public Bundle putIntArray(String aKey, int... aValue)
+	{
+		put(aKey, aValue);
+		return this;
+	}
+
+
+	/**
+	 * Inserts an int array value into the mapping of this Bundle, replacing any existing value for the given key.
+	 */
+	public Bundle putIntMatrix(String aKey, int[][] aValue)
 	{
 		put(aKey, aValue);
 		return this;
@@ -1406,6 +1709,16 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 * Inserts a long array value into the mapping of this Bundle, replacing any existing value for the given key.
 	 */
 	public Bundle putLongArray(String aKey, long... aValue)
+	{
+		put(aKey, aValue);
+		return this;
+	}
+
+
+	/**
+	 * Inserts a long array value into the mapping of this Bundle, replacing any existing value for the given key.
+	 */
+	public Bundle putLongMatrix(String aKey, long[][] aValue)
 	{
 		put(aKey, aValue);
 		return this;
@@ -1452,6 +1765,16 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 
 
 	/**
+	 * Inserts a short array value into the mapping of this Bundle, replacing any existing value for the given key.
+	 */
+	public Bundle putShortArray(String aKey, short[][] aValue)
+	{
+		put(aKey, aValue);
+		return this;
+	}
+
+
+	/**
 	 * Inserts a short list value into the mapping of this Bundle, replacing any existing value for the given key.
 	 */
 	public Bundle putShortArrayList(String aKey, ArrayList<Short> aValue)
@@ -1482,6 +1805,16 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 
 
 	/**
+	 * Inserts a String array value into the mapping of this Bundle, replacing any existing value for the given key.
+	 */
+	public Bundle putStringMatrix(String aKey, String[][] aValue)
+	{
+		put(aKey, aValue);
+		return this;
+	}
+
+
+	/**
 	 * Inserts an ArrayList value into the mapping of this Bundle, replacing any existing value for the given key.
 	 */
 	public Bundle putStringArrayList(String aKey, ArrayList<String> aValue)
@@ -1505,6 +1838,16 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 * Inserts a Date array value into the mapping of this Bundle, replacing any existing value for the given key.
 	 */
 	public Bundle putDateArray(String aKey, Date... aValue)
+	{
+		put(aKey, aValue);
+		return this;
+	}
+
+
+	/**
+	 * Inserts a Date array value into the mapping of this Bundle, replacing any existing value for the given key.
+	 */
+	public Bundle putDateMatrix(String aKey, Date[][] aValue)
 	{
 		put(aKey, aValue);
 		return this;
@@ -1634,7 +1977,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	}
 
 
-	public void put(String aKey, Object aValue)
+	void put(String aKey, Object aValue)
 	{
 		if (aKey == null)
 		{
@@ -1715,16 +2058,16 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		return bundle;
 	}
 
-	
+
 	public interface ConvertValue
 	{
 		/**
-		 * Return the value as a standard type.
-		 * 
+		 * Return the value as a standard Java type or other type supported by the Bundle implementation.
+		 *
 		 * @param aValue
 		 *   a java object.
-		 * @return 
-		 *   a standard java type supported the Bundle implementation.
+		 * @return
+		 *   a standard Java type or other type supported by the Bundle implementation.
 		 */
 		Object process(Object aValue);
 	}

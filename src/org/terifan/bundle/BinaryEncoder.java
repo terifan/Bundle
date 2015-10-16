@@ -71,16 +71,29 @@ public class BinaryEncoder implements Encoder
 
 			if (cls.isArray())
 			{
-				mOutput.writeBits(0b11, 2);
-				if (fieldType == FieldType.BYTE)
+				if (cls.getComponentType().isArray())
 				{
-					mOutput.writeVariableInt(((byte[])value).length, 3, 4, false);
-					mOutput.align();
-					mOutput.write((byte[])value);
+					mOutput.writeBits(0b111, 3);
+					if (fieldType == FieldType.BYTE)
+					{
+						writeByteMatrix(value);
+					}
+					else
+					{
+						writeMatrix(fieldType, value);
+					}
 				}
 				else
 				{
-					writeList(fieldType, value);
+					mOutput.writeBits(0b110, 3);
+					if (fieldType == FieldType.BYTE)
+					{
+						writeByteArray(value);
+					}
+					else
+					{
+						writeList(fieldType, value);
+					}
 				}
 			}
 			else if (List.class.isAssignableFrom(cls))
@@ -92,6 +105,82 @@ public class BinaryEncoder implements Encoder
 			{
 				mOutput.writeBits(0b0, 1);
 				writeValue(fieldType, value);
+			}
+		}
+	}
+
+
+	private void writeByteArray(Object aValue) throws IOException
+	{
+		mOutput.writeVariableInt(((byte[])aValue).length, 3, 4, false);
+		mOutput.align();
+		mOutput.write((byte[])aValue);
+	}
+
+
+	private void writeMatrix(FieldType aFieldType, Object aValue) throws ArrayIndexOutOfBoundsException, IOException, IllegalArgumentException
+	{
+		int len = Array.getLength(aValue);
+		mOutput.writeVariableInt(len, 3, 4, false);
+		for (int i = 0; i < len; i++)
+		{
+			Object v = Array.get(aValue, i);
+			if (v == null)
+			{
+				mOutput.writeBit(1);
+			}
+			else
+			{
+				mOutput.writeBit(0);
+				writeList(aFieldType, v);
+			}
+		}
+	}
+
+
+	private void writeByteMatrix(Object aValue) throws ArrayIndexOutOfBoundsException, IOException, IllegalArgumentException
+	{
+		byte[][] buf = (byte[][])aValue;
+		boolean full = true;
+
+		for (int i = 0; i < buf.length; i++)
+		{
+			if (buf[i] == null || buf[i].length != buf[0].length)
+			{
+				full = false;
+				break;
+			}
+		}
+
+		if (full)
+		{
+			mOutput.writeBit(0);
+			mOutput.writeVariableInt(buf.length, 3, 4, false);
+			mOutput.writeVariableInt(buf[0].length, 3, 4, false);
+			mOutput.align();
+			for (int i = 0; i < buf.length; i++)
+			{
+				mOutput.write(buf[i]);
+			}
+		}
+		else
+		{
+			mOutput.writeBit(1);
+			mOutput.writeVariableInt(buf.length, 3, 4, false);
+			for (int i = 0; i < buf.length; i++)
+			{
+				Object v = Array.get(aValue, i);
+				if (v == null)
+				{
+					mOutput.writeBit(1);
+				}
+				else
+				{
+					mOutput.writeBit(0);
+					mOutput.writeVariableInt(buf[i].length, 3, 4, false);
+					mOutput.align();
+					mOutput.write(buf[i]);
+				}
 			}
 		}
 	}
