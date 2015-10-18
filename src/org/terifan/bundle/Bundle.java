@@ -1410,11 +1410,14 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 			bundles = new Bundle[aValues.length][];
 			for (int i = 0; i < aValues.length; i++)
 			{
-				bundles[i] = new Bundle[aValues[i].length];
-				for (int j = 0; j < aValues[i].length; j++)
+				if (aValues[i] != null)
 				{
-					bundles[i][j] = new Bundle();
-					aValues[i][j].writeExternal(bundles[i][j]);
+					bundles[i] = new Bundle[aValues[i].length];
+					for (int j = 0; j < aValues[i].length; j++)
+					{
+						bundles[i][j] = new Bundle();
+						aValues[i][j].writeExternal(bundles[i][j]);
+					}
 				}
 			}
 		}
