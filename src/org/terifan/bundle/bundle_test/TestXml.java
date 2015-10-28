@@ -27,7 +27,8 @@ public class TestXml
 	{
 		try
 		{
-			test("params.xml");
+			test("tiny.xml");
+//			test("params.xml");
 //			test("fo.xml");
 //			test("ctts.xml");
 //			test("lynx.xml");
@@ -160,7 +161,9 @@ public class TestXml
 	{
 		Object output = aInput;
 
+		output = parseDate(output, "yyyy-MM-dd'T'HH:mm:ss.SSS");
 		output = parseDate(output, "yyyy-MM-dd'T'HH:mm:ss");
+		output = parseDate(output, "yyyy-MM-dd HH:mm:ss.SSS");
 		output = parseDate(output, "yyyy-MM-dd HH:mm:ss");
 		output = parseDate(output, "yyyy-MM-dd");
 
