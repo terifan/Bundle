@@ -1,8 +1,8 @@
 <OmsRequest>
   <requestId>f24611e5-f1c9-46c9-bba7-1450f7479845</requestId>
   <userId>SLVKRME</userId>
-  <userName>Kristaps Medins</userName>
-  <userEmail>lv.dl.rix.itmsapp@dbschenker.com</userEmail>
+  <userName>Denel Bernard</userName>
+  <userEmail>denel.bernard@company.com</userEmail>
   <trigger>USER</trigger>
   <trip>
     <transportMovementId>RIXX23032</transportMovementId>

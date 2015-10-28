@@ -1,8 +1,8 @@
 <OmsRequest>
   <requestId>4eed40a8-eb8e-4609-acc2-daef9b9a30ed</requestId>
   <userId>SEEENBE</userId>
-  <userName>Enel Bernard</userName>
-  <userEmail>enel.bernard@dbschenker.com</userEmail>
+  <userName>Denel Bernard</userName>
+  <userEmail>denel.bernard@company.com</userEmail>
   <trigger>USER</trigger>
   <trip>
     <transportMovementId>TLLX60820</transportMovementId>

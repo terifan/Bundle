@@ -1,0 +1,115 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<soapenv:Header/>
+	<soapenv:Body>
+		<ns6:TrackTraceResponse xmlns="" xmlns:ns6="http://www.schenker.com/CTTS/TrackTrace/Response/v1">
+			<TrackTraceDetailsMessage majorVersionNr="0" minorVersionNr="0">
+				<DataArea>
+					<OrderDescription>
+						<Identification>
+							<UniqueOrderNumber type="STT">TST3000125</UniqueOrderNumber>
+							<TransportMode>3</TransportMode>
+							<TransportType></TransportType>
+						</Identification>
+						<TransportConditions>
+							<Combiterm>001</Combiterm>
+						</TransportConditions>
+						<DateTimes type="55">
+							<Date>2013-08-26T00:00:00.019+02:00</Date>
+							<Time>00:00:00.020+02:00</Time>
+						</DateTimes>
+						<Locations type="DEP">
+							<LocationName>Oslo</LocationName>
+						</Locations>
+						<Locations type="DES">
+							<LocationName>Gothenburg/Goteborg</LocationName>
+						</Locations>
+						<Locations type="FDEL">
+							<LocationName>Hisings backa</LocationName>
+						</Locations>
+						<Locations type="PICK">
+							<LocationName>Oslo</LocationName>
+						</Locations>
+						<Partner roleCode="CZ">
+							<Address>
+								<AddressDetails>
+									<AddressDetailShared>
+										<Name>
+											<Name>SCHENKER A/S</Name>
+											<Index>0</Index>
+										</Name>
+										<Physical>
+											<PostalCode>0699</PostalCode>
+											<City>
+												<CityName>Oslo</CityName>
+											</City>
+											<Street>Postboks 292 alnabru</Street>
+											<Street>Alnabruveien 15</Street>
+										</Physical>
+									</AddressDetailShared>
+									<Country>
+										<AlphaTwoDigitCode>NO</AlphaTwoDigitCode>
+									</Country>
+								</AddressDetails>
+							</Address>
+						</Partner>
+						<Partner roleCode="CN">
+							<Address>
+								<AddressDetails>
+									<AddressDetailShared>
+										<Name>
+											<Name>SCHENKER AB UTRIKES</Name>
+											<Index>0</Index>
+										</Name>
+										<Physical>
+											<PostalCode>42246</PostalCode>
+											<City>
+												<CityName>Hisings backa</CityName>
+											</City>
+											<Street>Distrikt g&#246;teborg</Street>
+											<Street>Transportgatan 9-11</Street>
+										</Physical>
+									</AddressDetailShared>
+									<Country>
+										<AlphaTwoDigitCode>SE</AlphaTwoDigitCode>
+									</Country>
+								</AddressDetails>
+							</Address>
+						</Partner>
+						<References type="AAM">
+							<ReferenceID></ReferenceID>
+						</References>
+						<References type="SI">
+							<ReferenceID></ReferenceID>
+						</References>
+						<References type="ANT">
+							<ReferenceID></ReferenceID>
+						</References>
+						<PackageOutToIn>
+							<Package>
+								<PackageTypeCode></PackageTypeCode>
+							</Package>
+							<NumberOfUnits>1</NumberOfUnits>
+							<MarksAndLabels>
+								<Text> </Text>
+							</MarksAndLabels>
+							<Goods>
+								<GoodsDescription>
+									<Text>jh </Text>
+								</GoodsDescription>
+							</Goods>
+						</PackageOutToIn>
+						<TotalMeasures type="G">
+							<MeasureValue unit="KGM">10.00</MeasureValue>
+						</TotalMeasures>
+						<TotalMeasures type="ABJ">
+							<MeasureValue unit="MTQ">0.000</MeasureValue>
+						</TotalMeasures>
+						<TotalMeasures type="NoUnits">
+							<MeasureValue unit="NMP">1</MeasureValue>
+						</TotalMeasures>
+					</OrderDescription>
+				</DataArea>
+			</TrackTraceDetailsMessage>
+		</ns6:TrackTraceResponse>
+	</soapenv:Body>
+</soapenv:Envelope>

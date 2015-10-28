@@ -8,7 +8,6 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.TreeMap;
-import sun.rmi.runtime.Log;
 
 
 public class BinaryDecoder implements Decoder
@@ -92,14 +91,6 @@ public class BinaryDecoder implements Decoder
 			{
 				value = readList(fieldType);
 			}
-			else if (fieldType == FieldType.BYTE && mInput.readBit() == 0)
-			{
-				value = readByteArray(fieldType);
-			}
-			else if (fieldType == FieldType.BYTE)
-			{
-				value = readByteMatrix(fieldType);
-			}
 			else if (mInput.readBit() == 0)
 			{
 				value = readArray(fieldType);
@@ -118,6 +109,11 @@ public class BinaryDecoder implements Decoder
 
 	private Object readArray(FieldType aFieldType) throws IOException, ArrayIndexOutOfBoundsException, IllegalArgumentException, NegativeArraySizeException
 	{
+		if (aFieldType == FieldType.BYTE)
+		{
+			return readByteArray();
+		}
+
 		ArrayList list = readList(aFieldType);
 		Object value = Array.newInstance(aFieldType.getPrimitiveType(), list.size());
 		for (int i = 0; i < list.size(); i++)
@@ -131,23 +127,54 @@ public class BinaryDecoder implements Decoder
 
 	private Object readMatrix(FieldType aFieldType) throws IOException, ArrayIndexOutOfBoundsException, IllegalArgumentException, NegativeArraySizeException
 	{
-		int dim = mInput.readVariableInt(3, 4, false);
-		Object value = Array.newInstance(aFieldType.getPrimitiveType(), dim, 0);
-		for (int j = 0; j < dim; j++)
+		if (aFieldType == FieldType.BYTE)
 		{
-			if (mInput.readBit() == 0)
+			return readByteMatrix();
+		}
+
+		Object value;
+
+		if (mInput.readBit() == 0)
+		{
+			int rows = mInput.readVariableInt(3, 4, false);
+			if (rows > 0)
 			{
-				ArrayList list = readList(aFieldType);
-				Object arr = Array.newInstance(aFieldType.getPrimitiveType(), list.size());
-				for (int i = 0; i < list.size(); i++)
+				int cols = mInput.readVariableInt(3, 4, false);
+				value = Array.newInstance(aFieldType.getPrimitiveType(), rows, cols);
+				for (int i = 0; i < rows; i++)
 				{
-					Array.set(arr, i, list.get(i));
+					Object arr = Array.get(value, i);
+					for (int j = 0; j < cols; j++)
+					{
+						Array.set(arr, i, readValue(aFieldType));
+					}
 				}
-				Array.set(value, j, arr);
 			}
 			else
 			{
-				Array.set(value, j, null);
+				value = null;
+			}
+		}
+		else
+		{
+			int dim = mInput.readVariableInt(3, 4, false);
+			value = Array.newInstance(aFieldType.getPrimitiveType(), dim, 0);
+			for (int j = 0; j < dim; j++)
+			{
+				if (mInput.readBit() == 0)
+				{
+					ArrayList list = readList(aFieldType);
+					Object arr = Array.newInstance(aFieldType.getPrimitiveType(), list.size());
+					for (int i = 0; i < list.size(); i++)
+					{
+						Array.set(arr, i, list.get(i));
+					}
+					Array.set(value, j, arr);
+				}
+				else
+				{
+					Array.set(value, j, null);
+				}
 			}
 		}
 
@@ -155,7 +182,7 @@ public class BinaryDecoder implements Decoder
 	}
 
 
-	private Object readByteArray(FieldType aFieldType) throws NegativeArraySizeException, ArrayIndexOutOfBoundsException, IllegalArgumentException, IOException
+	private Object readByteArray() throws NegativeArraySizeException, ArrayIndexOutOfBoundsException, IllegalArgumentException, IOException
 	{
 		Object value = new byte[mInput.readVariableInt(3, 4, false)];
 		mInput.align();
@@ -165,7 +192,7 @@ public class BinaryDecoder implements Decoder
 	}
 
 
-	private Object readByteMatrix(FieldType aFieldType) throws NegativeArraySizeException, ArrayIndexOutOfBoundsException, IllegalArgumentException, IOException
+	private Object readByteMatrix() throws NegativeArraySizeException, ArrayIndexOutOfBoundsException, IllegalArgumentException, IOException
 	{
 		Object value;
 
@@ -173,7 +200,7 @@ public class BinaryDecoder implements Decoder
 		{
 			int rows = mInput.readVariableInt(3, 4, false);
 			int cols = mInput.readVariableInt(3, 4, false);
-			value = Array.newInstance(aFieldType.getPrimitiveType(), rows, cols);
+			value = Array.newInstance(Byte.TYPE, rows, cols);
 			mInput.align();
 			for (int j = 0; j < rows; j++)
 			{
@@ -183,7 +210,7 @@ public class BinaryDecoder implements Decoder
 		else
 		{
 			int dim = mInput.readVariableInt(3, 4, false);
-			value = Array.newInstance(aFieldType.getPrimitiveType(), dim, 0);
+			value = Array.newInstance(Byte.TYPE, dim, 0);
 			for (int j = 0; j < dim; j++)
 			{
 				if (mInput.readBit() == 0)
@@ -206,34 +233,7 @@ public class BinaryDecoder implements Decoder
 
 	private FieldType decodeFieldType() throws IOException
 	{
-		switch ((int)mInput.readBits(2))
-		{
-			case 0b00: return FieldType.DECODER_ORDER[0];
-			case 0b01: return FieldType.DECODER_ORDER[1];
-			case 0b10: return FieldType.DECODER_ORDER[2];
-			default:
-				switch ((int)mInput.readBits(3))
-				{
-					case 0b000: return FieldType.DECODER_ORDER[3];
-					case 0b001: return FieldType.DECODER_ORDER[4];
-					case 0b010: return FieldType.DECODER_ORDER[5];
-					case 0b011: return FieldType.DECODER_ORDER[6];
-					case 0b100: return FieldType.DECODER_ORDER[7];
-					case 0b101: return FieldType.DECODER_ORDER[8];
-					case 0b110: return FieldType.DECODER_ORDER[9];
-					default:
-						switch (mInput.readBit())
-						{
-							case 0b0: return FieldType.DECODER_ORDER[10];
-							default:
-								switch (mInput.readBit())
-								{
-									case 0b0: return FieldType.DECODER_ORDER[11];
-									default: return FieldType.DECODER_ORDER[12];
-								}
-						}
-				}
-		}
+		return FieldType.values()[(int)mInput.readBits(4)];
 	}
 
 
@@ -305,7 +305,7 @@ public class BinaryDecoder implements Decoder
 			case BOOLEAN:
 				return mInput.readBit() == 1;
 			case BYTE:
-				return (byte)mInput.read();
+				return (byte)mInput.readBits(8);
 			case SHORT:
 				return (short)mInput.readVariableInt(3, 0, true);
 			case CHAR:

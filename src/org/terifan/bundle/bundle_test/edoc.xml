@@ -11,11 +11,11 @@
             <mime>image/png</mime>
         </format>
         <user>
-            <login_name>semac1</login_name>
-            <password>semac1</password>
+            <login_name>denel</login_name>
+            <password>denel123</password>
         </user>
         <admin>
-            <e_mail>patrik@surikat.se</e_mail>
+            <e_mail>denel.bernard@company.com</e_mail>
         </admin>
     </request>
     <data_list>
@@ -43,19 +43,9 @@
                         <encoding>plaintext</encoding>
                     </meta_data>
                     <meta_data>
-                        <key>base64:phone_number</key>
-                        <value>MzcxMjY0MTMwNTQ=</value>
-                        <encoding>base64</encoding>
-                    </meta_data>
-                    <meta_data>
                         <key>timezone_name</key>
                         <value>Austrumeiropas ziemas laiks</value>
                         <encoding>plaintext</encoding>
-                    </meta_data>
-                    <meta_data>
-                        <key>base64:timezone_name</key>
-                        <value>QXVzdHJ1bWVpcm9wYXMgemllbWFzIGxhaWtz</value>
-                        <encoding>base64</encoding>
                     </meta_data>
                     <meta_data>
                         <key>location_longitude</key>
@@ -63,19 +53,9 @@
                         <encoding>plaintext</encoding>
                     </meta_data>
                     <meta_data>
-                        <key>base64:location_longitude</key>
-                        <value>MjMuMzAwNzQ2NTI=</value>
-                        <encoding>base64</encoding>
-                    </meta_data>
-                    <meta_data>
                         <key>claim_details</key>
                         <value></value>
                         <encoding>plaintext</encoding>
-                    </meta_data>
-                    <meta_data>
-                        <key>base64:claim_details</key>
-                        <value></value>
-                        <encoding>base64</encoding>
                     </meta_data>
                     <meta_data>
                         <key>signature_name</key>
@@ -83,20 +63,9 @@
                         <encoding>plaintext</encoding>
                     </meta_data>
                     <meta_data>
-                        <key>base64:signature_name</key>
-                        <value>IA==</value>
-                        <encoding>base64</encoding>
-                    </meta_data>
-                    <meta_data>
                         <key>location_geozone</key>
-                        <value>distance līdz
-Kalviai (B), 36km</value>
+                        <value>distance līdz Kalviai (B), 36km</value>
                         <encoding>plaintext</encoding>
-                    </meta_data>
-                    <meta_data>
-                        <key>base64:location_geozone</key>
-                        <value>ZGlzdGFuY2UgbMSrZHoKS2FsdmlhaSAoQiksIDM2a20=</value>
-                        <encoding>base64</encoding>
                     </meta_data>
                     <meta_data>
                         <key>app_version</key>
@@ -104,19 +73,9 @@ Kalviai (B), 36km</value>
                         <encoding>plaintext</encoding>
                     </meta_data>
                     <meta_data>
-                        <key>base64:app_version</key>
-                        <value>My4x</value>
-                        <encoding>base64</encoding>
-                    </meta_data>
-                    <meta_data>
                         <key>timezone_offset</key>
                         <value>10800000</value>
                         <encoding>plaintext</encoding>
-                    </meta_data>
-                    <meta_data>
-                        <key>base64:timezone_offset</key>
-                        <value>MTA4MDAwMDA=</value>
-                        <encoding>base64</encoding>
                     </meta_data>
                     <meta_data>
                         <key>remarks_reason_code</key>
@@ -124,19 +83,9 @@ Kalviai (B), 36km</value>
                         <encoding>plaintext</encoding>
                     </meta_data>
                     <meta_data>
-                        <key>base64:remarks_reason_code</key>
-                        <value>Tk9ORQ==</value>
-                        <encoding>base64</encoding>
-                    </meta_data>
-                    <meta_data>
                         <key>remarks</key>
                         <value></value>
                         <encoding>plaintext</encoding>
-                    </meta_data>
-                    <meta_data>
-                        <key>base64:remarks</key>
-                        <value></value>
-                        <encoding>base64</encoding>
                     </meta_data>
                     <meta_data>
                         <key>sender_name</key>
@@ -144,19 +93,9 @@ Kalviai (B), 36km</value>
                         <encoding>plaintext</encoding>
                     </meta_data>
                     <meta_data>
-                        <key>base64:sender_name</key>
-                        <value></value>
-                        <encoding>base64</encoding>
-                    </meta_data>
-                    <meta_data>
                         <key>app_name</key>
                         <value>iApp</value>
                         <encoding>plaintext</encoding>
-                    </meta_data>
-                    <meta_data>
-                        <key>base64:app_name</key>
-                        <value>aUFwcA==</value>
-                        <encoding>base64</encoding>
                     </meta_data>
                     <meta_data>
                         <key>deliverer_name</key>
@@ -164,19 +103,9 @@ Kalviai (B), 36km</value>
                         <encoding>plaintext</encoding>
                     </meta_data>
                     <meta_data>
-                        <key>base64:deliverer_name</key>
-                        <value></value>
-                        <encoding>base64</encoding>
-                    </meta_data>
-                    <meta_data>
                         <key>receiver_name</key>
                         <value> </value>
                         <encoding>plaintext</encoding>
-                    </meta_data>
-                    <meta_data>
-                        <key>base64:receiver_name</key>
-                        <value>IA==</value>
-                        <encoding>base64</encoding>
                     </meta_data>
                     <meta_data>
                         <key>location_time</key>
@@ -184,19 +113,9 @@ Kalviai (B), 36km</value>
                         <encoding>plaintext</encoding>
                     </meta_data>
                     <meta_data>
-                        <key>base64:location_time</key>
-                        <value>MjAxNS0wNS0wNiAwOTo0MToxMA==</value>
-                        <encoding>base64</encoding>
-                    </meta_data>
-                    <meta_data>
                         <key>claim_reason_code</key>
                         <value>NONE</value>
                         <encoding>plaintext</encoding>
-                    </meta_data>
-                    <meta_data>
-                        <key>base64:claim_reason_code</key>
-                        <value>Tk9ORQ==</value>
-                        <encoding>base64</encoding>
                     </meta_data>
                     <meta_data>
                         <key>driver_identification</key>
@@ -204,19 +123,9 @@ Kalviai (B), 36km</value>
                         <encoding>plaintext</encoding>
                     </meta_data>
                     <meta_data>
-                        <key>base64:driver_identification</key>
-                        <value>Tk9ORQ==</value>
-                        <encoding>base64</encoding>
-                    </meta_data>
-                    <meta_data>
                         <key>unit_platform</key>
                         <value>prod</value>
                         <encoding>plaintext</encoding>
-                    </meta_data>
-                    <meta_data>
-                        <key>base64:unit_platform</key>
-                        <value>cHJvZA==</value>
-                        <encoding>base64</encoding>
                     </meta_data>
                     <meta_data>
                         <key>unit_no</key>
@@ -224,19 +133,9 @@ Kalviai (B), 36km</value>
                         <encoding>plaintext</encoding>
                     </meta_data>
                     <meta_data>
-                        <key>base64:unit_no</key>
-                        <value>TFYwMDE3</value>
-                        <encoding>base64</encoding>
-                    </meta_data>
-                    <meta_data>
                         <key>create_datetime</key>
                         <value>2015-05-06 09:43:24</value>
                         <encoding>plaintext</encoding>
-                    </meta_data>
-                    <meta_data>
-                        <key>base64:create_datetime</key>
-                        <value>MjAxNS0wNS0wNiAwOTo0MzoyNA==</value>
-                        <encoding>base64</encoding>
                     </meta_data>
                     <meta_data>
                         <key>location_status</key>
@@ -244,29 +143,14 @@ Kalviai (B), 36km</value>
                         <encoding>plaintext</encoding>
                     </meta_data>
                     <meta_data>
-                        <key>base64:location_status</key>
-                        <value>Q1VSUkVOVA==</value>
-                        <encoding>base64</encoding>
-                    </meta_data>
-                    <meta_data>
                         <key>carrier_name</key>
                         <value></value>
                         <encoding>plaintext</encoding>
                     </meta_data>
                     <meta_data>
-                        <key>base64:carrier_name</key>
-                        <value></value>
-                        <encoding>base64</encoding>
-                    </meta_data>
-                    <meta_data>
                         <key>location_latitude</key>
                         <value>56.62230969</value>
                         <encoding>plaintext</encoding>
-                    </meta_data>
-                    <meta_data>
-                        <key>base64:location_latitude</key>
-                        <value>NTYuNjIyMzA5Njk=</value>
-                        <encoding>base64</encoding>
                     </meta_data>
                     <meta_data>
                         <key>order</key>

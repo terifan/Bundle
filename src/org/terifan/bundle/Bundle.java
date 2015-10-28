@@ -1601,7 +1601,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	/**
 	 * Inserts a double array value into the mapping of this Bundle, replacing any existing value for the given key.
 	 */
-	public Bundle putDoubleArray(String aKey, double[][] aValue)
+	public Bundle putDoubleMatrix(String aKey, double[][] aValue)
 	{
 		put(aKey, aValue);
 		return this;
@@ -1980,7 +1980,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	}
 
 
-	void put(String aKey, Object aValue)
+	public void put(String aKey, Object aValue)
 	{
 		if (aKey == null)
 		{

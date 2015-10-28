@@ -243,7 +243,7 @@ public class TextEncoder
 			for (String key : aBundle.keySet())
 			{
 				Object value = aBundle.get(key);
-				FieldType fieldType = FieldType.valueOf(value);
+				FieldType fieldType = FieldType.classify(value);
 				if (value != null && (fieldType == FieldType.BUNDLE || value.getClass().isArray() || List.class.isAssignableFrom(value.getClass())))
 				{
 					simple = false;
@@ -325,7 +325,7 @@ public class TextEncoder
 
 	private String escapeString(String s)
 	{
-		return s.replace("\\", "\\\\").replace("\"", "\\\"").replace("/", "\\/").replace("\b", "\\\b").replace("\f", "\\\f").replace("\n", "\\\n").replace("\r", "\\\r").replace("\t", "\\\t");
+		return s.replace("\\", "\\\\").replace("\"", "\\\"").replace("\b", "\\\b").replace("\f", "\\\f").replace("\n", "\\\n").replace("\r", "\\\r").replace("\t", "\\\t");
 	}
 
 

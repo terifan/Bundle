@@ -7,11 +7,12 @@ import java.io.OutputStream;
 /**
  * BitOutputStream writes bits to the underlying byte stream.
  */
-class BitOutputStream extends OutputStream
+class BitOutputStream //extends OutputStream
 {
 	private OutputStream mOutputStream;
 	private int mBitsToGo;
 	private int mBitBuffer;
+	private long mBitsWritten;
 
 
 	public BitOutputStream(OutputStream aOutputStream)
@@ -25,6 +26,7 @@ class BitOutputStream extends OutputStream
 	public void writeBit(int aBit) throws IOException
 	{
 		mBitBuffer |= aBit << --mBitsToGo;
+		mBitsWritten++;
 
 		if (mBitsToGo == 0)
 		{
@@ -169,21 +171,21 @@ class BitOutputStream extends OutputStream
 	}
 
 
-	@Override
-	public void write(int aByte) throws IOException
-	{
-		writeBits(0xff & aByte, 8);
-	}
+//	@Override
+//	public void write(int aByte) throws IOException
+//	{
+//		writeBits(0xff & aByte, 8);
+//	}
 
 
-	@Override
+//	@Override
 	public void write(byte[] aBuffer) throws IOException
 	{
 		write(aBuffer, 0, aBuffer.length);
 	}
 
 
-	@Override
+//	@Override
 	public void write(byte[] aBuffer, int aOffset, int aLength) throws IOException
 	{
 		if (mBitsToGo == 8)
@@ -206,7 +208,7 @@ class BitOutputStream extends OutputStream
 	}
 
 
-	@Override
+//	@Override
 	public void close() throws IOException
 	{
 		if (mOutputStream != null)
@@ -231,5 +233,11 @@ class BitOutputStream extends OutputStream
 	public int getBitCount()
 	{
 		return 8-mBitsToGo;
+	}
+
+
+	public long getBitsWritten()
+	{
+		return mBitsWritten;
 	}
 }

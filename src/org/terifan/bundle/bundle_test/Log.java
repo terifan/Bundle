@@ -1,9 +1,9 @@
-package org.terifan.bundle;
+package org.terifan.bundle.bundle_test;
 
 import java.io.PrintStream;
 
 
-class Log
+public class Log
 {
 	public final static PrintStream out = System.out;
 
@@ -105,7 +105,7 @@ class Log
 		}
 
 		int LW = 32;
-		int MR = 100;
+		int MR = 1000;
 
 		StringBuilder binText = new StringBuilder("");
 		StringBuilder hexText = new StringBuilder("");

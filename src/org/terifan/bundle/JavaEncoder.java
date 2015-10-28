@@ -49,7 +49,7 @@ public class JavaEncoder
 		for (String key : keys)
 		{
 			Object value = aBundle.get(key);
-			FieldType fieldType = FieldType.valueOf(value);
+			FieldType fieldType = FieldType.classify(value);
 
 			if (value != null)
 			{

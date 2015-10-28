@@ -7,7 +7,7 @@ import java.io.InputStream;
 /**
  * BitInputStream allow reading bits from the underlying stream.
  */
-class BitInputStream extends InputStream
+class BitInputStream //extends InputStream
 {
 	private InputStream mInputStream;
 	private int mBitBuffer;
@@ -152,21 +152,21 @@ class BitInputStream extends InputStream
 	}
 
 
-	@Override
-	public int read() throws IOException
-	{
-		return (int)readBits(8);
-	}
+//	@Override
+//	public int read() throws IOException
+//	{
+//		return (int)readBits(8);
+//	}
 
 
-	@Override
+//	@Override
 	public int read(byte[] aBuffer) throws IOException
 	{
 		return read(aBuffer, 0, aBuffer.length);
 	}
 
 
-	@Override
+//	@Override
 	public int read(byte[] aBuffer, int aOffset, int aLength) throws IOException
 	{
 		if (mBitCount == 0)

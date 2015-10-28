@@ -12,9 +12,9 @@ class Convert
 
 		for (int i = 0, len = aInput.length(); i < len; i++)
 		{
-			if (ptr+3 > array.length)
+			if (ptr + 3 > array.length)
 			{
-				array = Arrays.copyOf(array, (ptr+1)*3/2);
+				array = Arrays.copyOf(array, (ptr + 3) * 3 / 2);
 			}
 
 			char c = aInput.charAt(i);

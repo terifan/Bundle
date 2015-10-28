@@ -250,7 +250,7 @@ public class TextDecoder
 
 	private void replaceNullMatrix(Object aArr)
 	{
-		if (aArr != null && aArr.getClass().getComponentType().isArray())
+		if (aArr != null && aArr.getClass().isArray() && aArr.getClass().getComponentType().isArray())
 		{
 			Class type = null;
 			boolean hasNull = false;

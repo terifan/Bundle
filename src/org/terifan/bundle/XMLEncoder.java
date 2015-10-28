@@ -116,7 +116,7 @@ public class XMLEncoder
 		for (String key : aBundle.keySet())
 		{
 			Object value = aBundle.get(key);
-			FieldType fieldType = FieldType.valueOf(value);
+			FieldType fieldType = FieldType.classify(value);
 
 			if (fieldType == null)
 			{

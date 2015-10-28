@@ -1,0 +1,220 @@
+<?xml version='1.0' encoding='utf-8'?>
+<object fields='23' type='org.terifan.io.serialization.Test$MyObject'>
+	<field name='childCalendar' type='org.terifan.util.Calendar'>
+		<object fields='7' type='org.terifan.util.Calendar'>
+			<field name='mYear' type='int'>
+				<primitive type='int'>2015</primitive>
+			</field>
+			<field name='mMonth' type='int'>
+				<primitive type='int'>2</primitive>
+			</field>
+			<field name='mDay' type='int'>
+				<primitive type='int'>5</primitive>
+			</field>
+			<field name='mHour' type='int'>
+				<primitive type='int'>17</primitive>
+			</field>
+			<field name='mMinute' type='int'>
+				<primitive type='int'>15</primitive>
+			</field>
+			<field name='mSecond' type='int'>
+				<primitive type='int'>13</primitive>
+			</field>
+			<field name='mMilliSecond' type='int'>
+				<primitive type='int'>362</primitive>
+			</field>
+		</object>
+	</field>
+	<field name='_int' type='int'>
+		<primitive type='int'>7</primitive>
+	</field>
+	<field name='integer' type='Integer'>
+		<primitive type='Integer'>17</primitive>
+	</field>
+	<field name='_char' type='char'>
+		<primitive type='char'>x</primitive>
+	</field>
+	<field name='_chars' type='char'>
+		<array arrayType='array' depth='1' length='3' nulls='false' type='char'>
+			<primitive type='char'>h</primitive>
+			<primitive type='char'>e</primitive>
+			<primitive type='char'>j</primitive>
+		</array>
+	</field>
+	<field name='byteArrray1' type='byte'>
+		<array arrayType='array' depth='1' length='3' nulls='false' type='byte'>
+			<primitive type='byte'>1</primitive>
+			<primitive type='byte'>2</primitive>
+			<primitive type='byte'>3</primitive>
+		</array>
+	</field>
+	<field name='byteObjectArrray1' type='Byte'>
+		<array arrayType='array' depth='1' length='3' nulls='true' type='Byte'>
+			<primitive type='Byte'>1</primitive>
+			<null/>
+			<primitive type='Byte'>3</primitive>
+		</array>
+	</field>
+	<field name='byteArrray2' type='byte'>
+		<array arrayType='array' depth='2' length='2' nulls='false' type='byte'>
+			<array arrayType='array' depth='1' length='3' nulls='false' type='byte'>
+				<primitive type='byte'>4</primitive>
+				<primitive type='byte'>5</primitive>
+				<primitive type='byte'>6</primitive>
+			</array>
+			<array arrayType='array' depth='1' length='3' nulls='false' type='byte'>
+				<primitive type='byte'>7</primitive>
+				<primitive type='byte'>8</primitive>
+				<primitive type='byte'>9</primitive>
+			</array>
+		</array>
+	</field>
+	<field name='byteArrray2X' type='byte'>
+		<array arrayType='array' depth='2' length='2' nulls='false' type='byte'>
+			<array arrayType='array' depth='1' length='3' nulls='false' type='byte'>
+				<primitive type='byte'>4</primitive>
+				<primitive type='byte'>5</primitive>
+				<primitive type='byte'>6</primitive>
+			</array>
+			<array arrayType='array' depth='1' length='3' nulls='false' type='byte'>
+				<primitive type='byte'>7</primitive>
+				<primitive type='byte'>8</primitive>
+				<primitive type='byte'>9</primitive>
+			</array>
+		</array>
+	</field>
+	<field name='byteArrray3' type='byte'>
+		<array arrayType='array' depth='3' length='2' nulls='false' type='byte'>
+			<array arrayType='array' depth='2' length='2' nulls='false' type='byte'>
+				<array arrayType='array' depth='1' length='3' nulls='false' type='byte'>
+					<primitive type='byte'>10</primitive>
+					<primitive type='byte'>11</primitive>
+					<primitive type='byte'>12</primitive>
+				</array>
+				<array arrayType='array' depth='1' length='3' nulls='false' type='byte'>
+					<primitive type='byte'>7</primitive>
+					<primitive type='byte'>8</primitive>
+					<primitive type='byte'>9</primitive>
+				</array>
+			</array>
+			<array arrayType='array' depth='2' length='2' nulls='true' type='byte'>
+				<null/>
+				<array arrayType='array' depth='1' length='3' nulls='false' type='byte'>
+					<primitive type='byte'>13</primitive>
+					<primitive type='byte'>14</primitive>
+					<primitive type='byte'>15</primitive>
+				</array>
+			</array>
+		</array>
+	</field>
+	<field name='string' type='String'>
+		<primitive type='String'>&lt;&amp;&gt;</primitive>
+	</field>
+	<field name='stringX' type='String'>
+		<primitive type='String'>hej</primitive>
+	</field>
+	<field name='stringArray' type='String'>
+		<array arrayType='array' depth='1' length='3' nulls='true' type='String'>
+			<primitive type='String'>hej</primitive>
+			<null/>
+			<primitive type='String'>apa</primitive>
+		</array>
+	</field>
+	<field name='objectArray' type='java.lang.Object'>
+		<array arrayType='array' depth='1' length='3' nulls='false' type=''>
+			<primitive type='String'>hej</primitive>
+			<xprimitive type='Integer'>7</xprimitive>
+			<object fields='7' type='org.terifan.util.Calendar'>
+				<field name='mYear' type='int'>
+					<primitive type='int'>2015</primitive>
+				</field>
+				<field name='mMonth' type='int'>
+					<primitive type='int'>2</primitive>
+				</field>
+				<field name='mDay' type='int'>
+					<primitive type='int'>5</primitive>
+				</field>
+				<field name='mHour' type='int'>
+					<primitive type='int'>17</primitive>
+				</field>
+				<field name='mMinute' type='int'>
+					<primitive type='int'>15</primitive>
+				</field>
+				<field name='mSecond' type='int'>
+					<primitive type='int'>13</primitive>
+				</field>
+				<field name='mMilliSecond' type='int'>
+					<primitive type='int'>364</primitive>
+				</field>
+			</object>
+		</array>
+	</field>
+	<field name='stringArrayList' type='java.util.ArrayList'>
+		<array arrayType='list' depth='1' length='3' nulls='true' type='String'>
+			<primitive type='String'>hello</primitive>
+			<null/>
+			<primitive type='String'>world</primitive>
+		</array>
+	</field>
+	<field name='intStringHashMapArrayList' type='java.util.HashMap'>
+		<array arrayType='map' depth='1' length='4' nulls='false' type=''>
+			<primitive type='Integer'>3</primitive>
+			<array arrayType='list' depth='1' length='1' nulls='false' type='String'>
+				<primitive type='String'>test</primitive>
+			</array>
+			<primitive type='Integer'>7</primitive>
+			<array arrayType='list' depth='1' length='3' nulls='true' type='String'>
+				<primitive type='String'>hello</primitive>
+				<null/>
+				<primitive type='String'>world</primitive>
+			</array>
+		</array>
+	</field>
+	<field name='hiddenInt' type='int'>
+		<primitive type='int'>2</primitive>
+	</field>
+	<field name='mySecondObject' type='org.terifan.io.serialization.Test$MySecondObject'>
+		<object fields='1' type='org.terifan.io.serialization.Test$MySecondObject'>
+			<field name='int' type='int'>
+				<primitive type='int'>684</primitive>
+			</field>
+		</object>
+	</field>
+	<field name='greg' type='java.util.GregorianCalendar'>
+		<primitive type='DateTime'>2015-02-05 17:15:13.365</primitive>
+	</field>
+	<field name='_null' type='String'>
+		<null/>
+	</field>
+	<field name='loopReference' type='org.terifan.io.serialization.Test$MyObject'>
+		<reference/>
+	</field>
+	<field name='date' type='java.util.Date'>
+		<primitive type='DateTime'>2015-02-05 17:15:13.364</primitive>
+	</field>
+	<field name='parentCalendar' type='org.terifan.util.Calendar'>
+		<object fields='7' type='org.terifan.util.Calendar'>
+			<field name='mYear' type='int'>
+				<primitive type='int'>2015</primitive>
+			</field>
+			<field name='mMonth' type='int'>
+				<primitive type='int'>2</primitive>
+			</field>
+			<field name='mDay' type='int'>
+				<primitive type='int'>5</primitive>
+			</field>
+			<field name='mHour' type='int'>
+				<primitive type='int'>17</primitive>
+			</field>
+			<field name='mMinute' type='int'>
+				<primitive type='int'>15</primitive>
+			</field>
+			<field name='mSecond' type='int'>
+				<primitive type='int'>13</primitive>
+			</field>
+			<field name='mMilliSecond' type='int'>
+				<primitive type='int'>362</primitive>
+			</field>
+		</object>
+	</field>
+</object>
