@@ -16,9 +16,9 @@ enum FieldType
 	DOUBLE(Double.class, Double.TYPE),
 	STRING(String.class, String.class),
 	BUNDLE(Bundle.class, Bundle.class),
-	NULL(null,null),
+	DATE(Date.class, Date.class),
 	EMPTY_LIST(null,null),
-	DATE(Date.class, Date.class);
+	NULL(null,null);
 
 	private final Class mComponentType;
 	private final Class mPrimitiveType;

@@ -5,13 +5,25 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Array;
 import java.nio.ByteBuffer;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
-import org.terifan.bundle.bundle_test.Log;
 
+
+// header
+//  #copy header id
+//  #new fields count
+//	fields
+//   field
+//    #type
+//    #name
+//     known word / new word
+//  #terminator
+// data
+//  fields
+//   field
+//    #value
 
 public class BinaryEncoder implements Encoder
 {
@@ -21,21 +33,9 @@ public class BinaryEncoder implements Encoder
 	private HashMap<String,Integer> mStrings;
 	private HashMap<String,Integer> mHeaders;
 
-	private boolean PACK;
-	private boolean ALIGN;
-
 
 	public BinaryEncoder()
 	{
-		setPACK(false);
-	}
-
-
-	public BinaryEncoder setPACK(boolean aPACK)
-	{
-		PACK = aPACK;
-		ALIGN = !PACK;
-		return this;
 	}
 
 
@@ -74,54 +74,46 @@ public class BinaryEncoder implements Encoder
 
 	private void writeBundle(Bundle aBundle) throws IOException
 	{
-		String[] keys = writeBundleKeys(aBundle);
+		String[] keys = writeBundleHeader(aBundle);
 
 		for (String key : keys)
 		{
 			Object value = aBundle.get(key);
 			FieldType fieldType = FieldType.classify(value);
 
-			mOutput.writeBits(fieldType.ordinal(), 4);
-
-			if (fieldType == FieldType.NULL || fieldType == FieldType.EMPTY_LIST)
+			if (fieldType != FieldType.NULL && fieldType != FieldType.EMPTY_LIST)
 			{
-				continue;
-			}
+				Class<? extends Object> cls = value.getClass();
 
-			Class<? extends Object> cls = value.getClass();
-
-			if (cls.isArray())
-			{
-				if (cls.getComponentType().isArray())
+				if (cls.isArray())
 				{
-					mOutput.writeBits(0b111, 3);
-					writeMatrix(fieldType, value);
+					if (cls.getComponentType().isArray())
+					{
+						writeMatrix(fieldType, value);
+					}
+					else
+					{
+						writeArray(fieldType, value);
+					}
+				}
+				else if (List.class.isAssignableFrom(cls))
+				{
+					writeArray(fieldType, ((List)value).toArray());
 				}
 				else
 				{
-					mOutput.writeBits(0b110, 3);
-					writeArray(fieldType, value);
+					writeValue(fieldType, value);
 				}
-			}
-			else if (List.class.isAssignableFrom(cls))
-			{
-				mOutput.writeBits(0b10, 2);
-				writeArray(fieldType, ((List)value).toArray());
-			}
-			else
-			{
-				mOutput.writeBits(0b0, 1);
-				writeValue(fieldType, value);
 			}
 		}
 	}
 
 
-	private void writeByteArray(Object aValue) throws IOException
+	private void writeByteArray(byte[] aValue) throws IOException
 	{
-		mOutput.writeVariableInt(((byte[])aValue).length, 3, 4, false);
-		if (ALIGN) mOutput.align();
-		mOutput.write((byte[])aValue);
+		mOutput.writeVariableInt(aValue.length, 3, 1, false);
+//		mOutput.align();
+		mOutput.write(aValue);
 	}
 
 
@@ -153,11 +145,11 @@ public class BinaryEncoder implements Encoder
 		if (full)
 		{
 			mOutput.writeBit(0);
-			mOutput.writeVariableInt(rows, 3, 4, false);
+			mOutput.writeVariableInt(rows, 3, 1, false);
 			if (rows > 0)
 			{
 				int cols = Array.getLength(Array.get(aValue, 0));
-				mOutput.writeVariableInt(cols, 3, 4, false);
+				mOutput.writeVariableInt(cols, 3, 1, false);
 				for (int i = 0; i < rows; i++)
 				{
 					Object arr = Array.get(aValue, i);
@@ -172,7 +164,7 @@ public class BinaryEncoder implements Encoder
 		{
 			int len = Array.getLength(aValue);
 			mOutput.writeBit(1);
-			mOutput.writeVariableInt(len, 3, 4, false);
+			mOutput.writeVariableInt(len, 3, 1, false);
 			for (int i = 0; i < len; i++)
 			{
 				Object v = Array.get(aValue, i);
@@ -207,9 +199,9 @@ public class BinaryEncoder implements Encoder
 		if (full)
 		{
 			mOutput.writeBit(0);
-			mOutput.writeVariableInt(buf.length, 3, 4, false);
-			mOutput.writeVariableInt(buf[0].length, 3, 4, false);
-			if (ALIGN) mOutput.align();
+			mOutput.writeVariableInt(buf.length, 3, 1, false);
+			mOutput.writeVariableInt(buf[0].length, 3, 1, false);
+//			mOutput.align();
 			for (int i = 0; i < buf.length; i++)
 			{
 				mOutput.write(buf[i]);
@@ -218,7 +210,7 @@ public class BinaryEncoder implements Encoder
 		else
 		{
 			mOutput.writeBit(1);
-			mOutput.writeVariableInt(buf.length, 3, 4, false);
+			mOutput.writeVariableInt(buf.length, 3, 1, false);
 			for (int i = 0; i < buf.length; i++)
 			{
 				Object v = Array.get(aValue, i);
@@ -229,8 +221,8 @@ public class BinaryEncoder implements Encoder
 				else
 				{
 					mOutput.writeBit(0);
-					mOutput.writeVariableInt(buf[i].length, 3, 4, false); // 3,1?
-					if (ALIGN) mOutput.align();
+					mOutput.writeVariableInt(buf[i].length, 3, 1, false);
+//					mOutput.align();
 					mOutput.write(buf[i]);
 				}
 			}
@@ -238,18 +230,14 @@ public class BinaryEncoder implements Encoder
 	}
 
 
-	private String[] writeBundleKeys(Bundle aBundle) throws IOException
+	private String[] writeBundleHeader(Bundle aBundle) throws IOException
 	{
 		int initialKeyCount = mKeys.size();
 		String[] keys = aBundle.keySet().toArray(new String[aBundle.size()]);
-		ByteArrayOutputStream keyData = new ByteArrayOutputStream();
-
-		if (packHeaders(keys))
-		{
-			return keys;
-		}
 
 		mOutput.writeVariableInt(keys.length, 3, 0, false);
+
+		FieldType prevFieldType = null;
 
 		for (String key : keys)
 		{
@@ -261,62 +249,55 @@ public class BinaryEncoder implements Encoder
 			else
 			{
 				byte[] buffer = Convert.encodeUTF8(key);
-				keyData.write(buffer);
 
 				mOutput.writeBit(1);
 				mOutput.writeVariableInt(buffer.length, 3, 0, false);
+				mOutput.write(buffer);
 
 				mKeys.put(key, mKeys.size());
 			}
-		}
 
-		if (keyData.size() > 0)
-		{
-			if (ALIGN) mOutput.align();
+			Object value = aBundle.get(key);
+			FieldType fieldType = FieldType.classify(value);
+			Class<? extends Object> cls = value.getClass();
 
-			mOutput.write(keyData.toByteArray());
+			if (fieldType == prevFieldType)
+			{
+				mOutput.writeBit(1);
+			}
+			else
+			{
+				prevFieldType = fieldType;
+
+				mOutput.writeBit(0);
+				mOutput.writeBits(fieldType.ordinal(), 4);
+
+				if (fieldType != FieldType.NULL && fieldType != FieldType.EMPTY_LIST)
+				{
+					if (cls.isArray())
+					{
+						if (cls.getComponentType().isArray())
+						{
+							mOutput.writeBits(0b111, 3);
+						}
+						else
+						{
+							mOutput.writeBits(0b110, 3);
+						}
+					}
+					else if (List.class.isAssignableFrom(cls))
+					{
+						mOutput.writeBits(0b10, 2);
+					}
+					else
+					{
+						mOutput.writeBits(0b0, 1);
+					}
+				}
+			}
 		}
 
 		return keys;
-	}
-
-
-	private boolean packHeaders(String[] aKeys) throws IOException
-	{
-		if (PACK)
-		{
-			String header = "" + aKeys.length;
-
-			for (String key : aKeys)
-			{
-				if (mKeys.containsKey(key))
-				{
-					header += "," + mKeys.get(key);
-				}
-				else
-				{
-					header = null;
-					break;
-				}
-			}
-
-			if (header != null)
-			{
-				if (mHeaders.containsKey(header))
-				{
-					mOutput.writeBit(1);
-					mOutput.writeVariableInt(mHeaders.get(header), 3, 0, false);
-
-					return true;
-				}
-
-				mHeaders.put(header, mHeaders.size());
-			}
-
-			mOutput.writeBit(0);
-		}
-
-		return false;
 	}
 
 
@@ -324,7 +305,7 @@ public class BinaryEncoder implements Encoder
 	{
 		if (aFieldType == FieldType.BYTE)
 		{
-			writeByteArray(aValue);
+			writeByteArray((byte[])aValue);
 			return;
 		}
 
@@ -376,16 +357,16 @@ public class BinaryEncoder implements Encoder
 				mOutput.writeVariableInt((Character)aValue, 3, 0, false);
 				break;
 			case INT:
-				mOutput.writeVariableInt((Integer)aValue, 3, 1, true);
+				mOutput.writeVariableInt((Integer)aValue, 3, 0, true);
 				break;
 			case LONG:
-				mOutput.writeVariableLong((Long)aValue, 7, 0, true); // 3,1?
+				mOutput.writeVariableLong((Long)aValue, 3, 0, true);
 				break;
 			case FLOAT:
-				mOutput.writeVariableInt(Float.floatToIntBits((Float)aValue), 7, 0, false); // 3,1
+				mOutput.writeVariableInt(Float.floatToIntBits((Float)aValue), 3, 1, false);
 				break;
 			case DOUBLE:
-				mOutput.writeVariableLong(Double.doubleToLongBits((Double)aValue), 7, 0, false); // 3,1
+				mOutput.writeVariableLong(Double.doubleToLongBits((Double)aValue), 3, 1, false);
 				break;
 			case STRING:
 				if (packString(aValue))
@@ -395,7 +376,6 @@ public class BinaryEncoder implements Encoder
 
 				byte[] buffer = Convert.encodeUTF8((String)aValue);
 				mOutput.writeVariableInt(buffer.length, 3, 0, false);
-				if (ALIGN) mOutput.align();
 				mOutput.write(buffer);
 				break;
 			case DATE:
@@ -412,21 +392,18 @@ public class BinaryEncoder implements Encoder
 
 	private boolean packString(Object aValue) throws IOException
 	{
-		if (PACK)
+		String s = (String)aValue;
+		Integer index = mStrings.get(s);
+
+		if (index != null)
 		{
-			String s = (String)aValue;
-			Integer index = mStrings.get(s);
-
-			if (index != null)
-			{
-				mOutput.writeBit(1);
-				mOutput.writeVariableInt(index, 3, 0, false);
-				return true;
-			}
-
-			mStrings.put(s, mStrings.size());
-			mOutput.writeBit(0);
+			mOutput.writeBit(1);
+			mOutput.writeVariableInt(index, 3, 0, false);
+			return true;
 		}
+
+		mStrings.put(s, mStrings.size());
+		mOutput.writeBit(0);
 
 		return false;
 	}

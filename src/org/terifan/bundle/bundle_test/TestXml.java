@@ -27,14 +27,19 @@ public class TestXml
 	{
 		try
 		{
-			test("tiny.xml");
-//			test("params.xml");
-//			test("fo.xml");
-//			test("ctts.xml");
-//			test("lynx.xml");
-//			test("oms1.xml");
-//			test("oms2.xml");
-//			test("edoc.xml");
+			int delta = 0;
+
+			delta += test("tiny.xml", 133);
+			delta += test("params.xml", 725);
+			delta += test("fo.xml", 2238);
+			delta += test("ctts.xml", 1143);
+			delta += test("lynx.xml", 1250);
+			delta += test("oms1.xml", 24798);
+			delta += test("oms2.xml", 19302);
+			delta += test("edoc.xml", 119825);
+
+			Log.out.println("---------------------------------------------------------------------------------------------");
+			Log.out.println(delta);
 		}
 		catch (Throwable e)
 		{
@@ -43,7 +48,7 @@ public class TestXml
 	}
 
 
-	private static void test(String aFilename) throws SAXException, IOException, ParserConfigurationException
+	private static int test(String aFilename, int aExpectedSize) throws SAXException, IOException, ParserConfigurationException
 	{
 		byte[] xmlData;
 		try (InputStream in = TestXml.class.getResourceAsStream(aFilename))
@@ -58,17 +63,20 @@ public class TestXml
 //		Log.out.println(new TextEncoder().marshal(bundle));
 
 		byte[] binData = new BinaryEncoder().marshal(bundle);
-		byte[] binDataPack = new BinaryEncoder().setPACK(true).marshal(bundle);
 		String txtData = new TextEncoder().marshal(bundle, true);
 
-		Log.hexDump(binDataPack);
+		if (aFilename.equals("tiny.xml"))
+		{
+			Log.hexDump(binData);
+		}
 
 		byte[] zipBin = zip(binData);
-		byte[] zipBinPack = zip(binDataPack);
 		byte[] zipTxt = zip(txtData.getBytes("utf-8"));
 		byte[] zipXml = zip(xmlData);
 
-		Log.out.printf("%s, source=%6d, txt=%6d, bin=%6d, zip-source=%5d, zip-txt=%5d, zip-bin=%5d, bin-pack=%d, zip-bin-pack=%d\n", aFilename, xmlData.length, txtData.length(), binData.length, zipXml.length, zipTxt.length, zipBin.length, binDataPack.length, zipBinPack.length);
+		Log.out.printf("%10s, source: %6d (%5d), txt: %6d (%5d), bin: %6d (%5d) / %6d %5d\n", aFilename, xmlData.length, zipXml.length, txtData.length(), zipTxt.length, binData.length, zipBin.length, aExpectedSize, binData.length-aExpectedSize);
+
+		return binData.length-aExpectedSize;
 	}
 
 
