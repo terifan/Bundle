@@ -13,7 +13,6 @@ import java.util.TreeMap;
 
 // header
 //  #copy header id
-//  #new fields count
 //	fields
 //   field
 //    #type
