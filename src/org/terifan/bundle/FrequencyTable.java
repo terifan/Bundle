@@ -120,7 +120,7 @@ public class FrequencyTable
 
 			int n = 10;
 
-			int[] input = new int[1000000];
+			int[] input = new int[1000];
 			int[] data = new int[input.length];
 			for (int i = 0; i < input.length; i++)
 			{
@@ -129,26 +129,25 @@ public class FrequencyTable
 
 			FrequencyTable ctx = new FrequencyTable(n);
 
-			long t = System.nanoTime();
+//			long t = System.nanoTime();
 			for (int i = 0; i < input.length; i++)
 			{
 				data[i] = ctx.encode(input[i]);
-//				data[i] = input[i];
 			}
-			Log.out.println((System.nanoTime()-t)/1000000.0);
+//			Log.out.println((System.nanoTime()-t)/1000000.0);
 
-//			Log.out.println("---------------------------------------------------------------");
-//
-//			ctx = new FrequencyTable(n);
-//			for (int i = 0; i < input.length; i++)
-//			{
-//				int out = ctx.decode(data[i]);
-//				if (out != input[i])
-//				{
-//					Log.out.println(out+" != "+input[i]);
-//					break;
-//				}
-//			}
+			Log.out.println("---------------------------------------------------------------");
+
+			ctx = new FrequencyTable(n);
+			for (int i = 0; i < input.length; i++)
+			{
+				int out = ctx.decode(data[i]);
+				if (out != input[i])
+				{
+					Log.out.println(out+" != "+input[i]);
+					break;
+				}
+			}
 		}
 		catch (Throwable e)
 		{
