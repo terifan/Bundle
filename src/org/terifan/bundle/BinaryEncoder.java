@@ -9,15 +9,16 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
+import org.terifan.bundle.bundle_test.Log;
 
 
 // header
 //  #copy header id
 //	fields
 //   field
-//    #type
+//    #same type as before
+//	    ?new type
 //    #name
-//     known word / new word
 //  #terminator
 // data
 //  fields
@@ -32,9 +33,37 @@ public class BinaryEncoder implements Encoder
 	private HashMap<String,Integer> mStrings;
 	private HashMap<String,Integer> mHeaders;
 
+FrequencyTable tbl = new FrequencyTable(16);
+int[][] huffman1 = {
+{2,0b01},
+{2,0b10},
+{2,0b11},
+{4,0b001},
+{5,0b00001},
+{5,0b00010},
+{5,0b00011},
+{8,0b00000000},
+{8,0b00000001},
+{8,0b00000010},
+{8,0b00000011},
+{8,0b00000100},
+{8,0b00000101},
+{8,0b00000110},
+{8,0b00000111}
+};
+
 
 	public BinaryEncoder()
 	{
+		tbl.encode(FieldType.INT.ordinal());
+		tbl.encode(FieldType.STRING.ordinal());
+		tbl.encode(FieldType.DOUBLE.ordinal());
+		tbl.encode(FieldType.BUNDLE.ordinal());
+		tbl.encode(FieldType.DATE.ordinal());
+		tbl.encode(FieldType.LONG.ordinal());
+		tbl.encode(FieldType.BOOLEAN.ordinal());
+		tbl.encode(FieldType.NULL.ordinal());
+		tbl.encode(FieldType.EMPTY_LIST.ordinal());
 	}
 
 
@@ -240,22 +269,6 @@ public class BinaryEncoder implements Encoder
 
 		for (String key : keys)
 		{
-			if (mKeys.containsKey(key))
-			{
-				mOutput.writeBit(0);
-				mOutput.writeBitsInRange(mKeys.get(key), initialKeyCount);
-			}
-			else
-			{
-				byte[] buffer = Convert.encodeUTF8(key);
-
-				mOutput.writeBit(1);
-				mOutput.writeVariableInt(buffer.length, 3, 0, false);
-				mOutput.write(buffer);
-
-				mKeys.put(key, mKeys.size());
-			}
-
 			Object value = aBundle.get(key);
 			FieldType fieldType = FieldType.classify(value);
 			Class<? extends Object> cls = value.getClass();
@@ -269,7 +282,10 @@ public class BinaryEncoder implements Encoder
 				prevFieldType = fieldType;
 
 				mOutput.writeBit(0);
-				mOutput.writeBits(fieldType.ordinal(), 4);
+//				mOutput.writeBits(fieldType.ordinal(), 4);
+
+				int n = tbl.encode(fieldType.ordinal());
+				mOutput.writeBits(huffman1[n][1], huffman1[n][0]);
 
 				if (fieldType != FieldType.NULL && fieldType != FieldType.EMPTY_LIST)
 				{
@@ -293,6 +309,22 @@ public class BinaryEncoder implements Encoder
 						mOutput.writeBits(0b0, 1);
 					}
 				}
+			}
+
+			if (mKeys.containsKey(key))
+			{
+				mOutput.writeBit(0);
+				mOutput.writeBitsInRange(mKeys.get(key), initialKeyCount);
+			}
+			else
+			{
+				byte[] buffer = Convert.encodeUTF8(key);
+
+				mOutput.writeBit(1);
+				mOutput.writeVariableInt(buffer.length, 3, 0, false);
+				mOutput.write(buffer);
+
+				mKeys.put(key, mKeys.size());
 			}
 		}
 

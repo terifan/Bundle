@@ -20,7 +20,6 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 
-
 public class TestXml
 {
 	public static void main(String ... args)
@@ -30,6 +29,7 @@ public class TestXml
 			int delta = 0;
 
 			delta += test("tiny.xml", 133);
+			delta += test("lxir.xml", 466);
 			delta += test("params.xml", 725);
 			delta += test("fo.xml", 2238);
 			delta += test("ctts.xml", 1143);
@@ -37,6 +37,8 @@ public class TestXml
 			delta += test("oms1.xml", 24798);
 			delta += test("oms2.xml", 19302);
 			delta += test("edoc.xml", 119825);
+			delta += test("capimil1.xml", 10915);
+			delta += test("capimil2.xml", 13225);
 
 			Log.out.println("---------------------------------------------------------------------------------------------");
 			Log.out.println(delta);
@@ -74,7 +76,7 @@ public class TestXml
 		byte[] zipTxt = zip(txtData.getBytes("utf-8"));
 		byte[] zipXml = zip(xmlData);
 
-		Log.out.printf("%10s, source: %6d (%5d), txt: %6d (%5d), bin: %6d (%5d) / %6d %5d\n", aFilename, xmlData.length, zipXml.length, txtData.length(), zipTxt.length, binData.length, zipBin.length, aExpectedSize, binData.length-aExpectedSize);
+		Log.out.printf("%12s, source: %6d (%5d), txt: %6d (%5d), bin: %6d (%5d) / %6d %5d\n", aFilename, xmlData.length, zipXml.length, txtData.length(), zipTxt.length, binData.length, zipBin.length, aExpectedSize, binData.length-aExpectedSize);
 
 		return binData.length-aExpectedSize;
 	}

@@ -2040,11 +2040,11 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 
 			if (aConvertKey != null)
 			{
-				key = aConvertKey.process(key);
+				key = aConvertKey.convert(key);
 			}
 			if (aConvertValue != null)
 			{
-				value = aConvertValue.process(value);
+				value = aConvertValue.convert(value);
 			}
 
 			if (key != null)
@@ -2072,6 +2072,6 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		 * @return
 		 *   a standard Java type or other type supported by the Bundle implementation.
 		 */
-		Object process(Object aValue);
+		Object convert(Object aValue);
 	}
 }

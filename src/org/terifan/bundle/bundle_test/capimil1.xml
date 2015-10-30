@@ -1,0 +1,2136 @@
+<ShippingLegLocationDepartedEvent id="0">
+	<location id="1">
+		<timeSpan id="2">
+			<from id="3">
+				<date>2015-10-30T15:06:25.000+0100</date>
+				<hasTime>true</hasTime>
+			</from>
+			<to id="4">
+				<date>2015-10-31T15:06:25.000+0100</date>
+				<hasTime>true</hasTime>
+			</to>
+		</timeSpan>
+		<address id="5">
+			<country id="6">
+				<number>578</number>
+				<currency id="7">
+					<name>Norway Kroner</name>
+					<handle>NOK</handle>
+					<id>110</id>
+					<version>0</version>
+					<createDateTime>2010-12-08T10:19:39.000+0100</createDateTime>
+					<changeDateTime>2010-12-08T10:19:39.000+0100</changeDateTime>
+				</currency>
+				<isPartOfEuropeanUnion>false</isPartOfEuropeanUnion>
+				<iso3Code>NOR</iso3Code>
+				<formalName>Kingdom of Norway</formalName>
+				<capitalCityName>Oslo</capitalCityName>
+				<telephoneCode>+47</telephoneCode>
+				<name>Norway</name>
+				<handle>NO</handle>
+				<id>129</id>
+				<version>0</version>
+				<createDateTime>2010-12-08T10:19:58.000+0100</createDateTime>
+				<changeDateTime>2010-12-08T10:19:58.000+0100</changeDateTime>
+			</country>
+			<latitude>63.762817</latitude>
+			<longitude>9.758333</longitude>
+			<line1>Botngård</line1>
+			<cityName>Bjugn</cityName>
+			<postalCode>7160</postalCode>
+		</address>
+		<name>Bjugn</name>
+		<description>Tank</description>
+		<identifiers>
+			<identifier id="8">
+				<identifier>0</identifier>
+				<domainIdentifier>IndicationIndex</domainIdentifier>
+				<identifierAuthority>LXIR</identifierAuthority>
+				<id>29986</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:57:14.249+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:57:14.249+0100</changeDateTime>
+				<createUser id="9">
+					<userName>System User</userName>
+					<email>lynx.system@surikat.se</email>
+					<userId>1</userId>
+				</createUser>
+				<changeUser idref="9"/>
+			</identifier>
+			<identifier id="10">
+				<identifier>BJU</identifier>
+				<domainIdentifier>Location</domainIdentifier>
+				<identifierAuthority>LXIR</identifierAuthority>
+				<id>29987</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:57:14.312+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:57:14.312+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</identifier>
+		</identifiers>
+		<partyRole id="11">
+			<name>Consignee</name>
+			<handle>consignee</handle>
+			<id>2</id>
+			<version>0</version>
+			<createDateTime>2012-04-20T08:58:35.000+0200</createDateTime>
+		</partyRole>
+		<sourceIdentifier>2010</sourceIdentifier>
+		<isManuallyAdded>false</isManuallyAdded>
+		<id>23455</id>
+		<version>0</version>
+		<createDateTime>2015-10-30T09:57:14.171+0100</createDateTime>
+		<changeDateTime>2015-10-30T09:57:14.171+0100</changeDateTime>
+		<createUser idref="9"/>
+		<changeUser idref="9"/>
+	</location>
+	<toTimeSpans/>
+	<fromTimeSpans/>
+	<eventType id="12">
+		<name>Departed from ShippingLeg Location</name>
+		<handle>leg_location_departed</handle>
+		<id>41</id>
+		<version>0</version>
+		<createUser id="13">
+			<userName>Joakim Olausson</userName>
+			<email>emil.forsmark@surikat.se</email>
+			<userId>782</userId>
+		</createUser>
+		<changeUser idref="13"/>
+	</eventType>
+	<shipment id="14">
+		<contacts>
+			<contact id="15">
+				<communicationMethod id="16">
+					<name>Email</name>
+					<handle>email</handle>
+					<id>1</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:36.000+0200</createDateTime>
+				</communicationMethod>
+				<partyRole id="17">
+					<name>Consignor</name>
+					<handle>consignor</handle>
+					<id>1</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:35.000+0200</createDateTime>
+				</partyRole>
+				<name>Odd Børre</name>
+				<phoneNumber>404779369</phoneNumber>
+				<addresses>
+					<addresse id="18">
+						<phoneNumber>404779369</phoneNumber>
+						<addressType id="19">
+							<name>Phone</name>
+							<handle>phone</handle>
+							<id>3</id>
+							<version>0</version>
+							<createDateTime>2012-04-20T08:58:35.000+0200</createDateTime>
+						</addressType>
+						<id>17026</id>
+						<version>0</version>
+						<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+						<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+						<createUser idref="9"/>
+						<changeUser idref="9"/>
+					</addresse>
+				</addresses>
+				<id>3533</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</contact>
+			<contact id="20">
+				<communicationMethod idref="16"/>
+				<partyRole idref="11"/>
+				<name>Scanbio Scanbio</name>
+				<addresses>
+					<addresse id="21">
+						<addressType idref="19"/>
+						<id>17027</id>
+						<version>0</version>
+						<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+						<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+						<createUser idref="9"/>
+						<changeUser idref="9"/>
+					</addresse>
+				</addresses>
+				<id>3534</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</contact>
+		</contacts>
+		<identifiers>
+			<identifier id="22">
+				<identifier>RP-346</identifier>
+				<domainIdentifier>OrderNumber</domainIdentifier>
+				<identifierAuthority>LXIR</identifierAuthority>
+				<id>3099</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</identifier>
+			<identifier id="23">
+				<identifier>SubOrder</identifier>
+				<domainIdentifier>OrderType</domainIdentifier>
+				<identifierAuthority>LXIR</identifierAuthority>
+				<id>3100</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</identifier>
+		</identifiers>
+		<orderLines>
+			<orderLine id="24">
+				<identifiers>
+					<identifier id="25">
+						<identifier>RP-346-10-0</identifier>
+						<domainIdentifier>OrderLine</domainIdentifier>
+						<identifierAuthority>LXIR</identifierAuthority>
+						<id>7364</id>
+						<version>0</version>
+						<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+						<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+						<createUser idref="9"/>
+						<changeUser idref="9"/>
+					</identifier>
+					<identifier id="26">
+						<identifier>39186</identifier>
+						<domainIdentifier>DeliveryLocation</domainIdentifier>
+						<identifierAuthority>LXIR</identifierAuthority>
+						<id>7368</id>
+						<version>0</version>
+						<createDateTime>2015-10-30T09:56:02.000+0100</createDateTime>
+						<changeDateTime>2015-10-30T09:56:02.000+0100</changeDateTime>
+						<createUser idref="9"/>
+						<changeUser idref="9"/>
+					</identifier>
+					<identifier id="27">
+						<identifier>10425</identifier>
+						<domainIdentifier>LoadingLocation</domainIdentifier>
+						<identifierAuthority>LXIR</identifierAuthority>
+						<id>7366</id>
+						<version>0</version>
+						<createDateTime>2015-10-30T09:37:26.000+0100</createDateTime>
+						<changeDateTime>2015-10-30T09:37:26.000+0100</changeDateTime>
+						<createUser idref="9"/>
+						<changeUser idref="9"/>
+					</identifier>
+				</identifiers>
+				<article id="28">
+					<type id="29">
+						<name>Extra</name>
+						<handle>extra</handle>
+						<id>3</id>
+						<version>0</version>
+						<createUser id="30">
+							<userName>Joakim Olausson</userName>
+							<email>joakim.olausson@surikat.se</email>
+							<userId>782</userId>
+						</createUser>
+						<changeUser idref="30"/>
+					</type>
+					<unit id="31">
+						<name>Liter</name>
+						<handle>liter</handle>
+						<id>1</id>
+						<version>0</version>
+						<createDateTime>2013-12-15T08:58:35.000+0100</createDateTime>
+					</unit>
+					<isDeleted>false</isDeleted>
+					<requirements/>
+					<contractArticleIdentifiers>
+						<contractArticleIdentifier id="32">
+							<identifier>1104</identifier>
+							<domainIdentifier>Article</domainIdentifier>
+							<identifierAuthority>LXIR</identifierAuthority>
+							<id>54</id>
+							<version>0</version>
+							<createDateTime>2014-02-05T20:30:44.000+0100</createDateTime>
+							<changeDateTime>2014-02-05T20:30:44.000+0100</changeDateTime>
+							<createUser idref="9"/>
+							<changeUser idref="9"/>
+						</contractArticleIdentifier>
+					</contractArticleIdentifiers>
+					<name>Antiboil</name>
+					<handle>1104</handle>
+					<id>104</id>
+					<version>1</version>
+					<createDateTime>2014-01-13T22:07:54.000+0100</createDateTime>
+					<changeDateTime>2014-02-05T20:30:44.000+0100</changeDateTime>
+					<createUser idref="9"/>
+					<changeUser idref="9"/>
+				</article>
+				<quantity>67.0</quantity>
+				<id>3062</id>
+				<version>2</version>
+				<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:56:02.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</orderLine>
+			<orderLine id="33">
+				<identifiers>
+					<identifier id="34">
+						<identifier>39186</identifier>
+						<domainIdentifier>DeliveryLocation</domainIdentifier>
+						<identifierAuthority>LXIR</identifierAuthority>
+						<id>7369</id>
+						<version>0</version>
+						<createDateTime>2015-10-30T09:56:02.000+0100</createDateTime>
+						<changeDateTime>2015-10-30T09:56:02.000+0100</changeDateTime>
+						<createUser idref="9"/>
+						<changeUser idref="9"/>
+					</identifier>
+					<identifier id="35">
+						<identifier>10425</identifier>
+						<domainIdentifier>LoadingLocation</domainIdentifier>
+						<identifierAuthority>LXIR</identifierAuthority>
+						<id>7367</id>
+						<version>0</version>
+						<createDateTime>2015-10-30T09:37:26.000+0100</createDateTime>
+						<changeDateTime>2015-10-30T09:37:26.000+0100</changeDateTime>
+						<createUser idref="9"/>
+						<changeUser idref="9"/>
+					</identifier>
+					<identifier id="36">
+						<identifier>fb4e8ddb-01d4-4d1b-ac7a-b43633732990</identifier>
+						<domainIdentifier>OrderLine</domainIdentifier>
+						<identifierAuthority>LYNX</identifierAuthority>
+						<id>7365</id>
+						<version>0</version>
+						<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+						<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+						<createUser idref="9"/>
+						<changeUser idref="9"/>
+					</identifier>
+				</identifiers>
+				<article id="37">
+					<type id="38">
+						<name>Raw Material</name>
+						<handle>raw_material</handle>
+						<id>1</id>
+						<version>0</version>
+						<createUser idref="30"/>
+						<changeUser idref="30"/>
+					</type>
+					<unit idref="31"/>
+					<isDeleted>false</isDeleted>
+					<requirements/>
+					<contractArticleIdentifiers>
+						<contractArticleIdentifier id="39">
+							<identifier>1111</identifier>
+							<domainIdentifier>Article</domainIdentifier>
+							<identifierAuthority>LXIR</identifierAuthority>
+							<id>99</id>
+							<version>0</version>
+							<createDateTime>2014-03-14T09:29:50.000+0100</createDateTime>
+							<changeDateTime>2014-03-14T09:29:50.000+0100</changeDateTime>
+							<createUser idref="9"/>
+							<changeUser idref="9"/>
+						</contractArticleIdentifier>
+					</contractArticleIdentifiers>
+					<name>K2 Ensilasje</name>
+					<handle>1111</handle>
+					<id>137</id>
+					<version>17</version>
+					<createDateTime>2014-01-13T22:57:32.000+0100</createDateTime>
+					<changeDateTime>2014-03-14T09:29:50.000+0100</changeDateTime>
+					<createUser idref="9"/>
+					<changeUser idref="9"/>
+				</article>
+				<quantity>0.0</quantity>
+				<id>3063</id>
+				<version>2</version>
+				<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:56:02.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</orderLine>
+		</orderLines>
+		<measurements>
+			<measurement id="40">
+				<value>0.0</value>
+				<measurementType id="41">
+					<name>Gross Volume</name>
+					<handle>gross_volume</handle>
+					<id>3</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:35.000+0200</createDateTime>
+				</measurementType>
+				<id>13344</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:20.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:20.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</measurement>
+			<measurement id="42">
+				<value>0.0</value>
+				<measurementType id="43">
+					<name>Gross Weight</name>
+					<handle>gross_weight</handle>
+					<id>1</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:35.000+0200</createDateTime>
+				</measurementType>
+				<id>13343</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:20.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:20.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</measurement>
+			<measurement id="44">
+				<value>1.0</value>
+				<measurementType id="45">
+					<name>Is Tanks Clean</name>
+					<handle>is_clean_tanks</handle>
+					<id>14</id>
+					<version>0</version>
+					<createUser idref="13"/>
+					<changeUser idref="13"/>
+				</measurementType>
+				<id>13345</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:34:08.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:34:08.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</measurement>
+			<measurement id="46">
+				<value>4.0</value>
+				<measurementType id="47">
+					<name>Loading Duration</name>
+					<handle>loading_duration</handle>
+					<id>8</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:35.000+0200</createDateTime>
+				</measurementType>
+				<id>13341</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</measurement>
+			<measurement id="48">
+				<value>0.0</value>
+				<measurementType id="49">
+					<name>Has bad smell</name>
+					<handle>has_bad_smell</handle>
+					<id>11</id>
+					<version>0</version>
+					<createUser idref="13"/>
+					<changeUser idref="13"/>
+				</measurementType>
+				<id>13348</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:37:26.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:37:26.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</measurement>
+			<measurement id="50">
+				<value>1.0</value>
+				<measurementType id="51">
+					<name>pH</name>
+					<handle>ph</handle>
+					<id>12</id>
+					<version>0</version>
+					<createUser idref="13"/>
+					<changeUser idref="13"/>
+				</measurementType>
+				<id>13347</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:37:26.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:37:26.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</measurement>
+			<measurement id="52">
+				<value>0.0</value>
+				<measurementType id="53">
+					<name>Has Sample</name>
+					<handle>has_sample</handle>
+					<id>13</id>
+					<version>0</version>
+					<createUser idref="13"/>
+					<changeUser idref="13"/>
+				</measurementType>
+				<id>13349</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:37:26.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:37:26.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</measurement>
+			<measurement id="54">
+				<value>1.01</value>
+				<measurementType id="55">
+					<name>Unloading Duration</name>
+					<handle>unloading_duration</handle>
+					<id>9</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:35.000+0200</createDateTime>
+				</measurementType>
+				<id>13342</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</measurement>
+			<measurement id="56">
+				<value>0.0</value>
+				<measurementType id="57">
+					<name>Is sick</name>
+					<handle>is_sick</handle>
+					<id>10</id>
+					<version>0</version>
+					<createUser idref="13"/>
+					<changeUser idref="13"/>
+				</measurementType>
+				<id>13346</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:37:26.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:37:26.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</measurement>
+		</measurements>
+		<bookedShipmentHandlingUnitLineItems/>
+		<shipmentActivities>
+			<shipmentActivitie id="58">
+				<transportMode id="59">
+					<name>Ocean</name>
+					<handle>sea</handle>
+					<id>3</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:35.000+0200</createDateTime>
+				</transportMode>
+				<toLocation id="60">
+					<timeSpan id="61">
+						<from id="62">
+							<date>2015-10-30T15:06:25.000+0100</date>
+							<hasTime>true</hasTime>
+						</from>
+						<to id="63">
+							<date>2015-10-31T15:06:25.000+0100</date>
+							<hasTime>true</hasTime>
+						</to>
+					</timeSpan>
+					<address id="64">
+						<country idref="6"/>
+						<latitude>63.762817</latitude>
+						<longitude>9.758333</longitude>
+						<line1>Botngård</line1>
+						<cityName>Bjugn</cityName>
+						<postalCode>7160</postalCode>
+					</address>
+					<name>Bjugn</name>
+					<description>Tank</description>
+					<identifiers>
+						<identifier id="65">
+							<identifier>0</identifier>
+							<domainIdentifier>IndicationIndex</domainIdentifier>
+							<identifierAuthority>LXIR</identifierAuthority>
+							<id>29977</id>
+							<version>0</version>
+							<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+							<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+							<createUser idref="9"/>
+							<changeUser idref="9"/>
+						</identifier>
+						<identifier id="66">
+							<identifier>BJU</identifier>
+							<domainIdentifier>Location</domainIdentifier>
+							<identifierAuthority>LXIR</identifierAuthority>
+							<id>29976</id>
+							<version>0</version>
+							<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+							<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+							<createUser idref="9"/>
+							<changeUser idref="9"/>
+						</identifier>
+					</identifiers>
+					<partyRole idref="11"/>
+					<sourceIdentifier>2010</sourceIdentifier>
+					<isManuallyAdded>false</isManuallyAdded>
+					<shouldBeAddedToMasterData>false</shouldBeAddedToMasterData>
+					<id>23443</id>
+					<version>0</version>
+					<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+					<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+					<createUser idref="9"/>
+					<changeUser idref="9"/>
+				</toLocation>
+				<toTimeSpans>
+					<toTimeSpan id="67">
+						<dateTimeType id="68">
+							<name>Requested</name>
+							<handle>requested</handle>
+							<id>3</id>
+							<version>0</version>
+							<createDateTime>2012-04-20T08:58:35.000+0200</createDateTime>
+						</dateTimeType>
+						<timeSpan id="69">
+							<from id="70">
+								<date>2015-10-30T15:06:25.000+0100</date>
+								<hasTime>true</hasTime>
+							</from>
+							<to id="71">
+								<date>2015-10-31T15:06:25.000+0100</date>
+								<hasTime>true</hasTime>
+							</to>
+						</timeSpan>
+						<id>17671</id>
+						<version>0</version>
+						<createDateTime>2015-10-30T09:06:20.000+0100</createDateTime>
+						<changeDateTime>2015-10-30T09:06:20.000+0100</changeDateTime>
+						<createUser idref="9"/>
+						<changeUser idref="9"/>
+					</toTimeSpan>
+					<toTimeSpan id="72">
+						<dateTimeType id="73">
+							<name>Actual</name>
+							<handle>actual</handle>
+							<id>2</id>
+							<version>0</version>
+							<createDateTime>2012-04-20T08:58:35.000+0200</createDateTime>
+						</dateTimeType>
+						<timeSpan id="74">
+							<from id="75">
+								<date>2015-10-30T09:54:38.000+0100</date>
+								<hasTime>true</hasTime>
+							</from>
+							<to id="76">
+								<hasTime>true</hasTime>
+							</to>
+						</timeSpan>
+						<id>17683</id>
+						<version>0</version>
+						<createDateTime>2015-10-30T09:56:02.000+0100</createDateTime>
+						<changeDateTime>2015-10-30T09:56:02.000+0100</changeDateTime>
+						<createUser idref="9"/>
+						<changeUser idref="9"/>
+					</toTimeSpan>
+				</toTimeSpans>
+				<fromLocation id="77">
+					<timeSpan id="78">
+						<from id="79">
+							<date>2015-10-30T15:06:25.000+0100</date>
+							<hasTime>true</hasTime>
+						</from>
+						<to id="80">
+							<date>2015-10-31T15:06:25.000+0100</date>
+							<hasTime>true</hasTime>
+						</to>
+					</timeSpan>
+					<address id="81">
+						<country idref="6"/>
+						<latitude>65.126583</latitude>
+						<longitude>12.071983</longitude>
+						<line1>MARØYA.</line1>
+						<cityName>RØRVIK</cityName>
+						<postalCode>7900</postalCode>
+						<regionName>Trond</regionName>
+					</address>
+					<name>SINKABERG-HANSEN AS HEGGVIKA</name>
+					<description>Tank</description>
+					<identifiers>
+						<identifier id="82">
+							<identifier>5</identifier>
+							<domainIdentifier>IndicationIndex</domainIdentifier>
+							<identifierAuthority>LXIR</identifierAuthority>
+							<id>29975</id>
+							<version>0</version>
+							<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+							<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+							<createUser idref="9"/>
+							<changeUser idref="9"/>
+						</identifier>
+						<identifier id="83">
+							<identifier>10425</identifier>
+							<domainIdentifier>Location</domainIdentifier>
+							<identifierAuthority>LXIR</identifierAuthority>
+							<id>29974</id>
+							<version>0</version>
+							<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+							<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+							<createUser idref="9"/>
+							<changeUser idref="9"/>
+						</identifier>
+					</identifiers>
+					<remark>testar att anteckna igen</remark>
+					<partyRole idref="17"/>
+					<sourceIdentifier>1676</sourceIdentifier>
+					<isManuallyAdded>false</isManuallyAdded>
+					<shouldBeAddedToMasterData>false</shouldBeAddedToMasterData>
+					<id>23442</id>
+					<version>0</version>
+					<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+					<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+					<createUser idref="9"/>
+					<changeUser idref="9"/>
+				</fromLocation>
+				<fromTimeSpans>
+					<fromTimeSpan id="84">
+						<dateTimeType idref="73"/>
+						<timeSpan id="85">
+							<from id="86">
+								<date>2015-10-30T09:35:14.000+0100</date>
+								<hasTime>true</hasTime>
+							</from>
+							<to id="87">
+								<hasTime>true</hasTime>
+							</to>
+						</timeSpan>
+						<id>17681</id>
+						<version>0</version>
+						<createDateTime>2015-10-30T09:37:26.000+0100</createDateTime>
+						<changeDateTime>2015-10-30T09:37:26.000+0100</changeDateTime>
+						<createUser idref="9"/>
+						<changeUser idref="9"/>
+					</fromTimeSpan>
+					<fromTimeSpan id="88">
+						<dateTimeType idref="68"/>
+						<timeSpan id="89">
+							<from id="90">
+								<date>2015-10-30T15:06:25.000+0100</date>
+								<hasTime>true</hasTime>
+							</from>
+							<to id="91">
+								<date>2015-10-31T15:06:25.000+0100</date>
+								<hasTime>true</hasTime>
+							</to>
+						</timeSpan>
+						<id>17670</id>
+						<version>0</version>
+						<createDateTime>2015-10-30T09:06:20.000+0100</createDateTime>
+						<changeDateTime>2015-10-30T09:06:20.000+0100</changeDateTime>
+						<createUser idref="9"/>
+						<changeUser idref="9"/>
+					</fromTimeSpan>
+				</fromTimeSpans>
+				<parties/>
+				<transportStage id="92">
+					<name>Main Haul</name>
+					<handle>main_haul</handle>
+					<id>2</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:36.000+0200</createDateTime>
+				</transportStage>
+				<activityType id="93">
+					<name>Movement</name>
+					<handle>movement</handle>
+					<id>1</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:36.000+0200</createDateTime>
+				</activityType>
+				<dateTimes>
+					<dateTime id="94">
+						<dateTimeType idref="73"/>
+						<startDateTime>2015-10-30T09:35:14.000+0100</startDateTime>
+						<endDateTime>2015-10-30T09:54:38.000+0100</endDateTime>
+						<id>2844</id>
+						<version>1</version>
+						<createDateTime>2015-10-30T09:37:26.000+0100</createDateTime>
+						<changeDateTime>2015-10-30T09:56:02.000+0100</changeDateTime>
+						<createUser idref="9"/>
+						<changeUser idref="9"/>
+					</dateTime>
+					<dateTime id="95">
+						<dateTimeType idref="68"/>
+						<startDateTime>2015-10-30T15:06:25.000+0100</startDateTime>
+						<endDateTime>2015-10-30T15:06:25.000+0100</endDateTime>
+						<id>2843</id>
+						<version>0</version>
+						<createDateTime>2015-10-30T09:06:20.000+0100</createDateTime>
+						<changeDateTime>2015-10-30T09:06:20.000+0100</changeDateTime>
+						<createUser idref="9"/>
+						<changeUser idref="9"/>
+					</dateTime>
+				</dateTimes>
+				<id>1550</id>
+				<version>2</version>
+				<createDateTime>2015-10-30T09:06:20.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:56:02.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</shipmentActivitie>
+		</shipmentActivities>
+		<orderNumber>RP-346</orderNumber>
+		<shipmentHandlingUnitLineItems/>
+		<shipmentChargeLineItems/>
+		<isDangerousGoods>false</isDangerousGoods>
+		<isTemperaturedGoods>false</isTemperaturedGoods>
+		<dangerousGoods/>
+		<shipmentDateTimes>
+			<shipmentDateTime id="96">
+				<date>2015-10-30T15:06:25.000+0100</date>
+				<dateTimeType idref="68"/>
+				<dateTimePurpose id="97">
+					<name>End Of Execution</name>
+					<handle>end_of_execution</handle>
+					<id>7</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:36.000+0200</createDateTime>
+				</dateTimePurpose>
+				<id>8131</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:20.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:20.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</shipmentDateTime>
+			<shipmentDateTime id="98">
+				<date>2015-10-30T15:06:25.000+0100</date>
+				<dateTimeType idref="68"/>
+				<dateTimePurpose id="99">
+					<name>Start Of Execution</name>
+					<handle>start_of_execution</handle>
+					<id>6</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:36.000+0200</createDateTime>
+				</dateTimePurpose>
+				<id>8132</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:20.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:20.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</shipmentDateTime>
+			<shipmentDateTime id="100">
+				<date>2015-10-30T09:54:38.000+0100</date>
+				<dateTimeType idref="73"/>
+				<dateTimePurpose id="101">
+					<name>Information Of Delivery</name>
+					<handle>information_of_delivery</handle>
+					<id>4</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:36.000+0200</createDateTime>
+				</dateTimePurpose>
+				<id>8136</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:56:02.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:56:02.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</shipmentDateTime>
+			<shipmentDateTime id="102">
+				<dateTimeType idref="73"/>
+				<dateTimePurpose id="103">
+					<name>Pickup At Port Of Destination</name>
+					<handle>pickup_port_of_destination</handle>
+					<id>16</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:36.000+0200</createDateTime>
+				</dateTimePurpose>
+				<id>8135</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:56:02.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:56:02.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</shipmentDateTime>
+			<shipmentDateTime id="104">
+				<date>2015-11-10T09:54:38.000+0100</date>
+				<dateTimeType idref="73"/>
+				<dateTimePurpose id="105">
+					<name>Provider Invoice Cutoff Date</name>
+					<handle>provider_invoice_cutoff_date</handle>
+					<id>14</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:36.000+0200</createDateTime>
+				</dateTimePurpose>
+				<id>8134</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:56:02.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:56:02.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</shipmentDateTime>
+			<shipmentDateTime id="106">
+				<date>2015-11-04T09:54:38.000+0100</date>
+				<dateTimeType idref="73"/>
+				<dateTimePurpose id="107">
+					<name>Latest Date Performing Final Check</name>
+					<handle>latest_final_check_date</handle>
+					<id>15</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:36.000+0200</createDateTime>
+				</dateTimePurpose>
+				<id>8133</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:56:02.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:56:02.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</shipmentDateTime>
+		</shipmentDateTimes>
+		<transportInformation id="108">
+			<termsOfTransport id="109">
+				<location id="110">
+					<timeSpan id="111">
+						<from id="112">
+							<date>2015-10-30T15:06:25.000+0100</date>
+							<hasTime>true</hasTime>
+						</from>
+						<to id="113">
+							<date>2015-10-31T15:06:25.000+0100</date>
+							<hasTime>true</hasTime>
+						</to>
+					</timeSpan>
+					<address id="114">
+						<country idref="6"/>
+						<latitude>65.126583</latitude>
+						<longitude>12.071983</longitude>
+						<line1>MARØYA.</line1>
+						<cityName>RØRVIK</cityName>
+						<postalCode>7900</postalCode>
+						<regionName>Trond</regionName>
+					</address>
+					<name>SINKABERG-HANSEN AS HEGGVIKA</name>
+					<description>Tank</description>
+					<identifiers>
+						<identifier id="115">
+							<identifier>10425</identifier>
+							<domainIdentifier>Location</domainIdentifier>
+							<identifierAuthority>LXIR</identifierAuthority>
+							<id>29972</id>
+							<version>0</version>
+							<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+							<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+							<createUser idref="9"/>
+							<changeUser idref="9"/>
+						</identifier>
+						<identifier id="116">
+							<identifier>5</identifier>
+							<domainIdentifier>IndicationIndex</domainIdentifier>
+							<identifierAuthority>LXIR</identifierAuthority>
+							<id>29973</id>
+							<version>0</version>
+							<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+							<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+							<createUser idref="9"/>
+							<changeUser idref="9"/>
+						</identifier>
+					</identifiers>
+					<remark>testar att anteckna igen</remark>
+					<partyRole idref="17"/>
+					<sourceIdentifier>1676</sourceIdentifier>
+					<isManuallyAdded>false</isManuallyAdded>
+					<shouldBeAddedToMasterData>false</shouldBeAddedToMasterData>
+					<id>23441</id>
+					<version>0</version>
+					<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+					<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+					<createUser idref="9"/>
+					<changeUser idref="9"/>
+				</location>
+				<incoTerm id="117">
+					<name>FOB</name>
+					<handle>fob</handle>
+					<id>4</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:36.000+0200</createDateTime>
+				</incoTerm>
+				<termsDateTime>2013-11-26T15:04:36.000+0100</termsDateTime>
+			</termsOfTransport>
+			<transportMode idref="59"/>
+			<transportProduct id="118">
+				<transportMode idref="59"/>
+				<name>Bulk</name>
+				<handle>bulk</handle>
+				<id>6</id>
+				<version>0</version>
+				<createDateTime>2013-05-22T16:00:00.000+0200</createDateTime>
+				<changeDateTime>2013-05-22T16:00:00.000+0200</changeDateTime>
+				<createUser id="119">
+					<userName>Christian Bergström</userName>
+					<email>christian.bergstrom@surikat.se</email>
+					<userId>5</userId>
+				</createUser>
+				<changeUser idref="119"/>
+			</transportProduct>
+			<serviceLevel id="120">
+				<transportMode id="121">
+					<name>Air</name>
+					<handle>air</handle>
+					<id>2</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:35.000+0200</createDateTime>
+				</transportMode>
+				<name>Standard</name>
+				<handle>standard</handle>
+				<id>1</id>
+				<version>0</version>
+				<createDateTime>2012-04-20T08:58:36.000+0200</createDateTime>
+			</serviceLevel>
+		</transportInformation>
+		<parties>
+			<partie idref="77"/>
+			<partie idref="60"/>
+			<partie id="122">
+				<address id="123">
+					<country id="124">
+						<number>276</number>
+						<currency id="125">
+							<name>Euro</name>
+							<handle>EUR</handle>
+							<id>46</id>
+							<version>0</version>
+							<createDateTime>2010-12-08T10:19:39.000+0100</createDateTime>
+							<changeDateTime>2010-12-08T10:19:39.000+0100</changeDateTime>
+						</currency>
+						<isPartOfEuropeanUnion>true</isPartOfEuropeanUnion>
+						<iso3Code>DEU</iso3Code>
+						<formalName>Federal Republic of Germany</formalName>
+						<capitalCityName>Berlin</capitalCityName>
+						<telephoneCode>+49</telephoneCode>
+						<name>Germany</name>
+						<handle>DE</handle>
+						<id>64</id>
+						<version>0</version>
+						<createDateTime>2010-12-08T10:19:58.000+0100</createDateTime>
+						<changeDateTime>2010-12-08T10:19:58.000+0100</changeDateTime>
+					</country>
+					<latitude>7.0</latitude>
+					<longitude>6.0</longitude>
+					<line1>WAHLER STR. 37</line1>
+					<cityName>Düsseldorf</cityName>
+					<postalCode>40472.0</postalCode>
+					<line2>1</line2>
+					<line3>3</line3>
+					<line4>5</line4>
+					<postOfficeBox>2</postOfficeBox>
+					<regionName>4</regionName>
+				</address>
+				<name>UTi TMV Control Tower Teleflex Medical</name>
+				<identifiers/>
+				<partyRole id="126">
+					<name>Control Tower</name>
+					<handle>control_tower</handle>
+					<id>4</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:35.000+0200</createDateTime>
+				</partyRole>
+				<sourceIdentifier>173</sourceIdentifier>
+				<id>23444</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:20.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:20.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</partie>
+		</parties>
+		<events>
+			<event id="127">
+				<shipmentOrder id="128">
+					<measurements>
+						<measurement idref="46"/>
+						<measurement idref="54"/>
+					</measurements>
+					<transportInformation id="129">
+						<termsOfTransport id="130">
+							<location idref="110"/>
+							<incoTerm idref="117"/>
+							<termsDateTime>2013-11-26T15:04:36.000+0100</termsDateTime>
+						</termsOfTransport>
+						<transportMode idref="59"/>
+						<transportProduct idref="118"/>
+						<serviceLevel idref="120"/>
+					</transportInformation>
+					<orderDateTime>2015-10-30T09:05:59.000+0100</orderDateTime>
+					<contacts>
+						<contact id="131">
+							<communicationMethod idref="16"/>
+							<partyRole idref="11"/>
+							<name>Scanbio Scanbio</name>
+							<addresses>
+								<addresse id="132">
+									<addressType idref="19"/>
+									<id>17024</id>
+									<version>0</version>
+									<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+									<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+									<createUser idref="9"/>
+									<changeUser idref="9"/>
+								</addresse>
+							</addresses>
+							<id>3787</id>
+							<version>0</version>
+							<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+							<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+							<createUser idref="9"/>
+							<changeUser idref="9"/>
+						</contact>
+						<contact id="133">
+							<communicationMethod idref="16"/>
+							<partyRole idref="17"/>
+							<name>Odd Børre</name>
+							<phoneNumber>404779369</phoneNumber>
+							<addresses>
+								<addresse id="134">
+									<phoneNumber>404779369</phoneNumber>
+									<addressType idref="19"/>
+									<id>17025</id>
+									<version>0</version>
+									<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+									<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+									<createUser idref="9"/>
+									<changeUser idref="9"/>
+								</addresse>
+							</addresses>
+							<id>3788</id>
+							<version>0</version>
+							<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+							<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+							<createUser idref="9"/>
+							<changeUser idref="9"/>
+						</contact>
+					</contacts>
+					<orderNumber>RP-346</orderNumber>
+					<references/>
+					<locations>
+						<location idref="77"/>
+						<location idref="60"/>
+					</locations>
+					<isDangerousGoods>false</isDangerousGoods>
+					<isTemperaturedGoods>false</isTemperaturedGoods>
+					<dangerousGoods/>
+					<shipmentOrderOrderLines>
+						<shipmentOrderOrderLine id="135">
+							<identifiers>
+								<identifier id="136">
+									<identifier>RP-346-10-0</identifier>
+									<domainIdentifier>OrderLine</domainIdentifier>
+									<identifierAuthority>LXIR</identifierAuthority>
+									<id>2650</id>
+									<version>0</version>
+									<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+									<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+									<createUser idref="9"/>
+									<changeUser idref="9"/>
+								</identifier>
+							</identifiers>
+							<article idref="28"/>
+							<quantity>67.0</quantity>
+							<id>2650</id>
+							<version>0</version>
+							<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+							<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+							<createUser idref="9"/>
+							<changeUser idref="9"/>
+						</shipmentOrderOrderLine>
+						<shipmentOrderOrderLine id="137">
+							<identifiers>
+								<identifier id="138">
+									<identifier>fb4e8ddb-01d4-4d1b-ac7a-b43633732990</identifier>
+									<domainIdentifier>OrderLine</domainIdentifier>
+									<identifierAuthority>LYNX</identifierAuthority>
+									<id>2651</id>
+									<version>0</version>
+									<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+									<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+									<createUser idref="9"/>
+									<changeUser idref="9"/>
+								</identifier>
+							</identifiers>
+							<article idref="37"/>
+							<quantity>0.0</quantity>
+							<id>2651</id>
+							<version>0</version>
+							<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+							<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+							<createUser idref="9"/>
+							<changeUser idref="9"/>
+						</shipmentOrderOrderLine>
+					</shipmentOrderOrderLines>
+					<shipmentOrderIdentifiers>
+						<shipmentOrderIdentifier id="139">
+							<identifier>RP-346</identifier>
+							<domainIdentifier>OrderNumber</domainIdentifier>
+							<identifierAuthority>LXIR</identifierAuthority>
+							<id>3788</id>
+							<version>0</version>
+							<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+							<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+							<createUser idref="9"/>
+							<changeUser idref="9"/>
+						</shipmentOrderIdentifier>
+						<shipmentOrderIdentifier id="140">
+							<identifier>SubOrder</identifier>
+							<domainIdentifier>OrderType</domainIdentifier>
+							<identifierAuthority>LXIR</identifierAuthority>
+							<id>3787</id>
+							<version>0</version>
+							<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+							<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+							<createUser idref="9"/>
+							<changeUser idref="9"/>
+						</shipmentOrderIdentifier>
+					</shipmentOrderIdentifiers>
+					<loadingEquipmentLines/>
+					<id>1894</id>
+					<version>0</version>
+					<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+					<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+					<createUser idref="9"/>
+					<changeUser idref="9"/>
+				</shipmentOrder>
+				<notifications/>
+				<eventType id="141">
+					<name>Shipment Order Submitted</name>
+					<handle>shipment_order_submitted</handle>
+					<id>1</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:35.000+0200</createDateTime>
+				</eventType>
+				<shipment idref="14"/>
+				<references/>
+				<milestoneDeadlineUpdates/>
+				<isAddedByHuman>true</isAddedByHuman>
+				<eventDateTime>2015-10-30T09:06:16.000+0100</eventDateTime>
+				<status id="142">
+					<name>New</name>
+					<handle>new</handle>
+					<id>1</id>
+					<version>0</version>
+					<createUser idref="30"/>
+					<changeUser idref="30"/>
+				</status>
+				<documents/>
+				<manualCreateDateTime>2015-10-30T09:06:15.000+0100</manualCreateDateTime>
+				<id>24739</id>
+				<version>1</version>
+				<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:21.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</event>
+			<event id="143">
+				<resources>
+					<resource id="144">
+						<compartments>
+							<compartment id="145">
+								<name>Tank</name>
+								<typedAmount id="146">
+									<amount>800.0</amount>
+									<unit id="147">
+										<name>m3</name>
+										<handle>m3</handle>
+										<id>4</id>
+										<version>0</version>
+										<createDateTime>2013-12-15T08:58:35.000+0100</createDateTime>
+									</unit>
+								</typedAmount>
+								<id>41</id>
+								<version>0</version>
+								<createDateTime>2014-03-17T13:36:17.000+0100</createDateTime>
+								<changeDateTime>2014-03-17T13:36:17.000+0100</changeDateTime>
+								<createUser idref="30"/>
+								<changeUser idref="30"/>
+							</compartment>
+						</compartments>
+						<name>Test Extend Jacob</name>
+						<resourceType id="148">
+							<forFQDN>com.capimill.lynx.resources.entities.VehicleResource</forFQDN>
+							<name>Vehicle</name>
+							<handle>vehicle</handle>
+							<id>1</id>
+							<version>0</version>
+						</resourceType>
+						<latitude>57.705598</latitude>
+						<longitude>11.965566</longitude>
+						<speed>0.0</speed>
+						<mobilityIdentifier>357063051639422</mobilityIdentifier>
+						<isDeleted>false</isDeleted>
+						<events>
+							<event id="149">
+								<bunkerEventType>REPORT_LEVEL</bunkerEventType>
+								<typedAmount id="150">
+									<amount>0.0</amount>
+									<unit idref="31"/>
+								</typedAmount>
+								<resource idref="144"/>
+								<eventType id="151">
+									<name>Bunker</name>
+									<handle>bunker</handle>
+									<id>1</id>
+									<version>0</version>
+									<createUser idref="30"/>
+									<changeUser idref="30"/>
+								</eventType>
+								<documents/>
+								<manualCreateDateTime>2014-12-15T14:51:20.000+0100</manualCreateDateTime>
+								<id>59</id>
+								<version>0</version>
+								<createDateTime>2014-12-15T14:51:25.000+0100</createDateTime>
+								<changeDateTime>2014-12-15T14:51:25.000+0100</changeDateTime>
+								<createUser idref="9"/>
+								<changeUser idref="9"/>
+							</event>
+							<event id="152">
+								<bunkerEventType>REPORT_LEVEL</bunkerEventType>
+								<typedAmount id="153">
+									<amount>0.0</amount>
+									<unit idref="31"/>
+								</typedAmount>
+								<resource idref="144"/>
+								<eventType idref="151"/>
+								<documents/>
+								<manualCreateDateTime>2014-12-15T14:51:20.000+0100</manualCreateDateTime>
+								<id>60</id>
+								<version>0</version>
+								<createDateTime>2014-12-15T14:56:31.000+0100</createDateTime>
+								<changeDateTime>2014-12-15T14:56:31.000+0100</changeDateTime>
+								<createUser idref="9"/>
+								<changeUser idref="9"/>
+							</event>
+							<event id="154">
+								<bunkerEventType>REPORT_LEVEL</bunkerEventType>
+								<typedAmount id="155">
+									<amount>100.0</amount>
+									<unit idref="31"/>
+								</typedAmount>
+								<resource idref="144"/>
+								<eventType idref="151"/>
+								<documents/>
+								<manualCreateDateTime>2014-12-15T16:37:21.000+0100</manualCreateDateTime>
+								<id>61</id>
+								<version>0</version>
+								<createDateTime>2014-12-15T16:37:36.000+0100</createDateTime>
+								<changeDateTime>2014-12-15T16:37:36.000+0100</changeDateTime>
+								<createUser idref="9"/>
+								<changeUser idref="9"/>
+							</event>
+						</events>
+						<capabilities/>
+						<id>9</id>
+						<version>74636</version>
+						<createDateTime>2014-03-17T13:36:17.000+0100</createDateTime>
+						<changeDateTime>2015-10-30T09:56:04.000+0100</changeDateTime>
+						<createUser idref="30"/>
+						<changeUser idref="9"/>
+					</resource>
+				</resources>
+				<toTimeSpans/>
+				<fromTimeSpans/>
+				<eventType id="156">
+					<name>Resources Allocation Requested</name>
+					<handle>resources_allocation_requested</handle>
+					<id>39</id>
+					<version>0</version>
+					<createUser idref="13"/>
+					<changeUser idref="13"/>
+				</eventType>
+				<shipment idref="14"/>
+				<references/>
+				<milestoneDeadlineUpdates/>
+				<isAddedByHuman>true</isAddedByHuman>
+				<eventDateTime>2015-10-30T09:29:41.000+0100</eventDateTime>
+				<status idref="142"/>
+				<id>24740</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:29:41.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:29:41.000+0100</changeDateTime>
+				<createUser id="157">
+					<userName>Andreas Andreas</userName>
+					<email>andreas.karlsson@surikat.se</email>
+					<userId>785</userId>
+				</createUser>
+				<changeUser idref="157"/>
+			</event>
+			<event id="158">
+				<resources>
+					<resource idref="144"/>
+				</resources>
+				<toTimeSpans/>
+				<fromTimeSpans/>
+				<eventType id="159">
+					<name>Resources Allocated</name>
+					<handle>resources_allocated</handle>
+					<id>38</id>
+					<version>0</version>
+					<createUser idref="30"/>
+					<changeUser idref="30"/>
+				</eventType>
+				<shipment idref="14"/>
+				<references/>
+				<milestoneDeadlineUpdates/>
+				<isAddedByHuman>true</isAddedByHuman>
+				<eventDateTime>2015-10-30T09:32:40.000+0100</eventDateTime>
+				<status idref="142"/>
+				<id>24741</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:32:40.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:32:40.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</event>
+			<event id="160">
+				<location id="161">
+					<timeSpan id="162">
+						<from id="163">
+							<date>2015-10-30T15:06:25.000+0100</date>
+							<hasTime>true</hasTime>
+						</from>
+						<to id="164">
+							<date>2015-10-31T15:06:25.000+0100</date>
+							<hasTime>true</hasTime>
+						</to>
+					</timeSpan>
+					<address id="165">
+						<country idref="6"/>
+						<latitude>65.126583</latitude>
+						<longitude>12.071983</longitude>
+						<line1>MARØYA.</line1>
+						<cityName>RØRVIK</cityName>
+						<postalCode>7900</postalCode>
+						<regionName>Trond</regionName>
+					</address>
+					<name>SINKABERG-HANSEN AS HEGGVIKA</name>
+					<description>Tank</description>
+					<identifiers>
+						<identifier id="166">
+							<identifier>10425</identifier>
+							<domainIdentifier>Location</domainIdentifier>
+							<identifierAuthority>LXIR</identifierAuthority>
+							<id>29983</id>
+							<version>0</version>
+							<createDateTime>2015-10-30T09:33:13.000+0100</createDateTime>
+							<changeDateTime>2015-10-30T09:33:13.000+0100</changeDateTime>
+							<createUser idref="9"/>
+							<changeUser idref="9"/>
+						</identifier>
+						<identifier id="167">
+							<identifier>5</identifier>
+							<domainIdentifier>IndicationIndex</domainIdentifier>
+							<identifierAuthority>LXIR</identifierAuthority>
+							<id>29982</id>
+							<version>0</version>
+							<createDateTime>2015-10-30T09:33:13.000+0100</createDateTime>
+							<changeDateTime>2015-10-30T09:33:13.000+0100</changeDateTime>
+							<createUser idref="9"/>
+							<changeUser idref="9"/>
+						</identifier>
+					</identifiers>
+					<partyRole idref="17"/>
+					<sourceIdentifier>1676</sourceIdentifier>
+					<isManuallyAdded>false</isManuallyAdded>
+					<id>23453</id>
+					<version>0</version>
+					<createDateTime>2015-10-30T09:33:13.000+0100</createDateTime>
+					<changeDateTime>2015-10-30T09:33:13.000+0100</changeDateTime>
+					<createUser idref="9"/>
+					<changeUser idref="9"/>
+				</location>
+				<toTimeSpans/>
+				<fromTimeSpans/>
+				<eventType id="168">
+					<name>Arrived at ShippingLeg Location</name>
+					<handle>leg_location_arrived</handle>
+					<id>40</id>
+					<version>0</version>
+					<createUser idref="13"/>
+					<changeUser idref="13"/>
+				</eventType>
+				<shipment idref="14"/>
+				<references/>
+				<milestoneDeadlineUpdates/>
+				<isAddedByHuman>true</isAddedByHuman>
+				<eventDateTime>2015-10-30T09:33:06.000+0100</eventDateTime>
+				<status idref="142"/>
+				<manualCreateDateTime>2015-10-30T09:33:06.000+0100</manualCreateDateTime>
+				<id>24742</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:33:13.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:33:13.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</event>
+			<event id="169">
+				<compartments/>
+				<eventType id="170">
+					<name>Loading Started</name>
+					<handle>loading_started</handle>
+					<id>42</id>
+					<version>0</version>
+					<createUser idref="13"/>
+					<changeUser idref="13"/>
+				</eventType>
+				<shipment idref="14"/>
+				<references/>
+				<milestoneDeadlineUpdates/>
+				<isAddedByHuman>true</isAddedByHuman>
+				<eventDateTime>2015-10-30T09:34:00.000+0100</eventDateTime>
+				<status idref="142"/>
+				<documents/>
+				<id>24743</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:34:08.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:34:08.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</event>
+			<event id="171">
+				<activityStartDateTime>2015-10-30T09:34:00.000+0100</activityStartDateTime>
+				<actualPickupDateTime>2015-10-30T09:35:14.000+0100</actualPickupDateTime>
+				<eventType id="172">
+					<name>Loading Confirmed</name>
+					<handle>loading_confirmed</handle>
+					<id>6</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:35.000+0200</createDateTime>
+				</eventType>
+				<shipment idref="14"/>
+				<references/>
+				<milestoneDeadlineUpdates/>
+				<isAddedByHuman>true</isAddedByHuman>
+				<eventDateTime>2015-10-30T09:35:14.000+0100</eventDateTime>
+				<status idref="142"/>
+				<id>24744</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:37:26.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:37:26.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</event>
+			<event id="173">
+				<location id="174">
+					<timeSpan id="175">
+						<from id="176">
+							<date>2015-10-30T15:06:25.000+0100</date>
+							<hasTime>true</hasTime>
+						</from>
+						<to id="177">
+							<date>2015-10-31T15:06:25.000+0100</date>
+							<hasTime>true</hasTime>
+						</to>
+					</timeSpan>
+					<address id="178">
+						<country idref="6"/>
+						<latitude>63.762817</latitude>
+						<longitude>9.758333</longitude>
+						<line1>Botngård</line1>
+						<cityName>Bjugn</cityName>
+						<postalCode>7160</postalCode>
+					</address>
+					<name>Bjugn</name>
+					<description>Tank</description>
+					<identifiers>
+						<identifier id="179">
+							<identifier>0</identifier>
+							<domainIdentifier>IndicationIndex</domainIdentifier>
+							<identifierAuthority>LXIR</identifierAuthority>
+							<id>29985</id>
+							<version>0</version>
+							<createDateTime>2015-10-30T09:52:50.000+0100</createDateTime>
+							<changeDateTime>2015-10-30T09:52:50.000+0100</changeDateTime>
+							<createUser idref="9"/>
+							<changeUser idref="9"/>
+						</identifier>
+						<identifier id="180">
+							<identifier>BJU</identifier>
+							<domainIdentifier>Location</domainIdentifier>
+							<identifierAuthority>LXIR</identifierAuthority>
+							<id>29984</id>
+							<version>0</version>
+							<createDateTime>2015-10-30T09:52:50.000+0100</createDateTime>
+							<changeDateTime>2015-10-30T09:52:50.000+0100</changeDateTime>
+							<createUser idref="9"/>
+							<changeUser idref="9"/>
+						</identifier>
+					</identifiers>
+					<partyRole idref="11"/>
+					<sourceIdentifier>2010</sourceIdentifier>
+					<isManuallyAdded>false</isManuallyAdded>
+					<id>23454</id>
+					<version>0</version>
+					<createDateTime>2015-10-30T09:52:50.000+0100</createDateTime>
+					<changeDateTime>2015-10-30T09:52:50.000+0100</changeDateTime>
+					<createUser idref="9"/>
+					<changeUser idref="9"/>
+				</location>
+				<toTimeSpans/>
+				<fromTimeSpans/>
+				<eventType idref="168"/>
+				<shipment idref="14"/>
+				<references/>
+				<milestoneDeadlineUpdates/>
+				<isAddedByHuman>true</isAddedByHuman>
+				<eventDateTime>2015-10-30T09:50:32.000+0100</eventDateTime>
+				<status idref="142"/>
+				<manualCreateDateTime>2015-10-30T09:50:32.000+0100</manualCreateDateTime>
+				<id>24745</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:52:50.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:52:50.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</event>
+			<event id="181">
+				<activityStartDateTime>2015-10-30T09:53:03.000+0100</activityStartDateTime>
+				<iodDateTime>2015-10-30T09:54:38.000+0100</iodDateTime>
+				<shipmentHandlingUnitLineItems/>
+				<eventType id="182">
+					<name>Delivery Confirmed</name>
+					<handle>delivery_confirmed</handle>
+					<id>7</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:35.000+0200</createDateTime>
+				</eventType>
+				<shipment idref="14"/>
+				<references/>
+				<milestoneDeadlineUpdates/>
+				<isAddedByHuman>true</isAddedByHuman>
+				<eventDateTime>2015-10-30T09:54:38.000+0100</eventDateTime>
+				<status idref="142"/>
+				<documents/>
+				<id>24746</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:56:02.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:56:02.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</event>
+			<event idref="0"/>
+		</events>
+		<isDeleted>false</isDeleted>
+		<isCancelled>false</isCancelled>
+		<references>
+			<reference id="183">
+				<type id="184">
+					<name>Container Number</name>
+					<handle>container_number</handle>
+					<id>12</id>
+					<version>0</version>
+					<createDateTime>2012-05-04T09:08:43.000+0200</createDateTime>
+				</type>
+				<id>1338</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:37:26.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:37:26.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</reference>
+		</references>
+		<tasks>
+			<task id="185">
+				<eventType id="186">
+					<name>Transport Tendered</name>
+					<handle>transport_spot_tendered</handle>
+					<id>18</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:36.000+0200</createDateTime>
+				</eventType>
+				<shipment idref="14"/>
+				<name>Tender Transport</name>
+				<status id="187">
+					<name>Open</name>
+					<handle>open</handle>
+					<id>3</id>
+					<version>0</version>
+					<createDateTime>2012-05-04T09:08:43.000+0200</createDateTime>
+				</status>
+				<payload>6552</payload>
+				<remindersSentCount>0</remindersSentCount>
+				<deadline>2015-10-30T10:06:20.000+0100</deadline>
+				<taskType>register_shipment_event</taskType>
+				<candidateRoleType idref="126"/>
+				<id>6200</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:20.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:20.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</task>
+			<task id="188">
+				<eventType id="189">
+					<name>Estimated Charges Created</name>
+					<handle>charges_estimated</handle>
+					<id>30</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:36.000+0200</createDateTime>
+				</eventType>
+				<shipment idref="14"/>
+				<name>Enter estimated charges</name>
+				<status idref="187"/>
+				<remindersSentCount>0</remindersSentCount>
+				<deadline>2016-10-30T09:06:20.000+0100</deadline>
+				<taskType>register_shipment_event</taskType>
+				<candidateRoleType idref="126"/>
+				<isVisible>true</isVisible>
+				<id>6197</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:20.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:20.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</task>
+			<task id="190">
+				<eventType id="191">
+					<name>Invoice Entry Created</name>
+					<handle>create_invoice_entry</handle>
+					<id>23</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:36.000+0200</createDateTime>
+				</eventType>
+				<shipment idref="14"/>
+				<name>Enter invoice entry</name>
+				<status idref="187"/>
+				<remindersSentCount>0</remindersSentCount>
+				<deadline>2016-10-30T09:06:20.000+0100</deadline>
+				<taskType>register_shipment_event</taskType>
+				<candidateRoleType idref="126"/>
+				<isVisible>true</isVisible>
+				<id>6198</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:20.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:20.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</task>
+			<task id="192">
+				<eventType id="193">
+					<name>Transport Mode Changed</name>
+					<handle>transport_mode_changed</handle>
+					<id>34</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:36.000+0200</createDateTime>
+				</eventType>
+				<shipment idref="14"/>
+				<name>Change Transport Mode</name>
+				<status idref="187"/>
+				<remindersSentCount>0</remindersSentCount>
+				<deadline>2016-10-30T09:06:20.000+0100</deadline>
+				<taskType>register_shipment_event</taskType>
+				<candidateRoleType idref="126"/>
+				<isVisible>true</isVisible>
+				<id>6199</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:20.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:20.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</task>
+		</tasks>
+		<milestones>
+			<milestone id="194">
+				<type id="195">
+					<description>Teleflex Booking</description>
+					<category id="196">
+						<name>Pre-Transport</name>
+						<handle>pre_transport</handle>
+						<id>1</id>
+						<version>0</version>
+						<createDateTime>2012-05-04T09:08:46.000+0200</createDateTime>
+					</category>
+					<name>ORD</name>
+					<handle>ord</handle>
+					<id>1</id>
+					<version>0</version>
+					<createDateTime>2012-05-04T09:08:46.000+0200</createDateTime>
+				</type>
+				<status id="197">
+					<name>Completed</name>
+					<handle>completed</handle>
+					<id>2</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:37.000+0200</createDateTime>
+				</status>
+				<forEventType>shipment_order_amended</forEventType>
+				<resolution id="198">
+					<name>On Time</name>
+					<handle>ontime</handle>
+					<id>2</id>
+					<version>0</version>
+					<createDateTime>2012-05-04T09:08:46.000+0200</createDateTime>
+				</resolution>
+				<id>37316</id>
+				<version>1</version>
+				<createDateTime>2015-10-30T09:06:21.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:22.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</milestone>
+			<milestone id="199">
+				<type id="200">
+					<description>Control Tower Booking</description>
+					<category idref="196"/>
+					<name>TDR</name>
+					<handle>tdr</handle>
+					<id>2</id>
+					<version>0</version>
+					<createDateTime>2012-05-04T09:08:46.000+0200</createDateTime>
+				</type>
+				<status id="201">
+					<name>New</name>
+					<handle>new</handle>
+					<id>1</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:37.000+0200</createDateTime>
+				</status>
+				<forEventType>transport_spot_tendered</forEventType>
+				<resolution id="202">
+					<name>Unresolved</name>
+					<handle>unresolved</handle>
+					<id>1</id>
+					<version>0</version>
+					<createDateTime>2012-05-04T09:08:46.000+0200</createDateTime>
+				</resolution>
+				<id>37317</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:21.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:21.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</milestone>
+			<milestone id="203">
+				<type id="204">
+					<description>Booking Confirmation</description>
+					<category idref="196"/>
+					<name>BKD</name>
+					<handle>bkd</handle>
+					<id>3</id>
+					<version>0</version>
+					<createDateTime>2012-05-04T09:08:46.000+0200</createDateTime>
+				</type>
+				<status idref="201"/>
+				<forEventType>transport_details_confirmed_</forEventType>
+				<resolution idref="202"/>
+				<id>37318</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:21.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:21.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</milestone>
+			<milestone id="205">
+				<type id="206">
+					<description>Pick up</description>
+					<category id="207">
+						<name>Transport Execution</name>
+						<handle>transport_execution</handle>
+						<id>2</id>
+						<version>0</version>
+						<createDateTime>2012-05-04T09:08:46.000+0200</createDateTime>
+					</category>
+					<name>LDG</name>
+					<handle>ldg</handle>
+					<id>4</id>
+					<version>0</version>
+					<createDateTime>2012-05-04T09:08:46.000+0200</createDateTime>
+				</type>
+				<status idref="197"/>
+				<forEventType>loading_confirmed</forEventType>
+				<resolution idref="198"/>
+				<id>37319</id>
+				<version>1</version>
+				<createDateTime>2015-10-30T09:06:21.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:37:27.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</milestone>
+			<milestone id="208">
+				<type id="209">
+					<description>Closing</description>
+					<category idref="207"/>
+					<name>CLO</name>
+					<handle>clo</handle>
+					<id>5</id>
+					<version>0</version>
+					<createDateTime>2012-05-04T09:08:46.000+0200</createDateTime>
+				</type>
+				<status idref="201"/>
+				<forEventType>delivered_at_port_of_loading</forEventType>
+				<resolution idref="202"/>
+				<id>37320</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:21.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:21.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</milestone>
+			<milestone id="210">
+				<type id="211">
+					<description>Confirmend on Board</description>
+					<category idref="207"/>
+					<name>COB</name>
+					<handle>cob</handle>
+					<id>6</id>
+					<version>0</version>
+					<createDateTime>2012-05-04T09:08:46.000+0200</createDateTime>
+				</type>
+				<status idref="201"/>
+				<forEventType>confirmed_on_board</forEventType>
+				<resolution idref="202"/>
+				<id>37321</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:21.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:21.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</milestone>
+			<milestone id="212">
+				<type id="213">
+					<description>Estimated Time of Arrival</description>
+					<category idref="207"/>
+					<name>IOA</name>
+					<handle>ioa</handle>
+					<id>7</id>
+					<version>0</version>
+					<createDateTime>2012-05-04T09:08:46.000+0200</createDateTime>
+				</type>
+				<status idref="201"/>
+				<forEventType>information_of_arrival</forEventType>
+				<resolution idref="202"/>
+				<id>37322</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:21.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:21.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</milestone>
+			<milestone id="214">
+				<type id="215">
+					<description>Delivery Scheduling</description>
+					<category idref="207"/>
+					<name>DLS</name>
+					<handle>dls</handle>
+					<id>8</id>
+					<version>0</version>
+					<createDateTime>2012-05-04T09:08:46.000+0200</createDateTime>
+				</type>
+				<status idref="201"/>
+				<forEventType>delivery_information_updated</forEventType>
+				<resolution idref="202"/>
+				<id>37323</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:21.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:21.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</milestone>
+			<milestone id="216">
+				<type id="217">
+					<description>Information of Delivery</description>
+					<category idref="207"/>
+					<name>DLV</name>
+					<handle>dlv</handle>
+					<id>9</id>
+					<version>0</version>
+					<createDateTime>2012-05-04T09:08:46.000+0200</createDateTime>
+				</type>
+				<status idref="197"/>
+				<forEventType>delivery_confirmed</forEventType>
+				<resolution idref="198"/>
+				<id>37324</id>
+				<version>1</version>
+				<createDateTime>2015-10-30T09:06:21.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:56:03.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</milestone>
+			<milestone id="218">
+				<type id="219">
+					<description>Accruals</description>
+					<category id="220">
+						<name>Post-Transport</name>
+						<handle>post_transport</handle>
+						<id>3</id>
+						<version>0</version>
+						<createDateTime>2012-05-04T09:08:46.000+0200</createDateTime>
+					</category>
+					<name>ACC</name>
+					<handle>acc</handle>
+					<id>10</id>
+					<version>0</version>
+					<createDateTime>2012-05-04T09:08:46.000+0200</createDateTime>
+				</type>
+				<status idref="201"/>
+				<forEventType>charges_estimated</forEventType>
+				<resolution idref="202"/>
+				<id>37325</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:21.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:21.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</milestone>
+			<milestone id="221">
+				<type id="222">
+					<description>Invoice information</description>
+					<category idref="220"/>
+					<name>INV</name>
+					<handle>inv</handle>
+					<id>11</id>
+					<version>0</version>
+					<createDateTime>2012-05-04T09:08:46.000+0200</createDateTime>
+				</type>
+				<status idref="201"/>
+				<deadline>2015-11-10T09:54:38.000+0100</deadline>
+				<forEventType>create_invoice_entry</forEventType>
+				<resolution idref="202"/>
+				<id>37326</id>
+				<version>1</version>
+				<createDateTime>2015-10-30T09:06:21.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:56:03.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</milestone>
+			<milestone id="223">
+				<type id="224">
+					<description>Documentation Completed</description>
+					<category idref="220"/>
+					<name>DOC</name>
+					<handle>doc</handle>
+					<id>12</id>
+					<version>0</version>
+					<createDateTime>2012-05-04T09:08:46.000+0200</createDateTime>
+				</type>
+				<status idref="201"/>
+				<deadline>2015-11-03T09:54:38.000+0100</deadline>
+				<resolution idref="202"/>
+				<id>37327</id>
+				<version>1</version>
+				<createDateTime>2015-10-30T09:06:21.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:56:03.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</milestone>
+			<milestone id="225">
+				<type id="226">
+					<description>Final Check</description>
+					<category idref="220"/>
+					<name>CLD</name>
+					<handle>cld</handle>
+					<id>13</id>
+					<version>0</version>
+					<createDateTime>2012-05-04T09:08:46.000+0200</createDateTime>
+				</type>
+				<status idref="201"/>
+				<deadline>2015-11-04T09:54:38.000+0100</deadline>
+				<forEventType>shipment_closed</forEventType>
+				<resolution idref="202"/>
+				<id>37328</id>
+				<version>1</version>
+				<createDateTime>2015-10-30T09:06:21.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:56:03.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</milestone>
+			<milestone id="227">
+				<type id="228">
+					<description>Billed</description>
+					<category idref="220"/>
+					<name>BLL</name>
+					<handle>bll</handle>
+					<id>14</id>
+					<version>0</version>
+					<createDateTime>2012-05-04T09:08:46.000+0200</createDateTime>
+				</type>
+				<status idref="201"/>
+				<resolution idref="202"/>
+				<id>37329</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:21.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:21.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</milestone>
+		</milestones>
+		<notifications/>
+		<invoiceEntries/>
+		<estimatedChargeEntries/>
+		<documents/>
+		<status idref="187"/>
+		<orderReference>RP-346</orderReference>
+		<expectedDocuments>
+			<expectedDocument id="229">
+				<status id="230">
+					<name>Expected</name>
+					<handle>expected</handle>
+					<id>1</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:37.000+0200</createDateTime>
+				</status>
+				<documentType id="231">
+					<name>Freight Invoice</name>
+					<handle>freight_invoice</handle>
+					<id>11</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:36.000+0200</createDateTime>
+				</documentType>
+				<id>9584</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:21.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:21.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</expectedDocument>
+			<expectedDocument id="232">
+				<status idref="230"/>
+				<documentType id="233">
+					<name>Customs Declaration</name>
+					<handle>customs_declaration</handle>
+					<id>12</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:36.000+0200</createDateTime>
+				</documentType>
+				<id>9583</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:21.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:21.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</expectedDocument>
+			<expectedDocument id="234">
+				<status idref="230"/>
+				<documentType id="235">
+					<name>Commercial Invoice</name>
+					<handle>commercial_invoice</handle>
+					<id>2</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:36.000+0200</createDateTime>
+				</documentType>
+				<id>9585</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:21.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:21.000+0100</changeDateTime>
+				<createUser idref="9"/>
+				<changeUser idref="9"/>
+			</expectedDocument>
+		</expectedDocuments>
+		<id>2654208</id>
+		<version>5</version>
+		<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+		<changeDateTime>2015-10-30T09:56:02.000+0100</changeDateTime>
+		<createUser idref="9"/>
+		<changeUser idref="9"/>
+	</shipment>
+	<references/>
+	<milestoneDeadlineUpdates/>
+	<isAddedByHuman>true</isAddedByHuman>
+	<eventDateTime>2015-10-30T09:56:25.495+0100</eventDateTime>
+	<status idref="142"/>
+	<manualCreateDateTime>2015-10-30T09:56:25.495+0100</manualCreateDateTime>
+	<id>24747</id>
+	<version>0</version>
+	<createDateTime>2015-10-30T09:57:14.171+0100</createDateTime>
+	<changeDateTime>2015-10-30T09:57:14.171+0100</changeDateTime>
+	<createUser idref="9"/>
+	<changeUser idref="9"/>
+</ShippingLegLocationDepartedEvent>

@@ -1,0 +1,2136 @@
+<ShippingLegLocationDepartedEvent id="0" type="com.capimill.lynx.tms.entities.events.ShippingLegLocationDepartedEvent">
+	<location id="1" type="com.capimill.lynx.masterdata.parties.entities.LocationSummary">
+		<timeSpan id="2" type="com.capimill.lynx.common.entities.TimeSpan">
+			<from id="3" type="com.capimill.lynx.common.entities.TimeSpanDate">
+				<date>2015-10-30T15:06:25.000+0100</date>
+				<hasTime>true</hasTime>
+			</from>
+			<to id="4" type="com.capimill.lynx.common.entities.TimeSpanDate">
+				<date>2015-10-31T15:06:25.000+0100</date>
+				<hasTime>true</hasTime>
+			</to>
+		</timeSpan>
+		<address id="5" type="com.capimill.lynx.common.entities.GeographicalAddress">
+			<country id="6" type="com.capimill.lynx.common.entities.Country">
+				<number>578</number>
+				<currency id="7" type="com.capimill.lynx.common.entities.Currency">
+					<name>Norway Kroner</name>
+					<handle>NOK</handle>
+					<id>110</id>
+					<version>0</version>
+					<createDateTime>2010-12-08T10:19:39.000+0100</createDateTime>
+					<changeDateTime>2010-12-08T10:19:39.000+0100</changeDateTime>
+				</currency>
+				<isPartOfEuropeanUnion>false</isPartOfEuropeanUnion>
+				<iso3Code>NOR</iso3Code>
+				<formalName>Kingdom of Norway</formalName>
+				<capitalCityName>Oslo</capitalCityName>
+				<telephoneCode>+47</telephoneCode>
+				<name>Norway</name>
+				<handle>NO</handle>
+				<id>129</id>
+				<version>0</version>
+				<createDateTime>2010-12-08T10:19:58.000+0100</createDateTime>
+				<changeDateTime>2010-12-08T10:19:58.000+0100</changeDateTime>
+			</country>
+			<latitude>63.762817</latitude>
+			<longitude>9.758333</longitude>
+			<line1>Botngård</line1>
+			<cityName>Bjugn</cityName>
+			<postalCode>7160</postalCode>
+		</address>
+		<name>Bjugn</name>
+		<description>Tank</description>
+		<identifiers>
+			<identifier id="8" type="com.capimill.lynx.masterdata.parties.entities.PartySummaryIdentifier">
+				<identifier>0</identifier>
+				<domainIdentifier>IndicationIndex</domainIdentifier>
+				<identifierAuthority>LXIR</identifierAuthority>
+				<id>29986</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:57:14.249+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:57:14.249+0100</changeDateTime>
+				<createUser id="9" type="com.capimill.lynx.core.entities.UserInfo">
+					<userName>System User</userName>
+					<email>lynx.system@surikat.se</email>
+					<userId>1</userId>
+				</createUser>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</identifier>
+			<identifier id="10" type="com.capimill.lynx.masterdata.parties.entities.PartySummaryIdentifier">
+				<identifier>BJU</identifier>
+				<domainIdentifier>Location</domainIdentifier>
+				<identifierAuthority>LXIR</identifierAuthority>
+				<id>29987</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:57:14.312+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:57:14.312+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</identifier>
+		</identifiers>
+		<partyRole id="11" type="com.capimill.lynx.masterdata.parties.entities.PartyRole">
+			<name>Consignee</name>
+			<handle>consignee</handle>
+			<id>2</id>
+			<version>0</version>
+			<createDateTime>2012-04-20T08:58:35.000+0200</createDateTime>
+		</partyRole>
+		<sourceIdentifier>2010</sourceIdentifier>
+		<isManuallyAdded>false</isManuallyAdded>
+		<id>23455</id>
+		<version>0</version>
+		<createDateTime>2015-10-30T09:57:14.171+0100</createDateTime>
+		<changeDateTime>2015-10-30T09:57:14.171+0100</changeDateTime>
+		<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+		<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+	</location>
+	<toTimeSpans/>
+	<fromTimeSpans/>
+	<eventType id="12" type="com.capimill.lynx.tms.entities.events.ShipmentEventType">
+		<name>Departed from ShippingLeg Location</name>
+		<handle>leg_location_departed</handle>
+		<id>41</id>
+		<version>0</version>
+		<createUser id="13" type="com.capimill.lynx.core.entities.UserInfo">
+			<userName>Joakim Olausson</userName>
+			<email>emil.forsmark@surikat.se</email>
+			<userId>782</userId>
+		</createUser>
+		<changeUser idref="13" type="com.capimill.lynx.core.entities.UserInfo"/>
+	</eventType>
+	<shipment id="14" type="com.capimill.lynx.tms.entities.Shipment">
+		<contacts>
+			<contact id="15" type="com.capimill.lynx.tms.entities.ShipmentContact">
+				<communicationMethod id="16" type="com.capimill.lynx.tms.entities.CommunicationMethod">
+					<name>Email</name>
+					<handle>email</handle>
+					<id>1</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:36.000+0200</createDateTime>
+				</communicationMethod>
+				<partyRole id="17" type="com.capimill.lynx.masterdata.parties.entities.PartyRole">
+					<name>Consignor</name>
+					<handle>consignor</handle>
+					<id>1</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:35.000+0200</createDateTime>
+				</partyRole>
+				<name>Odd Børre</name>
+				<phoneNumber>404779369</phoneNumber>
+				<addresses>
+					<addresse id="18" type="com.capimill.lynx.common.entities.PhoneAddress">
+						<phoneNumber>404779369</phoneNumber>
+						<addressType id="19" type="com.capimill.lynx.common.entities.AddressType">
+							<name>Phone</name>
+							<handle>phone</handle>
+							<id>3</id>
+							<version>0</version>
+							<createDateTime>2012-04-20T08:58:35.000+0200</createDateTime>
+						</addressType>
+						<id>17026</id>
+						<version>0</version>
+						<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+						<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+						<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+						<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+					</addresse>
+				</addresses>
+				<id>3533</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</contact>
+			<contact id="20" type="com.capimill.lynx.tms.entities.ShipmentContact">
+				<communicationMethod idref="16" type="com.capimill.lynx.tms.entities.CommunicationMethod"/>
+				<partyRole idref="11" type="com.capimill.lynx.masterdata.parties.entities.PartyRole"/>
+				<name>Scanbio Scanbio</name>
+				<addresses>
+					<addresse id="21" type="com.capimill.lynx.common.entities.PhoneAddress">
+						<addressType idref="19" type="com.capimill.lynx.common.entities.AddressType"/>
+						<id>17027</id>
+						<version>0</version>
+						<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+						<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+						<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+						<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+					</addresse>
+				</addresses>
+				<id>3534</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</contact>
+		</contacts>
+		<identifiers>
+			<identifier id="22" type="com.capimill.lynx.tms.entities.ShipmentIdentifier">
+				<identifier>RP-346</identifier>
+				<domainIdentifier>OrderNumber</domainIdentifier>
+				<identifierAuthority>LXIR</identifierAuthority>
+				<id>3099</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</identifier>
+			<identifier id="23" type="com.capimill.lynx.tms.entities.ShipmentIdentifier">
+				<identifier>SubOrder</identifier>
+				<domainIdentifier>OrderType</domainIdentifier>
+				<identifierAuthority>LXIR</identifierAuthority>
+				<id>3100</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</identifier>
+		</identifiers>
+		<orderLines>
+			<orderLine id="24" type="com.capimill.lynx.tms.entities.ShipmentOrderLine">
+				<identifiers>
+					<identifier id="25" type="com.capimill.lynx.tms.entities.ShipmentOrderLineIdentifier">
+						<identifier>RP-346-10-0</identifier>
+						<domainIdentifier>OrderLine</domainIdentifier>
+						<identifierAuthority>LXIR</identifierAuthority>
+						<id>7364</id>
+						<version>0</version>
+						<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+						<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+						<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+						<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+					</identifier>
+					<identifier id="26" type="com.capimill.lynx.tms.entities.ShipmentOrderLineIdentifier">
+						<identifier>39186</identifier>
+						<domainIdentifier>DeliveryLocation</domainIdentifier>
+						<identifierAuthority>LXIR</identifierAuthority>
+						<id>7368</id>
+						<version>0</version>
+						<createDateTime>2015-10-30T09:56:02.000+0100</createDateTime>
+						<changeDateTime>2015-10-30T09:56:02.000+0100</changeDateTime>
+						<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+						<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+					</identifier>
+					<identifier id="27" type="com.capimill.lynx.tms.entities.ShipmentOrderLineIdentifier">
+						<identifier>10425</identifier>
+						<domainIdentifier>LoadingLocation</domainIdentifier>
+						<identifierAuthority>LXIR</identifierAuthority>
+						<id>7366</id>
+						<version>0</version>
+						<createDateTime>2015-10-30T09:37:26.000+0100</createDateTime>
+						<changeDateTime>2015-10-30T09:37:26.000+0100</changeDateTime>
+						<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+						<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+					</identifier>
+				</identifiers>
+				<article id="28" type="com.capimill.lynx.bss.entities.ContractArticle">
+					<type id="29" type="com.capimill.lynx.bss.entities.ContractArticleType">
+						<name>Extra</name>
+						<handle>extra</handle>
+						<id>3</id>
+						<version>0</version>
+						<createUser id="30" type="com.capimill.lynx.core.entities.UserInfo">
+							<userName>Joakim Olausson</userName>
+							<email>joakim.olausson@surikat.se</email>
+							<userId>782</userId>
+						</createUser>
+						<changeUser idref="30" type="com.capimill.lynx.core.entities.UserInfo"/>
+					</type>
+					<unit id="31" type="com.capimill.lynx.common.entities.Unit">
+						<name>Liter</name>
+						<handle>liter</handle>
+						<id>1</id>
+						<version>0</version>
+						<createDateTime>2013-12-15T08:58:35.000+0100</createDateTime>
+					</unit>
+					<isDeleted>false</isDeleted>
+					<requirements/>
+					<contractArticleIdentifiers>
+						<contractArticleIdentifier id="32" type="com.capimill.lynx.bss.entities.ContractArticleIdentifier">
+							<identifier>1104</identifier>
+							<domainIdentifier>Article</domainIdentifier>
+							<identifierAuthority>LXIR</identifierAuthority>
+							<id>54</id>
+							<version>0</version>
+							<createDateTime>2014-02-05T20:30:44.000+0100</createDateTime>
+							<changeDateTime>2014-02-05T20:30:44.000+0100</changeDateTime>
+							<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+							<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+						</contractArticleIdentifier>
+					</contractArticleIdentifiers>
+					<name>Antiboil</name>
+					<handle>1104</handle>
+					<id>104</id>
+					<version>1</version>
+					<createDateTime>2014-01-13T22:07:54.000+0100</createDateTime>
+					<changeDateTime>2014-02-05T20:30:44.000+0100</changeDateTime>
+					<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+					<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				</article>
+				<quantity>67.0</quantity>
+				<id>3062</id>
+				<version>2</version>
+				<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:56:02.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</orderLine>
+			<orderLine id="33" type="com.capimill.lynx.tms.entities.ShipmentOrderLine">
+				<identifiers>
+					<identifier id="34" type="com.capimill.lynx.tms.entities.ShipmentOrderLineIdentifier">
+						<identifier>39186</identifier>
+						<domainIdentifier>DeliveryLocation</domainIdentifier>
+						<identifierAuthority>LXIR</identifierAuthority>
+						<id>7369</id>
+						<version>0</version>
+						<createDateTime>2015-10-30T09:56:02.000+0100</createDateTime>
+						<changeDateTime>2015-10-30T09:56:02.000+0100</changeDateTime>
+						<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+						<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+					</identifier>
+					<identifier id="35" type="com.capimill.lynx.tms.entities.ShipmentOrderLineIdentifier">
+						<identifier>10425</identifier>
+						<domainIdentifier>LoadingLocation</domainIdentifier>
+						<identifierAuthority>LXIR</identifierAuthority>
+						<id>7367</id>
+						<version>0</version>
+						<createDateTime>2015-10-30T09:37:26.000+0100</createDateTime>
+						<changeDateTime>2015-10-30T09:37:26.000+0100</changeDateTime>
+						<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+						<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+					</identifier>
+					<identifier id="36" type="com.capimill.lynx.tms.entities.ShipmentOrderLineIdentifier">
+						<identifier>fb4e8ddb-01d4-4d1b-ac7a-b43633732990</identifier>
+						<domainIdentifier>OrderLine</domainIdentifier>
+						<identifierAuthority>LYNX</identifierAuthority>
+						<id>7365</id>
+						<version>0</version>
+						<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+						<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+						<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+						<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+					</identifier>
+				</identifiers>
+				<article id="37" type="com.capimill.lynx.bss.entities.ContractArticle">
+					<type id="38" type="com.capimill.lynx.bss.entities.ContractArticleType">
+						<name>Raw Material</name>
+						<handle>raw_material</handle>
+						<id>1</id>
+						<version>0</version>
+						<createUser idref="30" type="com.capimill.lynx.core.entities.UserInfo"/>
+						<changeUser idref="30" type="com.capimill.lynx.core.entities.UserInfo"/>
+					</type>
+					<unit idref="31" type="com.capimill.lynx.common.entities.Unit"/>
+					<isDeleted>false</isDeleted>
+					<requirements/>
+					<contractArticleIdentifiers>
+						<contractArticleIdentifier id="39" type="com.capimill.lynx.bss.entities.ContractArticleIdentifier">
+							<identifier>1111</identifier>
+							<domainIdentifier>Article</domainIdentifier>
+							<identifierAuthority>LXIR</identifierAuthority>
+							<id>99</id>
+							<version>0</version>
+							<createDateTime>2014-03-14T09:29:50.000+0100</createDateTime>
+							<changeDateTime>2014-03-14T09:29:50.000+0100</changeDateTime>
+							<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+							<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+						</contractArticleIdentifier>
+					</contractArticleIdentifiers>
+					<name>K2 Ensilasje</name>
+					<handle>1111</handle>
+					<id>137</id>
+					<version>17</version>
+					<createDateTime>2014-01-13T22:57:32.000+0100</createDateTime>
+					<changeDateTime>2014-03-14T09:29:50.000+0100</changeDateTime>
+					<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+					<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				</article>
+				<quantity>0.0</quantity>
+				<id>3063</id>
+				<version>2</version>
+				<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:56:02.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</orderLine>
+		</orderLines>
+		<measurements>
+			<measurement id="40" type="com.capimill.lynx.tms.entities.ShipmentMeasurement">
+				<value>0.0</value>
+				<measurementType id="41" type="com.capimill.lynx.tms.entities.MeasurementType">
+					<name>Gross Volume</name>
+					<handle>gross_volume</handle>
+					<id>3</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:35.000+0200</createDateTime>
+				</measurementType>
+				<id>13344</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:20.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:20.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</measurement>
+			<measurement id="42" type="com.capimill.lynx.tms.entities.ShipmentMeasurement">
+				<value>0.0</value>
+				<measurementType id="43" type="com.capimill.lynx.tms.entities.MeasurementType">
+					<name>Gross Weight</name>
+					<handle>gross_weight</handle>
+					<id>1</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:35.000+0200</createDateTime>
+				</measurementType>
+				<id>13343</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:20.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:20.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</measurement>
+			<measurement id="44" type="com.capimill.lynx.tms.entities.ShipmentMeasurement">
+				<value>1.0</value>
+				<measurementType id="45" type="com.capimill.lynx.tms.entities.MeasurementType">
+					<name>Is Tanks Clean</name>
+					<handle>is_clean_tanks</handle>
+					<id>14</id>
+					<version>0</version>
+					<createUser idref="13" type="com.capimill.lynx.core.entities.UserInfo"/>
+					<changeUser idref="13" type="com.capimill.lynx.core.entities.UserInfo"/>
+				</measurementType>
+				<id>13345</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:34:08.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:34:08.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</measurement>
+			<measurement id="46" type="com.capimill.lynx.tms.entities.ShipmentMeasurement">
+				<value>4.0</value>
+				<measurementType id="47" type="com.capimill.lynx.tms.entities.MeasurementType">
+					<name>Loading Duration</name>
+					<handle>loading_duration</handle>
+					<id>8</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:35.000+0200</createDateTime>
+				</measurementType>
+				<id>13341</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</measurement>
+			<measurement id="48" type="com.capimill.lynx.tms.entities.ShipmentMeasurement">
+				<value>0.0</value>
+				<measurementType id="49" type="com.capimill.lynx.tms.entities.MeasurementType">
+					<name>Has bad smell</name>
+					<handle>has_bad_smell</handle>
+					<id>11</id>
+					<version>0</version>
+					<createUser idref="13" type="com.capimill.lynx.core.entities.UserInfo"/>
+					<changeUser idref="13" type="com.capimill.lynx.core.entities.UserInfo"/>
+				</measurementType>
+				<id>13348</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:37:26.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:37:26.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</measurement>
+			<measurement id="50" type="com.capimill.lynx.tms.entities.ShipmentMeasurement">
+				<value>1.0</value>
+				<measurementType id="51" type="com.capimill.lynx.tms.entities.MeasurementType">
+					<name>pH</name>
+					<handle>ph</handle>
+					<id>12</id>
+					<version>0</version>
+					<createUser idref="13" type="com.capimill.lynx.core.entities.UserInfo"/>
+					<changeUser idref="13" type="com.capimill.lynx.core.entities.UserInfo"/>
+				</measurementType>
+				<id>13347</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:37:26.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:37:26.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</measurement>
+			<measurement id="52" type="com.capimill.lynx.tms.entities.ShipmentMeasurement">
+				<value>0.0</value>
+				<measurementType id="53" type="com.capimill.lynx.tms.entities.MeasurementType">
+					<name>Has Sample</name>
+					<handle>has_sample</handle>
+					<id>13</id>
+					<version>0</version>
+					<createUser idref="13" type="com.capimill.lynx.core.entities.UserInfo"/>
+					<changeUser idref="13" type="com.capimill.lynx.core.entities.UserInfo"/>
+				</measurementType>
+				<id>13349</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:37:26.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:37:26.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</measurement>
+			<measurement id="54" type="com.capimill.lynx.tms.entities.ShipmentMeasurement">
+				<value>1.01</value>
+				<measurementType id="55" type="com.capimill.lynx.tms.entities.MeasurementType">
+					<name>Unloading Duration</name>
+					<handle>unloading_duration</handle>
+					<id>9</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:35.000+0200</createDateTime>
+				</measurementType>
+				<id>13342</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</measurement>
+			<measurement id="56" type="com.capimill.lynx.tms.entities.ShipmentMeasurement">
+				<value>0.0</value>
+				<measurementType id="57" type="com.capimill.lynx.tms.entities.MeasurementType">
+					<name>Is sick</name>
+					<handle>is_sick</handle>
+					<id>10</id>
+					<version>0</version>
+					<createUser idref="13" type="com.capimill.lynx.core.entities.UserInfo"/>
+					<changeUser idref="13" type="com.capimill.lynx.core.entities.UserInfo"/>
+				</measurementType>
+				<id>13346</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:37:26.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:37:26.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</measurement>
+		</measurements>
+		<bookedShipmentHandlingUnitLineItems/>
+		<shipmentActivities>
+			<shipmentActivitie id="58" type="com.capimill.lynx.tms.entities.ShippingLeg">
+				<transportMode id="59" type="com.capimill.lynx.tms.entities.TransportMode">
+					<name>Ocean</name>
+					<handle>sea</handle>
+					<id>3</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:35.000+0200</createDateTime>
+				</transportMode>
+				<toLocation id="60" type="com.capimill.lynx.masterdata.parties.entities.LocationSummary_$$_javassist_267">
+					<timeSpan id="61" type="com.capimill.lynx.common.entities.TimeSpan">
+						<from id="62" type="com.capimill.lynx.common.entities.TimeSpanDate">
+							<date>2015-10-30T15:06:25.000+0100</date>
+							<hasTime>true</hasTime>
+						</from>
+						<to id="63" type="com.capimill.lynx.common.entities.TimeSpanDate">
+							<date>2015-10-31T15:06:25.000+0100</date>
+							<hasTime>true</hasTime>
+						</to>
+					</timeSpan>
+					<address id="64" type="com.capimill.lynx.common.entities.GeographicalAddress">
+						<country idref="6" type="com.capimill.lynx.common.entities.Country"/>
+						<latitude>63.762817</latitude>
+						<longitude>9.758333</longitude>
+						<line1>Botngård</line1>
+						<cityName>Bjugn</cityName>
+						<postalCode>7160</postalCode>
+					</address>
+					<name>Bjugn</name>
+					<description>Tank</description>
+					<identifiers>
+						<identifier id="65" type="com.capimill.lynx.masterdata.parties.entities.PartySummaryIdentifier">
+							<identifier>0</identifier>
+							<domainIdentifier>IndicationIndex</domainIdentifier>
+							<identifierAuthority>LXIR</identifierAuthority>
+							<id>29977</id>
+							<version>0</version>
+							<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+							<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+							<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+							<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+						</identifier>
+						<identifier id="66" type="com.capimill.lynx.masterdata.parties.entities.PartySummaryIdentifier">
+							<identifier>BJU</identifier>
+							<domainIdentifier>Location</domainIdentifier>
+							<identifierAuthority>LXIR</identifierAuthority>
+							<id>29976</id>
+							<version>0</version>
+							<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+							<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+							<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+							<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+						</identifier>
+					</identifiers>
+					<partyRole idref="11" type="com.capimill.lynx.masterdata.parties.entities.PartyRole"/>
+					<sourceIdentifier>2010</sourceIdentifier>
+					<isManuallyAdded>false</isManuallyAdded>
+					<shouldBeAddedToMasterData>false</shouldBeAddedToMasterData>
+					<id>23443</id>
+					<version>0</version>
+					<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+					<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+					<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+					<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				</toLocation>
+				<toTimeSpans>
+					<toTimeSpan id="67" type="com.capimill.lynx.tms.entities.TypedTimeSpan">
+						<dateTimeType id="68" type="com.capimill.lynx.tms.entities.DateTimeType">
+							<name>Requested</name>
+							<handle>requested</handle>
+							<id>3</id>
+							<version>0</version>
+							<createDateTime>2012-04-20T08:58:35.000+0200</createDateTime>
+						</dateTimeType>
+						<timeSpan id="69" type="com.capimill.lynx.common.entities.TimeSpan">
+							<from id="70" type="com.capimill.lynx.common.entities.TimeSpanDate">
+								<date>2015-10-30T15:06:25.000+0100</date>
+								<hasTime>true</hasTime>
+							</from>
+							<to id="71" type="com.capimill.lynx.common.entities.TimeSpanDate">
+								<date>2015-10-31T15:06:25.000+0100</date>
+								<hasTime>true</hasTime>
+							</to>
+						</timeSpan>
+						<id>17671</id>
+						<version>0</version>
+						<createDateTime>2015-10-30T09:06:20.000+0100</createDateTime>
+						<changeDateTime>2015-10-30T09:06:20.000+0100</changeDateTime>
+						<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+						<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+					</toTimeSpan>
+					<toTimeSpan id="72" type="com.capimill.lynx.tms.entities.TypedTimeSpan">
+						<dateTimeType id="73" type="com.capimill.lynx.tms.entities.DateTimeType">
+							<name>Actual</name>
+							<handle>actual</handle>
+							<id>2</id>
+							<version>0</version>
+							<createDateTime>2012-04-20T08:58:35.000+0200</createDateTime>
+						</dateTimeType>
+						<timeSpan id="74" type="com.capimill.lynx.common.entities.TimeSpan">
+							<from id="75" type="com.capimill.lynx.common.entities.TimeSpanDate">
+								<date>2015-10-30T09:54:38.000+0100</date>
+								<hasTime>true</hasTime>
+							</from>
+							<to id="76" type="com.capimill.lynx.common.entities.TimeSpanDate">
+								<hasTime>true</hasTime>
+							</to>
+						</timeSpan>
+						<id>17683</id>
+						<version>0</version>
+						<createDateTime>2015-10-30T09:56:02.000+0100</createDateTime>
+						<changeDateTime>2015-10-30T09:56:02.000+0100</changeDateTime>
+						<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+						<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+					</toTimeSpan>
+				</toTimeSpans>
+				<fromLocation id="77" type="com.capimill.lynx.masterdata.parties.entities.LocationSummary_$$_javassist_267">
+					<timeSpan id="78" type="com.capimill.lynx.common.entities.TimeSpan">
+						<from id="79" type="com.capimill.lynx.common.entities.TimeSpanDate">
+							<date>2015-10-30T15:06:25.000+0100</date>
+							<hasTime>true</hasTime>
+						</from>
+						<to id="80" type="com.capimill.lynx.common.entities.TimeSpanDate">
+							<date>2015-10-31T15:06:25.000+0100</date>
+							<hasTime>true</hasTime>
+						</to>
+					</timeSpan>
+					<address id="81" type="com.capimill.lynx.common.entities.GeographicalAddress">
+						<country idref="6" type="com.capimill.lynx.common.entities.Country"/>
+						<latitude>65.126583</latitude>
+						<longitude>12.071983</longitude>
+						<line1>MARØYA.</line1>
+						<cityName>RØRVIK</cityName>
+						<postalCode>7900</postalCode>
+						<regionName>Trond</regionName>
+					</address>
+					<name>SINKABERG-HANSEN AS HEGGVIKA</name>
+					<description>Tank</description>
+					<identifiers>
+						<identifier id="82" type="com.capimill.lynx.masterdata.parties.entities.PartySummaryIdentifier">
+							<identifier>5</identifier>
+							<domainIdentifier>IndicationIndex</domainIdentifier>
+							<identifierAuthority>LXIR</identifierAuthority>
+							<id>29975</id>
+							<version>0</version>
+							<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+							<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+							<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+							<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+						</identifier>
+						<identifier id="83" type="com.capimill.lynx.masterdata.parties.entities.PartySummaryIdentifier">
+							<identifier>10425</identifier>
+							<domainIdentifier>Location</domainIdentifier>
+							<identifierAuthority>LXIR</identifierAuthority>
+							<id>29974</id>
+							<version>0</version>
+							<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+							<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+							<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+							<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+						</identifier>
+					</identifiers>
+					<remark>testar att anteckna igen</remark>
+					<partyRole idref="17" type="com.capimill.lynx.masterdata.parties.entities.PartyRole"/>
+					<sourceIdentifier>1676</sourceIdentifier>
+					<isManuallyAdded>false</isManuallyAdded>
+					<shouldBeAddedToMasterData>false</shouldBeAddedToMasterData>
+					<id>23442</id>
+					<version>0</version>
+					<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+					<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+					<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+					<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				</fromLocation>
+				<fromTimeSpans>
+					<fromTimeSpan id="84" type="com.capimill.lynx.tms.entities.TypedTimeSpan">
+						<dateTimeType idref="73" type="com.capimill.lynx.tms.entities.DateTimeType"/>
+						<timeSpan id="85" type="com.capimill.lynx.common.entities.TimeSpan">
+							<from id="86" type="com.capimill.lynx.common.entities.TimeSpanDate">
+								<date>2015-10-30T09:35:14.000+0100</date>
+								<hasTime>true</hasTime>
+							</from>
+							<to id="87" type="com.capimill.lynx.common.entities.TimeSpanDate">
+								<hasTime>true</hasTime>
+							</to>
+						</timeSpan>
+						<id>17681</id>
+						<version>0</version>
+						<createDateTime>2015-10-30T09:37:26.000+0100</createDateTime>
+						<changeDateTime>2015-10-30T09:37:26.000+0100</changeDateTime>
+						<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+						<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+					</fromTimeSpan>
+					<fromTimeSpan id="88" type="com.capimill.lynx.tms.entities.TypedTimeSpan">
+						<dateTimeType idref="68" type="com.capimill.lynx.tms.entities.DateTimeType"/>
+						<timeSpan id="89" type="com.capimill.lynx.common.entities.TimeSpan">
+							<from id="90" type="com.capimill.lynx.common.entities.TimeSpanDate">
+								<date>2015-10-30T15:06:25.000+0100</date>
+								<hasTime>true</hasTime>
+							</from>
+							<to id="91" type="com.capimill.lynx.common.entities.TimeSpanDate">
+								<date>2015-10-31T15:06:25.000+0100</date>
+								<hasTime>true</hasTime>
+							</to>
+						</timeSpan>
+						<id>17670</id>
+						<version>0</version>
+						<createDateTime>2015-10-30T09:06:20.000+0100</createDateTime>
+						<changeDateTime>2015-10-30T09:06:20.000+0100</changeDateTime>
+						<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+						<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+					</fromTimeSpan>
+				</fromTimeSpans>
+				<parties/>
+				<transportStage id="92" type="com.capimill.lynx.tms.entities.TransportStage">
+					<name>Main Haul</name>
+					<handle>main_haul</handle>
+					<id>2</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:36.000+0200</createDateTime>
+				</transportStage>
+				<activityType id="93" type="com.capimill.lynx.tms.entities.ShipmentActivityType">
+					<name>Movement</name>
+					<handle>movement</handle>
+					<id>1</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:36.000+0200</createDateTime>
+				</activityType>
+				<dateTimes>
+					<dateTime id="94" type="com.capimill.lynx.tms.entities.ShipmentActivityDateTime">
+						<dateTimeType idref="73" type="com.capimill.lynx.tms.entities.DateTimeType"/>
+						<startDateTime>2015-10-30T09:35:14.000+0100</startDateTime>
+						<endDateTime>2015-10-30T09:54:38.000+0100</endDateTime>
+						<id>2844</id>
+						<version>1</version>
+						<createDateTime>2015-10-30T09:37:26.000+0100</createDateTime>
+						<changeDateTime>2015-10-30T09:56:02.000+0100</changeDateTime>
+						<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+						<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+					</dateTime>
+					<dateTime id="95" type="com.capimill.lynx.tms.entities.ShipmentActivityDateTime">
+						<dateTimeType idref="68" type="com.capimill.lynx.tms.entities.DateTimeType"/>
+						<startDateTime>2015-10-30T15:06:25.000+0100</startDateTime>
+						<endDateTime>2015-10-30T15:06:25.000+0100</endDateTime>
+						<id>2843</id>
+						<version>0</version>
+						<createDateTime>2015-10-30T09:06:20.000+0100</createDateTime>
+						<changeDateTime>2015-10-30T09:06:20.000+0100</changeDateTime>
+						<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+						<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+					</dateTime>
+				</dateTimes>
+				<id>1550</id>
+				<version>2</version>
+				<createDateTime>2015-10-30T09:06:20.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:56:02.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</shipmentActivitie>
+		</shipmentActivities>
+		<orderNumber>RP-346</orderNumber>
+		<shipmentHandlingUnitLineItems/>
+		<shipmentChargeLineItems/>
+		<isDangerousGoods>false</isDangerousGoods>
+		<isTemperaturedGoods>false</isTemperaturedGoods>
+		<dangerousGoods/>
+		<shipmentDateTimes>
+			<shipmentDateTime id="96" type="com.capimill.lynx.tms.entities.ShipmentDateTime">
+				<date>2015-10-30T15:06:25.000+0100</date>
+				<dateTimeType idref="68" type="com.capimill.lynx.tms.entities.DateTimeType"/>
+				<dateTimePurpose id="97" type="com.capimill.lynx.tms.entities.DateTimePurpose">
+					<name>End Of Execution</name>
+					<handle>end_of_execution</handle>
+					<id>7</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:36.000+0200</createDateTime>
+				</dateTimePurpose>
+				<id>8131</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:20.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:20.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</shipmentDateTime>
+			<shipmentDateTime id="98" type="com.capimill.lynx.tms.entities.ShipmentDateTime">
+				<date>2015-10-30T15:06:25.000+0100</date>
+				<dateTimeType idref="68" type="com.capimill.lynx.tms.entities.DateTimeType"/>
+				<dateTimePurpose id="99" type="com.capimill.lynx.tms.entities.DateTimePurpose">
+					<name>Start Of Execution</name>
+					<handle>start_of_execution</handle>
+					<id>6</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:36.000+0200</createDateTime>
+				</dateTimePurpose>
+				<id>8132</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:20.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:20.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</shipmentDateTime>
+			<shipmentDateTime id="100" type="com.capimill.lynx.tms.entities.ShipmentDateTime">
+				<date>2015-10-30T09:54:38.000+0100</date>
+				<dateTimeType idref="73" type="com.capimill.lynx.tms.entities.DateTimeType"/>
+				<dateTimePurpose id="101" type="com.capimill.lynx.tms.entities.DateTimePurpose">
+					<name>Information Of Delivery</name>
+					<handle>information_of_delivery</handle>
+					<id>4</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:36.000+0200</createDateTime>
+				</dateTimePurpose>
+				<id>8136</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:56:02.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:56:02.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</shipmentDateTime>
+			<shipmentDateTime id="102" type="com.capimill.lynx.tms.entities.ShipmentDateTime">
+				<dateTimeType idref="73" type="com.capimill.lynx.tms.entities.DateTimeType"/>
+				<dateTimePurpose id="103" type="com.capimill.lynx.tms.entities.DateTimePurpose">
+					<name>Pickup At Port Of Destination</name>
+					<handle>pickup_port_of_destination</handle>
+					<id>16</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:36.000+0200</createDateTime>
+				</dateTimePurpose>
+				<id>8135</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:56:02.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:56:02.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</shipmentDateTime>
+			<shipmentDateTime id="104" type="com.capimill.lynx.tms.entities.ShipmentDateTime">
+				<date>2015-11-10T09:54:38.000+0100</date>
+				<dateTimeType idref="73" type="com.capimill.lynx.tms.entities.DateTimeType"/>
+				<dateTimePurpose id="105" type="com.capimill.lynx.tms.entities.DateTimePurpose">
+					<name>Provider Invoice Cutoff Date</name>
+					<handle>provider_invoice_cutoff_date</handle>
+					<id>14</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:36.000+0200</createDateTime>
+				</dateTimePurpose>
+				<id>8134</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:56:02.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:56:02.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</shipmentDateTime>
+			<shipmentDateTime id="106" type="com.capimill.lynx.tms.entities.ShipmentDateTime">
+				<date>2015-11-04T09:54:38.000+0100</date>
+				<dateTimeType idref="73" type="com.capimill.lynx.tms.entities.DateTimeType"/>
+				<dateTimePurpose id="107" type="com.capimill.lynx.tms.entities.DateTimePurpose">
+					<name>Latest Date Performing Final Check</name>
+					<handle>latest_final_check_date</handle>
+					<id>15</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:36.000+0200</createDateTime>
+				</dateTimePurpose>
+				<id>8133</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:56:02.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:56:02.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</shipmentDateTime>
+		</shipmentDateTimes>
+		<transportInformation id="108" type="com.capimill.lynx.tms.entities.TransportInformation">
+			<termsOfTransport id="109" type="com.capimill.lynx.tms.entities.TermsOfTransport">
+				<location id="110" type="com.capimill.lynx.masterdata.parties.entities.LocationSummary_$$_javassist_267">
+					<timeSpan id="111" type="com.capimill.lynx.common.entities.TimeSpan">
+						<from id="112" type="com.capimill.lynx.common.entities.TimeSpanDate">
+							<date>2015-10-30T15:06:25.000+0100</date>
+							<hasTime>true</hasTime>
+						</from>
+						<to id="113" type="com.capimill.lynx.common.entities.TimeSpanDate">
+							<date>2015-10-31T15:06:25.000+0100</date>
+							<hasTime>true</hasTime>
+						</to>
+					</timeSpan>
+					<address id="114" type="com.capimill.lynx.common.entities.GeographicalAddress">
+						<country idref="6" type="com.capimill.lynx.common.entities.Country"/>
+						<latitude>65.126583</latitude>
+						<longitude>12.071983</longitude>
+						<line1>MARØYA.</line1>
+						<cityName>RØRVIK</cityName>
+						<postalCode>7900</postalCode>
+						<regionName>Trond</regionName>
+					</address>
+					<name>SINKABERG-HANSEN AS HEGGVIKA</name>
+					<description>Tank</description>
+					<identifiers>
+						<identifier id="115" type="com.capimill.lynx.masterdata.parties.entities.PartySummaryIdentifier">
+							<identifier>10425</identifier>
+							<domainIdentifier>Location</domainIdentifier>
+							<identifierAuthority>LXIR</identifierAuthority>
+							<id>29972</id>
+							<version>0</version>
+							<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+							<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+							<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+							<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+						</identifier>
+						<identifier id="116" type="com.capimill.lynx.masterdata.parties.entities.PartySummaryIdentifier">
+							<identifier>5</identifier>
+							<domainIdentifier>IndicationIndex</domainIdentifier>
+							<identifierAuthority>LXIR</identifierAuthority>
+							<id>29973</id>
+							<version>0</version>
+							<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+							<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+							<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+							<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+						</identifier>
+					</identifiers>
+					<remark>testar att anteckna igen</remark>
+					<partyRole idref="17" type="com.capimill.lynx.masterdata.parties.entities.PartyRole"/>
+					<sourceIdentifier>1676</sourceIdentifier>
+					<isManuallyAdded>false</isManuallyAdded>
+					<shouldBeAddedToMasterData>false</shouldBeAddedToMasterData>
+					<id>23441</id>
+					<version>0</version>
+					<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+					<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+					<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+					<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				</location>
+				<incoTerm id="117" type="com.capimill.lynx.tms.entities.IncoTerm_$$_javassist_86">
+					<name>FOB</name>
+					<handle>fob</handle>
+					<id>4</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:36.000+0200</createDateTime>
+				</incoTerm>
+				<termsDateTime>2013-11-26T15:04:36.000+0100</termsDateTime>
+			</termsOfTransport>
+			<transportMode idref="59" type="com.capimill.lynx.tms.entities.TransportMode"/>
+			<transportProduct id="118" type="com.capimill.lynx.tms.entities.TransportProduct">
+				<transportMode idref="59" type="com.capimill.lynx.tms.entities.TransportMode"/>
+				<name>Bulk</name>
+				<handle>bulk</handle>
+				<id>6</id>
+				<version>0</version>
+				<createDateTime>2013-05-22T16:00:00.000+0200</createDateTime>
+				<changeDateTime>2013-05-22T16:00:00.000+0200</changeDateTime>
+				<createUser id="119" type="com.capimill.lynx.core.entities.UserInfo">
+					<userName>Christian Bergström</userName>
+					<email>christian.bergstrom@surikat.se</email>
+					<userId>5</userId>
+				</createUser>
+				<changeUser idref="119" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</transportProduct>
+			<serviceLevel id="120" type="com.capimill.lynx.tms.entities.ServiceLevel">
+				<transportMode id="121" type="com.capimill.lynx.tms.entities.TransportMode">
+					<name>Air</name>
+					<handle>air</handle>
+					<id>2</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:35.000+0200</createDateTime>
+				</transportMode>
+				<name>Standard</name>
+				<handle>standard</handle>
+				<id>1</id>
+				<version>0</version>
+				<createDateTime>2012-04-20T08:58:36.000+0200</createDateTime>
+			</serviceLevel>
+		</transportInformation>
+		<parties>
+			<partie idref="77" type="com.capimill.lynx.masterdata.parties.entities.LocationSummary_$$_javassist_267"/>
+			<partie idref="60" type="com.capimill.lynx.masterdata.parties.entities.LocationSummary_$$_javassist_267"/>
+			<partie id="122" type="com.capimill.lynx.masterdata.parties.entities.PartySummary">
+				<address id="123" type="com.capimill.lynx.common.entities.GeographicalAddress">
+					<country id="124" type="com.capimill.lynx.common.entities.Country">
+						<number>276</number>
+						<currency id="125" type="com.capimill.lynx.common.entities.Currency">
+							<name>Euro</name>
+							<handle>EUR</handle>
+							<id>46</id>
+							<version>0</version>
+							<createDateTime>2010-12-08T10:19:39.000+0100</createDateTime>
+							<changeDateTime>2010-12-08T10:19:39.000+0100</changeDateTime>
+						</currency>
+						<isPartOfEuropeanUnion>true</isPartOfEuropeanUnion>
+						<iso3Code>DEU</iso3Code>
+						<formalName>Federal Republic of Germany</formalName>
+						<capitalCityName>Berlin</capitalCityName>
+						<telephoneCode>+49</telephoneCode>
+						<name>Germany</name>
+						<handle>DE</handle>
+						<id>64</id>
+						<version>0</version>
+						<createDateTime>2010-12-08T10:19:58.000+0100</createDateTime>
+						<changeDateTime>2010-12-08T10:19:58.000+0100</changeDateTime>
+					</country>
+					<latitude>7.0</latitude>
+					<longitude>6.0</longitude>
+					<line1>WAHLER STR. 37</line1>
+					<cityName>Düsseldorf</cityName>
+					<postalCode>40472.0</postalCode>
+					<line2>1</line2>
+					<line3>3</line3>
+					<line4>5</line4>
+					<postOfficeBox>2</postOfficeBox>
+					<regionName>4</regionName>
+				</address>
+				<name>UTi TMV Control Tower Teleflex Medical</name>
+				<identifiers/>
+				<partyRole id="126" type="com.capimill.lynx.masterdata.parties.entities.PartyRole">
+					<name>Control Tower</name>
+					<handle>control_tower</handle>
+					<id>4</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:35.000+0200</createDateTime>
+				</partyRole>
+				<sourceIdentifier>173</sourceIdentifier>
+				<id>23444</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:20.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:20.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</partie>
+		</parties>
+		<events>
+			<event id="127" type="com.capimill.lynx.tms.entities.events.ShipmentOrderSubmittedEvent">
+				<shipmentOrder id="128" type="com.capimill.lynx.tms.entities.ShipmentOrder">
+					<measurements>
+						<measurement idref="46" type="com.capimill.lynx.tms.entities.ShipmentMeasurement"/>
+						<measurement idref="54" type="com.capimill.lynx.tms.entities.ShipmentMeasurement"/>
+					</measurements>
+					<transportInformation id="129" type="com.capimill.lynx.tms.entities.TransportInformation">
+						<termsOfTransport id="130" type="com.capimill.lynx.tms.entities.TermsOfTransport">
+							<location idref="110" type="com.capimill.lynx.masterdata.parties.entities.LocationSummary_$$_javassist_267"/>
+							<incoTerm idref="117" type="com.capimill.lynx.tms.entities.IncoTerm_$$_javassist_86"/>
+							<termsDateTime>2013-11-26T15:04:36.000+0100</termsDateTime>
+						</termsOfTransport>
+						<transportMode idref="59" type="com.capimill.lynx.tms.entities.TransportMode"/>
+						<transportProduct idref="118" type="com.capimill.lynx.tms.entities.TransportProduct"/>
+						<serviceLevel idref="120" type="com.capimill.lynx.tms.entities.ServiceLevel"/>
+					</transportInformation>
+					<orderDateTime>2015-10-30T09:05:59.000+0100</orderDateTime>
+					<contacts>
+						<contact id="131" type="com.capimill.lynx.tms.entities.ShipmentOrderContact">
+							<communicationMethod idref="16" type="com.capimill.lynx.tms.entities.CommunicationMethod"/>
+							<partyRole idref="11" type="com.capimill.lynx.masterdata.parties.entities.PartyRole"/>
+							<name>Scanbio Scanbio</name>
+							<addresses>
+								<addresse id="132" type="com.capimill.lynx.common.entities.PhoneAddress">
+									<addressType idref="19" type="com.capimill.lynx.common.entities.AddressType"/>
+									<id>17024</id>
+									<version>0</version>
+									<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+									<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+									<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+									<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+								</addresse>
+							</addresses>
+							<id>3787</id>
+							<version>0</version>
+							<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+							<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+							<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+							<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+						</contact>
+						<contact id="133" type="com.capimill.lynx.tms.entities.ShipmentOrderContact">
+							<communicationMethod idref="16" type="com.capimill.lynx.tms.entities.CommunicationMethod"/>
+							<partyRole idref="17" type="com.capimill.lynx.masterdata.parties.entities.PartyRole"/>
+							<name>Odd Børre</name>
+							<phoneNumber>404779369</phoneNumber>
+							<addresses>
+								<addresse id="134" type="com.capimill.lynx.common.entities.PhoneAddress">
+									<phoneNumber>404779369</phoneNumber>
+									<addressType idref="19" type="com.capimill.lynx.common.entities.AddressType"/>
+									<id>17025</id>
+									<version>0</version>
+									<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+									<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+									<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+									<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+								</addresse>
+							</addresses>
+							<id>3788</id>
+							<version>0</version>
+							<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+							<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+							<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+							<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+						</contact>
+					</contacts>
+					<orderNumber>RP-346</orderNumber>
+					<references/>
+					<locations>
+						<location idref="77" type="com.capimill.lynx.masterdata.parties.entities.LocationSummary_$$_javassist_267"/>
+						<location idref="60" type="com.capimill.lynx.masterdata.parties.entities.LocationSummary_$$_javassist_267"/>
+					</locations>
+					<isDangerousGoods>false</isDangerousGoods>
+					<isTemperaturedGoods>false</isTemperaturedGoods>
+					<dangerousGoods/>
+					<shipmentOrderOrderLines>
+						<shipmentOrderOrderLine id="135" type="com.capimill.lynx.tms.entities.ShipmentOrderOrderLine">
+							<identifiers>
+								<identifier id="136" type="com.capimill.lynx.tms.entities.ShipmentOrderOrderLineIdentifier">
+									<identifier>RP-346-10-0</identifier>
+									<domainIdentifier>OrderLine</domainIdentifier>
+									<identifierAuthority>LXIR</identifierAuthority>
+									<id>2650</id>
+									<version>0</version>
+									<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+									<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+									<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+									<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+								</identifier>
+							</identifiers>
+							<article idref="28" type="com.capimill.lynx.bss.entities.ContractArticle"/>
+							<quantity>67.0</quantity>
+							<id>2650</id>
+							<version>0</version>
+							<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+							<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+							<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+							<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+						</shipmentOrderOrderLine>
+						<shipmentOrderOrderLine id="137" type="com.capimill.lynx.tms.entities.ShipmentOrderOrderLine">
+							<identifiers>
+								<identifier id="138" type="com.capimill.lynx.tms.entities.ShipmentOrderOrderLineIdentifier">
+									<identifier>fb4e8ddb-01d4-4d1b-ac7a-b43633732990</identifier>
+									<domainIdentifier>OrderLine</domainIdentifier>
+									<identifierAuthority>LYNX</identifierAuthority>
+									<id>2651</id>
+									<version>0</version>
+									<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+									<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+									<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+									<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+								</identifier>
+							</identifiers>
+							<article idref="37" type="com.capimill.lynx.bss.entities.ContractArticle"/>
+							<quantity>0.0</quantity>
+							<id>2651</id>
+							<version>0</version>
+							<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+							<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+							<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+							<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+						</shipmentOrderOrderLine>
+					</shipmentOrderOrderLines>
+					<shipmentOrderIdentifiers>
+						<shipmentOrderIdentifier id="139" type="com.capimill.lynx.tms.entities.ShipmentOrderIdentifier">
+							<identifier>RP-346</identifier>
+							<domainIdentifier>OrderNumber</domainIdentifier>
+							<identifierAuthority>LXIR</identifierAuthority>
+							<id>3788</id>
+							<version>0</version>
+							<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+							<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+							<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+							<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+						</shipmentOrderIdentifier>
+						<shipmentOrderIdentifier id="140" type="com.capimill.lynx.tms.entities.ShipmentOrderIdentifier">
+							<identifier>SubOrder</identifier>
+							<domainIdentifier>OrderType</domainIdentifier>
+							<identifierAuthority>LXIR</identifierAuthority>
+							<id>3787</id>
+							<version>0</version>
+							<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+							<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+							<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+							<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+						</shipmentOrderIdentifier>
+					</shipmentOrderIdentifiers>
+					<loadingEquipmentLines/>
+					<id>1894</id>
+					<version>0</version>
+					<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+					<changeDateTime>2015-10-30T09:06:16.000+0100</changeDateTime>
+					<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+					<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				</shipmentOrder>
+				<notifications/>
+				<eventType id="141" type="com.capimill.lynx.tms.entities.events.ShipmentEventType">
+					<name>Shipment Order Submitted</name>
+					<handle>shipment_order_submitted</handle>
+					<id>1</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:35.000+0200</createDateTime>
+				</eventType>
+				<shipment idref="14" type="com.capimill.lynx.tms.entities.Shipment"/>
+				<references/>
+				<milestoneDeadlineUpdates/>
+				<isAddedByHuman>true</isAddedByHuman>
+				<eventDateTime>2015-10-30T09:06:16.000+0100</eventDateTime>
+				<status id="142" type="com.capimill.lynx.tms.entities.EventStatusType">
+					<name>New</name>
+					<handle>new</handle>
+					<id>1</id>
+					<version>0</version>
+					<createUser idref="30" type="com.capimill.lynx.core.entities.UserInfo"/>
+					<changeUser idref="30" type="com.capimill.lynx.core.entities.UserInfo"/>
+				</status>
+				<documents/>
+				<manualCreateDateTime>2015-10-30T09:06:15.000+0100</manualCreateDateTime>
+				<id>24739</id>
+				<version>1</version>
+				<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:21.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</event>
+			<event id="143" type="com.capimill.lynx.tms.entities.events.ShipmentResourceAllocationRequestEvent">
+				<resources>
+					<resource id="144" type="com.capimill.lynx.resources.entities.VehicleResource">
+						<compartments>
+							<compartment id="145" type="com.capimill.lynx.resources.entities.Compartment">
+								<name>Tank</name>
+								<typedAmount id="146" type="com.capimill.lynx.tms.entities.TypedAmount">
+									<amount>800.0</amount>
+									<unit id="147" type="com.capimill.lynx.common.entities.Unit">
+										<name>m3</name>
+										<handle>m3</handle>
+										<id>4</id>
+										<version>0</version>
+										<createDateTime>2013-12-15T08:58:35.000+0100</createDateTime>
+									</unit>
+								</typedAmount>
+								<id>41</id>
+								<version>0</version>
+								<createDateTime>2014-03-17T13:36:17.000+0100</createDateTime>
+								<changeDateTime>2014-03-17T13:36:17.000+0100</changeDateTime>
+								<createUser idref="30" type="com.capimill.lynx.core.entities.UserInfo"/>
+								<changeUser idref="30" type="com.capimill.lynx.core.entities.UserInfo"/>
+							</compartment>
+						</compartments>
+						<name>Test Extend Jacob</name>
+						<resourceType id="148" type="com.capimill.lynx.resources.entities.ResourceType">
+							<forFQDN>com.capimill.lynx.resources.entities.VehicleResource</forFQDN>
+							<name>Vehicle</name>
+							<handle>vehicle</handle>
+							<id>1</id>
+							<version>0</version>
+						</resourceType>
+						<latitude>57.705598</latitude>
+						<longitude>11.965566</longitude>
+						<speed>0.0</speed>
+						<mobilityIdentifier>357063051639422</mobilityIdentifier>
+						<isDeleted>false</isDeleted>
+						<events>
+							<event id="149" type="com.capimill.lynx.tms.entities.events.BunkerResourceEvent">
+								<bunkerEventType>REPORT_LEVEL</bunkerEventType>
+								<typedAmount id="150" type="com.capimill.lynx.tms.entities.TypedAmount">
+									<amount>0.0</amount>
+									<unit idref="31" type="com.capimill.lynx.common.entities.Unit"/>
+								</typedAmount>
+								<resource idref="144" type="com.capimill.lynx.resources.entities.VehicleResource"/>
+								<eventType id="151" type="com.capimill.lynx.tms.entities.events.ResourceEventType">
+									<name>Bunker</name>
+									<handle>bunker</handle>
+									<id>1</id>
+									<version>0</version>
+									<createUser idref="30" type="com.capimill.lynx.core.entities.UserInfo"/>
+									<changeUser idref="30" type="com.capimill.lynx.core.entities.UserInfo"/>
+								</eventType>
+								<documents/>
+								<manualCreateDateTime>2014-12-15T14:51:20.000+0100</manualCreateDateTime>
+								<id>59</id>
+								<version>0</version>
+								<createDateTime>2014-12-15T14:51:25.000+0100</createDateTime>
+								<changeDateTime>2014-12-15T14:51:25.000+0100</changeDateTime>
+								<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+								<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+							</event>
+							<event id="152" type="com.capimill.lynx.tms.entities.events.BunkerResourceEvent">
+								<bunkerEventType>REPORT_LEVEL</bunkerEventType>
+								<typedAmount id="153" type="com.capimill.lynx.tms.entities.TypedAmount">
+									<amount>0.0</amount>
+									<unit idref="31" type="com.capimill.lynx.common.entities.Unit"/>
+								</typedAmount>
+								<resource idref="144" type="com.capimill.lynx.resources.entities.VehicleResource"/>
+								<eventType idref="151" type="com.capimill.lynx.tms.entities.events.ResourceEventType"/>
+								<documents/>
+								<manualCreateDateTime>2014-12-15T14:51:20.000+0100</manualCreateDateTime>
+								<id>60</id>
+								<version>0</version>
+								<createDateTime>2014-12-15T14:56:31.000+0100</createDateTime>
+								<changeDateTime>2014-12-15T14:56:31.000+0100</changeDateTime>
+								<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+								<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+							</event>
+							<event id="154" type="com.capimill.lynx.tms.entities.events.BunkerResourceEvent">
+								<bunkerEventType>REPORT_LEVEL</bunkerEventType>
+								<typedAmount id="155" type="com.capimill.lynx.tms.entities.TypedAmount">
+									<amount>100.0</amount>
+									<unit idref="31" type="com.capimill.lynx.common.entities.Unit"/>
+								</typedAmount>
+								<resource idref="144" type="com.capimill.lynx.resources.entities.VehicleResource"/>
+								<eventType idref="151" type="com.capimill.lynx.tms.entities.events.ResourceEventType"/>
+								<documents/>
+								<manualCreateDateTime>2014-12-15T16:37:21.000+0100</manualCreateDateTime>
+								<id>61</id>
+								<version>0</version>
+								<createDateTime>2014-12-15T16:37:36.000+0100</createDateTime>
+								<changeDateTime>2014-12-15T16:37:36.000+0100</changeDateTime>
+								<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+								<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+							</event>
+						</events>
+						<capabilities/>
+						<id>9</id>
+						<version>74636</version>
+						<createDateTime>2014-03-17T13:36:17.000+0100</createDateTime>
+						<changeDateTime>2015-10-30T09:56:04.000+0100</changeDateTime>
+						<createUser idref="30" type="com.capimill.lynx.core.entities.UserInfo"/>
+						<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+					</resource>
+				</resources>
+				<toTimeSpans/>
+				<fromTimeSpans/>
+				<eventType id="156" type="com.capimill.lynx.tms.entities.events.ShipmentEventType">
+					<name>Resources Allocation Requested</name>
+					<handle>resources_allocation_requested</handle>
+					<id>39</id>
+					<version>0</version>
+					<createUser idref="13" type="com.capimill.lynx.core.entities.UserInfo"/>
+					<changeUser idref="13" type="com.capimill.lynx.core.entities.UserInfo"/>
+				</eventType>
+				<shipment idref="14" type="com.capimill.lynx.tms.entities.Shipment"/>
+				<references/>
+				<milestoneDeadlineUpdates/>
+				<isAddedByHuman>true</isAddedByHuman>
+				<eventDateTime>2015-10-30T09:29:41.000+0100</eventDateTime>
+				<status idref="142" type="com.capimill.lynx.tms.entities.EventStatusType"/>
+				<id>24740</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:29:41.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:29:41.000+0100</changeDateTime>
+				<createUser id="157" type="com.capimill.lynx.core.entities.UserInfo">
+					<userName>Andreas Andreas</userName>
+					<email>andreas.karlsson@surikat.se</email>
+					<userId>785</userId>
+				</createUser>
+				<changeUser idref="157" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</event>
+			<event id="158" type="com.capimill.lynx.tms.entities.events.ShipmentResourcesAllocatedEvent">
+				<resources>
+					<resource idref="144" type="com.capimill.lynx.resources.entities.VehicleResource"/>
+				</resources>
+				<toTimeSpans/>
+				<fromTimeSpans/>
+				<eventType id="159" type="com.capimill.lynx.tms.entities.events.ShipmentEventType">
+					<name>Resources Allocated</name>
+					<handle>resources_allocated</handle>
+					<id>38</id>
+					<version>0</version>
+					<createUser idref="30" type="com.capimill.lynx.core.entities.UserInfo"/>
+					<changeUser idref="30" type="com.capimill.lynx.core.entities.UserInfo"/>
+				</eventType>
+				<shipment idref="14" type="com.capimill.lynx.tms.entities.Shipment"/>
+				<references/>
+				<milestoneDeadlineUpdates/>
+				<isAddedByHuman>true</isAddedByHuman>
+				<eventDateTime>2015-10-30T09:32:40.000+0100</eventDateTime>
+				<status idref="142" type="com.capimill.lynx.tms.entities.EventStatusType"/>
+				<id>24741</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:32:40.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:32:40.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</event>
+			<event id="160" type="com.capimill.lynx.tms.entities.events.ShippingLegLocationArrivedEvent">
+				<location id="161" type="com.capimill.lynx.masterdata.parties.entities.LocationSummary">
+					<timeSpan id="162" type="com.capimill.lynx.common.entities.TimeSpan">
+						<from id="163" type="com.capimill.lynx.common.entities.TimeSpanDate">
+							<date>2015-10-30T15:06:25.000+0100</date>
+							<hasTime>true</hasTime>
+						</from>
+						<to id="164" type="com.capimill.lynx.common.entities.TimeSpanDate">
+							<date>2015-10-31T15:06:25.000+0100</date>
+							<hasTime>true</hasTime>
+						</to>
+					</timeSpan>
+					<address id="165" type="com.capimill.lynx.common.entities.GeographicalAddress">
+						<country idref="6" type="com.capimill.lynx.common.entities.Country"/>
+						<latitude>65.126583</latitude>
+						<longitude>12.071983</longitude>
+						<line1>MARØYA.</line1>
+						<cityName>RØRVIK</cityName>
+						<postalCode>7900</postalCode>
+						<regionName>Trond</regionName>
+					</address>
+					<name>SINKABERG-HANSEN AS HEGGVIKA</name>
+					<description>Tank</description>
+					<identifiers>
+						<identifier id="166" type="com.capimill.lynx.masterdata.parties.entities.PartySummaryIdentifier">
+							<identifier>10425</identifier>
+							<domainIdentifier>Location</domainIdentifier>
+							<identifierAuthority>LXIR</identifierAuthority>
+							<id>29983</id>
+							<version>0</version>
+							<createDateTime>2015-10-30T09:33:13.000+0100</createDateTime>
+							<changeDateTime>2015-10-30T09:33:13.000+0100</changeDateTime>
+							<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+							<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+						</identifier>
+						<identifier id="167" type="com.capimill.lynx.masterdata.parties.entities.PartySummaryIdentifier">
+							<identifier>5</identifier>
+							<domainIdentifier>IndicationIndex</domainIdentifier>
+							<identifierAuthority>LXIR</identifierAuthority>
+							<id>29982</id>
+							<version>0</version>
+							<createDateTime>2015-10-30T09:33:13.000+0100</createDateTime>
+							<changeDateTime>2015-10-30T09:33:13.000+0100</changeDateTime>
+							<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+							<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+						</identifier>
+					</identifiers>
+					<partyRole idref="17" type="com.capimill.lynx.masterdata.parties.entities.PartyRole"/>
+					<sourceIdentifier>1676</sourceIdentifier>
+					<isManuallyAdded>false</isManuallyAdded>
+					<id>23453</id>
+					<version>0</version>
+					<createDateTime>2015-10-30T09:33:13.000+0100</createDateTime>
+					<changeDateTime>2015-10-30T09:33:13.000+0100</changeDateTime>
+					<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+					<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				</location>
+				<toTimeSpans/>
+				<fromTimeSpans/>
+				<eventType id="168" type="com.capimill.lynx.tms.entities.events.ShipmentEventType">
+					<name>Arrived at ShippingLeg Location</name>
+					<handle>leg_location_arrived</handle>
+					<id>40</id>
+					<version>0</version>
+					<createUser idref="13" type="com.capimill.lynx.core.entities.UserInfo"/>
+					<changeUser idref="13" type="com.capimill.lynx.core.entities.UserInfo"/>
+				</eventType>
+				<shipment idref="14" type="com.capimill.lynx.tms.entities.Shipment"/>
+				<references/>
+				<milestoneDeadlineUpdates/>
+				<isAddedByHuman>true</isAddedByHuman>
+				<eventDateTime>2015-10-30T09:33:06.000+0100</eventDateTime>
+				<status idref="142" type="com.capimill.lynx.tms.entities.EventStatusType"/>
+				<manualCreateDateTime>2015-10-30T09:33:06.000+0100</manualCreateDateTime>
+				<id>24742</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:33:13.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:33:13.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</event>
+			<event id="169" type="com.capimill.lynx.tms.entities.events.LoadingStartedEvent">
+				<compartments/>
+				<eventType id="170" type="com.capimill.lynx.tms.entities.events.ShipmentEventType">
+					<name>Loading Started</name>
+					<handle>loading_started</handle>
+					<id>42</id>
+					<version>0</version>
+					<createUser idref="13" type="com.capimill.lynx.core.entities.UserInfo"/>
+					<changeUser idref="13" type="com.capimill.lynx.core.entities.UserInfo"/>
+				</eventType>
+				<shipment idref="14" type="com.capimill.lynx.tms.entities.Shipment"/>
+				<references/>
+				<milestoneDeadlineUpdates/>
+				<isAddedByHuman>true</isAddedByHuman>
+				<eventDateTime>2015-10-30T09:34:00.000+0100</eventDateTime>
+				<status idref="142" type="com.capimill.lynx.tms.entities.EventStatusType"/>
+				<documents/>
+				<id>24743</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:34:08.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:34:08.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</event>
+			<event id="171" type="com.capimill.lynx.tms.entities.events.LoadingEvent">
+				<activityStartDateTime>2015-10-30T09:34:00.000+0100</activityStartDateTime>
+				<actualPickupDateTime>2015-10-30T09:35:14.000+0100</actualPickupDateTime>
+				<eventType id="172" type="com.capimill.lynx.tms.entities.events.ShipmentEventType">
+					<name>Loading Confirmed</name>
+					<handle>loading_confirmed</handle>
+					<id>6</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:35.000+0200</createDateTime>
+				</eventType>
+				<shipment idref="14" type="com.capimill.lynx.tms.entities.Shipment"/>
+				<references/>
+				<milestoneDeadlineUpdates/>
+				<isAddedByHuman>true</isAddedByHuman>
+				<eventDateTime>2015-10-30T09:35:14.000+0100</eventDateTime>
+				<status idref="142" type="com.capimill.lynx.tms.entities.EventStatusType"/>
+				<id>24744</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:37:26.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:37:26.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</event>
+			<event id="173" type="com.capimill.lynx.tms.entities.events.ShippingLegLocationArrivedEvent">
+				<location id="174" type="com.capimill.lynx.masterdata.parties.entities.LocationSummary">
+					<timeSpan id="175" type="com.capimill.lynx.common.entities.TimeSpan">
+						<from id="176" type="com.capimill.lynx.common.entities.TimeSpanDate">
+							<date>2015-10-30T15:06:25.000+0100</date>
+							<hasTime>true</hasTime>
+						</from>
+						<to id="177" type="com.capimill.lynx.common.entities.TimeSpanDate">
+							<date>2015-10-31T15:06:25.000+0100</date>
+							<hasTime>true</hasTime>
+						</to>
+					</timeSpan>
+					<address id="178" type="com.capimill.lynx.common.entities.GeographicalAddress">
+						<country idref="6" type="com.capimill.lynx.common.entities.Country"/>
+						<latitude>63.762817</latitude>
+						<longitude>9.758333</longitude>
+						<line1>Botngård</line1>
+						<cityName>Bjugn</cityName>
+						<postalCode>7160</postalCode>
+					</address>
+					<name>Bjugn</name>
+					<description>Tank</description>
+					<identifiers>
+						<identifier id="179" type="com.capimill.lynx.masterdata.parties.entities.PartySummaryIdentifier">
+							<identifier>0</identifier>
+							<domainIdentifier>IndicationIndex</domainIdentifier>
+							<identifierAuthority>LXIR</identifierAuthority>
+							<id>29985</id>
+							<version>0</version>
+							<createDateTime>2015-10-30T09:52:50.000+0100</createDateTime>
+							<changeDateTime>2015-10-30T09:52:50.000+0100</changeDateTime>
+							<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+							<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+						</identifier>
+						<identifier id="180" type="com.capimill.lynx.masterdata.parties.entities.PartySummaryIdentifier">
+							<identifier>BJU</identifier>
+							<domainIdentifier>Location</domainIdentifier>
+							<identifierAuthority>LXIR</identifierAuthority>
+							<id>29984</id>
+							<version>0</version>
+							<createDateTime>2015-10-30T09:52:50.000+0100</createDateTime>
+							<changeDateTime>2015-10-30T09:52:50.000+0100</changeDateTime>
+							<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+							<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+						</identifier>
+					</identifiers>
+					<partyRole idref="11" type="com.capimill.lynx.masterdata.parties.entities.PartyRole"/>
+					<sourceIdentifier>2010</sourceIdentifier>
+					<isManuallyAdded>false</isManuallyAdded>
+					<id>23454</id>
+					<version>0</version>
+					<createDateTime>2015-10-30T09:52:50.000+0100</createDateTime>
+					<changeDateTime>2015-10-30T09:52:50.000+0100</changeDateTime>
+					<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+					<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				</location>
+				<toTimeSpans/>
+				<fromTimeSpans/>
+				<eventType idref="168" type="com.capimill.lynx.tms.entities.events.ShipmentEventType"/>
+				<shipment idref="14" type="com.capimill.lynx.tms.entities.Shipment"/>
+				<references/>
+				<milestoneDeadlineUpdates/>
+				<isAddedByHuman>true</isAddedByHuman>
+				<eventDateTime>2015-10-30T09:50:32.000+0100</eventDateTime>
+				<status idref="142" type="com.capimill.lynx.tms.entities.EventStatusType"/>
+				<manualCreateDateTime>2015-10-30T09:50:32.000+0100</manualCreateDateTime>
+				<id>24745</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:52:50.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:52:50.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</event>
+			<event id="181" type="com.capimill.lynx.tms.entities.events.DeliveryEvent">
+				<activityStartDateTime>2015-10-30T09:53:03.000+0100</activityStartDateTime>
+				<iodDateTime>2015-10-30T09:54:38.000+0100</iodDateTime>
+				<shipmentHandlingUnitLineItems/>
+				<eventType id="182" type="com.capimill.lynx.tms.entities.events.ShipmentEventType">
+					<name>Delivery Confirmed</name>
+					<handle>delivery_confirmed</handle>
+					<id>7</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:35.000+0200</createDateTime>
+				</eventType>
+				<shipment idref="14" type="com.capimill.lynx.tms.entities.Shipment"/>
+				<references/>
+				<milestoneDeadlineUpdates/>
+				<isAddedByHuman>true</isAddedByHuman>
+				<eventDateTime>2015-10-30T09:54:38.000+0100</eventDateTime>
+				<status idref="142" type="com.capimill.lynx.tms.entities.EventStatusType"/>
+				<documents/>
+				<id>24746</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:56:02.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:56:02.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</event>
+			<event idref="0" type="com.capimill.lynx.tms.entities.events.ShippingLegLocationDepartedEvent"/>
+		</events>
+		<isDeleted>false</isDeleted>
+		<isCancelled>false</isCancelled>
+		<references>
+			<reference id="183" type="com.capimill.lynx.tms.entities.ShipmentReference">
+				<type id="184" type="com.capimill.lynx.common.entities.ReferenceType">
+					<name>Container Number</name>
+					<handle>container_number</handle>
+					<id>12</id>
+					<version>0</version>
+					<createDateTime>2012-05-04T09:08:43.000+0200</createDateTime>
+				</type>
+				<id>1338</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:37:26.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:37:26.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</reference>
+		</references>
+		<tasks>
+			<task id="185" type="com.capimill.lynx.tms.entities.RegisterShipmentEventTask">
+				<eventType id="186" type="com.capimill.lynx.tms.entities.events.ShipmentEventType">
+					<name>Transport Tendered</name>
+					<handle>transport_spot_tendered</handle>
+					<id>18</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:36.000+0200</createDateTime>
+				</eventType>
+				<shipment idref="14" type="com.capimill.lynx.tms.entities.Shipment"/>
+				<name>Tender Transport</name>
+				<status id="187" type="com.capimill.lynx.core.entities.EntityStatus">
+					<name>Open</name>
+					<handle>open</handle>
+					<id>3</id>
+					<version>0</version>
+					<createDateTime>2012-05-04T09:08:43.000+0200</createDateTime>
+				</status>
+				<payload>6552</payload>
+				<remindersSentCount>0</remindersSentCount>
+				<deadline>2015-10-30T10:06:20.000+0100</deadline>
+				<taskType>register_shipment_event</taskType>
+				<candidateRoleType idref="126" type="com.capimill.lynx.masterdata.parties.entities.PartyRole"/>
+				<id>6200</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:20.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:20.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</task>
+			<task id="188" type="com.capimill.lynx.tms.entities.RegisterShipmentEventTask">
+				<eventType id="189" type="com.capimill.lynx.tms.entities.events.ShipmentEventType">
+					<name>Estimated Charges Created</name>
+					<handle>charges_estimated</handle>
+					<id>30</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:36.000+0200</createDateTime>
+				</eventType>
+				<shipment idref="14" type="com.capimill.lynx.tms.entities.Shipment"/>
+				<name>Enter estimated charges</name>
+				<status idref="187" type="com.capimill.lynx.core.entities.EntityStatus"/>
+				<remindersSentCount>0</remindersSentCount>
+				<deadline>2016-10-30T09:06:20.000+0100</deadline>
+				<taskType>register_shipment_event</taskType>
+				<candidateRoleType idref="126" type="com.capimill.lynx.masterdata.parties.entities.PartyRole"/>
+				<isVisible>true</isVisible>
+				<id>6197</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:20.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:20.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</task>
+			<task id="190" type="com.capimill.lynx.tms.entities.RegisterShipmentEventTask">
+				<eventType id="191" type="com.capimill.lynx.tms.entities.events.ShipmentEventType">
+					<name>Invoice Entry Created</name>
+					<handle>create_invoice_entry</handle>
+					<id>23</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:36.000+0200</createDateTime>
+				</eventType>
+				<shipment idref="14" type="com.capimill.lynx.tms.entities.Shipment"/>
+				<name>Enter invoice entry</name>
+				<status idref="187" type="com.capimill.lynx.core.entities.EntityStatus"/>
+				<remindersSentCount>0</remindersSentCount>
+				<deadline>2016-10-30T09:06:20.000+0100</deadline>
+				<taskType>register_shipment_event</taskType>
+				<candidateRoleType idref="126" type="com.capimill.lynx.masterdata.parties.entities.PartyRole"/>
+				<isVisible>true</isVisible>
+				<id>6198</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:20.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:20.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</task>
+			<task id="192" type="com.capimill.lynx.tms.entities.RegisterShipmentEventTask">
+				<eventType id="193" type="com.capimill.lynx.tms.entities.events.ShipmentEventType">
+					<name>Transport Mode Changed</name>
+					<handle>transport_mode_changed</handle>
+					<id>34</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:36.000+0200</createDateTime>
+				</eventType>
+				<shipment idref="14" type="com.capimill.lynx.tms.entities.Shipment"/>
+				<name>Change Transport Mode</name>
+				<status idref="187" type="com.capimill.lynx.core.entities.EntityStatus"/>
+				<remindersSentCount>0</remindersSentCount>
+				<deadline>2016-10-30T09:06:20.000+0100</deadline>
+				<taskType>register_shipment_event</taskType>
+				<candidateRoleType idref="126" type="com.capimill.lynx.masterdata.parties.entities.PartyRole"/>
+				<isVisible>true</isVisible>
+				<id>6199</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:20.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:20.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</task>
+		</tasks>
+		<milestones>
+			<milestone id="194" type="com.capimill.lynx.milestone.entities.Milestone">
+				<type id="195" type="com.capimill.lynx.milestone.entities.MilestoneType">
+					<description>Teleflex Booking</description>
+					<category id="196" type="com.capimill.lynx.milestone.entities.MilestoneCategory">
+						<name>Pre-Transport</name>
+						<handle>pre_transport</handle>
+						<id>1</id>
+						<version>0</version>
+						<createDateTime>2012-05-04T09:08:46.000+0200</createDateTime>
+					</category>
+					<name>ORD</name>
+					<handle>ord</handle>
+					<id>1</id>
+					<version>0</version>
+					<createDateTime>2012-05-04T09:08:46.000+0200</createDateTime>
+				</type>
+				<status id="197" type="com.capimill.lynx.milestone.entities.MilestoneStatus">
+					<name>Completed</name>
+					<handle>completed</handle>
+					<id>2</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:37.000+0200</createDateTime>
+				</status>
+				<forEventType>shipment_order_amended</forEventType>
+				<resolution id="198" type="com.capimill.lynx.milestone.entities.MilestoneResolution">
+					<name>On Time</name>
+					<handle>ontime</handle>
+					<id>2</id>
+					<version>0</version>
+					<createDateTime>2012-05-04T09:08:46.000+0200</createDateTime>
+				</resolution>
+				<id>37316</id>
+				<version>1</version>
+				<createDateTime>2015-10-30T09:06:21.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:22.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</milestone>
+			<milestone id="199" type="com.capimill.lynx.milestone.entities.Milestone">
+				<type id="200" type="com.capimill.lynx.milestone.entities.MilestoneType">
+					<description>Control Tower Booking</description>
+					<category idref="196" type="com.capimill.lynx.milestone.entities.MilestoneCategory"/>
+					<name>TDR</name>
+					<handle>tdr</handle>
+					<id>2</id>
+					<version>0</version>
+					<createDateTime>2012-05-04T09:08:46.000+0200</createDateTime>
+				</type>
+				<status id="201" type="com.capimill.lynx.milestone.entities.MilestoneStatus">
+					<name>New</name>
+					<handle>new</handle>
+					<id>1</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:37.000+0200</createDateTime>
+				</status>
+				<forEventType>transport_spot_tendered</forEventType>
+				<resolution id="202" type="com.capimill.lynx.milestone.entities.MilestoneResolution">
+					<name>Unresolved</name>
+					<handle>unresolved</handle>
+					<id>1</id>
+					<version>0</version>
+					<createDateTime>2012-05-04T09:08:46.000+0200</createDateTime>
+				</resolution>
+				<id>37317</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:21.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:21.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</milestone>
+			<milestone id="203" type="com.capimill.lynx.milestone.entities.Milestone">
+				<type id="204" type="com.capimill.lynx.milestone.entities.MilestoneType">
+					<description>Booking Confirmation</description>
+					<category idref="196" type="com.capimill.lynx.milestone.entities.MilestoneCategory"/>
+					<name>BKD</name>
+					<handle>bkd</handle>
+					<id>3</id>
+					<version>0</version>
+					<createDateTime>2012-05-04T09:08:46.000+0200</createDateTime>
+				</type>
+				<status idref="201" type="com.capimill.lynx.milestone.entities.MilestoneStatus"/>
+				<forEventType>transport_details_confirmed_</forEventType>
+				<resolution idref="202" type="com.capimill.lynx.milestone.entities.MilestoneResolution"/>
+				<id>37318</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:21.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:21.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</milestone>
+			<milestone id="205" type="com.capimill.lynx.milestone.entities.Milestone">
+				<type id="206" type="com.capimill.lynx.milestone.entities.MilestoneType">
+					<description>Pick up</description>
+					<category id="207" type="com.capimill.lynx.milestone.entities.MilestoneCategory">
+						<name>Transport Execution</name>
+						<handle>transport_execution</handle>
+						<id>2</id>
+						<version>0</version>
+						<createDateTime>2012-05-04T09:08:46.000+0200</createDateTime>
+					</category>
+					<name>LDG</name>
+					<handle>ldg</handle>
+					<id>4</id>
+					<version>0</version>
+					<createDateTime>2012-05-04T09:08:46.000+0200</createDateTime>
+				</type>
+				<status idref="197" type="com.capimill.lynx.milestone.entities.MilestoneStatus"/>
+				<forEventType>loading_confirmed</forEventType>
+				<resolution idref="198" type="com.capimill.lynx.milestone.entities.MilestoneResolution"/>
+				<id>37319</id>
+				<version>1</version>
+				<createDateTime>2015-10-30T09:06:21.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:37:27.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</milestone>
+			<milestone id="208" type="com.capimill.lynx.milestone.entities.Milestone">
+				<type id="209" type="com.capimill.lynx.milestone.entities.MilestoneType">
+					<description>Closing</description>
+					<category idref="207" type="com.capimill.lynx.milestone.entities.MilestoneCategory"/>
+					<name>CLO</name>
+					<handle>clo</handle>
+					<id>5</id>
+					<version>0</version>
+					<createDateTime>2012-05-04T09:08:46.000+0200</createDateTime>
+				</type>
+				<status idref="201" type="com.capimill.lynx.milestone.entities.MilestoneStatus"/>
+				<forEventType>delivered_at_port_of_loading</forEventType>
+				<resolution idref="202" type="com.capimill.lynx.milestone.entities.MilestoneResolution"/>
+				<id>37320</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:21.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:21.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</milestone>
+			<milestone id="210" type="com.capimill.lynx.milestone.entities.Milestone">
+				<type id="211" type="com.capimill.lynx.milestone.entities.MilestoneType">
+					<description>Confirmend on Board</description>
+					<category idref="207" type="com.capimill.lynx.milestone.entities.MilestoneCategory"/>
+					<name>COB</name>
+					<handle>cob</handle>
+					<id>6</id>
+					<version>0</version>
+					<createDateTime>2012-05-04T09:08:46.000+0200</createDateTime>
+				</type>
+				<status idref="201" type="com.capimill.lynx.milestone.entities.MilestoneStatus"/>
+				<forEventType>confirmed_on_board</forEventType>
+				<resolution idref="202" type="com.capimill.lynx.milestone.entities.MilestoneResolution"/>
+				<id>37321</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:21.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:21.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</milestone>
+			<milestone id="212" type="com.capimill.lynx.milestone.entities.Milestone">
+				<type id="213" type="com.capimill.lynx.milestone.entities.MilestoneType">
+					<description>Estimated Time of Arrival</description>
+					<category idref="207" type="com.capimill.lynx.milestone.entities.MilestoneCategory"/>
+					<name>IOA</name>
+					<handle>ioa</handle>
+					<id>7</id>
+					<version>0</version>
+					<createDateTime>2012-05-04T09:08:46.000+0200</createDateTime>
+				</type>
+				<status idref="201" type="com.capimill.lynx.milestone.entities.MilestoneStatus"/>
+				<forEventType>information_of_arrival</forEventType>
+				<resolution idref="202" type="com.capimill.lynx.milestone.entities.MilestoneResolution"/>
+				<id>37322</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:21.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:21.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</milestone>
+			<milestone id="214" type="com.capimill.lynx.milestone.entities.Milestone">
+				<type id="215" type="com.capimill.lynx.milestone.entities.MilestoneType">
+					<description>Delivery Scheduling</description>
+					<category idref="207" type="com.capimill.lynx.milestone.entities.MilestoneCategory"/>
+					<name>DLS</name>
+					<handle>dls</handle>
+					<id>8</id>
+					<version>0</version>
+					<createDateTime>2012-05-04T09:08:46.000+0200</createDateTime>
+				</type>
+				<status idref="201" type="com.capimill.lynx.milestone.entities.MilestoneStatus"/>
+				<forEventType>delivery_information_updated</forEventType>
+				<resolution idref="202" type="com.capimill.lynx.milestone.entities.MilestoneResolution"/>
+				<id>37323</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:21.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:21.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</milestone>
+			<milestone id="216" type="com.capimill.lynx.milestone.entities.Milestone">
+				<type id="217" type="com.capimill.lynx.milestone.entities.MilestoneType">
+					<description>Information of Delivery</description>
+					<category idref="207" type="com.capimill.lynx.milestone.entities.MilestoneCategory"/>
+					<name>DLV</name>
+					<handle>dlv</handle>
+					<id>9</id>
+					<version>0</version>
+					<createDateTime>2012-05-04T09:08:46.000+0200</createDateTime>
+				</type>
+				<status idref="197" type="com.capimill.lynx.milestone.entities.MilestoneStatus"/>
+				<forEventType>delivery_confirmed</forEventType>
+				<resolution idref="198" type="com.capimill.lynx.milestone.entities.MilestoneResolution"/>
+				<id>37324</id>
+				<version>1</version>
+				<createDateTime>2015-10-30T09:06:21.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:56:03.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</milestone>
+			<milestone id="218" type="com.capimill.lynx.milestone.entities.Milestone">
+				<type id="219" type="com.capimill.lynx.milestone.entities.MilestoneType">
+					<description>Accruals</description>
+					<category id="220" type="com.capimill.lynx.milestone.entities.MilestoneCategory">
+						<name>Post-Transport</name>
+						<handle>post_transport</handle>
+						<id>3</id>
+						<version>0</version>
+						<createDateTime>2012-05-04T09:08:46.000+0200</createDateTime>
+					</category>
+					<name>ACC</name>
+					<handle>acc</handle>
+					<id>10</id>
+					<version>0</version>
+					<createDateTime>2012-05-04T09:08:46.000+0200</createDateTime>
+				</type>
+				<status idref="201" type="com.capimill.lynx.milestone.entities.MilestoneStatus"/>
+				<forEventType>charges_estimated</forEventType>
+				<resolution idref="202" type="com.capimill.lynx.milestone.entities.MilestoneResolution"/>
+				<id>37325</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:21.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:21.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</milestone>
+			<milestone id="221" type="com.capimill.lynx.milestone.entities.Milestone">
+				<type id="222" type="com.capimill.lynx.milestone.entities.MilestoneType">
+					<description>Invoice information</description>
+					<category idref="220" type="com.capimill.lynx.milestone.entities.MilestoneCategory"/>
+					<name>INV</name>
+					<handle>inv</handle>
+					<id>11</id>
+					<version>0</version>
+					<createDateTime>2012-05-04T09:08:46.000+0200</createDateTime>
+				</type>
+				<status idref="201" type="com.capimill.lynx.milestone.entities.MilestoneStatus"/>
+				<deadline>2015-11-10T09:54:38.000+0100</deadline>
+				<forEventType>create_invoice_entry</forEventType>
+				<resolution idref="202" type="com.capimill.lynx.milestone.entities.MilestoneResolution"/>
+				<id>37326</id>
+				<version>1</version>
+				<createDateTime>2015-10-30T09:06:21.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:56:03.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</milestone>
+			<milestone id="223" type="com.capimill.lynx.milestone.entities.Milestone">
+				<type id="224" type="com.capimill.lynx.milestone.entities.MilestoneType">
+					<description>Documentation Completed</description>
+					<category idref="220" type="com.capimill.lynx.milestone.entities.MilestoneCategory"/>
+					<name>DOC</name>
+					<handle>doc</handle>
+					<id>12</id>
+					<version>0</version>
+					<createDateTime>2012-05-04T09:08:46.000+0200</createDateTime>
+				</type>
+				<status idref="201" type="com.capimill.lynx.milestone.entities.MilestoneStatus"/>
+				<deadline>2015-11-03T09:54:38.000+0100</deadline>
+				<resolution idref="202" type="com.capimill.lynx.milestone.entities.MilestoneResolution"/>
+				<id>37327</id>
+				<version>1</version>
+				<createDateTime>2015-10-30T09:06:21.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:56:03.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</milestone>
+			<milestone id="225" type="com.capimill.lynx.milestone.entities.Milestone">
+				<type id="226" type="com.capimill.lynx.milestone.entities.MilestoneType">
+					<description>Final Check</description>
+					<category idref="220" type="com.capimill.lynx.milestone.entities.MilestoneCategory"/>
+					<name>CLD</name>
+					<handle>cld</handle>
+					<id>13</id>
+					<version>0</version>
+					<createDateTime>2012-05-04T09:08:46.000+0200</createDateTime>
+				</type>
+				<status idref="201" type="com.capimill.lynx.milestone.entities.MilestoneStatus"/>
+				<deadline>2015-11-04T09:54:38.000+0100</deadline>
+				<forEventType>shipment_closed</forEventType>
+				<resolution idref="202" type="com.capimill.lynx.milestone.entities.MilestoneResolution"/>
+				<id>37328</id>
+				<version>1</version>
+				<createDateTime>2015-10-30T09:06:21.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:56:03.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</milestone>
+			<milestone id="227" type="com.capimill.lynx.milestone.entities.Milestone">
+				<type id="228" type="com.capimill.lynx.milestone.entities.MilestoneType">
+					<description>Billed</description>
+					<category idref="220" type="com.capimill.lynx.milestone.entities.MilestoneCategory"/>
+					<name>BLL</name>
+					<handle>bll</handle>
+					<id>14</id>
+					<version>0</version>
+					<createDateTime>2012-05-04T09:08:46.000+0200</createDateTime>
+				</type>
+				<status idref="201" type="com.capimill.lynx.milestone.entities.MilestoneStatus"/>
+				<resolution idref="202" type="com.capimill.lynx.milestone.entities.MilestoneResolution"/>
+				<id>37329</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:21.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:21.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</milestone>
+		</milestones>
+		<notifications/>
+		<invoiceEntries/>
+		<estimatedChargeEntries/>
+		<documents/>
+		<status idref="187" type="com.capimill.lynx.core.entities.EntityStatus"/>
+		<orderReference>RP-346</orderReference>
+		<expectedDocuments>
+			<expectedDocument id="229" type="com.capimill.lynx.tms.entities.ExpectedDocument">
+				<status id="230" type="com.capimill.lynx.tms.entities.ExpectedDocumentStatus">
+					<name>Expected</name>
+					<handle>expected</handle>
+					<id>1</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:37.000+0200</createDateTime>
+				</status>
+				<documentType id="231" type="com.capimill.lynx.tms.entities.DocumentType">
+					<name>Freight Invoice</name>
+					<handle>freight_invoice</handle>
+					<id>11</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:36.000+0200</createDateTime>
+				</documentType>
+				<id>9584</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:21.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:21.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</expectedDocument>
+			<expectedDocument id="232" type="com.capimill.lynx.tms.entities.ExpectedDocument">
+				<status idref="230" type="com.capimill.lynx.tms.entities.ExpectedDocumentStatus"/>
+				<documentType id="233" type="com.capimill.lynx.tms.entities.DocumentType">
+					<name>Customs Declaration</name>
+					<handle>customs_declaration</handle>
+					<id>12</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:36.000+0200</createDateTime>
+				</documentType>
+				<id>9583</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:21.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:21.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</expectedDocument>
+			<expectedDocument id="234" type="com.capimill.lynx.tms.entities.ExpectedDocument">
+				<status idref="230" type="com.capimill.lynx.tms.entities.ExpectedDocumentStatus"/>
+				<documentType id="235" type="com.capimill.lynx.tms.entities.DocumentType">
+					<name>Commercial Invoice</name>
+					<handle>commercial_invoice</handle>
+					<id>2</id>
+					<version>0</version>
+					<createDateTime>2012-04-20T08:58:36.000+0200</createDateTime>
+				</documentType>
+				<id>9585</id>
+				<version>0</version>
+				<createDateTime>2015-10-30T09:06:21.000+0100</createDateTime>
+				<changeDateTime>2015-10-30T09:06:21.000+0100</changeDateTime>
+				<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+				<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+			</expectedDocument>
+		</expectedDocuments>
+		<id>2654208</id>
+		<version>5</version>
+		<createDateTime>2015-10-30T09:06:16.000+0100</createDateTime>
+		<changeDateTime>2015-10-30T09:56:02.000+0100</changeDateTime>
+		<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+		<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+	</shipment>
+	<references/>
+	<milestoneDeadlineUpdates/>
+	<isAddedByHuman>true</isAddedByHuman>
+	<eventDateTime>2015-10-30T09:56:25.495+0100</eventDateTime>
+	<status idref="142" type="com.capimill.lynx.tms.entities.EventStatusType"/>
+	<manualCreateDateTime>2015-10-30T09:56:25.495+0100</manualCreateDateTime>
+	<id>24747</id>
+	<version>0</version>
+	<createDateTime>2015-10-30T09:57:14.171+0100</createDateTime>
+	<changeDateTime>2015-10-30T09:57:14.171+0100</changeDateTime>
+	<createUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+	<changeUser idref="9" type="com.capimill.lynx.core.entities.UserInfo"/>
+</ShippingLegLocationDepartedEvent>
