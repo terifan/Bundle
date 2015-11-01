@@ -8,8 +8,8 @@ import java.nio.ByteBuffer;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
-import org.terifan.bundle.bundle_test.Log;
 
 
 // header
@@ -33,7 +33,13 @@ public class BinaryEncoder implements Encoder
 	private HashMap<String,Integer> mStrings;
 	private HashMap<String,Integer> mHeaders;
 
-FrequencyTable tbl = new FrequencyTable(16);
+FrequencyTable tblHeaders = new FrequencyTable(1000);
+FrequencyTable tblStrings = new FrequencyTable(1000);
+FrequencyTable tblStringLengths = new FrequencyTable(1000);
+FrequencyTable tblKeys = new FrequencyTable(1000);
+FrequencyTable tblFieldType = new FrequencyTable(20);
+FrequencyTable tblKeyLengths = new FrequencyTable(50);
+
 int[][] huffman1 = {
 {2,0b01},
 {2,0b10},
@@ -52,18 +58,26 @@ int[][] huffman1 = {
 {8,0b00000111}
 };
 
+long mDeltaDate;
+long mDeltaLong;
+long mStatisticsRawCount;
+
+
+	private TreeMap<FieldType,Integer> mStatistics = new TreeMap<>();
+	private TreeMap<String,Integer> mStatisticsOperations = new TreeMap<>();
+
 
 	public BinaryEncoder()
 	{
-		tbl.encode(FieldType.INT.ordinal());
-		tbl.encode(FieldType.STRING.ordinal());
-		tbl.encode(FieldType.DOUBLE.ordinal());
-		tbl.encode(FieldType.BUNDLE.ordinal());
-		tbl.encode(FieldType.DATE.ordinal());
-		tbl.encode(FieldType.LONG.ordinal());
-		tbl.encode(FieldType.BOOLEAN.ordinal());
-		tbl.encode(FieldType.NULL.ordinal());
-		tbl.encode(FieldType.EMPTY_LIST.ordinal());
+		tblFieldType.encode(FieldType.INT.ordinal());
+		tblFieldType.encode(FieldType.STRING.ordinal());
+		tblFieldType.encode(FieldType.DOUBLE.ordinal());
+		tblFieldType.encode(FieldType.BUNDLE.ordinal());
+		tblFieldType.encode(FieldType.DATE.ordinal());
+		tblFieldType.encode(FieldType.LONG.ordinal());
+		tblFieldType.encode(FieldType.BOOLEAN.ordinal());
+		tblFieldType.encode(FieldType.NULL.ordinal());
+		tblFieldType.encode(FieldType.EMPTY.ordinal());
 	}
 
 
@@ -100,6 +114,12 @@ int[][] huffman1 = {
 	}
 
 
+	public String getStatistics()
+	{
+		return "raw=" + mStatisticsRawCount + ", op=" + mStatisticsOperations + ", types=" + mStatistics;
+	}
+
+
 	private void writeBundle(Bundle aBundle) throws IOException
 	{
 		String[] keys = writeBundleHeader(aBundle);
@@ -109,7 +129,9 @@ int[][] huffman1 = {
 			Object value = aBundle.get(key);
 			FieldType fieldType = FieldType.classify(value);
 
-			if (fieldType != FieldType.NULL && fieldType != FieldType.EMPTY_LIST)
+			mStatistics.put(fieldType, mStatistics.getOrDefault(fieldType, 0) + 1);
+			
+			if (fieldType != FieldType.NULL && fieldType != FieldType.EMPTY)
 			{
 				Class<? extends Object> cls = value.getClass();
 
@@ -140,8 +162,9 @@ int[][] huffman1 = {
 	private void writeByteArray(byte[] aValue) throws IOException
 	{
 		mOutput.writeVariableInt(aValue.length, 3, 1, false);
-//		mOutput.align();
 		mOutput.write(aValue);
+		
+		mStatisticsRawCount += aValue.length;
 	}
 
 
@@ -229,10 +252,11 @@ int[][] huffman1 = {
 			mOutput.writeBit(0);
 			mOutput.writeVariableInt(buf.length, 3, 1, false);
 			mOutput.writeVariableInt(buf[0].length, 3, 1, false);
-//			mOutput.align();
 			for (int i = 0; i < buf.length; i++)
 			{
 				mOutput.write(buf[i]);
+		
+				mStatisticsRawCount += buf.length;
 			}
 		}
 		else
@@ -250,8 +274,9 @@ int[][] huffman1 = {
 				{
 					mOutput.writeBit(0);
 					mOutput.writeVariableInt(buf[i].length, 3, 1, false);
-//					mOutput.align();
 					mOutput.write(buf[i]);
+		
+					mStatisticsRawCount += buf.length;
 				}
 			}
 		}
@@ -263,6 +288,60 @@ int[][] huffman1 = {
 		int initialKeyCount = mKeys.size();
 		String[] keys = aBundle.keySet().toArray(new String[aBundle.size()]);
 
+
+		StringBuilder signature = new StringBuilder();
+		
+		for (String key : keys)
+		{
+			Object value = aBundle.get(key);
+			FieldType fieldType = FieldType.classify(value);
+			Class<? extends Object> cls = value.getClass();
+
+			signature.append(fieldType.ordinal());
+			signature.append(":");
+			signature.append(key);
+			signature.append(":");
+
+			if (fieldType != FieldType.NULL && fieldType != FieldType.EMPTY)
+			{
+				if (cls.isArray())
+				{
+					if (cls.getComponentType().isArray())
+					{
+						signature.append("1:");
+					}
+					else
+					{
+						signature.append("2:");
+					}
+				}
+				else if (List.class.isAssignableFrom(cls))
+				{
+					signature.append("3:");
+				}
+				else
+				{
+					signature.append("4:");
+				}
+			}
+		}
+		
+		Integer header = mHeaders.get(signature.toString());
+		if (header != null)
+		{
+			inc("dup");
+
+			mOutput.writeBit(1);
+//			mOutput.writeVariableInt(header, 3, 0, false);
+			mOutput.writeVariableInt(tblHeaders.encode(header), 1, 0, false);
+			return keys;
+		}
+
+		inc("hdr");
+		
+		mHeaders.put(signature.toString(), mHeaders.size());
+
+		mOutput.writeBit(0);
 		mOutput.writeVariableInt(keys.length, 3, 0, false);
 
 		FieldType prevFieldType = null;
@@ -284,10 +363,10 @@ int[][] huffman1 = {
 				mOutput.writeBit(0);
 //				mOutput.writeBits(fieldType.ordinal(), 4);
 
-				int n = tbl.encode(fieldType.ordinal());
+				int n = tblFieldType.encode(fieldType.ordinal());
 				mOutput.writeBits(huffman1[n][1], huffman1[n][0]);
 
-				if (fieldType != FieldType.NULL && fieldType != FieldType.EMPTY_LIST)
+				if (fieldType != FieldType.NULL && fieldType != FieldType.EMPTY)
 				{
 					if (cls.isArray())
 					{
@@ -313,16 +392,23 @@ int[][] huffman1 = {
 
 			if (mKeys.containsKey(key))
 			{
+				inc("key");
+
 				mOutput.writeBit(0);
-				mOutput.writeBitsInRange(mKeys.get(key), initialKeyCount);
+//				mOutput.writeVariableInt(mKeys.get(key), 3, 0, false);
+//				mOutput.writeBitsInRange(mKeys.get(key), initialKeyCount);
+				mOutput.writeVariableInt(tblKeys.encode(mKeys.get(key)), 3, 0, false);
 			}
 			else
 			{
 				byte[] buffer = Convert.encodeUTF8(key);
 
 				mOutput.writeBit(1);
-				mOutput.writeVariableInt(buffer.length, 3, 0, false);
+//				mOutput.writeVariableInt(buffer.length, 3, 0, false);
+				mOutput.writeVariableInt(tblKeyLengths.encode(buffer.length), 3, 0, false);
 				mOutput.write(buffer);
+		
+				mStatisticsRawCount += buffer.length;
 
 				mKeys.put(key, mKeys.size());
 			}
@@ -352,7 +438,8 @@ int[][] huffman1 = {
 			}
 		}
 
-		mOutput.writeVariableInt(hasNull ? -length : length, 3, 0, true);
+		mOutput.writeBit(hasNull ? 1 : 0);
+		mOutput.writeVariableInt(length, 3, 0, false);
 
 		for (int i = 0; i < length; i++)
 		{
@@ -391,7 +478,9 @@ int[][] huffman1 = {
 				mOutput.writeVariableInt((Integer)aValue, 3, 0, true);
 				break;
 			case LONG:
-				mOutput.writeVariableLong((Long)aValue, 3, 0, true);
+//				mOutput.writeVariableLong((Long)aValue, 3, 0, true);
+				mOutput.writeVariableLong((Long)aValue-mDeltaLong, 3, 1, true);
+				mDeltaLong = (Long)aValue;
 				break;
 			case FLOAT:
 				mOutput.writeVariableInt(Float.floatToIntBits((Float)aValue), 3, 1, false);
@@ -400,17 +489,13 @@ int[][] huffman1 = {
 				mOutput.writeVariableLong(Double.doubleToLongBits((Double)aValue), 3, 1, false);
 				break;
 			case STRING:
-				if (packString(aValue))
-				{
-					break;
-				}
-
-				byte[] buffer = Convert.encodeUTF8((String)aValue);
-				mOutput.writeVariableInt(buffer.length, 3, 0, false);
-				mOutput.write(buffer);
+				packString(aValue);
 				break;
 			case DATE:
-				mOutput.writeVariableLong(((Date)aValue).getTime(), 7, 0, false);
+				long time = ((Date)aValue).getTime();
+//				mOutput.writeVariableLong(time, 7, 0, false);
+				mOutput.writeVariableLong(time-mDeltaDate, 3, 1, true);
+				mDeltaDate = time;
 				break;
 			case BUNDLE:
 				writeBundle((Bundle)aValue);
@@ -428,14 +513,31 @@ int[][] huffman1 = {
 
 		if (index != null)
 		{
+			inc("str");
+			
 			mOutput.writeBit(1);
-			mOutput.writeVariableInt(index, 3, 0, false);
+//			mOutput.writeVariableInt(index, 3, 0, false);
+			mOutput.writeVariableInt(tblStrings.encode(index), 3, 0, false);
 			return true;
 		}
+		
+		byte[] buffer = Convert.encodeUTF8((String)aValue);
+
+		mOutput.writeBit(0);
+//		mOutput.writeVariableInt(buffer.length, 3, 0, false);
+		mOutput.writeVariableInt(tblStringLengths.encode(buffer.length), 3, 0, false);
+		mOutput.write(buffer);
+		
+		mStatisticsRawCount += buffer.length;
 
 		mStrings.put(s, mStrings.size());
-		mOutput.writeBit(0);
 
 		return false;
+	}
+
+
+	private void inc(String aOperation)
+	{
+		mStatisticsOperations.put(aOperation, mStatisticsOperations.getOrDefault(aOperation, 0) + 1);
 	}
 }

@@ -79,7 +79,7 @@ public class BinaryDecoder implements Decoder
 			{
 				value = null;
 			}
-			else if (fieldType == FieldType.EMPTY_LIST)
+			else if (fieldType == FieldType.EMPTY)
 			{
 				value = new ArrayList();
 			}

@@ -17,7 +17,7 @@ enum FieldType
 	STRING(String.class, String.class),
 	BUNDLE(Bundle.class, Bundle.class),
 	DATE(Date.class, Date.class),
-	EMPTY_LIST(null,null),
+	EMPTY(null,null),
 	NULL(null,null);
 
 	private final Class mComponentType;
@@ -65,7 +65,7 @@ enum FieldType
 			}
 			if (cls == null)
 			{
-				return EMPTY_LIST;
+				return EMPTY;
 			}
 		}
 		if (cls.isArray())
@@ -90,7 +90,7 @@ enum FieldType
 
 	public String getJavaName()
 	{
-		if (this == EMPTY_LIST)
+		if (this == EMPTY)
 		{
 			return name();
 		}

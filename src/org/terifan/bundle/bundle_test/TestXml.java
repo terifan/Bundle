@@ -64,19 +64,20 @@ public class TestXml
 
 //		Log.out.println(new TextEncoder().marshal(bundle));
 
-		byte[] binData = new BinaryEncoder().marshal(bundle);
+		BinaryEncoder binaryEncoder = new BinaryEncoder();
+		byte[] binData = binaryEncoder.marshal(bundle);
 		String txtData = new TextEncoder().marshal(bundle, true);
 
-		if (aFilename.equals("tiny.xml"))
-		{
-			Log.hexDump(binData);
-		}
+//		if (aFilename.equals("tiny.xml"))
+//		{
+//			Log.hexDump(binData);
+//		}
 
 		byte[] zipBin = zip(binData);
 		byte[] zipTxt = zip(txtData.getBytes("utf-8"));
 		byte[] zipXml = zip(xmlData);
 
-		Log.out.printf("%12s, source: %6d (%5d), txt: %6d (%5d), bin: %6d (%5d) / %6d %5d\n", aFilename, xmlData.length, zipXml.length, txtData.length(), zipTxt.length, binData.length, zipBin.length, aExpectedSize, binData.length-aExpectedSize);
+		Log.out.printf("%12s, source: %6d (%5d), txt: %6d (%5d), bin: %6d (%5d) / %6d %5d / %6d %s\n", aFilename, xmlData.length, zipXml.length, txtData.length(), zipTxt.length, binData.length, zipBin.length, aExpectedSize, binData.length-aExpectedSize, binData.length-zipTxt.length, binaryEncoder.getStatistics());
 
 		return binData.length-aExpectedSize;
 	}
