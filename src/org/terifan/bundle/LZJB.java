@@ -1,6 +1,7 @@
 package org.terifan.bundle;
 
-import java.util.Arrays;
+import java.io.File;
+import java.io.FileInputStream;
 import org.terifan.bundle.bundle_test.Log;
 
 
@@ -124,8 +125,8 @@ public class LZJB
 //	}
 
 
-	private final static int W = 32 - 1;
-	private final static int P = 4096 - 1;
+	private final static int W = (1 << 16) - 1;
+	private final static int P = (1 << 24) - 1;
 	private byte[] mWindow = new byte[W + 1];
 	private int[] mPointers = new int[P + 1];
 	private int mPosition;
@@ -138,18 +139,20 @@ public class LZJB
 
 	public byte[] compress(byte[] aBuffer)
 	{
+		int copys = 0;
+		int copylen = 0;
+		int literals = 0;
+
 		for (int offset = 0; offset < aBuffer.length; )
 		{
-			byte[] before = mWindow.clone();
-
 			int matchLen = 1;
 			int position;
 
-			if (offset < aBuffer.length - 1)
+			if (offset < aBuffer.length - 2)
 			{
 				int hash = hash(aBuffer, offset);
 				position = mPointers[hash];
-				boolean match = aBuffer[offset] == mWindow[position & W];
+				boolean match = aBuffer[offset] == mWindow[position & W] && aBuffer[offset + 1] == mWindow[(position + 1) & W] && aBuffer[offset + 2] == mWindow[(position + 2) & W];
 
 				mPointers[hash] = mPosition;
 				mWindow[mPosition & W] = aBuffer[offset];
@@ -164,7 +167,7 @@ public class LZJB
 							break;
 						}
 
-						if (offset + matchLen < aBuffer.length - 1)
+						if (offset + matchLen < aBuffer.length - 2)
 						{
 							mPointers[hash(aBuffer, offset + matchLen)] = mPosition;
 						}
@@ -180,16 +183,15 @@ public class LZJB
 				mPosition++;
 			}
 
-			Log.out.printf("%3d %2d [%s]\n", matchLen==1?0:mPosition-position-matchLen, matchLen, new String(aBuffer, offset, matchLen));
+			if (matchLen==1) literals++;
+			else {copys++; copylen+=matchLen;}
+
+//			Log.out.printf("%3d %2d [%s]\n", matchLen==1?0:mPosition-position-matchLen, matchLen, new String(aBuffer, offset, matchLen));
 
 			offset += matchLen;
-
-			if (matchLen>1)
-			{
-				Log.hexDump(before);
-				Log.hexDump(mWindow);
-			}
 		}
+
+		Log.out.println(literals+" "+copys+" "+copylen);
 
 		return null;
 	}
@@ -197,7 +199,7 @@ public class LZJB
 
 	private int hash(byte[] aBuffer, int aOffset)
 	{
-		return (((0xff & aBuffer[aOffset]) << 4) ^ (0xff & aBuffer[aOffset + 1])) & P;
+		return (((0xff & aBuffer[aOffset]) << 16) ^ ((0xff & aBuffer[aOffset + 1]) << 8) ^ (0xff & aBuffer[aOffset + 2])) & P;
 	}
 
 
@@ -215,7 +217,15 @@ public class LZJB
 
 //			compressor.compress("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww".getBytes());
 
-			compressor.compress("banana apple lemon cigar car monkey monkey".getBytes());
+//			compressor.compress("banana apple lemon cigar car monkey monkey".getBytes());
+
+			File file = new File("d:/ex151012.log");
+			byte[] buf = new byte[(int)file.length()];
+			try (FileInputStream in = new FileInputStream(file))
+			{
+				in.read(buf);
+			}
+			compressor.compress(buf);
 		}
 		catch (Throwable e)
 		{
