@@ -133,7 +133,6 @@ public class LZJB
 
 	public LZJB()
 	{
-		Arrays.fill(mPointers, -1);
 	}
 
 
@@ -141,6 +140,8 @@ public class LZJB
 	{
 		for (int offset = 0; offset < aBuffer.length; )
 		{
+			byte[] before = mWindow.clone();
+
 			int matchLen = 1;
 			int position;
 
@@ -174,16 +175,20 @@ public class LZJB
 			}
 			else
 			{
-				position = -1;
+				position = 0;
 				mWindow[mPosition & W] = aBuffer[offset];
 				mPosition++;
 			}
 
-			Log.out.printf("%3d %2d [%s]\n", mPosition-position-matchLen, matchLen, new String(aBuffer, offset, matchLen));
+			Log.out.printf("%3d %2d [%s]\n", matchLen==1?0:mPosition-position-matchLen, matchLen, new String(aBuffer, offset, matchLen));
 
 			offset += matchLen;
 
-//			Log.hexDump(mWindow);
+			if (matchLen>1)
+			{
+				Log.hexDump(before);
+				Log.hexDump(mWindow);
+			}
 		}
 
 		return null;
@@ -207,7 +212,10 @@ public class LZJB
 //			compressor.compress("helloworld".getBytes());
 //			compressor.compress("worldwar".getBytes());
 //			compressor.compress("warcrafting".getBytes());
-			compressor.compress("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww".getBytes());
+
+//			compressor.compress("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww".getBytes());
+
+			compressor.compress("banana apple lemon cigar car monkey monkey".getBytes());
 		}
 		catch (Throwable e)
 		{
