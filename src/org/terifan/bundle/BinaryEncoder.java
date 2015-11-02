@@ -5,11 +5,12 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Array;
 import java.nio.ByteBuffer;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.TreeMap;
+import org.terifan.bundle.bundle_test.Log;
 
 
 // header
@@ -33,35 +34,57 @@ public class BinaryEncoder implements Encoder
 	private HashMap<String,Integer> mStrings;
 	private HashMap<String,Integer> mHeaders;
 
-FrequencyTable tblHeaders = new FrequencyTable(1000);
-FrequencyTable tblStrings = new FrequencyTable(1000);
-FrequencyTable tblStringLengths = new FrequencyTable(1000);
-FrequencyTable tblKeys = new FrequencyTable(1000);
-FrequencyTable tblFieldType = new FrequencyTable(20);
-FrequencyTable tblKeyLengths = new FrequencyTable(50);
+	private FrequencyTable mFreqHeaders = new FrequencyTable(1000);
+	private FrequencyTable mFreqStrings = new FrequencyTable(1000);
+	private FrequencyTable mFreqStringLengths = new FrequencyTable(1000);
+	private FrequencyTable mFreqKeys = new FrequencyTable(1000);
+	private FrequencyTable mFreqFieldType = new FrequencyTable(20);
+	private FrequencyTable mFreqKeyLengths = new FrequencyTable(50);
+	private FrequencyTable mFreqKeysCount = new FrequencyTable(1000);
 
-int[][] huffman1 = {
-{2,0b01},
-{2,0b10},
-{2,0b11},
-{4,0b001},
-{5,0b00001},
-{5,0b00010},
-{5,0b00011},
-{8,0b00000000},
-{8,0b00000001},
-{8,0b00000010},
-{8,0b00000011},
-{8,0b00000100},
-{8,0b00000101},
-{8,0b00000110},
-{8,0b00000111}
-};
+	private int[][] mHuffmanFieldType = 
+	{
+//		{1,0b1},
+//		{3,0b001},
+//		{3,0b010},
+//		{3,0b011},
+//		{4,0b0001},
+//		{6,0b000001},
+//		{6,0b000010},
+//		{6,0b000011},
+//		{9,0b000000000},
+//		{9,0b000000001},
+//		{9,0b000000010},
+//		{9,0b000000011},
+//		{9,0b000000100},
+//		{9,0b000000101},
+//		{9,0b000000110},
+//		{9,0b000000111}
+		{2,0b01},
+		{2,0b10},
+		{2,0b11},
+		{4,0b001},
+		{5,0b00001},
+		{5,0b00010},
+		{5,0b00011},
+		{8,0b00000000},
+		{8,0b00000001},
+		{8,0b00000010},
+		{8,0b00000011},
+		{8,0b00000100},
+		{8,0b00000101},
+		{8,0b00000110},
+		{8,0b00000111}
+	};
 
-long mDeltaDate;
-long mDeltaLong;
-long mStatisticsRawCount;
+	private long mDeltaDate;
+	private long mDeltaLong;
+	private long mStatisticsRawCount;
 
+	private LZJB mLzjbStrings = new LZJB();
+	private LZJB mLzjbKeys = new LZJB();
+	private LZJB mLzjbBytes = new LZJB();
+	private LZJB mLzjbDates = new LZJB();
 
 	private TreeMap<FieldType,Integer> mStatistics = new TreeMap<>();
 	private TreeMap<String,Integer> mStatisticsOperations = new TreeMap<>();
@@ -69,15 +92,15 @@ long mStatisticsRawCount;
 
 	public BinaryEncoder()
 	{
-		tblFieldType.encode(FieldType.INT.ordinal());
-		tblFieldType.encode(FieldType.STRING.ordinal());
-		tblFieldType.encode(FieldType.DOUBLE.ordinal());
-		tblFieldType.encode(FieldType.BUNDLE.ordinal());
-		tblFieldType.encode(FieldType.DATE.ordinal());
-		tblFieldType.encode(FieldType.LONG.ordinal());
-		tblFieldType.encode(FieldType.BOOLEAN.ordinal());
-		tblFieldType.encode(FieldType.NULL.ordinal());
-		tblFieldType.encode(FieldType.EMPTY.ordinal());
+		mFreqFieldType.encode(FieldType.INT.ordinal());
+		mFreqFieldType.encode(FieldType.STRING.ordinal());
+		mFreqFieldType.encode(FieldType.DOUBLE.ordinal());
+		mFreqFieldType.encode(FieldType.BUNDLE.ordinal());
+		mFreqFieldType.encode(FieldType.DATE.ordinal());
+		mFreqFieldType.encode(FieldType.LONG.ordinal());
+		mFreqFieldType.encode(FieldType.BOOLEAN.ordinal());
+		mFreqFieldType.encode(FieldType.NULL.ordinal());
+		mFreqFieldType.encode(FieldType.EMPTY.ordinal());
 	}
 
 
@@ -111,6 +134,11 @@ long mStatisticsRawCount;
 		mOutput.finish();
 		mOutput = null;
 		mKeys = null;
+
+//		mLzjbBytes.analyze();
+//		mLzjbStrings.analyze();
+//		mLzjbKeys.analyze();
+//		mLzjbDates.analyze();
 	}
 
 
@@ -161,9 +189,11 @@ long mStatisticsRawCount;
 
 	private void writeByteArray(byte[] aValue) throws IOException
 	{
-		mOutput.writeVariableInt(aValue.length, 3, 1, false);
-		mOutput.write(aValue);
-		
+//		mOutput.writeVariableInt(aValue.length, 3, 1, false);
+		mOutput.writeExpGolomb(aValue.length, 3);
+//		mOutput.write(aValue);
+		mLzjbBytes.write(mOutput, aValue);
+
 		mStatisticsRawCount += aValue.length;
 	}
 
@@ -196,11 +226,13 @@ long mStatisticsRawCount;
 		if (full)
 		{
 			mOutput.writeBit(0);
-			mOutput.writeVariableInt(rows, 3, 1, false);
+//			mOutput.writeVariableInt(rows, 3, 1, false);
+			mOutput.writeExpGolomb(rows, 3);
 			if (rows > 0)
 			{
 				int cols = Array.getLength(Array.get(aValue, 0));
-				mOutput.writeVariableInt(cols, 3, 1, false);
+//				mOutput.writeVariableInt(cols, 3, 1, false);
+				mOutput.writeExpGolomb(cols, 3);
 				for (int i = 0; i < rows; i++)
 				{
 					Object arr = Array.get(aValue, i);
@@ -215,7 +247,8 @@ long mStatisticsRawCount;
 		{
 			int len = Array.getLength(aValue);
 			mOutput.writeBit(1);
-			mOutput.writeVariableInt(len, 3, 1, false);
+//			mOutput.writeVariableInt(len, 3, 1, false);
+			mOutput.writeExpGolomb(len, 3);
 			for (int i = 0; i < len; i++)
 			{
 				Object v = Array.get(aValue, i);
@@ -250,11 +283,14 @@ long mStatisticsRawCount;
 		if (full)
 		{
 			mOutput.writeBit(0);
-			mOutput.writeVariableInt(buf.length, 3, 1, false);
-			mOutput.writeVariableInt(buf[0].length, 3, 1, false);
+//			mOutput.writeVariableInt(buf.length, 3, 1, false);
+			mOutput.writeExpGolomb(buf.length, 3);
+//			mOutput.writeVariableInt(buf[0].length, 3, 1, false);
+			mOutput.writeExpGolomb(buf[0].length, 3);
 			for (int i = 0; i < buf.length; i++)
 			{
-				mOutput.write(buf[i]);
+//				mOutput.write(buf[i]);
+				mLzjbBytes.write(mOutput, buf[i]);
 		
 				mStatisticsRawCount += buf.length;
 			}
@@ -262,7 +298,8 @@ long mStatisticsRawCount;
 		else
 		{
 			mOutput.writeBit(1);
-			mOutput.writeVariableInt(buf.length, 3, 1, false);
+//			mOutput.writeVariableInt(buf.length, 3, 1, false);
+			mOutput.writeExpGolomb(buf.length, 3);
 			for (int i = 0; i < buf.length; i++)
 			{
 				Object v = Array.get(aValue, i);
@@ -273,9 +310,11 @@ long mStatisticsRawCount;
 				else
 				{
 					mOutput.writeBit(0);
-					mOutput.writeVariableInt(buf[i].length, 3, 1, false);
-					mOutput.write(buf[i]);
-		
+//					mOutput.writeVariableInt(buf[i].length, 3, 1, false);
+					mOutput.writeExpGolomb(buf[i].length, 3);
+//					mOutput.write(buf[i]);
+					mLzjbBytes.write(mOutput, buf[i]);
+	
 					mStatisticsRawCount += buf.length;
 				}
 			}
@@ -295,7 +334,6 @@ long mStatisticsRawCount;
 		{
 			Object value = aBundle.get(key);
 			FieldType fieldType = FieldType.classify(value);
-			Class<? extends Object> cls = value.getClass();
 
 			signature.append(fieldType.ordinal());
 			signature.append(":");
@@ -304,6 +342,8 @@ long mStatisticsRawCount;
 
 			if (fieldType != FieldType.NULL && fieldType != FieldType.EMPTY)
 			{
+				Class<? extends Object> cls = value.getClass();
+
 				if (cls.isArray())
 				{
 					if (cls.getComponentType().isArray())
@@ -333,7 +373,8 @@ long mStatisticsRawCount;
 
 			mOutput.writeBit(1);
 //			mOutput.writeVariableInt(header, 3, 0, false);
-			mOutput.writeVariableInt(tblHeaders.encode(header), 1, 0, false);
+//			mOutput.writeVariableInt(tblHeaders.encode(header), 1, 0, false);
+			mOutput.writeExpGolomb(mFreqHeaders.encode(header), 1);
 			return keys;
 		}
 
@@ -342,7 +383,8 @@ long mStatisticsRawCount;
 		mHeaders.put(signature.toString(), mHeaders.size());
 
 		mOutput.writeBit(0);
-		mOutput.writeVariableInt(keys.length, 3, 0, false);
+//		mOutput.writeVariableInt(tblKeysCount.encode(keys.length), 3, 0, false);
+		mOutput.writeExpGolomb(mFreqKeysCount.encode(keys.length), 2);
 
 		FieldType prevFieldType = null;
 
@@ -350,24 +392,31 @@ long mStatisticsRawCount;
 		{
 			Object value = aBundle.get(key);
 			FieldType fieldType = FieldType.classify(value);
-			Class<? extends Object> cls = value.getClass();
 
 			if (fieldType == prevFieldType)
 			{
 				mOutput.writeBit(1);
+//				int n = mFreqFieldType.encode(0);
+//				mOutput.writeBits(mHuffmanFieldType[n][1], mHuffmanFieldType[n][0]);
 			}
 			else
 			{
 				prevFieldType = fieldType;
 
 				mOutput.writeBit(0);
+				
+				
+				
 //				mOutput.writeBits(fieldType.ordinal(), 4);
-
-				int n = tblFieldType.encode(fieldType.ordinal());
-				mOutput.writeBits(huffman1[n][1], huffman1[n][0]);
+//				mOutput.writeExpGolomb(tblFieldType.encode(fieldType.ordinal()), 1);
+//				int n = mFreqFieldType.encode(1 + fieldType.ordinal());
+				int n = mFreqFieldType.encode(fieldType.ordinal());
+				mOutput.writeBits(mHuffmanFieldType[n][1], mHuffmanFieldType[n][0]);
 
 				if (fieldType != FieldType.NULL && fieldType != FieldType.EMPTY)
 				{
+					Class<? extends Object> cls = value.getClass();
+
 					if (cls.isArray())
 					{
 						if (cls.getComponentType().isArray())
@@ -397,7 +446,8 @@ long mStatisticsRawCount;
 				mOutput.writeBit(0);
 //				mOutput.writeVariableInt(mKeys.get(key), 3, 0, false);
 //				mOutput.writeBitsInRange(mKeys.get(key), initialKeyCount);
-				mOutput.writeVariableInt(tblKeys.encode(mKeys.get(key)), 3, 0, false);
+//				mOutput.writeVariableInt(tblKeys.encode(mKeys.get(key)), 3, 0, false);
+				mOutput.writeExpGolomb(mFreqKeys.encode(mKeys.get(key)), 3);
 			}
 			else
 			{
@@ -405,8 +455,10 @@ long mStatisticsRawCount;
 
 				mOutput.writeBit(1);
 //				mOutput.writeVariableInt(buffer.length, 3, 0, false);
-				mOutput.writeVariableInt(tblKeyLengths.encode(buffer.length), 3, 0, false);
-				mOutput.write(buffer);
+//				mOutput.writeVariableInt(tblKeyLengths.encode(buffer.length), 3, 0, false);
+				mOutput.writeExpGolomb(mFreqKeyLengths.encode(buffer.length), 3);
+//				mOutput.write(buffer);
+				mLzjbKeys.write(mOutput, buffer);
 		
 				mStatisticsRawCount += buffer.length;
 
@@ -439,7 +491,8 @@ long mStatisticsRawCount;
 		}
 
 		mOutput.writeBit(hasNull ? 1 : 0);
-		mOutput.writeVariableInt(length, 3, 0, false);
+//		mOutput.writeVariableInt(length, 3, 0, false);
+		mOutput.writeExpGolomb(length, 3);
 
 		for (int i = 0; i < length; i++)
 		{
@@ -494,7 +547,8 @@ long mStatisticsRawCount;
 			case DATE:
 				long time = ((Date)aValue).getTime();
 //				mOutput.writeVariableLong(time, 7, 0, false);
-				mOutput.writeVariableLong(time-mDeltaDate, 3, 1, true);
+//				mOutput.writeVariableLong(time-mDeltaDate, 3, 1, true);
+				mLzjbDates.write(mOutput, new SimpleDateFormat("yyyyMMddHHmmssSSS").format(aValue).getBytes());
 				mDeltaDate = time;
 				break;
 			case BUNDLE:
@@ -517,7 +571,8 @@ long mStatisticsRawCount;
 			
 			mOutput.writeBit(1);
 //			mOutput.writeVariableInt(index, 3, 0, false);
-			mOutput.writeVariableInt(tblStrings.encode(index), 3, 0, false);
+//			mOutput.writeVariableInt(tblStrings.encode(index), 3, 0, false);
+			mOutput.writeExpGolomb(mFreqStrings.encode(index), 3);
 			return true;
 		}
 		
@@ -525,9 +580,12 @@ long mStatisticsRawCount;
 
 		mOutput.writeBit(0);
 //		mOutput.writeVariableInt(buffer.length, 3, 0, false);
-		mOutput.writeVariableInt(tblStringLengths.encode(buffer.length), 3, 0, false);
-		mOutput.write(buffer);
-		
+//		mOutput.writeVariableInt(tblStringLengths.encode(buffer.length), 3, 0, false);
+		mOutput.writeExpGolomb(mFreqStringLengths.encode(buffer.length), 3);
+
+//		mOutput.write(buffer);
+		mLzjbStrings.write(mOutput, buffer);
+
 		mStatisticsRawCount += buffer.length;
 
 		mStrings.put(s, mStrings.size());

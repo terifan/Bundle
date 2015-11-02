@@ -411,6 +411,17 @@ public class TextDecoder
 		{
 			return null;
 		}
+		
+		if (type == null)
+		{
+			String s = "";
+			for (int i = 0; i < 20; i++)
+			{
+				s += (char)aReader.read();
+			}
+			throw new IllegalArgumentException("Error near: " + s.replace("\n", " ").replace("\r", " ").replace("\t", " "));
+		}
+		
 		Object array = Array.newInstance(getPrimitiveType(type), list.size());
 
 		for (int i = 0; i < list.size(); i++)

@@ -2,12 +2,13 @@ package org.terifan.bundle;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import org.terifan.bundle.bundle_test.Log;
 
 
 /**
  * BitOutputStream writes bits to the underlying byte stream.
  */
-class BitOutputStream //extends OutputStream
+class BitOutputStream implements AutoCloseable
 {
 	private OutputStream mOutputStream;
 	private int mBitsToGo;
@@ -208,7 +209,7 @@ class BitOutputStream //extends OutputStream
 	}
 
 
-//	@Override
+	@Override
 	public void close() throws IOException
 	{
 		if (mOutputStream != null)
@@ -239,5 +240,26 @@ class BitOutputStream //extends OutputStream
 	public long getBitsWritten()
 	{
 		return mBitsWritten;
+	}
+
+
+	public void writeExpGolomb(int val, int k) throws IOException
+	{
+		assert val >= 0 && val < (1<<30)-1;
+	
+		while (val >= (1 << k))
+		{
+			writeBit(1);
+			val -= 1 << k;
+			k++;
+		}
+
+		writeBit(0);
+
+		while (k > 0)
+		{
+			k--;
+			writeBit((val >>> k) & 1);
+		}
 	}
 }
