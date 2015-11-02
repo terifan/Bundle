@@ -146,7 +146,7 @@ public class LZJB
 		for (int offset = 0; offset < aBuffer.length; )
 		{
 			int matchLen = 1;
-			int position;
+			int position = 0;
 
 			if (offset < aBuffer.length - 2)
 			{
@@ -154,9 +154,7 @@ public class LZJB
 				position = mPointers[hash];
 				boolean match = aBuffer[offset] == mWindow[position & W] && aBuffer[offset + 1] == mWindow[(position + 1) & W] && aBuffer[offset + 2] == mWindow[(position + 2) & W];
 
-				mPointers[hash] = mPosition;
-				mWindow[mPosition & W] = aBuffer[offset];
-				mPosition++;
+				insert(offset, 0, aBuffer);
 
 				if (match)
 				{
@@ -167,20 +165,13 @@ public class LZJB
 							break;
 						}
 
-						if (offset + matchLen < aBuffer.length - 2)
-						{
-							mPointers[hash(aBuffer, offset + matchLen)] = mPosition;
-						}
-						mWindow[mPosition & W] = aBuffer[offset + matchLen];
-						mPosition++;
+						insert(offset, matchLen, aBuffer);
 					}
 				}
 			}
 			else
 			{
-				position = 0;
-				mWindow[mPosition & W] = aBuffer[offset];
-				mPosition++;
+				insert(offset, 0, aBuffer);
 			}
 
 			if (matchLen==1) literals++;
@@ -197,9 +188,22 @@ public class LZJB
 	}
 
 
+	private void insert(int aOffset, int aMatchLen, byte[] aBuffer)
+	{
+		if (aOffset + aMatchLen < aBuffer.length - 2)
+		{
+			mPointers[hash(aBuffer, aOffset + aMatchLen)] = mPosition;
+		}
+		mWindow[mPosition & W] = aBuffer[aOffset + aMatchLen];
+		mPosition++;
+	}
+
+
 	private int hash(byte[] aBuffer, int aOffset)
 	{
-		return (((0xff & aBuffer[aOffset]) << 16) ^ ((0xff & aBuffer[aOffset + 1]) << 8) ^ (0xff & aBuffer[aOffset + 2])) & P;
+		return ((aBuffer[aOffset    ] << 16)
+			  ^ (aBuffer[aOffset + 1] <<  8)
+			  ^ (aBuffer[aOffset + 2]      )) & P;
 	}
 
 
@@ -225,6 +229,7 @@ public class LZJB
 			{
 				in.read(buf);
 			}
+
 			compressor.compress(buf);
 		}
 		catch (Throwable e)
