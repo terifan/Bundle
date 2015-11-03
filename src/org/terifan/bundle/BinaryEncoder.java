@@ -13,19 +13,6 @@ import java.util.TreeMap;
 import org.terifan.bundle.bundle_test.Log;
 
 
-// header
-//  #copy header id
-//	fields
-//   field
-//    #same type as before
-//	    ?new type
-//    #name
-//  #terminator
-// data
-//  fields
-//   field
-//    #value
-
 public class BinaryEncoder implements Encoder
 {
 	private TreeMap<String,Integer> mKeys;
@@ -42,24 +29,8 @@ public class BinaryEncoder implements Encoder
 	private FrequencyTable mFreqKeyLengths = new FrequencyTable(50);
 	private FrequencyTable mFreqKeysCount = new FrequencyTable(1000);
 
-	private int[][] mHuffmanFieldType = 
+	private int[][] mHuffmanFieldType =
 	{
-//		{1,0b1},
-//		{3,0b001},
-//		{3,0b010},
-//		{3,0b011},
-//		{4,0b0001},
-//		{6,0b000001},
-//		{6,0b000010},
-//		{6,0b000011},
-//		{9,0b000000000},
-//		{9,0b000000001},
-//		{9,0b000000010},
-//		{9,0b000000011},
-//		{9,0b000000100},
-//		{9,0b000000101},
-//		{9,0b000000110},
-//		{9,0b000000111}
 		{2,0b01},
 		{2,0b10},
 		{2,0b11},
@@ -158,7 +129,7 @@ public class BinaryEncoder implements Encoder
 			FieldType fieldType = FieldType.classify(value);
 
 			mStatistics.put(fieldType, mStatistics.getOrDefault(fieldType, 0) + 1);
-			
+
 			if (fieldType != FieldType.NULL && fieldType != FieldType.EMPTY)
 			{
 				Class<? extends Object> cls = value.getClass();
@@ -291,7 +262,7 @@ public class BinaryEncoder implements Encoder
 			{
 //				mOutput.write(buf[i]);
 				mLzjbBytes.write(mOutput, buf[i]);
-		
+
 				mStatisticsRawCount += buf.length;
 			}
 		}
@@ -314,7 +285,7 @@ public class BinaryEncoder implements Encoder
 					mOutput.writeExpGolomb(buf[i].length, 3);
 //					mOutput.write(buf[i]);
 					mLzjbBytes.write(mOutput, buf[i]);
-	
+
 					mStatisticsRawCount += buf.length;
 				}
 			}
@@ -329,7 +300,7 @@ public class BinaryEncoder implements Encoder
 
 
 		StringBuilder signature = new StringBuilder();
-		
+
 		for (String key : keys)
 		{
 			Object value = aBundle.get(key);
@@ -365,7 +336,7 @@ public class BinaryEncoder implements Encoder
 				}
 			}
 		}
-		
+
 		Integer header = mHeaders.get(signature.toString());
 		if (header != null)
 		{
@@ -379,7 +350,7 @@ public class BinaryEncoder implements Encoder
 		}
 
 		inc("hdr");
-		
+
 		mHeaders.put(signature.toString(), mHeaders.size());
 
 		mOutput.writeBit(0);
@@ -404,9 +375,9 @@ public class BinaryEncoder implements Encoder
 				prevFieldType = fieldType;
 
 				mOutput.writeBit(0);
-				
-				
-				
+
+
+
 //				mOutput.writeBits(fieldType.ordinal(), 4);
 //				mOutput.writeExpGolomb(tblFieldType.encode(fieldType.ordinal()), 1);
 //				int n = mFreqFieldType.encode(1 + fieldType.ordinal());
@@ -456,10 +427,10 @@ public class BinaryEncoder implements Encoder
 				mOutput.writeBit(1);
 //				mOutput.writeVariableInt(buffer.length, 3, 0, false);
 //				mOutput.writeVariableInt(tblKeyLengths.encode(buffer.length), 3, 0, false);
-				mOutput.writeExpGolomb(mFreqKeyLengths.encode(buffer.length), 3);
+				mOutput.writeExpGolomb(mFreqKeyLengths.encode(key.length()), 3);
 //				mOutput.write(buffer);
 				mLzjbKeys.write(mOutput, buffer);
-		
+
 				mStatisticsRawCount += buffer.length;
 
 				mKeys.put(key, mKeys.size());
@@ -568,14 +539,14 @@ public class BinaryEncoder implements Encoder
 		if (index != null)
 		{
 			inc("str");
-			
+
 			mOutput.writeBit(1);
 //			mOutput.writeVariableInt(index, 3, 0, false);
 //			mOutput.writeVariableInt(tblStrings.encode(index), 3, 0, false);
 			mOutput.writeExpGolomb(mFreqStrings.encode(index), 3);
 			return true;
 		}
-		
+
 		byte[] buffer = Convert.encodeUTF8((String)aValue);
 
 		mOutput.writeBit(0);
