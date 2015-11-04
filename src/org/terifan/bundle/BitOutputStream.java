@@ -246,7 +246,7 @@ class BitOutputStream implements AutoCloseable
 	public void writeExpGolomb(int val, int k) throws IOException
 	{
 		assert val >= 0 && val < (1<<30)-1;
-	
+
 		while (val >= (1 << k))
 		{
 			writeBit(1);
@@ -260,6 +260,25 @@ class BitOutputStream implements AutoCloseable
 		{
 			k--;
 			writeBit((val >>> k) & 1);
+		}
+	}
+
+
+	public void writeVLC(long aValue) throws IOException
+	{
+		writeBit(aValue < 0 ? 1 : 0);
+		writeBit(aValue >= 64 ? 1 : 0);
+		writeBits(aValue & 63, 6);
+		if (aValue < 0)
+		{
+			aValue = -(aValue + 1);
+		}
+		aValue >>>= 6;
+		while (aValue > 0)
+		{
+			writeBit(aValue >= 128 ? 1 : 0);
+			writeBits((int)(aValue & 127), 7);
+			aValue >>>= 7;
 		}
 	}
 }

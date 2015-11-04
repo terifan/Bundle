@@ -48,9 +48,7 @@ public class BinaryEncoder implements Encoder
 		{8,0b00000111}
 	};
 
-	private long mDeltaDate;
 	private long mDeltaLong;
-	private long mStatisticsRawCount;
 
 	private LZJB mLzjbStrings = new LZJB();
 	private LZJB mLzjbKeys = new LZJB();
@@ -105,17 +103,12 @@ public class BinaryEncoder implements Encoder
 		mOutput.finish();
 		mOutput = null;
 		mKeys = null;
-
-//		mLzjbBytes.analyze();
-//		mLzjbStrings.analyze();
-//		mLzjbKeys.analyze();
-//		mLzjbDates.analyze();
 	}
 
 
 	public String getStatistics()
 	{
-		return "raw=" + mStatisticsRawCount + ", op=" + mStatisticsOperations + ", types=" + mStatistics;
+		return "" + mStatistics;
 	}
 
 
@@ -164,8 +157,6 @@ public class BinaryEncoder implements Encoder
 		mOutput.writeExpGolomb(aValue.length, 3);
 //		mOutput.write(aValue);
 		mLzjbBytes.write(mOutput, aValue);
-
-		mStatisticsRawCount += aValue.length;
 	}
 
 
@@ -262,8 +253,6 @@ public class BinaryEncoder implements Encoder
 			{
 //				mOutput.write(buf[i]);
 				mLzjbBytes.write(mOutput, buf[i]);
-
-				mStatisticsRawCount += buf.length;
 			}
 		}
 		else
@@ -285,8 +274,6 @@ public class BinaryEncoder implements Encoder
 					mOutput.writeExpGolomb(buf[i].length, 3);
 //					mOutput.write(buf[i]);
 					mLzjbBytes.write(mOutput, buf[i]);
-
-					mStatisticsRawCount += buf.length;
 				}
 			}
 		}
@@ -431,8 +418,6 @@ public class BinaryEncoder implements Encoder
 //				mOutput.write(buffer);
 				mLzjbKeys.write(mOutput, buffer);
 
-				mStatisticsRawCount += buffer.length;
-
 				mKeys.put(key, mKeys.size());
 			}
 		}
@@ -520,7 +505,6 @@ public class BinaryEncoder implements Encoder
 //				mOutput.writeVariableLong(time, 7, 0, false);
 //				mOutput.writeVariableLong(time-mDeltaDate, 3, 1, true);
 				mLzjbDates.write(mOutput, new SimpleDateFormat("yyyyMMddHHmmssSSS").format(aValue).getBytes());
-				mDeltaDate = time;
 				break;
 			case BUNDLE:
 				writeBundle((Bundle)aValue);
@@ -556,8 +540,6 @@ public class BinaryEncoder implements Encoder
 
 //		mOutput.write(buffer);
 		mLzjbStrings.write(mOutput, buffer);
-
-		mStatisticsRawCount += buffer.length;
 
 		mStrings.put(s, mStrings.size());
 

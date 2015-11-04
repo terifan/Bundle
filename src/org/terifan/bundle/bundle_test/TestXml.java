@@ -8,6 +8,7 @@ import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
 import javax.xml.parsers.ParserConfigurationException;
 import org.terifan.bundle.BinaryEncoder;
+import org.terifan.bundle.BinaryEncoderRef;
 import org.terifan.bundle.Bundle;
 import org.terifan.bundle.ConvertXml;
 import org.terifan.bundle.TextDecoder;
@@ -17,26 +18,31 @@ import org.xml.sax.SAXException;
 
 public class TestXml
 {
+	private static int[] sums = new int[12];
+
+	private static String FORMAT = "%12s  %6d (%5d), %6d (%5d), %6d (%5d), %6d (%5d), %9d %7d %8d %9d\n";
+
 	public static void main(String ... args)
 	{
 		try
 		{
-			int delta = 0;
+			Log.out.printf("%12s  %14s  %14s  %14s  %14s   %7s %8s %8s %9s\n", "", "xml", "txt", "bin", "ref", "bin-ref", "bin-zRef", "bin-zTxt", "zRef-zTxt");
+			Log.out.printf("%12s  %s  %s  %s  %s   %s %s %s %s\n", "", "--------------", "--------------", "--------------", "--------------", "-------", "--------", "--------", "---------");
 
-			delta += test("tiny.xml", 133);
-			delta += test("lxir.xml", 466);
-			delta += test("params.xml", 725);
-			delta += test("fo.xml", 2238);
-			delta += test("ctts.xml", 1143);
-			delta += test("lynx.xml", 1250);
-			delta += test("oms1.xml", 24798);
-			delta += test("oms2.xml", 19302);
-			delta += test("edoc.xml", 119825);
-			delta += test("capimil1.xml", 10915);
-			delta += test("capimil2.xml", 13225);
+			test("tiny.xml");
+			test("lxir.xml");
+			test("params.xml");
+			test("fo.xml");
+			test("ctts.xml");
+			test("lynx.xml");
+			test("oms1.xml");
+			test("oms2.xml");
+			test("edoc.xml");
+			test("capimil1.xml");
+			test("capimil2.xml");
 
-			Log.out.println("---------------------------------------------------------------------------------------------");
-			Log.out.println(delta);
+			Log.out.println("------------------------------------------------------------------------------------------------------------------");
+			Log.out.printf(FORMAT, "", sums[0], sums[1], sums[2], sums[3], sums[4], sums[5], sums[6], sums[7], sums[8], sums[9], sums[10], sums[11]);
 		}
 		catch (Throwable e)
 		{
@@ -45,43 +51,62 @@ public class TestXml
 	}
 
 
-	private static int test(String aFilename, int aExpectedSize) throws SAXException, IOException, ParserConfigurationException
+	private static void test(String aFilename) throws SAXException, IOException, ParserConfigurationException
 	{
-		byte[] xmlData;
+		byte[] xml;
 		try (InputStream in = TestXml.class.getResourceAsStream(aFilename))
 		{
-			xmlData = fetch(in);
+			xml = fetch(in);
 		}
 
 		Bundle bundle = new Bundle();
 
 		if (aFilename.endsWith(".bundle"))
 		{
-			bundle = new TextDecoder().unmarshal(new ByteArrayInputStream(xmlData));
+			bundle = new TextDecoder().unmarshal(new ByteArrayInputStream(xml));
 		}
 		else
 		{
-			ConvertXml.unmarshal(new ByteArrayInputStream(xmlData), bundle);
+			ConvertXml.unmarshal(new ByteArrayInputStream(xml), bundle);
 		}
 
 //		Log.out.println(new TextEncoder().marshal(bundle));
 
 		BinaryEncoder binaryEncoder = new BinaryEncoder();
-		byte[] binData = binaryEncoder.marshal(bundle);
-		String txtData = new TextEncoder().marshal(bundle, true);
+		BinaryEncoderRef binaryEncoderRef = new BinaryEncoderRef();
+		byte[] bin = binaryEncoder.marshal(bundle);
+		byte[] ref = binaryEncoderRef.marshal(bundle);
+		String txt = new TextEncoder().marshal(bundle, true);
 
 //		if (aFilename.equals("tiny.xml"))
 //		{
-//			Log.hexDump(binData);
+//			Log.hexDump(ref);
 //		}
 
-		byte[] zipBin = zip(binData);
-		byte[] zipTxt = zip(txtData.getBytes("utf-8"));
-		byte[] zipXml = zip(xmlData);
+		byte[] zipBin = zip(bin);
+		byte[] zipRef = zip(ref);
+		byte[] zipTxt = zip(txt.getBytes("utf-8"));
+		byte[] zipXml = zip(xml);
 
-		Log.out.printf("%12s, source: %6d (%5d), txt: %6d (%5d), bin: %6d (%5d) / %6d %6d / %6d %s\n", aFilename, xmlData.length, zipXml.length, txtData.length(), zipTxt.length, binData.length, zipBin.length, aExpectedSize, binData.length-aExpectedSize, binData.length-zipTxt.length, binaryEncoder.getStatistics());
+		int d1 = bin.length - ref.length;
+		int d2 = bin.length - zipRef.length;
+		int d3 = bin.length - zipTxt.length;
+		int d4 = zipRef.length - zipTxt.length;
 
-		return binData.length-aExpectedSize;
+		Log.out.printf("%12s, %6d (%5d), %6d (%5d), %6d (%5d), %6d (%5d) / %8d %7d %8d %9d  %s\n", aFilename, xml.length, zipXml.length, txt.length(), zipTxt.length, bin.length, zipBin.length, ref.length, zipRef.length, d1, d2, d3, d4, binaryEncoder.getStatistics());
+
+		sums[0] += xml.length;
+		sums[1] += zipXml.length;
+		sums[2] += txt.length();
+		sums[3] += zipTxt.length;
+		sums[4] += bin.length;
+		sums[5] += zipBin.length;
+		sums[6] += ref.length;
+		sums[7] += zipRef.length;
+		sums[8] += d1;
+		sums[9] += d2;
+		sums[10] += d3;
+		sums[11] += d4;
 	}
 
 
