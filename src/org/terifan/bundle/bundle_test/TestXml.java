@@ -12,7 +12,7 @@ import org.terifan.bundle.BinaryEncoderRef;
 import org.terifan.bundle.BitOutputStream;
 import org.terifan.bundle.Bundle;
 import org.terifan.bundle.ConvertXml;
-import org.terifan.bundle.LZJB;
+import org.terifan.bundle.compression.LZJB;
 import org.terifan.bundle.TextDecoder;
 import org.terifan.bundle.TextEncoder;
 import org.xml.sax.SAXException;

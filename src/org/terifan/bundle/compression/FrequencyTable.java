@@ -1,4 +1,4 @@
-package org.terifan.bundle;
+package org.terifan.bundle.compression;
 
 import java.util.Random;
 import org.terifan.bundle.bundle_test.Log;

@@ -1,8 +1,9 @@
-package org.terifan.bundle;
+package org.terifan.bundle.compression;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import org.terifan.bundle.BitOutputStream;
 import org.terifan.bundle.bundle_test.Log;
 
 
@@ -58,9 +59,9 @@ public class LZJB
 				mLiteralStats[i].encode(j);
 			}
 		}
-		
+
 //		byte[] buf = new byte[122784];
-//		try (InputStream in = Bundle.class.getResourceAsStream("dic.bin"))
+//		try (InputStream in = getClass().getResourceAsStream("dic.bin"))
 //		{
 //			in.read(buf);
 //		}
