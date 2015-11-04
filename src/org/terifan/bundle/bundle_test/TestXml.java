@@ -9,8 +9,10 @@ import java.util.zip.DeflaterOutputStream;
 import javax.xml.parsers.ParserConfigurationException;
 import org.terifan.bundle.BinaryEncoder;
 import org.terifan.bundle.BinaryEncoderRef;
+import org.terifan.bundle.BitOutputStream;
 import org.terifan.bundle.Bundle;
 import org.terifan.bundle.ConvertXml;
+import org.terifan.bundle.LZJB;
 import org.terifan.bundle.TextDecoder;
 import org.terifan.bundle.TextEncoder;
 import org.xml.sax.SAXException;
@@ -18,31 +20,32 @@ import org.xml.sax.SAXException;
 
 public class TestXml
 {
-	private static int[] sums = new int[12];
+	private static int[] sums = new int[14];
 
-	private static String FORMAT = "%12s  %6d (%5d), %6d (%5d), %6d (%5d), %6d (%5d), %9d %7d %8d %9d\n";
+	private static String FORMAT = "%12s  %6d (%5d) (%5d)  %6d (%5d)  %6d (%5d) (%6d)  %6d (%5d) %8d %8d %8d %9d  %s\n";
 
 	public static void main(String ... args)
 	{
 		try
 		{
-			Log.out.printf("%12s  %14s  %14s  %14s  %14s   %7s %8s %8s %9s\n", "", "xml", "txt", "bin", "ref", "bin-ref", "bin-zRef", "bin-zTxt", "zRef-zTxt");
-			Log.out.printf("%12s  %s  %s  %s  %s   %s %s %s %s\n", "", "--------------", "--------------", "--------------", "--------------", "-------", "--------", "--------", "---------");
+			Log.out.printf("%12s  %22s  %14s  %23s  %14s  %7s %8s %8s %9s\n", "", "xml", "txt", "bin", "ref", "bin-ref", "bin-zRef", "bin-zTxt", "zRef-zTxt");
+			Log.out.printf("%12s  %s  %s  %s  %s  %s %s %s %s\n", "", "----------------------", "--------------", "-----------------------", "--------------", "-------", "--------", "--------", "---------");
 
-			test("tiny.xml");
-			test("lxir.xml");
-			test("params.xml");
-			test("fo.xml");
-			test("ctts.xml");
-			test("lynx.xml");
-			test("oms1.xml");
-			test("oms2.xml");
-			test("edoc.xml");
-			test("capimil1.xml");
-			test("capimil2.xml");
+			test("tiny.xml", 125);
+			test("lxir.xml", 302);
+			test("params.xml", 480);
+			test("fo.xml", 1261);
+			test("ctts.xml", 739);
+			test("lynx.xml", 810);
+			test("oms1.xml", 15318);
+			test("oms2.xml", 11764);
+			test("edoc.xml", 23543);
+			test("capimil1.xml", 5800);
+			test("capimil2.xml", 6521);
 
-			Log.out.println("------------------------------------------------------------------------------------------------------------------");
-			Log.out.printf(FORMAT, "", sums[0], sums[1], sums[2], sums[3], sums[4], sums[5], sums[6], sums[7], sums[8], sums[9], sums[10], sums[11]);
+			Log.out.printf("%12s  %s  %s  %s  %s  %s %s %s %s\n", "", "----------------------", "--------------", "-----------------------", "--------------", "-------", "--------", "--------", "---------");
+			Log.out.printf(FORMAT, "", sums[0], sums[1], sums[2], sums[3], sums[4], sums[5], sums[6], sums[7], sums[8], sums[9], sums[10], sums[11], sums[12], sums[13], "");
+			Log.out.printf("%54s%6d\n", "", sums[5]-sums[7]);
 		}
 		catch (Throwable e)
 		{
@@ -51,7 +54,7 @@ public class TestXml
 	}
 
 
-	private static void test(String aFilename) throws SAXException, IOException, ParserConfigurationException
+	private static void test(String aFilename, int aExpectedLength) throws SAXException, IOException, ParserConfigurationException
 	{
 		byte[] xml;
 		try (InputStream in = TestXml.class.getResourceAsStream(aFilename))
@@ -77,6 +80,10 @@ public class TestXml
 		byte[] bin = binaryEncoder.marshal(bundle);
 		byte[] ref = binaryEncoderRef.marshal(bundle);
 		String txt = new TextEncoder().marshal(bundle, true);
+		
+		ByteArrayOutputStream lzjbXml = new ByteArrayOutputStream();
+		BitOutputStream bos = new BitOutputStream(lzjbXml);
+		new LZJB().write(bos, xml);
 
 //		if (aFilename.equals("tiny.xml"))
 //		{
@@ -93,20 +100,22 @@ public class TestXml
 		int d3 = bin.length - zipTxt.length;
 		int d4 = zipRef.length - zipTxt.length;
 
-		Log.out.printf("%12s, %6d (%5d), %6d (%5d), %6d (%5d), %6d (%5d) / %8d %7d %8d %9d  %s\n", aFilename, xml.length, zipXml.length, txt.length(), zipTxt.length, bin.length, zipBin.length, ref.length, zipRef.length, d1, d2, d3, d4, binaryEncoder.getStatistics());
+		Log.out.printf(FORMAT, aFilename, xml.length, zipXml.length, lzjbXml.size(), txt.length(), zipTxt.length, bin.length, zipBin.length, aExpectedLength, ref.length, zipRef.length, d1, d2, d3, d4, binaryEncoder.getStatistics());
 
 		sums[0] += xml.length;
 		sums[1] += zipXml.length;
-		sums[2] += txt.length();
-		sums[3] += zipTxt.length;
-		sums[4] += bin.length;
-		sums[5] += zipBin.length;
-		sums[6] += ref.length;
-		sums[7] += zipRef.length;
-		sums[8] += d1;
-		sums[9] += d2;
-		sums[10] += d3;
-		sums[11] += d4;
+		sums[2] += lzjbXml.size();
+		sums[3] += txt.length();
+		sums[4] += zipTxt.length;
+		sums[5] += bin.length;
+		sums[6] += zipBin.length;
+		sums[7] += aExpectedLength;
+		sums[8] += ref.length;
+		sums[9] += zipRef.length;
+		sums[10] += d1;
+		sums[11] += d2;
+		sums[12] += d3;
+		sums[13] += d4;
 	}
 
 
@@ -125,7 +134,7 @@ public class TestXml
 	private static byte[] zip(byte[] aData) throws IOException
 	{
 		ByteArrayOutputStream zip = new ByteArrayOutputStream();
-		try (DeflaterOutputStream dos = new DeflaterOutputStream(zip, new Deflater(Deflater.BEST_COMPRESSION)))
+		try (DeflaterOutputStream dos = new DeflaterOutputStream(zip))
 		{
 			dos.write(aData);
 		}

@@ -83,14 +83,14 @@ public class FrequencyTable
 	{
 		int symbol = mCharToSymbol[aChar];
 		inc(symbol);
-		return symbol;
+		return symbol - 1;
 	}
 
 
 	public int decode(int aSymbol)
 	{
-		int chr = mSymbolToChar[aSymbol];
-		inc(aSymbol);
+		int chr = mSymbolToChar[aSymbol + 1];
+		inc(aSymbol + 1);
 		return chr;
 	}
 

@@ -8,7 +8,7 @@ import org.terifan.bundle.bundle_test.Log;
 /**
  * BitOutputStream writes bits to the underlying byte stream.
  */
-class BitOutputStream implements AutoCloseable
+public class BitOutputStream implements AutoCloseable
 {
 	private OutputStream mOutputStream;
 	private int mBitsToGo;

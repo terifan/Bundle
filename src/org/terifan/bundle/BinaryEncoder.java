@@ -50,10 +50,10 @@ public class BinaryEncoder implements Encoder
 
 	private long mDeltaLong;
 
-	private LZJB mLzjbStrings = new LZJB();
-	private LZJB mLzjbKeys = new LZJB();
-	private LZJB mLzjbBytes = new LZJB();
-	private LZJB mLzjbDates = new LZJB();
+	private LZJB mLzjbStrings;
+	private LZJB mLzjbKeys;
+	private LZJB mLzjbBytes;
+	private LZJB mLzjbDates;
 
 	private TreeMap<FieldType,Integer> mStatistics = new TreeMap<>();
 	private TreeMap<String,Integer> mStatisticsOperations = new TreeMap<>();
@@ -92,6 +92,11 @@ public class BinaryEncoder implements Encoder
 	@Override
 	public void marshal(Bundle aBundle, OutputStream aOutputStream) throws IOException
 	{
+		mLzjbStrings = new LZJB();
+		mLzjbKeys = new LZJB();
+		mLzjbBytes = new LZJB();
+		mLzjbDates = new LZJB();
+
 		mOutput = new BitOutputStream(aOutputStream);
 		mKeys = new TreeMap<>();
 
