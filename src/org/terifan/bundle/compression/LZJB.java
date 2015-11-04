@@ -90,7 +90,7 @@ public class LZJB
 
 		int[][] commands = new int[64][4];
 
-		for (int offset = 0, entryIndex = 0; offset < aBuffer.length;)
+		for (int offset = 0, commandIndex = 0; offset < aBuffer.length;)
 		{
 			int matchLen = 1;
 			int matchPosition = 0;
@@ -142,16 +142,16 @@ public class LZJB
 				insert(aBuffer, offset++);
 			}
 
-			commands[entryIndex][0] = matchLen;
-			commands[entryIndex][1] = matchPosition;
-			commands[entryIndex][2] = offset;
-			commands[entryIndex][3] = mWindowPosition;
-			entryIndex++;
+			commands[commandIndex][0] = matchLen;
+			commands[commandIndex][1] = matchPosition;
+			commands[commandIndex][2] = offset;
+			commands[commandIndex][3] = mWindowPosition;
+			commandIndex++;
 
-			if (entryIndex == commands.length || offset == aBuffer.length)
+			if (commandIndex == commands.length || offset == aBuffer.length)
 			{
-				flushBlock(aBitOutputStream, commands, entryIndex, aBuffer);
-				entryIndex = 0;
+				flushBlock(aBitOutputStream, commands, commandIndex, aBuffer);
+				commandIndex = 0;
 			}
 		}
 	}
