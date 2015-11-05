@@ -4,7 +4,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
 import javax.xml.parsers.ParserConfigurationException;
 import org.terifan.bundle.HelixEncoder;
@@ -77,8 +76,8 @@ public class TestXml
 
 		HelixEncoder binaryEncoder = new HelixEncoder();
 		BinaryEncoder binaryEncoderRef = new BinaryEncoder();
-		byte[] bin = binaryEncoder.marshal(bundle);
-		byte[] ref = binaryEncoderRef.marshal(bundle);
+		byte[] hex = binaryEncoder.marshal(bundle);
+		byte[] bin = binaryEncoderRef.marshal(bundle);
 		String txt = new TextEncoder().marshal(bundle, true);
 		
 		ByteArrayOutputStream lzjbXml = new ByteArrayOutputStream();
@@ -87,31 +86,31 @@ public class TestXml
 
 //		if (aFilename.equals("tiny.xml"))
 //		{
-//			Log.hexDump(ref);
+//			Log.hexDump(bin);
 //		}
 
+		byte[] zipHex = zip(hex);
 		byte[] zipBin = zip(bin);
-		byte[] zipRef = zip(ref);
 		byte[] zipTxt = zip(txt.getBytes("utf-8"));
 		byte[] zipXml = zip(xml);
 
-		int d1 = bin.length - ref.length;
-		int d2 = bin.length - zipRef.length;
-		int d3 = bin.length - zipTxt.length;
-		int d4 = zipRef.length - zipTxt.length;
+		int d1 = hex.length - bin.length;
+		int d2 = hex.length - zipBin.length;
+		int d3 = hex.length - zipTxt.length;
+		int d4 = zipBin.length - zipTxt.length;
 
-		Log.out.printf(FORMAT, aFilename, xml.length, zipXml.length, lzjbXml.size(), txt.length(), zipTxt.length, bin.length, zipBin.length, aExpectedLength, ref.length, zipRef.length, d1, d2, d3, d4, binaryEncoder.getStatistics());
+		Log.out.printf(FORMAT, aFilename, xml.length, zipXml.length, lzjbXml.size(), txt.length(), zipTxt.length, hex.length, zipHex.length, aExpectedLength, bin.length, zipBin.length, d1, d2, d3, d4, binaryEncoder.getStatistics());
 
 		sums[0] += xml.length;
 		sums[1] += zipXml.length;
 		sums[2] += lzjbXml.size();
 		sums[3] += txt.length();
 		sums[4] += zipTxt.length;
-		sums[5] += bin.length;
-		sums[6] += zipBin.length;
+		sums[5] += hex.length;
+		sums[6] += zipHex.length;
 		sums[7] += aExpectedLength;
-		sums[8] += ref.length;
-		sums[9] += zipRef.length;
+		sums[8] += bin.length;
+		sums[9] += zipBin.length;
 		sums[10] += d1;
 		sums[11] += d2;
 		sums[12] += d3;
