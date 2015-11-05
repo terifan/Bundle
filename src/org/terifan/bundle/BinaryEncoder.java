@@ -101,25 +101,28 @@ public class BinaryEncoder implements Encoder
 				{
 					if (cls.getComponentType().isArray())
 					{
-						mOutput.writeBits(0b111, 3);
+						mOutput.writeBits(0b11, 2);
 					}
 					else
 					{
-						mOutput.writeBits(0b110, 3);
+						mOutput.writeBits(0b10, 2);
 					}
 				}
 				else if (List.class.isAssignableFrom(cls))
 				{
-					mOutput.writeBits(0b10, 2);
+					mOutput.writeBits(0b01, 2);
 				}
 				else
 				{
-					mOutput.writeBits(0b0, 1);
+					mOutput.writeBits(0b00, 2);
 				}
 			}
+		}
 
-			mOutput.align();
+		mOutput.align();
 
+		for (String key : keys)
+		{
 			writeString(key);
 		}
 

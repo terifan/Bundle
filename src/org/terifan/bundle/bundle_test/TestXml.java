@@ -84,10 +84,10 @@ public class TestXml
 		BitOutputStream bos = new BitOutputStream(lzjbXml);
 		new LZJB().write(bos, xml);
 
-//		if (aFilename.equals("tiny.xml"))
-//		{
-//			Log.hexDump(bin);
-//		}
+		if (aFilename.equals("tiny.xml"))
+		{
+			Log.hexDump(bin);
+		}
 
 		byte[] zipHex = zip(hex);
 		byte[] zipBin = zip(bin);
