@@ -15,7 +15,7 @@ import java.util.TreeMap;
 import org.terifan.bundle.bundle_test.Log;
 
 
-public class HelixEncoder implements Encoder
+public class StyxEncoder implements Encoder
 {
 	private TreeMap<String,Integer> mKeys;
 	private BitOutputStream mOutput;
@@ -61,7 +61,7 @@ public class HelixEncoder implements Encoder
 	private TreeMap<String,Integer> mStatisticsOperations = new TreeMap<>();
 
 
-	public HelixEncoder()
+	public StyxEncoder()
 	{
 		mFreqFieldType.encode(FieldType.INT.ordinal());
 		mFreqFieldType.encode(FieldType.STRING.ordinal());
@@ -294,6 +294,7 @@ public class HelixEncoder implements Encoder
 
 
 		StringBuilder signature = new StringBuilder();
+		boolean onlyLiterals = true;
 
 		for (String key : keys)
 		{
@@ -311,6 +312,7 @@ public class HelixEncoder implements Encoder
 
 				if (cls.isArray())
 				{
+					onlyLiterals = false;
 					if (cls.getComponentType().isArray())
 					{
 						signature.append("1:");
@@ -322,6 +324,7 @@ public class HelixEncoder implements Encoder
 				}
 				else if (List.class.isAssignableFrom(cls))
 				{
+					onlyLiterals = false;
 					signature.append("3:");
 				}
 				else
@@ -351,6 +354,8 @@ public class HelixEncoder implements Encoder
 //		mOutput.writeVariableInt(tblKeysCount.encode(keys.length), 3, 0, false);
 		mOutput.writeExpGolomb(mFreqKeysCount.encode(keys.length), 2);
 
+		mOutput.writeBit(onlyLiterals);
+
 		FieldType prevFieldType = null;
 
 		for (String key : keys)
@@ -378,7 +383,7 @@ public class HelixEncoder implements Encoder
 				int n = mFreqFieldType.encode(fieldType.ordinal());
 				mOutput.writeBits(mHuffmanFieldType[n][1], mHuffmanFieldType[n][0]);
 
-				if (fieldType != FieldType.NULL && fieldType != FieldType.EMPTY)
+				if (fieldType != FieldType.NULL && fieldType != FieldType.EMPTY && !onlyLiterals)
 				{
 					Class<? extends Object> cls = value.getClass();
 
@@ -453,7 +458,7 @@ public class HelixEncoder implements Encoder
 			}
 		}
 
-		mOutput.writeBit(hasNull ? 1 : 0);
+		mOutput.writeBit(hasNull);
 //		mOutput.writeVariableInt(length, 3, 0, false);
 		mOutput.writeExpGolomb(length, 3);
 
@@ -463,7 +468,7 @@ public class HelixEncoder implements Encoder
 
 			if (hasNull)
 			{
-				mOutput.writeBit(item == null ? 1 : 0);
+				mOutput.writeBit(item == null);
 			}
 
 			if (item != null)
@@ -479,7 +484,7 @@ public class HelixEncoder implements Encoder
 		switch (aFieldType)
 		{
 			case BOOLEAN:
-				mOutput.writeBit((Boolean)aValue ? 1 : 0);
+				mOutput.writeBit((Boolean)aValue);
 				break;
 			case BYTE:
 				mOutput.writeBits(0xff & (Byte)aValue, 8);

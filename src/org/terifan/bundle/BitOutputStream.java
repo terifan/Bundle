@@ -24,6 +24,12 @@ public class BitOutputStream implements AutoCloseable
 	}
 
 
+	public void writeBit(boolean aBit) throws IOException
+	{
+		writeBit(aBit ? 1 : 0);
+	}
+
+
 	public void writeBit(int aBit) throws IOException
 	{
 		mBitBuffer |= aBit << --mBitsToGo;
@@ -266,19 +272,24 @@ public class BitOutputStream implements AutoCloseable
 
 	public void writeVLC(long aValue) throws IOException
 	{
-		writeBit(aValue < 0 ? 1 : 0);
-		writeBit(aValue >= 64 ? 1 : 0);
-		writeBits(aValue & 63, 6);
-		if (aValue < 0)
+		aValue = (aValue << 1) ^ (aValue >> 63);
+
+		for (int len = 0;;)
 		{
-			aValue = -(aValue + 1);
-		}
-		aValue >>>= 6;
-		while (aValue > 0)
-		{
-			writeBit(aValue >= 128 ? 1 : 0);
 			writeBits((int)(aValue & 127), 7);
 			aValue >>>= 7;
+			len += 7;
+
+			if (aValue == 0)
+			{
+				if (len < 64)
+				{
+					writeBit(0);
+				}
+				break;
+			}
+
+			writeBit(1);
 		}
 	}
 }

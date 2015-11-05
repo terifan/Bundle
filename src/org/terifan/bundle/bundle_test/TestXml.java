@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.zip.DeflaterOutputStream;
 import javax.xml.parsers.ParserConfigurationException;
-import org.terifan.bundle.HelixEncoder;
+import org.terifan.bundle.StyxEncoder;
 import org.terifan.bundle.BinaryEncoder;
 import org.terifan.bundle.BitOutputStream;
 import org.terifan.bundle.Bundle;
@@ -27,7 +27,7 @@ public class TestXml
 	{
 		try
 		{
-			Log.out.printf("%12s  %22s  %14s  %23s  %14s  %7s %8s %8s %9s\n", "", "xml", "txt", "hex", "bin", "hex-bin", "hex-zBin", "hex-zTxt", "zBin-zTxt");
+			Log.out.printf("%12s  %22s  %14s  %23s  %14s  %7s %8s %8s %9s\n", "", "xml", "txt", "stx", "bin", "stx-bin", "stx-zBin", "stx-zTxt", "zBin-zTxt");
 			Log.out.printf("%12s  %s  %s  %s  %s  %s %s %s %s\n", "", "----------------------", "--------------", "-----------------------", "--------------", "-------", "--------", "--------", "---------");
 
 			test("tiny.xml", 125);
@@ -74,9 +74,9 @@ public class TestXml
 
 //		Log.out.println(new TextEncoder().marshal(bundle));
 
-		HelixEncoder binaryEncoder = new HelixEncoder();
+		StyxEncoder binaryEncoder = new StyxEncoder();
 		BinaryEncoder binaryEncoderRef = new BinaryEncoder();
-		byte[] hex = binaryEncoder.marshal(bundle);
+		byte[] stx = binaryEncoder.marshal(bundle);
 		byte[] bin = binaryEncoderRef.marshal(bundle);
 		String txt = new TextEncoder().marshal(bundle, true);
 		
@@ -84,30 +84,30 @@ public class TestXml
 		BitOutputStream bos = new BitOutputStream(lzjbXml);
 		new LZJB().write(bos, xml);
 
-		if (aFilename.equals("tiny.xml"))
-		{
-			Log.hexDump(bin);
-		}
+//		if (aFilename.equals("tiny.xml"))
+//		{
+//			Log.hexDump(bin);
+//		}
 
-		byte[] zipHex = zip(hex);
+		byte[] zipStx = zip(stx);
 		byte[] zipBin = zip(bin);
 		byte[] zipTxt = zip(txt.getBytes("utf-8"));
 		byte[] zipXml = zip(xml);
 
-		int d1 = hex.length - bin.length;
-		int d2 = hex.length - zipBin.length;
-		int d3 = hex.length - zipTxt.length;
+		int d1 = stx.length - bin.length;
+		int d2 = stx.length - zipBin.length;
+		int d3 = stx.length - zipTxt.length;
 		int d4 = zipBin.length - zipTxt.length;
 
-		Log.out.printf(FORMAT, aFilename, xml.length, zipXml.length, lzjbXml.size(), txt.length(), zipTxt.length, hex.length, zipHex.length, aExpectedLength, bin.length, zipBin.length, d1, d2, d3, d4, binaryEncoder.getStatistics());
+		Log.out.printf(FORMAT, aFilename, xml.length, zipXml.length, lzjbXml.size(), txt.length(), zipTxt.length, stx.length, zipStx.length, aExpectedLength, bin.length, zipBin.length, d1, d2, d3, d4, binaryEncoder.getStatistics());
 
 		sums[0] += xml.length;
 		sums[1] += zipXml.length;
 		sums[2] += lzjbXml.size();
 		sums[3] += txt.length();
 		sums[4] += zipTxt.length;
-		sums[5] += hex.length;
-		sums[6] += zipHex.length;
+		sums[5] += stx.length;
+		sums[6] += zipStx.length;
 		sums[7] += aExpectedLength;
 		sums[8] += bin.length;
 		sums[9] += zipBin.length;
