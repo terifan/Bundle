@@ -158,135 +158,6 @@ public class StyxEncoder implements Encoder
 	}
 
 
-	private void writeByteArray(byte[] aValue) throws IOException
-	{
-//		mOutput.writeVariableInt(aValue.length, 3, 1, false);
-		mOutput.writeExpGolomb(aValue.length, 3);
-//		mOutput.write(aValue);
-		mLzjbBytes.write(mOutput, aValue);
-	}
-
-
-	private void writeMatrix(FieldType aFieldType, Object aValue) throws ArrayIndexOutOfBoundsException, IOException, IllegalArgumentException
-	{
-		if (aFieldType == FieldType.BYTE)
-		{
-			writeByteMatrix(aValue);
-			return;
-		}
-
-		int rows = Array.getLength(aValue);
-		boolean full = true;
-
-		for (int i = 0, j = 0; i < rows; i++)
-		{
-			Object arr = Array.get(aValue, i);
-			if (arr == null || i > 0 && Array.getLength(arr) != j)
-			{
-				full = false;
-				break;
-			}
-			else if (i == 0)
-			{
-				j = Array.getLength(arr);
-			}
-		}
-
-		if (full)
-		{
-			mOutput.writeBit(0);
-//			mOutput.writeVariableInt(rows, 3, 1, false);
-			mOutput.writeExpGolomb(rows, 3);
-			if (rows > 0)
-			{
-				int cols = Array.getLength(Array.get(aValue, 0));
-//				mOutput.writeVariableInt(cols, 3, 1, false);
-				mOutput.writeExpGolomb(cols, 3);
-				for (int i = 0; i < rows; i++)
-				{
-					Object arr = Array.get(aValue, i);
-					for (int j = 0; j < cols; j++)
-					{
-						writeValue(aFieldType, Array.get(arr, j));
-					}
-				}
-			}
-		}
-		else
-		{
-			int len = Array.getLength(aValue);
-			mOutput.writeBit(1);
-//			mOutput.writeVariableInt(len, 3, 1, false);
-			mOutput.writeExpGolomb(len, 3);
-			for (int i = 0; i < len; i++)
-			{
-				Object v = Array.get(aValue, i);
-				if (v == null)
-				{
-					mOutput.writeBit(1);
-				}
-				else
-				{
-					mOutput.writeBit(0);
-					writeArray(aFieldType, v);
-				}
-			}
-		}
-	}
-
-
-	private void writeByteMatrix(Object aValue) throws ArrayIndexOutOfBoundsException, IOException, IllegalArgumentException
-	{
-		byte[][] buf = (byte[][])aValue;
-		boolean full = true;
-
-		for (int i = 0; i < buf.length; i++)
-		{
-			if (buf[i] == null || buf[i].length != buf[0].length)
-			{
-				full = false;
-				break;
-			}
-		}
-
-		if (full)
-		{
-			mOutput.writeBit(0);
-//			mOutput.writeVariableInt(buf.length, 3, 1, false);
-			mOutput.writeExpGolomb(buf.length, 3);
-//			mOutput.writeVariableInt(buf[0].length, 3, 1, false);
-			mOutput.writeExpGolomb(buf[0].length, 3);
-			for (int i = 0; i < buf.length; i++)
-			{
-//				mOutput.write(buf[i]);
-				mLzjbBytes.write(mOutput, buf[i]);
-			}
-		}
-		else
-		{
-			mOutput.writeBit(1);
-//			mOutput.writeVariableInt(buf.length, 3, 1, false);
-			mOutput.writeExpGolomb(buf.length, 3);
-			for (int i = 0; i < buf.length; i++)
-			{
-				Object v = Array.get(aValue, i);
-				if (v == null)
-				{
-					mOutput.writeBit(1);
-				}
-				else
-				{
-					mOutput.writeBit(0);
-//					mOutput.writeVariableInt(buf[i].length, 3, 1, false);
-					mOutput.writeExpGolomb(buf[i].length, 3);
-//					mOutput.write(buf[i]);
-					mLzjbBytes.write(mOutput, buf[i]);
-				}
-			}
-		}
-	}
-
-
 	private String[] writeBundleHeader(Bundle aBundle) throws IOException
 	{
 		int initialKeyCount = mKeys.size();
@@ -435,6 +306,135 @@ public class StyxEncoder implements Encoder
 		}
 
 		return keys;
+	}
+
+
+	private void writeMatrix(FieldType aFieldType, Object aValue) throws ArrayIndexOutOfBoundsException, IOException, IllegalArgumentException
+	{
+		if (aFieldType == FieldType.BYTE)
+		{
+			writeByteMatrix(aValue);
+			return;
+		}
+
+		int rows = Array.getLength(aValue);
+		boolean full = true;
+
+		for (int i = 0, j = 0; i < rows; i++)
+		{
+			Object arr = Array.get(aValue, i);
+			if (arr == null || i > 0 && Array.getLength(arr) != j)
+			{
+				full = false;
+				break;
+			}
+			else if (i == 0)
+			{
+				j = Array.getLength(arr);
+			}
+		}
+
+		if (full)
+		{
+			mOutput.writeBit(0);
+//			mOutput.writeVariableInt(rows, 3, 1, false);
+			mOutput.writeExpGolomb(rows, 3);
+			if (rows > 0)
+			{
+				int cols = Array.getLength(Array.get(aValue, 0));
+//				mOutput.writeVariableInt(cols, 3, 1, false);
+				mOutput.writeExpGolomb(cols, 3);
+				for (int i = 0; i < rows; i++)
+				{
+					Object arr = Array.get(aValue, i);
+					for (int j = 0; j < cols; j++)
+					{
+						writeValue(aFieldType, Array.get(arr, j));
+					}
+				}
+			}
+		}
+		else
+		{
+			int len = Array.getLength(aValue);
+			mOutput.writeBit(1);
+//			mOutput.writeVariableInt(len, 3, 1, false);
+			mOutput.writeExpGolomb(len, 3);
+			for (int i = 0; i < len; i++)
+			{
+				Object v = Array.get(aValue, i);
+				if (v == null)
+				{
+					mOutput.writeBit(1);
+				}
+				else
+				{
+					mOutput.writeBit(0);
+					writeArray(aFieldType, v);
+				}
+			}
+		}
+	}
+
+
+	private void writeByteMatrix(Object aValue) throws ArrayIndexOutOfBoundsException, IOException, IllegalArgumentException
+	{
+		byte[][] buf = (byte[][])aValue;
+		boolean full = true;
+
+		for (int i = 0; i < buf.length; i++)
+		{
+			if (buf[i] == null || buf[i].length != buf[0].length)
+			{
+				full = false;
+				break;
+			}
+		}
+
+		if (full)
+		{
+			mOutput.writeBit(0);
+//			mOutput.writeVariableInt(buf.length, 3, 1, false);
+			mOutput.writeExpGolomb(buf.length, 3);
+//			mOutput.writeVariableInt(buf[0].length, 3, 1, false);
+			mOutput.writeExpGolomb(buf[0].length, 3);
+			for (int i = 0; i < buf.length; i++)
+			{
+//				mOutput.write(buf[i]);
+				mLzjbBytes.write(mOutput, buf[i]);
+			}
+		}
+		else
+		{
+			mOutput.writeBit(1);
+//			mOutput.writeVariableInt(buf.length, 3, 1, false);
+			mOutput.writeExpGolomb(buf.length, 3);
+			for (int i = 0; i < buf.length; i++)
+			{
+				Object v = Array.get(aValue, i);
+				if (v == null)
+				{
+					mOutput.writeBit(1);
+				}
+				else
+				{
+					mOutput.writeBit(0);
+//					mOutput.writeVariableInt(buf[i].length, 3, 1, false);
+					mOutput.writeExpGolomb(buf[i].length, 3);
+//					mOutput.write(buf[i]);
+					mLzjbBytes.write(mOutput, buf[i]);
+				}
+			}
+		}
+	}
+
+
+	private void writeByteArray(byte[] aValue) throws IOException
+	{
+//		mOutput.writeVariableInt(aValue.length, 3, 1, false);
+		mOutput.writeExpGolomb(aValue.length, 3);
+//		mOutput.write(aValue);
+		mLzjbBytes.write(mOutput, aValue);
 	}
 
 

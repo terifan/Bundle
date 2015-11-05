@@ -150,7 +150,7 @@ public class BinaryEncoder implements Encoder
 		{
 			for (int i = 0; i < length; i++)
 			{
-				mOutput.writeBit(Array.get(aValue, i) != null ? 1 : 0);
+				mOutput.writeBit(Array.get(aValue, i) == null);
 			}
 
 			mOutput.align();
@@ -191,7 +191,7 @@ public class BinaryEncoder implements Encoder
 		{
 			for (int i = 0; i < length; i++)
 			{
-				mOutput.writeBit(Array.get(aValue, i) == null ? 1 : 0);
+				mOutput.writeBit(Array.get(aValue, i) == null);
 			}
 
 			mOutput.align();
@@ -216,7 +216,7 @@ public class BinaryEncoder implements Encoder
 		switch (aFieldType)
 		{
 			case BOOLEAN:
-				mOutput.writeBit((Boolean)aValue ? 1 : 0);
+				mOutput.writeBit((Boolean)aValue);
 				break;
 			case BYTE:
 				mOutput.writeBits(0xff & (Byte)aValue, 8);
