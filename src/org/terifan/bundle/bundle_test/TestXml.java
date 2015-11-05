@@ -7,8 +7,8 @@ import java.io.InputStream;
 import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
 import javax.xml.parsers.ParserConfigurationException;
+import org.terifan.bundle.HelixEncoder;
 import org.terifan.bundle.BinaryEncoder;
-import org.terifan.bundle.BinaryEncoderRef;
 import org.terifan.bundle.BitOutputStream;
 import org.terifan.bundle.Bundle;
 import org.terifan.bundle.ConvertXml;
@@ -28,7 +28,7 @@ public class TestXml
 	{
 		try
 		{
-			Log.out.printf("%12s  %22s  %14s  %23s  %14s  %7s %8s %8s %9s\n", "", "xml", "txt", "bin", "ref", "bin-ref", "bin-zRef", "bin-zTxt", "zRef-zTxt");
+			Log.out.printf("%12s  %22s  %14s  %23s  %14s  %7s %8s %8s %9s\n", "", "xml", "txt", "hex", "bin", "hex-bin", "hex-zBin", "hex-zTxt", "zBin-zTxt");
 			Log.out.printf("%12s  %s  %s  %s  %s  %s %s %s %s\n", "", "----------------------", "--------------", "-----------------------", "--------------", "-------", "--------", "--------", "---------");
 
 			test("tiny.xml", 125);
@@ -75,8 +75,8 @@ public class TestXml
 
 //		Log.out.println(new TextEncoder().marshal(bundle));
 
-		BinaryEncoder binaryEncoder = new BinaryEncoder();
-		BinaryEncoderRef binaryEncoderRef = new BinaryEncoderRef();
+		HelixEncoder binaryEncoder = new HelixEncoder();
+		BinaryEncoder binaryEncoderRef = new BinaryEncoder();
 		byte[] bin = binaryEncoder.marshal(bundle);
 		byte[] ref = binaryEncoderRef.marshal(bundle);
 		String txt = new TextEncoder().marshal(bundle, true);
