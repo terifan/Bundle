@@ -69,5 +69,5 @@ public enum FieldType2
 	@Deprecated unused_4_2,
 	@Deprecated unused_4_3,
 	@Deprecated unused_4_4,
-	@Deprecated unused_4_5,
+	@Deprecated unused_4_5
 }

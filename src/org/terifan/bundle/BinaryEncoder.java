@@ -50,32 +50,24 @@ public class BinaryEncoder implements Encoder
 		for (String key : keys)
 		{
 			Object value = aBundle.get(key);
-			FieldType fieldType = FieldType.classify(value);
+			FieldType2 fieldType = aBundle.getType(key);
 
-			if (fieldType != FieldType.NULL && fieldType != FieldType.EMPTY)
+			if (fieldType.name().endsWith("_MATRIX"))
 			{
-				Class<? extends Object> cls = value.getClass();
-
-				if (cls.isArray())
-				{
-					if (cls.getComponentType().isArray())
-					{
-						writeMatrix(fieldType, value);
-					}
-					else
-					{
-						writeArray(fieldType, value);
-					}
-				}
-				else if (List.class.isAssignableFrom(cls))
-				{
-					writeArray(fieldType, ((List)value).toArray());
-				}
-				else
-				{
-					writeValue(fieldType, value);
-					mOutput.align();
-				}
+				writeMatrix(fieldType, value);
+			}
+			else if (fieldType.name().endsWith("_ARRAY"))
+			{
+				writeArray(fieldType, value);
+			}
+			else if (fieldType.name().endsWith("_ARRAYLIST"))
+			{
+				writeArray(fieldType, ((List)value).toArray());
+			}
+			else
+			{
+				writeValue(fieldType, value);
+				mOutput.align();
 			}
 		}
 	}
@@ -89,39 +81,7 @@ public class BinaryEncoder implements Encoder
 
 		for (String key : keys)
 		{
-			Object value = aBundle.get(key);
-
-//			FieldType2 type = aBundle.getType(key);
-//			Log.out.println(type+" "+key+" = "+value);
-
-			FieldType fieldType = FieldType.classify(value);
-
-			mOutput.writeBits(fieldType.ordinal(), 4);
-
-			if (fieldType != FieldType.NULL && fieldType != FieldType.EMPTY)
-			{
-				Class<? extends Object> cls = value.getClass();
-
-				if (cls.isArray())
-				{
-					if (cls.getComponentType().isArray())
-					{
-						mOutput.writeBits(0b11, 2);
-					}
-					else
-					{
-						mOutput.writeBits(0b10, 2);
-					}
-				}
-				else if (List.class.isAssignableFrom(cls))
-				{
-					mOutput.writeBits(0b01, 2);
-				}
-				else
-				{
-					mOutput.writeBits(0b00, 2);
-				}
-			}
+			mOutput.writeBits(aBundle.getType(key).ordinal(), 6);
 		}
 
 		mOutput.align();
@@ -135,7 +95,7 @@ public class BinaryEncoder implements Encoder
 	}
 
 
-	private void writeMatrix(FieldType aFieldType, Object aValue) throws ArrayIndexOutOfBoundsException, IOException, IllegalArgumentException
+	private void writeMatrix(FieldType2 aFieldType, Object aValue) throws ArrayIndexOutOfBoundsException, IOException, IllegalArgumentException
 	{
 		int length = Array.getLength(aValue);
 		boolean hasNull = false;
@@ -173,20 +133,17 @@ public class BinaryEncoder implements Encoder
 	}
 
 
-	private void writeArray(FieldType aFieldType, Object aValue) throws IOException
+	private void writeArray(FieldType2 aFieldType, Object aValue) throws IOException
 	{
 		int length = Array.getLength(aValue);
 		boolean hasNull = false;
 
-		if (aFieldType == FieldType.BUNDLE || aFieldType == FieldType.DATE || aFieldType == FieldType.STRING)
+		for (int i = 0; i < length; i++)
 		{
-			for (int i = 0; i < length; i++)
+			if (Array.get(aValue, i) == null)
 			{
-				if (Array.get(aValue, i) == null)
-				{
-					hasNull = true;
-					break;
-				}
+				hasNull = true;
+				break;
 			}
 		}
 
@@ -216,41 +173,74 @@ public class BinaryEncoder implements Encoder
 	}
 
 
-	private void writeValue(FieldType aFieldType, Object aValue) throws IOException
+	private void writeValue(FieldType2 aFieldType, Object aValue) throws IOException
 	{
 		switch (aFieldType)
 		{
 			case BOOLEAN:
+			case BOOLEAN_ARRAY:
+			case BOOLEAN_ARRAYLIST:
+			case BOOLEAN_MATRIX:
 				mOutput.writeBit((Boolean)aValue);
 				break;
 			case BYTE:
+			case BYTE_ARRAY:
+			case BYTE_ARRAYLIST:
+			case BYTE_MATRIX:
 				mOutput.writeBits(0xff & (Byte)aValue, 8);
 				break;
 			case SHORT:
+			case SHORT_ARRAY:
+			case SHORT_ARRAYLIST:
+			case SHORT_MATRIX:
 				mOutput.writeVLC((Short)aValue);
 				break;
 			case CHAR:
+			case CHAR_ARRAY:
+			case CHAR_ARRAYLIST:
+			case CHAR_MATRIX:
 				mOutput.writeVLC((Character)aValue);
 				break;
 			case INT:
+			case INT_ARRAY:
+			case INT_ARRAYLIST:
+			case INT_MATRIX:
 				mOutput.writeVLC((Integer)aValue);
 				break;
 			case LONG:
+			case LONG_ARRAY:
+			case LONG_ARRAYLIST:
+			case LONG_MATRIX:
 				mOutput.writeVLC((Long)aValue);
 				break;
 			case FLOAT:
+			case FLOAT_ARRAY:
+			case FLOAT_ARRAYLIST:
+			case FLOAT_MATRIX:
 				mOutput.writeVLC(Float.floatToIntBits((Float)aValue));
 				break;
 			case DOUBLE:
+			case DOUBLE_ARRAY:
+			case DOUBLE_ARRAYLIST:
+			case DOUBLE_MATRIX:
 				mOutput.writeVLC(Double.doubleToLongBits((Double)aValue));
 				break;
 			case STRING:
+			case STRING_ARRAY:
+			case STRING_ARRAYLIST:
+			case STRING_MATRIX:
 				writeString((String)aValue);
 				break;
 			case DATE:
+			case DATE_ARRAY:
+			case DATE_ARRAYLIST:
+			case DATE_MATRIX:
 				mOutput.writeVLC(((Date)aValue).getTime());
 				break;
 			case BUNDLE:
+			case BUNDLE_ARRAY:
+			case BUNDLE_ARRAYLIST:
+			case BUNDLE_MATRIX:
 				writeBundle((Bundle)aValue);
 				break;
 			default:
