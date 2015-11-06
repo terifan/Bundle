@@ -7,6 +7,7 @@ import java.lang.reflect.Array;
 import java.nio.ByteBuffer;
 import java.util.Date;
 import java.util.List;
+import org.terifan.bundle.bundle_test.Log;
 
 
 public class BinaryEncoder implements Encoder
@@ -89,6 +90,10 @@ public class BinaryEncoder implements Encoder
 		for (String key : keys)
 		{
 			Object value = aBundle.get(key);
+
+//			FieldType2 type = aBundle.getType(key);
+//			Log.out.println(type+" "+key+" = "+value);
+
 			FieldType fieldType = FieldType.classify(value);
 
 			mOutput.writeBits(fieldType.ordinal(), 4);

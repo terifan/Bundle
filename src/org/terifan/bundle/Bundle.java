@@ -20,7 +20,8 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 {
 	private final static long serialVersionUID = 1L;
 
-	private final Map<String, Object> mValues = new LinkedHashMap<>();
+	private final Map<String, Object> mValues;
+	private final Map<String, FieldType2> mTypes;
 	private boolean mStrict;
 
 
@@ -29,6 +30,8 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle()
 	{
+		mValues = new LinkedHashMap<>();
+		mTypes = new LinkedHashMap<>();
 	}
 
 
@@ -37,6 +40,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle(Bundle aOther)
 	{
+		this();
 		putAll(aOther);
 	}
 
@@ -93,6 +97,15 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 
 
 	/**
+	 * Returns the value type associated with the key.
+	 */
+	public FieldType2 getType(String aKey)
+	{
+		return mTypes.get(aKey);
+	}
+
+
+	/**
 	 * Returns the value associated with the given key, or null if no mapping of the given key exists.
 	 */
 	public Object get(String aKey)
@@ -127,7 +140,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (Bundle)typeWarning(aKey, o, "Bundle", aDefaultValue, e);
+			return typeWarning(aKey, o, Bundle.class, aDefaultValue, e);
 		}
 	}
 
@@ -145,7 +158,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (Bundle[])typeWarning(aKey, o, "Bundle[]", null, e);
+			return typeWarning(aKey, o, Bundle[].class, null, e);
 		}
 	}
 
@@ -163,7 +176,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (Bundle[][])typeWarning(aKey, o, "Bundle[][]", null, e);
+			return typeWarning(aKey, o, Bundle[][].class, null, e);
 		}
 	}
 
@@ -181,7 +194,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (ArrayList<Bundle>)typeWarning(aKey, o, "ArrayList<Bundle>", null, e);
+			return typeWarning(aKey, o, ArrayList.class, null, e);
 		}
 	}
 
@@ -431,7 +444,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (Boolean)typeWarning(aKey, o, "Boolean", aDefaultValue, e);
+			return typeWarning(aKey, o, Boolean.class, aDefaultValue, e);
 		}
 	}
 
@@ -449,7 +462,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (boolean[])typeWarning(aKey, o, "boolean[]", null, e);
+			return typeWarning(aKey, o, boolean[].class, null, e);
 		}
 	}
 
@@ -467,7 +480,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (boolean[][])typeWarning(aKey, o, "boolean[][]", null, e);
+			return typeWarning(aKey, o, boolean[][].class, null, e);
 		}
 	}
 
@@ -485,7 +498,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (ArrayList<Boolean>)typeWarning(aKey, o, "ArrayList<Boolean>", null, e);
+			return typeWarning(aKey, o, ArrayList.class, null, e);
 		}
 	}
 
@@ -519,7 +532,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (Byte)typeWarning(aKey, o, "Byte", aDefaultValue, e);
+			return typeWarning(aKey, o, Byte.class, aDefaultValue, e);
 		}
 	}
 
@@ -537,7 +550,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (byte[])typeWarning(aKey, o, "byte[]", null, e);
+			return typeWarning(aKey, o, byte[].class, null, e);
 		}
 	}
 
@@ -555,7 +568,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (byte[][])typeWarning(aKey, o, "byte[][]", null, e);
+			return typeWarning(aKey, o, byte[][].class, null, e);
 		}
 	}
 
@@ -573,7 +586,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (ArrayList<Byte>)typeWarning(aKey, o, "ArrayList<Byte>", null, e);
+			return typeWarning(aKey, o, ArrayList.class, null, e);
 		}
 	}
 
@@ -607,7 +620,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (Character)typeWarning(aKey, o, "Character", aDefaultValue, e);
+			return typeWarning(aKey, o, Character.class, aDefaultValue, e);
 		}
 	}
 
@@ -625,7 +638,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (char[])typeWarning(aKey, o, "char[]", null, e);
+			return typeWarning(aKey, o, char[].class, null, e);
 		}
 	}
 
@@ -643,7 +656,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (char[][])typeWarning(aKey, o, "char[][]", null, e);
+			return typeWarning(aKey, o, char[][].class, null, e);
 		}
 	}
 
@@ -661,7 +674,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (ArrayList<Character>)typeWarning(aKey, o, "ArrayList<Character>", null, e);
+			return typeWarning(aKey, o, ArrayList.class, null, e);
 		}
 	}
 
@@ -695,7 +708,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (Double)typeWarning(aKey, o, "Double", aDefaultValue, e);
+			return typeWarning(aKey, o, Double.class, aDefaultValue, e);
 		}
 	}
 
@@ -713,7 +726,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (double[])typeWarning(aKey, o, "double[]", null, e);
+			return typeWarning(aKey, o, double[].class, null, e);
 		}
 	}
 
@@ -731,7 +744,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (double[][])typeWarning(aKey, o, "double[][]", null, e);
+			return typeWarning(aKey, o, double[][].class, null, e);
 		}
 	}
 
@@ -749,7 +762,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (ArrayList<Double>)typeWarning(aKey, o, "ArrayList<Double>", null, e);
+			return typeWarning(aKey, o, ArrayList.class, null, e);
 		}
 	}
 
@@ -783,7 +796,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (Float)typeWarning(aKey, o, "Float", aDefaultValue, e);
+			return typeWarning(aKey, o, Float.class, aDefaultValue, e);
 		}
 	}
 
@@ -801,7 +814,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (float[])typeWarning(aKey, o, "float[]", null, e);
+			return typeWarning(aKey, o, float[].class, null, e);
 		}
 	}
 
@@ -819,7 +832,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (float[][])typeWarning(aKey, o, "float[][]", null, e);
+			return typeWarning(aKey, o, float[][].class, null, e);
 		}
 	}
 
@@ -837,7 +850,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (ArrayList<Float>)typeWarning(aKey, o, "ArrayList<Float>", null, e);
+			return typeWarning(aKey, o, ArrayList.class, null, e);
 		}
 	}
 
@@ -862,7 +875,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (Integer)typeWarning(aKey, o, "Integer", aDefaultValue, e);
+			return typeWarning(aKey, o, Integer.class, aDefaultValue, e);
 		}
 	}
 
@@ -889,7 +902,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (int[])typeWarning(aKey, o, "int[]", null, e);
+			return typeWarning(aKey, o, int[].class, null, e);
 		}
 	}
 
@@ -907,7 +920,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (int[][])typeWarning(aKey, o, "int[][]", null, e);
+			return typeWarning(aKey, o, int[][].class, null, e);
 		}
 	}
 
@@ -925,7 +938,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (ArrayList<Integer>)typeWarning(aKey, o, "ArrayList<Integer>", null, e);
+			return typeWarning(aKey, o, ArrayList.class, null, e);
 		}
 	}
 
@@ -959,7 +972,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (Long)typeWarning(aKey, o, "Long", aDefaultValue, e);
+			return typeWarning(aKey, o, Long.class, aDefaultValue, e);
 		}
 	}
 
@@ -977,7 +990,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (long[])typeWarning(aKey, o, "long[]", null, e);
+			return typeWarning(aKey, o, long[].class, null, e);
 		}
 	}
 
@@ -995,7 +1008,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (long[][])typeWarning(aKey, o, "long[][]", null, e);
+			return typeWarning(aKey, o, long[][].class, null, e);
 		}
 	}
 
@@ -1013,7 +1026,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (ArrayList<Long>)typeWarning(aKey, o, "ArrayList<Long>", null, e);
+			return typeWarning(aKey, o, ArrayList.class, null, e);
 		}
 	}
 
@@ -1047,7 +1060,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (Short)typeWarning(aKey, o, "Short", aDefaultValue, e);
+			return typeWarning(aKey, o, Short.class, aDefaultValue, e);
 		}
 	}
 
@@ -1065,7 +1078,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (short[])typeWarning(aKey, o, "short[]", null, e);
+			return typeWarning(aKey, o, short[].class, null, e);
 		}
 	}
 
@@ -1083,7 +1096,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (short[][])typeWarning(aKey, o, "short[][]", null, e);
+			return typeWarning(aKey, o, short[][].class, null, e);
 		}
 	}
 
@@ -1101,7 +1114,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (ArrayList<Short>)typeWarning(aKey, o, "ArrayList<Short>", null, e);
+			return typeWarning(aKey, o, ArrayList.class, null, e);
 		}
 	}
 
@@ -1132,7 +1145,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (String)typeWarning(aKey, o, "String", aDefaultValue, e);
+			return typeWarning(aKey, o, String.class, aDefaultValue, e);
 		}
 	}
 
@@ -1150,7 +1163,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (String[])typeWarning(aKey, o, "String[]", null, e);
+			return typeWarning(aKey, o, String[].class, null, e);
 		}
 	}
 
@@ -1168,7 +1181,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (String[][])typeWarning(aKey, o, "String[][]", null, e);
+			return typeWarning(aKey, o, String[][].class, null, e);
 		}
 	}
 
@@ -1186,7 +1199,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (ArrayList<String>)typeWarning(aKey, o, "ArrayList<String>", null, e);
+			return typeWarning(aKey, o, ArrayList.class, null, e);
 		}
 	}
 
@@ -1228,7 +1241,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException | ParseException e)
 		{
-			return (Date)typeWarning(aKey, o, "Date", aDefaultValue, e);
+			return typeWarning(aKey, o, Date.class, aDefaultValue, e);
 		}
 	}
 
@@ -1246,7 +1259,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (Date[])typeWarning(aKey, o, "Date[]", null, e);
+			return typeWarning(aKey, o, Date[].class, null, e);
 		}
 	}
 
@@ -1264,7 +1277,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (Date[][])typeWarning(aKey, o, "Date[][]", null, e);
+			return typeWarning(aKey, o, Date[][].class, null, e);
 		}
 	}
 
@@ -1282,7 +1295,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		catch (ClassCastException e)
 		{
-			return (ArrayList<Date>)typeWarning(aKey, o, "ArrayList<Date>", null, e);
+			return typeWarning(aKey, o, ArrayList.class, null, e);
 		}
 	}
 
@@ -1321,7 +1334,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	{
 		for (String key : aOther)
 		{
-			put(key, aOther.mValues.get(key));
+			put(key, aOther.mValues.get(key), aOther.mTypes.get(key));
 		}
 		return this;
 	}
@@ -1332,28 +1345,28 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putBundle(String aKey, Bundle aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.BUNDLE);
 		return this;
 	}
 
 
 	public Bundle putBundleArray(String aKey, Bundle... aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.BUNDLE_ARRAY);
 		return this;
 	}
 
 
 	public Bundle putBundleMatrix(String aKey, Bundle[][] aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.BUNDLE_MATRIX);
 		return this;
 	}
 
 
 	public Bundle putBundleArrayList(String aKey, ArrayList<Bundle> aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.BUNDLE_ARRAYLIST);
 		return this;
 	}
 
@@ -1370,7 +1383,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 			bundle = new Bundle();
 			aValue.writeExternal(bundle);
 		}
-		put(aKey, bundle);
+		put(aKey, bundle, FieldType2.BUNDLE);
 		return this;
 	}
 
@@ -1392,7 +1405,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 				aValues[i].writeExternal(bundles[i]);
 			}
 		}
-		put(aKey, bundles);
+		put(aKey, bundles, FieldType2.BUNDLE_ARRAY);
 		return this;
 	}
 
@@ -1421,7 +1434,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 				}
 			}
 		}
-		put(aKey, bundles);
+		put(aKey, bundles, FieldType2.BUNDLE_MATRIX);
 		return this;
 	}
 
@@ -1444,7 +1457,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 				bundles.add(bundle);
 			}
 		}
-		put(aKey, bundles);
+		put(aKey, bundles, FieldType2.BUNDLE_ARRAYLIST);
 		return this;
 	}
 
@@ -1454,7 +1467,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putBoolean(String aKey, boolean aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.BOOLEAN);
 		return this;
 	}
 
@@ -1464,7 +1477,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putBooleanArray(String aKey, boolean... aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.BOOLEAN_ARRAY);
 		return this;
 	}
 
@@ -1474,7 +1487,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putBooleanMatrix(String aKey, boolean[][] aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.BOOLEAN_MATRIX);
 		return this;
 	}
 
@@ -1484,7 +1497,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putBooleanArrayList(String aKey, ArrayList<Boolean> aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.BOOLEAN_ARRAYLIST);
 		return this;
 	}
 
@@ -1503,7 +1516,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putByte(String aKey, byte aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.BYTE);
 		return this;
 	}
 
@@ -1513,7 +1526,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putByteArray(String aKey, byte... aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.BYTE_ARRAY);
 		return this;
 	}
 
@@ -1523,7 +1536,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putByteMatrix(String aKey, byte[][] aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.BYTE_MATRIX);
 		return this;
 	}
 
@@ -1533,7 +1546,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putByteArrayList(String aKey, ArrayList<Byte> aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.BYTE_ARRAYLIST);
 		return this;
 	}
 
@@ -1543,7 +1556,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putChar(String aKey, char aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.CHAR);
 		return this;
 	}
 
@@ -1553,7 +1566,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putCharArray(String aKey, char... aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.CHAR_ARRAY);
 		return this;
 	}
 
@@ -1563,7 +1576,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putCharMatrix(String aKey, char[][] aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.CHAR_MATRIX);
 		return this;
 	}
 
@@ -1573,7 +1586,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putCharArrayList(String aKey, ArrayList<Character> aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.CHAR_ARRAYLIST);
 		return this;
 	}
 
@@ -1583,7 +1596,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putDouble(String aKey, double aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.DOUBLE);
 		return this;
 	}
 
@@ -1593,7 +1606,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putDoubleArray(String aKey, double... aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.DOUBLE_ARRAY);
 		return this;
 	}
 
@@ -1603,7 +1616,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putDoubleMatrix(String aKey, double[][] aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.DOUBLE_MATRIX);
 		return this;
 	}
 
@@ -1613,7 +1626,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putDoubleArrayList(String aKey, ArrayList<Double> aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.DOUBLE_ARRAYLIST);
 		return this;
 	}
 
@@ -1623,7 +1636,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putFloat(String aKey, float aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.FLOAT);
 		return this;
 	}
 
@@ -1633,7 +1646,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putFloatArray(String aKey, float... aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.FLOAT_ARRAY);
 		return this;
 	}
 
@@ -1643,7 +1656,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putFloatMatrix(String aKey, float[][] aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.FLOAT_MATRIX);
 		return this;
 	}
 
@@ -1653,7 +1666,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putFloatArrayList(String aKey, ArrayList<Float> aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.FLOAT_ARRAYLIST);
 		return this;
 	}
 
@@ -1663,7 +1676,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putInt(String aKey, int aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.INT);
 		return this;
 	}
 
@@ -1673,7 +1686,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putIntArray(String aKey, int... aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.INT_ARRAY);
 		return this;
 	}
 
@@ -1683,7 +1696,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putIntMatrix(String aKey, int[][] aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.INT_MATRIX);
 		return this;
 	}
 
@@ -1693,7 +1706,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putIntArrayList(String aKey, ArrayList<Integer> aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.INT_ARRAYLIST);
 		return this;
 	}
 
@@ -1703,7 +1716,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putLong(String aKey, long aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.LONG);
 		return this;
 	}
 
@@ -1713,7 +1726,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putLongArray(String aKey, long... aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.LONG_ARRAY);
 		return this;
 	}
 
@@ -1723,7 +1736,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putLongMatrix(String aKey, long[][] aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.LONG_MATRIX);
 		return this;
 	}
 
@@ -1733,7 +1746,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putLongArrayList(String aKey, ArrayList<Long> aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.LONG_ARRAYLIST);
 		return this;
 	}
 
@@ -1752,7 +1765,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putShort(String aKey, short aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.SHORT);
 		return this;
 	}
 
@@ -1762,7 +1775,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putShortArray(String aKey, short... aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.SHORT_ARRAY);
 		return this;
 	}
 
@@ -1772,7 +1785,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putShortArray(String aKey, short[][] aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.SHORT_ARRAY);
 		return this;
 	}
 
@@ -1782,7 +1795,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putShortArrayList(String aKey, ArrayList<Short> aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.SHORT_ARRAYLIST);
 		return this;
 	}
 
@@ -1792,7 +1805,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putString(String aKey, String aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.STRING);
 		return this;
 	}
 
@@ -1802,7 +1815,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putStringArray(String aKey, String... aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.STRING_ARRAY);
 		return this;
 	}
 
@@ -1812,7 +1825,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putStringMatrix(String aKey, String[][] aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.STRING_MATRIX);
 		return this;
 	}
 
@@ -1822,7 +1835,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putStringArrayList(String aKey, ArrayList<String> aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.STRING_ARRAYLIST);
 		return this;
 	}
 
@@ -1832,7 +1845,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putDate(String aKey, Date aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.DATE);
 		return this;
 	}
 
@@ -1842,7 +1855,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putDateArray(String aKey, Date... aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.DATE_ARRAY);
 		return this;
 	}
 
@@ -1852,7 +1865,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putDateMatrix(String aKey, Date[][] aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.DATE_MATRIX);
 		return this;
 	}
 
@@ -1862,7 +1875,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putDateArrayList(String aKey, ArrayList<Date> aValue)
 	{
-		put(aKey, aValue);
+		put(aKey, aValue, FieldType2.DATE_ARRAYLIST);
 		return this;
 	}
 
@@ -1980,7 +1993,88 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	}
 
 
-	public void put(String aKey, Object aValue)
+	@Deprecated
+	void put(String aKey, Object aValue)
+	{
+		FieldType2 type = null;
+
+		if (aValue == null) type = FieldType2.STRING;
+		else if (aValue instanceof Boolean) type = FieldType2.BOOLEAN;
+		else if (aValue instanceof Byte) type = FieldType2.BYTE;
+		else if (aValue instanceof Short) type = FieldType2.SHORT;
+		else if (aValue instanceof Character) type = FieldType2.CHAR;
+		else if (aValue instanceof Integer) type = FieldType2.INT;
+		else if (aValue instanceof Long) type = FieldType2.LONG;
+		else if (aValue instanceof Float) type = FieldType2.FLOAT;
+		else if (aValue instanceof Double) type = FieldType2.DOUBLE;
+		else if (aValue instanceof String) type = FieldType2.STRING;
+		else if (aValue instanceof Date) type = FieldType2.DATE;
+		else if (aValue instanceof Bundle) type = FieldType2.BUNDLE;
+		else if (aValue.getClass().isArray() && aValue.getClass().getComponentType().isArray())
+		{
+			Object v = aValue.getClass().getComponentType().getComponentType();
+			if (v == Boolean.TYPE) type = FieldType2.BOOLEAN_MATRIX;
+			else if (v == Byte.TYPE) type = FieldType2.BYTE_MATRIX;
+			else if (v == Short.TYPE) type = FieldType2.SHORT_MATRIX;
+			else if (v == Character.TYPE) type = FieldType2.CHAR_MATRIX;
+			else if (v == Integer.TYPE) type = FieldType2.INT_MATRIX;
+			else if (v == Long.TYPE) type = FieldType2.LONG_MATRIX;
+			else if (v == Float.TYPE) type = FieldType2.FLOAT_MATRIX;
+			else if (v == Double.TYPE) type = FieldType2.DOUBLE_MATRIX;
+			else if (v == String.class) type = FieldType2.STRING_MATRIX;
+			else if (v == Date.class) type = FieldType2.DATE_MATRIX;
+			else if (v == Bundle.class) type = FieldType2.BUNDLE_MATRIX;
+			else throw new IllegalArgumentException("Unsupported type: " + aValue.getClass());
+		}
+		else if (aValue.getClass().isArray())
+		{
+			Object v = aValue.getClass().getComponentType();
+			if (v == Boolean.TYPE) type = FieldType2.BOOLEAN_ARRAY;
+			else if (v == Byte.TYPE) type = FieldType2.BYTE_ARRAY;
+			else if (v == Short.TYPE) type = FieldType2.SHORT_ARRAY;
+			else if (v == Character.TYPE) type = FieldType2.CHAR_ARRAY;
+			else if (v == Integer.TYPE) type = FieldType2.INT_ARRAY;
+			else if (v == Long.TYPE) type = FieldType2.LONG_ARRAY;
+			else if (v == Float.TYPE) type = FieldType2.FLOAT_ARRAY;
+			else if (v == Double.TYPE) type = FieldType2.DOUBLE_ARRAY;
+			else if (v == String.class) type = FieldType2.STRING_ARRAY;
+			else if (v == Date.class) type = FieldType2.DATE_ARRAY;
+			else if (v == Bundle.class) type = FieldType2.BUNDLE_ARRAY;
+			else throw new IllegalArgumentException("Unsupported type: " + aValue.getClass());
+		}
+		else if (aValue instanceof ArrayList)
+		{
+			ArrayList list = (ArrayList)aValue;
+			Object v = list.get(0);
+			Class t = null;
+			if (v instanceof Boolean) {type = FieldType2.BOOLEAN_ARRAYLIST; t = Boolean.class;}
+			else if (v instanceof Byte) {type = FieldType2.BYTE_ARRAYLIST; t = Byte.class;}
+			else if (v instanceof Short) {type = FieldType2.SHORT_ARRAYLIST; t = Short.class;}
+			else if (v instanceof Character) {type = FieldType2.CHAR_ARRAYLIST; t = Character.class;}
+			else if (v instanceof Integer) {type = FieldType2.INT_ARRAYLIST; t = Integer.class;}
+			else if (v instanceof Long) {type = FieldType2.LONG_ARRAYLIST; t = Long.class;}
+			else if (v instanceof Float) {type = FieldType2.FLOAT_ARRAYLIST; t = Float.class;}
+			else if (v instanceof Double) {type = FieldType2.DOUBLE_ARRAYLIST; t = Double.class;}
+			else if (v instanceof String) {type = FieldType2.STRING_ARRAYLIST; t = String.class;}
+			else if (v instanceof Date) {type = FieldType2.DATE_ARRAYLIST; t = Date.class;}
+			else if (v instanceof Bundle) {type = FieldType2.BUNDLE_ARRAYLIST; t = Bundle.class;}
+			else throw new IllegalArgumentException("Unsupported type: " + aValue.getClass());
+
+			for (Object item : list)
+			{
+				if (item != null && item.getClass() != t)
+				{
+					throw new IllegalArgumentException("Unsupported type in ArrayList: " + aValue.getClass());
+				}
+			}
+		}
+		else throw new IllegalArgumentException("Unsupported type: " + aValue.getClass());
+
+		put(aKey, aValue, type);
+	}
+
+
+	void put(String aKey, Object aValue, FieldType2 aType)
 	{
 		if (aKey == null)
 		{
@@ -1988,6 +2082,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 
 		mValues.put(aKey, aValue);
+		mTypes.put(aKey, aType);
 	}
 
 
@@ -1997,9 +2092,9 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 * @return
 	 *    default implementation return the default value provided
 	 */
-	protected Object typeWarning(String aKey, Object aValue, String aClassName, Object aDefaultValue, Exception aException)
+	protected <E> E typeWarning(String aKey, Object aValue, Class<E> aExpectedType, E aDefaultValue, Exception aException)
 	{
-		System.err.println("Attempt to cast generated internal exception: Key '" + aKey+ "' expected "+aClassName+" but value was a "+aValue.getClass().getSimpleName()+". The default value '"+aDefaultValue+"' was returned.");
+		System.err.printf("Attempt to cast generated internal exception: Key '%s' expected %s but value was a %s. The default value '%s' was returned.\n", aKey, aExpectedType.getSimpleName(), aValue == null ? null : aValue.getClass().getSimpleName(), aDefaultValue);
 
 		return aDefaultValue;
 	}
@@ -2023,55 +2118,55 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	}
 
 
-	public static Bundle createBundle(Map<String,?> aMap, ConvertValue aConvertValue)
-	{
-		return createBundle(aMap, null, aConvertValue);
-	}
-
-
-	public static Bundle createBundle(Map<?,?> aMap, ConvertValue aConvertKey, ConvertValue aConvertValue)
-	{
-		Bundle bundle = new Bundle();
-
-		for (Entry entry : aMap.entrySet())
-		{
-			Object key = entry.getKey();
-			Object value = entry.getValue();
-
-			if (aConvertKey != null)
-			{
-				key = aConvertKey.convert(key);
-			}
-			if (aConvertValue != null)
-			{
-				value = aConvertValue.convert(value);
-			}
-
-			if (key != null)
-			{
-				if (!(key instanceof String))
-				{
-					throw new IllegalStateException("A key was not converted to String: " + entry.getKey());
-				}
-
-				bundle.put((String)key, value);
-			}
-		}
-
-		return bundle;
-	}
-
-
-	public interface ConvertValue
-	{
-		/**
-		 * Return the value as a standard Java type or other type supported by the Bundle implementation.
-		 *
-		 * @param aValue
-		 *   a java object.
-		 * @return
-		 *   a standard Java type or other type supported by the Bundle implementation.
-		 */
-		Object convert(Object aValue);
-	}
+//	public static Bundle createBundle(Map<String,?> aMap, ConvertValue aConvertValue)
+//	{
+//		return createBundle(aMap, null, aConvertValue);
+//	}
+//
+//
+//	public static Bundle createBundle(Map<?,?> aMap, ConvertValue aConvertKey, ConvertValue aConvertValue)
+//	{
+//		Bundle bundle = new Bundle();
+//
+//		for (Entry entry : aMap.entrySet())
+//		{
+//			Object key = entry.getKey();
+//			Object value = entry.getValue();
+//
+//			if (aConvertKey != null)
+//			{
+//				key = aConvertKey.convert(key);
+//			}
+//			if (aConvertValue != null)
+//			{
+//				value = aConvertValue.convert(value);
+//			}
+//
+//			if (key != null)
+//			{
+//				if (!(key instanceof String))
+//				{
+//					throw new IllegalStateException("A key was not converted to String: " + entry.getKey());
+//				}
+//
+//				bundle.put((String)key, value);
+//			}
+//		}
+//
+//		return bundle;
+//	}
+//
+//
+//	public interface ConvertValue
+//	{
+//		/**
+//		 * Return the value as a standard Java type or other type supported by the Bundle implementation.
+//		 *
+//		 * @param aValue
+//		 *   a java object.
+//		 * @return
+//		 *   a standard Java type or other type supported by the Bundle implementation.
+//		 */
+//		Object convert(Object aValue);
+//	}
 }
