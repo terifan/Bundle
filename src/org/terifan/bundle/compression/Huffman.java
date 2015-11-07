@@ -1,19 +1,16 @@
 package org.terifan.bundle.compression;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
 import org.terifan.bundle.io.BitInputStream;
 import org.terifan.bundle.io.BitOutputStream;
-import org.terifan.bundle.bundle_test.Log;
 
 
 /**
  * This class builds and maintains a canonical Huffman tree.
  */
-public class HuffmanTree 
+public class Huffman 
 {
 	private final static Comparator<? super Node> mFrequencySorter = (e,f)->Integer.compare(f.mFrequency, e.mFrequency);
 	private final static Comparator<? super Node> mLengthSymbolSorter = (e,f)->e.mLength == f.mLength ? Integer.compare(e.mSymbol, f.mSymbol) : Integer.compare(e.mLength, f.mLength);
@@ -25,7 +22,13 @@ public class HuffmanTree
 	private int mMaxCodeLength;
 
 
-	public HuffmanTree(int aSymbolCount)
+	/**
+	 * Create a baseline Huffman tree. All symbols are initiated with a one (1) frequency.
+	 * 
+	 * @param aSymbolCount 
+	 *   the number of symbols the tree supports.
+	 */
+	public Huffman(int aSymbolCount)
 	{
 		mSymbolCount = aSymbolCount;
 		mNodes = new Node[aSymbolCount];
@@ -40,7 +43,13 @@ public class HuffmanTree
 	}
 
 
-	public HuffmanTree buildTree(int... aFrequencies)
+	/**
+	 * Builds a tree using the frequencies provided.
+	 * 
+	 * @return 
+	 *   this instance.
+	 */
+	public Huffman buildTree(int... aFrequencies)
 	{
 		if (aFrequencies.length != mSymbolCount && aFrequencies.length != 0)
 		{
@@ -49,7 +58,7 @@ public class HuffmanTree
 
 		for (int i = 0; i < aFrequencies.length; i++)
 		{
-			mNodes[i].mFrequency = 1 + aFrequencies[i]; // zero frequencies not supported
+			mNodes[i].mFrequency = aFrequencies[i];
 		}
 
 		Node[] nodes = mNodes.clone();
@@ -81,9 +90,15 @@ public class HuffmanTree
 	}
 
 
-	public HuffmanTree reconstructTree(int... aLengths)
+	/**
+	 * Reconstruct a tree using the code lengths returned by the <code>extractLengths()</code> method.
+	 * 
+	 * @return 
+	 *   this instance.
+	 */
+	public Huffman reconstructTree(int... aCodeLengths)
 	{
-		if (aLengths.length != mSymbolCount)
+		if (aCodeLengths.length != mSymbolCount)
 		{
 			throw new IllegalArgumentException();
 		}
@@ -92,7 +107,7 @@ public class HuffmanTree
 
 		for (int i = 0; i < mSymbolCount; i++)
 		{
-			int len = aLengths[i];
+			int len = aCodeLengths[i];
 
 			mNodes[i].mLength = len;
 
@@ -110,6 +125,9 @@ public class HuffmanTree
 	}
 
 
+	/**
+	 * This is where the canonical magic happens, using lengths to reconstruct the tree.
+	 */
 	private void reconstructTreeImpl()
 	{
 		Arrays.sort(mNodes, mLengthSymbolSorter);
@@ -126,6 +144,9 @@ public class HuffmanTree
 	}
 
 
+	/**
+	 * Compute lengths and release interior nodes.
+	 */
 	private void update(Node aNode, int aLength)
 	{
 		aNode.mLength = aLength;
@@ -142,7 +163,10 @@ public class HuffmanTree
 	}
 
 
-	private int[] extractLengths()
+	/**
+	 * Return an array containing all code lengths. These lengths are all necessary to reconstruct a tree.
+	 */
+	public int[] extractLengths()
 	{
 		int[] lengths = new int[mSymbolCount];
 		for (int i = 0; i < mSymbolCount; i++)
@@ -152,8 +176,11 @@ public class HuffmanTree
 
 		return lengths;
 	}
-	
-	
+
+
+	/**
+	 * Builds a 2**mMaxCodeLength entry table for lookups.
+	 */
 	private void updateDecoderLookup()
 	{
 		mDecoderLookup = new int[1 << mMaxCodeLength];
@@ -171,18 +198,37 @@ public class HuffmanTree
 	}
 
 
+	/**
+	 * Return the code/length pair used to encode a certain symbol.
+	 */
 	public Symbol getSymbol(int aSymbol)
 	{
 		return mNodes[aSymbol];
 	}
 
 
+	/**
+	 * Decode a symbol given the code provided.
+	 * 
+	 * @param aPeekBits
+	 *   bits read from an underlying stream. Must contain <code>getMaxCodeLength()</code> bits.
+	 * @return 
+	 *   the symbol
+	 */
 	public Symbol decode(int aPeekBits)
 	{
 		return mNodes[mDecoderLookup[aPeekBits]];
 	}
 
 
+	/**
+	 * Decode the next symbol from the stream provided.
+	 * 
+	 * Note: This method will peek ahead of the current position in stream.
+	 * 
+	 * @return
+	 *   the symbol that was decoded.
+	 */
 	public Symbol decode(BitInputStream aBitInputStream) throws IOException
 	{
 		Node node = mNodes[mDecoderLookup[aBitInputStream.peekBits(mMaxCodeLength)]];
@@ -192,7 +238,13 @@ public class HuffmanTree
 	}
 
 
-	public void encode(BitOutputStream aBitOutputStream, int aSymbol) throws IOException
+	/**
+	 * Encode a symbol to the stream.
+	 * 
+	 * @return
+	 *   the symbol that was encoded.
+	 */
+	public Symbol encode(BitOutputStream aBitOutputStream, int aSymbol) throws IOException
 	{
 		if (aSymbol < 0 || aSymbol >= mSymbolCount)
 		{
@@ -201,9 +253,14 @@ public class HuffmanTree
 
 		Node node = mNodes[aSymbol];
 		aBitOutputStream.writeBits(node.mCode, node.mLength);
+		
+		return node;
 	}
 
 
+	/**
+	 * Return the longest code.
+	 */
 	public int getMaxCodeLength()
 	{
 		return mMaxCodeLength;
@@ -227,9 +284,15 @@ public class HuffmanTree
 	public interface Symbol
 	{
 		int getSymbol();
-		
+
+		/**
+		 * Bit pattern written to an underlying stream.
+		 */
 		int getCode();
-		
+
+		/**
+		 * Length of the bit pattern.
+		 */
 		int getLength();
 	}
 
@@ -278,53 +341,6 @@ public class HuffmanTree
 		public int getLength()
 		{
 			return mLength;
-		}
-	}
-	
-	
-	public static void main(String... args)
-	{
-		try
-		{
-			int[] lengths;
-			byte[] buffer;
-
-			{
-				HuffmanTree tree = new HuffmanTree(16).buildTree(42,15,0,10,8,20,23,48,0,9,16,21,5,7,0,18);
-
-				lengths = tree.extractLengths();
-
-				ByteArrayOutputStream baos = new ByteArrayOutputStream();
-				try (BitOutputStream bos = new BitOutputStream(baos))
-				{
-					tree.encode(bos, 7);
-					tree.encode(bos, 2);
-					tree.encode(bos, 0);
-					tree.encode(bos, 4);
-					tree.encode(bos, 1);
-				}
-
-				Log.out.println(tree);
-
-				buffer = baos.toByteArray();
-			}
-
-			for (int i : lengths) Log.out.print(i+",");
-			Log.out.println();
-
-			{
-				HuffmanTree tree = new HuffmanTree(lengths.length).reconstructTree(lengths);
-
-				BitInputStream bis = new BitInputStream(new ByteArrayInputStream(buffer));
-				for (int i = 0; i < 5; i++)
-				{
-					Log.out.println(tree.decode(bis).getSymbol());
-				}
-			}
-		}
-		catch (Throwable e)
-		{
-			e.printStackTrace(System.out);
 		}
 	}
 }

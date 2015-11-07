@@ -2,7 +2,6 @@ package org.terifan.bundle.io;
 
 import java.io.IOException;
 import java.io.InputStream;
-import org.terifan.bundle.bundle_test.Log;
 
 
 /**
@@ -173,21 +172,12 @@ public class BitInputStream //extends InputStream
 	}
 
 
-//	@Override
-//	public int read() throws IOException
-//	{
-//		return (int)readBits(8);
-//	}
-
-
-//	@Override
 	public int read(byte[] aBuffer) throws IOException
 	{
 		return read(aBuffer, 0, aBuffer.length);
 	}
 
 
-//	@Override
 	public int read(byte[] aBuffer, int aOffset, int aLength) throws IOException
 	{
 		if (mBitCount == 0)
