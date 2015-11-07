@@ -35,16 +35,16 @@ public class HuffmanTree
 		{
 			Node left = nodes[len - 2];
 			Node right = nodes[len - 1];
-			Node newNode = new Node(left.mFrequency + right.mFrequency, left, right);
+			int newFreq = left.mFrequency + right.mFrequency;
 
 			len--;
 			int i = len;
-			for (; i > 0 && nodes[i - 1].mFrequency < newNode.mFrequency; i--)
+			for (; i > 0 && nodes[i - 1].mFrequency < newFreq; i--)
 			{
 			}
 
 			System.arraycopy(nodes, i, nodes, i + 1, len - i);
-			nodes[i] = newNode;
+			nodes[i] = new Node(newFreq, left, right);
 		}
 
 		update(nodes[0], 0, 0);
