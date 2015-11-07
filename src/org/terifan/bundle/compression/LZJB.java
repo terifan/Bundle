@@ -3,7 +3,7 @@ package org.terifan.bundle.compression;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import org.terifan.bundle.BitOutputStream;
+import org.terifan.bundle.io.BitOutputStream;
 import org.terifan.bundle.bundle_test.Log;
 
 
@@ -35,9 +35,9 @@ public class LZJB
 
 	public LZJB() throws IOException
 	{
-		huffmanLength = HuffmanTree.constructSuffixTree(3,3,5,6,7,10);
-		huffmanDistance = HuffmanTree.constructSuffixTree(1,4,6,9,11,12,14,14,15);
-		huffmanLiteral = HuffmanTree.constructSuffixTree(4,4,5,6,7);
+		huffmanLength = constructSuffixTree(3,3,5,6,7,10);
+		huffmanDistance = constructSuffixTree(1,4,6,9,11,12,14,14,15);
+		huffmanLiteral = constructSuffixTree(4,4,5,6,7);
 		
 		for (int i = 0; i < mLiteralStats.length; i++)
 		{
@@ -275,6 +275,33 @@ public class LZJB
 	public void analyze()
 	{
 //		Log.out.println(mHashCollision);
+	}
+
+
+	private static int[][] constructSuffixTree(int... aSuffixLengths)
+	{
+		int symbolCount = 0;
+		int levels = aSuffixLengths.length - 1;
+		for (int i = 0; i <= levels; i++)
+		{
+			symbolCount += 1 << aSuffixLengths[i];
+		}
+		
+		int[][] huffman = new int[symbolCount][2];
+
+		for (int i = 0, k = 0; i <= levels; i++)
+		{
+			int prefixLen = i == levels ? i : i + 1;
+			int prefix = (i == levels ? (1 << i) - 1 : (2 << i) - 2) << aSuffixLengths[i];
+
+			for (int j = 0; j < 1 << aSuffixLengths[i]; j++ ,k++)
+			{
+				huffman[k][0] = prefix + j;
+				huffman[k][1] = (prefixLen + aSuffixLengths[i]);
+			}
+		}
+		
+		return huffman;
 	}
 	
 

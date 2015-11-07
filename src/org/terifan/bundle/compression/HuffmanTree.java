@@ -5,36 +5,57 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
-import org.terifan.bundle.BitInputStream;
-import org.terifan.bundle.BitOutputStream;
+import org.terifan.bundle.io.BitInputStream;
+import org.terifan.bundle.io.BitOutputStream;
 import org.terifan.bundle.bundle_test.Log;
 
 
+/**
+ * This class builds and maintains a canonical Huffman tree.
+ */
 public class HuffmanTree 
 {
 	private final static Comparator<? super Node> mFrequencySorter = (e,f)->Integer.compare(f.mFrequency, e.mFrequency);
 	private final static Comparator<? super Node> mLengthSymbolSorter = (e,f)->e.mLength == f.mLength ? Integer.compare(e.mSymbol, f.mSymbol) : Integer.compare(e.mLength, f.mLength);
 	private final static Comparator<? super Node> mSymbolSorter = (e,f)->Integer.compare(e.mSymbol, f.mSymbol);
 
+	private final Node[] mNodes;
+	private final int mSymbolCount;
+	private int[] mDecoderLookup;
+	private int mMaxCodeLength;
 
-	public HuffmanTree()
+
+	public HuffmanTree(int aSymbolCount)
 	{
+		mSymbolCount = aSymbolCount;
+		mNodes = new Node[aSymbolCount];
+
+		for (int i = 0; i < aSymbolCount; i++)
+		{
+			mNodes[i] = new Node(i, 0, 0);
+			mNodes[i].mFrequency = 1;
+		}
+
+		buildTree();
 	}
 
 
-	private Node[] buildTree(int... aFrequencies)
+	public HuffmanTree buildTree(int... aFrequencies)
 	{
-		int len = aFrequencies.length;
-
-		Node[] nodes = new Node[len];
-		for (int i = 0; i < len; i++)
+		if (aFrequencies.length != mSymbolCount && aFrequencies.length != 0)
 		{
-			nodes[i] = new Node(aFrequencies[i], i);
+			throw new IllegalArgumentException();
 		}
 
-		Node[] original = nodes.clone();
+		for (int i = 0; i < aFrequencies.length; i++)
+		{
+			mNodes[i].mFrequency = 1 + aFrequencies[i]; // zero frequencies not supported
+		}
 
+		Node[] nodes = mNodes.clone();
 		Arrays.sort(nodes, mFrequencySorter);
+
+		int len = mSymbolCount;
 
 		while (len > 1)
 		{
@@ -54,43 +75,57 @@ public class HuffmanTree
 
 		update(nodes[0], 0);
 
-		return reconstructTreeImpl(original);
+		reconstructTreeImpl();
+		
+		return this;
 	}
 
 
-	public Node[] reconstructTree(int... aLengths)
+	public HuffmanTree reconstructTree(int... aLengths)
 	{
-		Node[] nodes = new Node[aLengths.length];
-		for (int i = 0; i < aLengths.length; i++)
+		if (aLengths.length != mSymbolCount)
 		{
-			nodes[i] = new Node(i, 0, aLengths[i]);
-		}
-		
-		return reconstructTreeImpl(nodes);
-	}
-
-
-	private Node[] reconstructTreeImpl(Node[] aNodes)
-	{
-		Arrays.sort(aNodes, mLengthSymbolSorter);
-		
-		aNodes[0].mCode = 0;
-		for (int i = 0, j = 1; j < aNodes.length; j++)
-		{
-			i = (i + 1) << (aNodes[j].mLength - aNodes[j - 1].mLength);
-
-			aNodes[j].mCode = i;
+			throw new IllegalArgumentException();
 		}
 
-		Arrays.sort(aNodes, mSymbolSorter);
+		mMaxCodeLength = 0;
 
-		return aNodes;
+		for (int i = 0; i < mSymbolCount; i++)
+		{
+			int len = aLengths[i];
+
+			mNodes[i].mLength = len;
+
+			if (len > mMaxCodeLength)
+			{
+				mMaxCodeLength = len;
+			}
+		}
+		
+		reconstructTreeImpl();
+		
+		updateDecoderLookup();
+		
+		return this;
 	}
 
 
-	/**
-	 * Update length of the leaf nodes (actual symbols) and also remove references to child nodes from interior nodes so they can be garbage collected.
-	 */
+	private void reconstructTreeImpl()
+	{
+		Arrays.sort(mNodes, mLengthSymbolSorter);
+		
+		mNodes[0].mCode = 0;
+		for (int i = 0, j = 1; j < mSymbolCount; j++)
+		{
+			i = (i + 1) << (mNodes[j].mLength - mNodes[j - 1].mLength);
+
+			mNodes[j].mCode = i;
+		}
+
+		Arrays.sort(mNodes, mSymbolSorter);
+	}
+
+
 	private void update(Node aNode, int aLength)
 	{
 		aNode.mLength = aLength;
@@ -107,38 +142,99 @@ public class HuffmanTree
 	}
 
 
-	private int[] extractLengths(Node[] aNodes)
+	private int[] extractLengths()
 	{
-		int[] lengths = new int[aNodes.length];
-		for (int i = 0; i < aNodes.length; i++)
+		int[] lengths = new int[mSymbolCount];
+		for (int i = 0; i < mSymbolCount; i++)
 		{
-			lengths[i] = aNodes[i].mLength;
+			lengths[i] = mNodes[i].mLength;
 		}
 
 		return lengths;
 	}
 	
 	
-	public int[] createDecoderLookupTable(Node[] aNodes, int aMaxCodeSize)
+	private void updateDecoderLookup()
 	{
-		int[] alphabet = new int[1 << aMaxCodeSize];
+		mDecoderLookup = new int[1 << mMaxCodeLength];
 
-		for (int i = 0, symbol = 0; i < alphabet.length; symbol++)
+		for (int i = 0, symbol = 0; i < mDecoderLookup.length; symbol++)
 		{
-			int length = aNodes[symbol].mLength;
-			int code = aNodes[symbol].mCode << (aMaxCodeSize - length);
+			int length = mNodes[symbol].mLength;
+			int code = mNodes[symbol].mCode << (mMaxCodeLength - length);
 
-			for (int k = 0, sz = 1 << (aMaxCodeSize - length); k < sz; k++, i++)
+			for (int k = 0, sz = 1 << (mMaxCodeLength - length); k < sz; k++, i++)
 			{
-				alphabet[k + code] = symbol;
+				mDecoderLookup[k + code] = symbol;
 			}
 		}
+	}
+
+
+	public Symbol getSymbol(int aSymbol)
+	{
+		return mNodes[aSymbol];
+	}
+
+
+	public Symbol decode(int aPeekBits)
+	{
+		return mNodes[mDecoderLookup[aPeekBits]];
+	}
+
+
+	public Symbol decode(BitInputStream aBitInputStream) throws IOException
+	{
+		Node node = mNodes[mDecoderLookup[aBitInputStream.peekBits(mMaxCodeLength)]];
+		aBitInputStream.skipBits(node.mLength);
 		
-		return alphabet;
+		return node;
+	}
+
+
+	public void encode(BitOutputStream aBitOutputStream, int aSymbol) throws IOException
+	{
+		if (aSymbol < 0 || aSymbol >= mSymbolCount)
+		{
+			throw new IllegalArgumentException();
+		}
+
+		Node node = mNodes[aSymbol];
+		aBitOutputStream.writeBits(node.mCode, node.mLength);
+	}
+
+
+	public int getMaxCodeLength()
+	{
+		return mMaxCodeLength;
+	}
+
+
+	@Override
+	public String toString()
+	{
+		StringBuilder sb = new StringBuilder();
+		for (Node node : mNodes)
+		{
+			String s = "00000000" + Integer.toString(node.mCode,2);
+			sb.append(String.format("%2d %2d %4d %s%s", node.mSymbol, node.mLength, node.mFrequency, s.substring(s.length() - node.mLength), node != mNodes[mSymbolCount - 1] ? "\n" : ""));
+		}
+
+		return sb.toString();
 	}
 	
 	
-	public static class Node
+	public interface Symbol
+	{
+		int getSymbol();
+		
+		int getCode();
+		
+		int getLength();
+	}
+
+
+	private static class Node implements Symbol
 	{
 		private int mSymbol;
 		private int mFrequency;
@@ -147,11 +243,6 @@ public class HuffmanTree
 		private int mCode;
 		private int mLength;
 
-		private Node(int aFrequency, int aSymbol)
-		{
-			mFrequency = aFrequency;
-			mSymbol = aSymbol;
-		}
 
 		private Node(int aSymbol, int aCode, int aLength)
 		{
@@ -159,6 +250,7 @@ public class HuffmanTree
 			mCode = aCode;
 			mLength = aLength;
 		}
+
 
 		private Node(int aFrequency, Node aLeft, Node aRight)
 		{
@@ -168,55 +260,25 @@ public class HuffmanTree
 		}
 
 
+		@Override
 		public int getSymbol()
 		{
 			return mSymbol;
 		}
 
 
+		@Override
 		public int getCode()
 		{
 			return mCode;
 		}
 
 
+		@Override
 		public int getLength()
 		{
 			return mLength;
 		}
-		
-		
-		public void writeTo(BitOutputStream aBitOutputStream) throws IOException
-		{
-			aBitOutputStream.writeBits(mCode, mLength);
-		}
-	}
-
-
-	public static int[][] constructSuffixTree(int... aSuffixLengths)
-	{
-		int symbolCount = 0;
-		int levels = aSuffixLengths.length - 1;
-		for (int i = 0; i <= levels; i++)
-		{
-			symbolCount += 1 << aSuffixLengths[i];
-		}
-		
-		int[][] huffman = new int[symbolCount][2];
-
-		for (int i = 0, k = 0; i <= levels; i++)
-		{
-			int prefixLen = i == levels ? i : i + 1;
-			int prefix = (i == levels ? (1 << i) - 1 : (2 << i) - 2) << aSuffixLengths[i];
-
-			for (int j = 0; j < 1 << aSuffixLengths[i]; j++ ,k++)
-			{
-				huffman[k][0] = prefix + j;
-				huffman[k][1] = (prefixLen + aSuffixLengths[i]);
-			}
-		}
-		
-		return huffman;
 	}
 	
 	
@@ -224,47 +286,40 @@ public class HuffmanTree
 	{
 		try
 		{
-			HuffmanTree tree = new HuffmanTree();
-//			Node[] nodes = tree.buildTree(2,4,1,2);
-//			Node[] nodes = tree.buildTree(6,3,7,6,10,6,15,5);
-			Node[] nodes = tree.buildTree(42,15,10,8,20,23,48,9,16,21,5,7,18);
+			int[] lengths;
+			byte[] buffer;
 
-			for (Node node : nodes)
 			{
-				String s = "00000000" + Integer.toString(node.mCode,2);
-				Log.out.printf("%2d %2d %s\n", node.mSymbol, node.mLength, s.substring(s.length()-node.mLength));
+				HuffmanTree tree = new HuffmanTree(16).buildTree(42,15,0,10,8,20,23,48,0,9,16,21,5,7,0,18);
+
+				lengths = tree.extractLengths();
+
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				try (BitOutputStream bos = new BitOutputStream(baos))
+				{
+					tree.encode(bos, 7);
+					tree.encode(bos, 2);
+					tree.encode(bos, 0);
+					tree.encode(bos, 4);
+					tree.encode(bos, 1);
+				}
+
+				Log.out.println(tree);
+
+				buffer = baos.toByteArray();
 			}
 
-			Log.out.println("----------");
+			for (int i : lengths) Log.out.print(i+",");
+			Log.out.println();
 
-			nodes = tree.reconstructTree(tree.extractLengths(nodes));
-
-//			nodes = tree.reconstructTree(2, 4, 3, 2, 2, 4);
-
-			for (Node node : nodes)
 			{
-				String s = "00000000" + Integer.toString(node.mCode,2);
-				Log.out.printf("%2d %2d %s\n", node.mSymbol, node.mLength, s.substring(s.length()-node.mLength));
-			}
-			
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			try (BitOutputStream bos = new BitOutputStream(baos))
-			{
-				nodes[7].writeTo(bos);
-				nodes[2].writeTo(bos);
-				nodes[0].writeTo(bos);
-				nodes[4].writeTo(bos);
-				nodes[1].writeTo(bos);
-			}
+				HuffmanTree tree = new HuffmanTree(lengths.length).reconstructTree(lengths);
 
-			int[] alphabet = tree.createDecoderLookupTable(nodes, 8);
-
-			BitInputStream bis = new BitInputStream(new ByteArrayInputStream(baos.toByteArray()));
-			for (int i = 0; i < 5; i++)
-			{
-				Node n = nodes[alphabet[bis.peekBits(8)]];
-				bis.skipBits(n.mLength);
-				Log.out.println(n.mSymbol);
+				BitInputStream bis = new BitInputStream(new ByteArrayInputStream(buffer));
+				for (int i = 0; i < 5; i++)
+				{
+					Log.out.println(tree.decode(bis).getSymbol());
+				}
 			}
 		}
 		catch (Throwable e)

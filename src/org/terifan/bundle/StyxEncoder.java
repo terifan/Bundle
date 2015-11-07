@@ -1,5 +1,6 @@
 package org.terifan.bundle;
 
+import org.terifan.bundle.io.BitOutputStream;
 import org.terifan.bundle.compression.FrequencyTable;
 import org.terifan.bundle.compression.LZJB;
 import java.io.ByteArrayOutputStream;

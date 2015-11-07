@@ -8,7 +8,7 @@ import java.util.zip.DeflaterOutputStream;
 import javax.xml.parsers.ParserConfigurationException;
 import org.terifan.bundle.StyxEncoder;
 import org.terifan.bundle.BinaryEncoder;
-import org.terifan.bundle.BitOutputStream;
+import org.terifan.bundle.io.BitOutputStream;
 import org.terifan.bundle.Bundle;
 import org.terifan.bundle.ConvertXml;
 import org.terifan.bundle.compression.LZJB;

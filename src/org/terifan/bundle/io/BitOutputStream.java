@@ -1,4 +1,4 @@
-package org.terifan.bundle;
+package org.terifan.bundle.io;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -178,21 +178,12 @@ public class BitOutputStream implements AutoCloseable
 	}
 
 
-//	@Override
-//	public void write(int aByte) throws IOException
-//	{
-//		writeBits(0xff & aByte, 8);
-//	}
-
-
-//	@Override
 	public void write(byte[] aBuffer) throws IOException
 	{
 		write(aBuffer, 0, aBuffer.length);
 	}
 
 
-//	@Override
 	public void write(byte[] aBuffer, int aOffset, int aLength) throws IOException
 	{
 		if (mBitsToGo == 8)
@@ -239,7 +230,7 @@ public class BitOutputStream implements AutoCloseable
 
 	public int getBitCount()
 	{
-		return 8-mBitsToGo;
+		return 8 - mBitsToGo;
 	}
 
 

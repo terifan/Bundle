@@ -1,4 +1,4 @@
-package org.terifan.bundle;
+package org.terifan.bundle.io;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -79,7 +79,15 @@ public class BitInputStream //extends InputStream
 	{
 		while (mBitCount < aCount)
 		{
-			mBitBuffer = (mBitBuffer << 8) + mInputStream.read();
+			int i = mInputStream.read();
+			
+			if (i == -1)
+			{
+				i = 0;
+			}
+
+			mBitBuffer <<= 8;
+			mBitBuffer += i;
 			mBitCount += 8;
 		}
 
