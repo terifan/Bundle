@@ -320,14 +320,12 @@ public class Huffman
 	 */
 	public int[][] extractCodebook()
 	{
-		int[] counts = new int[mSymbolCount];
+		int[] counts = new int[32]; // assuming code lengths will never be 32 bits or longer
 		int[] symbols = new int[mSymbolCount];
-		
+
 		Node[] nodes = mNodes.clone();
 		Arrays.sort(nodes, mLengthSymbolSorter);
 
-		int symbolIndex = 0;
-		int countIndex = 0;
 		int remaining = mSymbolCount;
 
 		for (Node node : nodes)
@@ -337,6 +335,9 @@ public class Huffman
 				remaining--;
 			}
 		}
+
+		int symbolIndex = 0;
+		int countIndex = 0;
 
 		for (int length = 1; remaining > 0; length++)
 		{
