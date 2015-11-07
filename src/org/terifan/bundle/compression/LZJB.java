@@ -35,9 +35,9 @@ public class LZJB
 
 	public LZJB() throws IOException
 	{
-		huffmanLength = HuffmanTree.construct(3,3,5,6,7,10);
-		huffmanDistance = HuffmanTree.construct(1,4,6,9,11,12,14,14,15);
-		huffmanLiteral = HuffmanTree.construct(4,4,5,6,7);
+		huffmanLength = HuffmanTree.constructSuffixTree(3,3,5,6,7,10);
+		huffmanDistance = HuffmanTree.constructSuffixTree(1,4,6,9,11,12,14,14,15);
+		huffmanLiteral = HuffmanTree.constructSuffixTree(4,4,5,6,7);
 		
 		for (int i = 0; i < mLiteralStats.length; i++)
 		{
