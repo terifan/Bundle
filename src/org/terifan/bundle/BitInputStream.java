@@ -2,6 +2,7 @@ package org.terifan.bundle;
 
 import java.io.IOException;
 import java.io.InputStream;
+import org.terifan.bundle.bundle_test.Log;
 
 
 /**
@@ -71,6 +72,18 @@ public class BitInputStream //extends InputStream
 		}
 
 		return output;
+	}
+
+
+	public int peekBits(int aCount) throws IOException
+	{
+		while (mBitCount < aCount)
+		{
+			mBitBuffer = (mBitBuffer << 8) + mInputStream.read();
+			mBitCount += 8;
+		}
+
+		return mBitBuffer >>> (mBitCount - aCount);
 	}
 
 
