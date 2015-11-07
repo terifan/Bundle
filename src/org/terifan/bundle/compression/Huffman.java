@@ -313,6 +313,11 @@ public class Huffman
 	}
 
 
+	/**
+	 * Return a matrix containing code counts and codes. These values are all necessary to reconstruct a tree. 
+	 * 
+	 * Codebooks can better represent a tree when the tree have many zero frequencies.
+	 */
 	public int[][] extractCodebook()
 	{
 		int[] counts = new int[mSymbolCount];
