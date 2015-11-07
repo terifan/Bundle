@@ -39,7 +39,9 @@ public class Huffman
 			mNodes[i].mFrequency = 1;
 		}
 
-		buildTree();
+		int[] freq = new int[aSymbolCount];
+		Arrays.fill(freq, 1);
+		buildTree(freq);
 	}
 
 
@@ -51,20 +53,27 @@ public class Huffman
 	 */
 	public Huffman buildTree(int... aFrequencies)
 	{
-		if (aFrequencies.length != mSymbolCount && aFrequencies.length != 0)
+		if (aFrequencies.length != mSymbolCount)
 		{
 			throw new IllegalArgumentException();
 		}
 
-		for (int i = 0; i < aFrequencies.length; i++)
+		Node[] nodes = mNodes.clone();
+		int len = 0;
+
+		for (int i = 0; i < mSymbolCount; i++)
 		{
+			mNodes[i].mCode = 0;
+			mNodes[i].mLength = 0;
 			mNodes[i].mFrequency = aFrequencies[i];
+
+			if (aFrequencies[i] > 0)
+			{
+				len++;
+			}
 		}
 
-		Node[] nodes = mNodes.clone();
 		Arrays.sort(nodes, mFrequencySorter);
-
-		int len = mSymbolCount;
 
 		while (len > 1)
 		{
@@ -83,9 +92,11 @@ public class Huffman
 		}
 
 		update(nodes[0], 0);
-
+		
 		reconstructTreeImpl();
 		
+		updateDecoderLookup();
+
 		return this;
 	}
 
@@ -104,23 +115,18 @@ public class Huffman
 		}
 
 		mMaxCodeLength = 0;
-
+		
 		for (int i = 0; i < mSymbolCount; i++)
 		{
-			int len = aCodeLengths[i];
-
-			mNodes[i].mLength = len;
-
-			if (len > mMaxCodeLength)
-			{
-				mMaxCodeLength = len;
-			}
+			mNodes[i].mCode = 0;
+			mNodes[i].mFrequency = 0;
+			mNodes[i].mLength = aCodeLengths[i];
 		}
-		
+
 		reconstructTreeImpl();
-		
+
 		updateDecoderLookup();
-		
+
 		return this;
 	}
 
@@ -131,12 +137,23 @@ public class Huffman
 	private void reconstructTreeImpl()
 	{
 		Arrays.sort(mNodes, mLengthSymbolSorter);
-		
-		mNodes[0].mCode = 0;
-		for (int i = 0, j = 1; j < mSymbolCount; j++)
-		{
-			i = (i + 1) << (mNodes[j].mLength - mNodes[j - 1].mLength);
 
+		int j = 0;
+		for (; mNodes[j].mLength == 0 && j < mSymbolCount; j++)
+		{
+		}
+
+		mNodes[j].mCode = 0;
+		int prevLength = mNodes[j].mLength;
+		j++;
+
+		for (int i = 0; j < mSymbolCount; j++)
+		{
+			int length = mNodes[j].mLength;
+
+			i = (i + 1) << (length - prevLength);
+
+			prevLength = length;
 			mNodes[j].mCode = i;
 		}
 
@@ -183,16 +200,27 @@ public class Huffman
 	 */
 	private void updateDecoderLookup()
 	{
+		mMaxCodeLength = 0;
+
+		for (Node node : mNodes)
+		{
+			mMaxCodeLength = Math.max(mMaxCodeLength, node.mLength);
+		}
+
 		mDecoderLookup = new int[1 << mMaxCodeLength];
 
 		for (int i = 0, symbol = 0; i < mDecoderLookup.length; symbol++)
 		{
 			int length = mNodes[symbol].mLength;
-			int code = mNodes[symbol].mCode << (mMaxCodeLength - length);
 
-			for (int k = 0, sz = 1 << (mMaxCodeLength - length); k < sz; k++, i++)
+			if (length > 0)
 			{
-				mDecoderLookup[k + code] = symbol;
+				int code = mNodes[symbol].mCode << (mMaxCodeLength - length);
+
+				for (int k = 0, sz = 1 << (mMaxCodeLength - length); k < sz; k++, i++)
+				{
+					mDecoderLookup[k + code] = symbol;
+				}
 			}
 		}
 	}
@@ -252,6 +280,12 @@ public class Huffman
 		}
 
 		Node node = mNodes[aSymbol];
+		
+		if (node.mFrequency == 0)
+		{
+			throw new IllegalArgumentException();
+		}
+		
 		aBitOutputStream.writeBits(node.mCode, node.mLength);
 		
 		return node;
