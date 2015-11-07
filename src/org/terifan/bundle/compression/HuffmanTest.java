@@ -16,6 +16,7 @@ public class HuffmanTest
 		try
 		{
 			Random r = new Random(1);
+//			int[] valid = {0,1,7,15};
 			int[] valid = {0,1,3,4,5,6,7,9,10,11,12,13,15};
 			int[] input = new int[1000000];
 			for (int i = 0; i < input.length; i++)
@@ -25,12 +26,14 @@ public class HuffmanTest
 
 			int[] lengths;
 			byte[] buffer;
+			int[][] codebook;
 
 			{
+//				Huffman tree = new Huffman(16).buildTree(42,15,0,0,0,0,0,48,0,0,0,0,0,0,0,18);
 				Huffman tree = new Huffman(16).buildTree(42,15,0,10,8,20,23,48,0,9,16,21,5,7,0,18);
-//				Huffman tree = new Huffman(16).buildTree(42,15,1,10,8,20,23,48,1,9,16,21,5,7,1,18);
 
 				lengths = tree.extractLengths();
+				codebook = tree.extractCodebook();
 
 				ByteArrayOutputStream baos = new ByteArrayOutputStream();
 				try (BitOutputStream bos = new BitOutputStream(baos))
@@ -41,7 +44,7 @@ public class HuffmanTest
 					}
 				}
 
-				Log.out.println(tree);
+//				Log.out.println(tree);
 
 				buffer = baos.toByteArray();
 			}
@@ -50,9 +53,23 @@ public class HuffmanTest
 			for (int i : lengths) Log.out.print(i+",");
 			Log.out.println();
 			Log.out.println("---------------------------");
+			Log.out.print("(");
+			for (int i : codebook[0])
+			{
+				Log.out.print(i+",");
+			}
+			Log.out.print("),(");
+			for (int i : codebook[1])
+			{
+				Log.out.print(i+",");
+			}
+			Log.out.println(")");
+			Log.out.println("---------------------------------");
 
 			{
-				Huffman tree = new Huffman(lengths.length).reconstructTree(lengths);
+//				Huffman tree = new Huffman(lengths.length).reconstructTree(lengths);
+
+				Huffman tree = new Huffman(lengths.length).reconstructTree(codebook);
 
 				Log.out.println(tree);
 

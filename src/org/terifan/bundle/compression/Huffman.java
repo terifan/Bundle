@@ -114,8 +114,6 @@ public class Huffman
 			throw new IllegalArgumentException();
 		}
 
-		mMaxCodeLength = 0;
-		
 		for (int i = 0; i < mSymbolCount; i++)
 		{
 			mNodes[i].mCode = 0;
@@ -313,8 +311,82 @@ public class Huffman
 
 		return sb.toString();
 	}
+
+
+	public int[][] extractCodebook()
+	{
+		int[] counts = new int[mSymbolCount];
+		int[] symbols = new int[mSymbolCount];
+		
+		Node[] nodes = mNodes.clone();
+		Arrays.sort(nodes, mLengthSymbolSorter);
+
+		int symbolIndex = 0;
+		int countIndex = 0;
+		int remaining = mSymbolCount;
+
+		for (Node node : nodes)
+		{
+			if (node.mLength == 0)
+			{
+				remaining--;
+			}
+		}
+
+		for (int length = 1; remaining > 0; length++)
+		{
+			int count = 0;
+			for (Node node : nodes)
+			{
+				if (node.mLength == length)
+				{
+					count++;
+					symbols[symbolIndex++] = node.mSymbol;
+				}
+			}
+			counts[countIndex++] = count;
+			remaining -= count;
+		}
+
+		return new int[][]{Arrays.copyOfRange(counts, 0, countIndex), Arrays.copyOfRange(symbols, 0, symbolIndex)};
+	}
+
 	
+	/**
+	 * Reconstruct a tree using the codebook returned by the <code>extractCodebook()</code> method.
+	 * 
+	 * @return 
+	 *   this instance.
+	 */
+	public Huffman reconstructTree(int[][] aCodebook)
+	{
+		for (Node node : mNodes)
+		{
+			node.mCode = 0;
+			node.mFrequency = 0;
+			node.mLength = 0;
+		}
+
+		int length = 1;
+		int symbolIndex = 0;
+		for (int count : aCodebook[0])
+		{
+			for (int i = 0; i < count; i++)
+			{
+				mNodes[aCodebook[1][symbolIndex++]].mLength = length;
+			}
+
+			length++;
+		}
+
+		reconstructTreeImpl();
+
+		updateDecoderLookup();
+
+		return this;
+	}
 	
+
 	public interface Symbol
 	{
 		int getSymbol();
