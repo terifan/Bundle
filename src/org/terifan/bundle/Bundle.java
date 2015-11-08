@@ -9,11 +9,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
+import java.util.TreeMap;
 
 
 public final class Bundle implements Cloneable, Externalizable, Iterable<String>
@@ -30,8 +30,8 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle()
 	{
-		mValues = new LinkedHashMap<>();
-		mTypes = new LinkedHashMap<>();
+		mValues = new TreeMap<>();
+		mTypes = new HashMap<>();
 	}
 
 
