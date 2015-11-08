@@ -283,4 +283,15 @@ public class BitOutputStream implements AutoCloseable
 			writeBit(1);
 		}
 	}
+	
+	
+	public void writeUnary(int aSymbol) throws IOException
+	{
+		int l = aSymbol;
+		while (l-- > 0)
+		{
+			writeBit(0);
+		}
+		writeBit(1);
+	}
 }

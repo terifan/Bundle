@@ -3,6 +3,7 @@ package org.terifan.bundle.compression;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
+import org.terifan.bundle.bundle_test.Log;
 import org.terifan.bundle.io.BitInputStream;
 import org.terifan.bundle.io.BitOutputStream;
 
@@ -281,7 +282,7 @@ public class Huffman
 		
 		if (node.mFrequency == 0)
 		{
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Symbol has zero frequency and cannot be encoded: " + aSymbol);
 		}
 		
 		aBitOutputStream.writeBits(node.mCode, node.mLength);
@@ -390,6 +391,80 @@ public class Huffman
 		updateDecoderLookup();
 
 		return this;
+	}
+
+
+	public void encodeLengths(BitOutputStream aBitOutputStream) throws IOException
+	{
+		int[] lengths = extractLengths();
+		
+		boolean zero = lengths[0] == 0;
+		aBitOutputStream.writeBit(zero);
+		Log.out.print("("+(zero?0:1)+")");
+		for (int i = 0; i < mSymbolCount; )
+		{
+			int n = 0;
+			for (; i < mSymbolCount && n < 16; i++, n++)
+			{
+				if ((lengths[i] == 0) != zero)
+				{
+					break;
+				}
+				if (!zero)
+				{
+					aBitOutputStream.writeUnary(lengths[i] - 1);
+//					aBitOutputStream.writeExpGolomb(lengths[i] - 1, 0);
+				}
+			}
+			Log.out.print(n+",");
+			aBitOutputStream.writeBits(n - 1, 4);
+			if (n == 16)
+			{
+				zero = lengths[i] == 0;
+				aBitOutputStream.writeBit(zero);
+				Log.out.print("("+(zero?0:1)+")");
+			}
+			else
+			{
+				zero = !zero;
+			}
+		}
+		Log.out.println();
+	}
+
+
+	public void encodeCodebook(BitOutputStream aBitOutputStream) throws IOException
+	{
+		int[][] codebook = extractCodebook();
+
+		int maxSymbol = 0;
+		for (Node node : mNodes)
+		{
+			maxSymbol = Math.max(maxSymbol, node.mSymbol);
+		}
+
+		int codeSize = (int)Math.ceil(Math.log(maxSymbol) / Math.log(2));
+
+//		Log.out.print(codebook[0].length+",");
+
+		aBitOutputStream.writeUnary(codebook[0].length - 1);
+//		Log.out.print("(");
+		for (int i : codebook[0])
+		{
+//			Log.out.print(i+",");
+			aBitOutputStream.writeUnary(i);
+		}
+//		Log.out.print("),");
+
+		aBitOutputStream.writeUnary(codeSize - 1);
+//		Log.out.print(codeSize+",(");
+		for (int i : codebook[1])
+		{
+//			Log.out.print(i+",");
+			aBitOutputStream.writeBits(i, codeSize);
+		}
+//		Log.out.print(")");
+//		Log.out.println();
 	}
 	
 

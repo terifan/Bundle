@@ -9,11 +9,11 @@ import java.io.OutputStream;
 import java.lang.reflect.Array;
 import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
 import org.terifan.bundle.bundle_test.Log;
+import org.terifan.bundle.compression.Huffman;
 
 
 public class StyxEncoder implements Encoder
@@ -28,28 +28,8 @@ public class StyxEncoder implements Encoder
 	private FrequencyTable mFreqStrings = new FrequencyTable(1000);
 	private FrequencyTable mFreqStringLengths = new FrequencyTable(1000);
 	private FrequencyTable mFreqKeys = new FrequencyTable(1000);
-	private FrequencyTable mFreqFieldType = new FrequencyTable(20);
 	private FrequencyTable mFreqKeyLengths = new FrequencyTable(50);
 	private FrequencyTable mFreqKeysCount = new FrequencyTable(1000);
-
-	private int[][] mHuffmanFieldType =
-	{
-		{2,0b01},
-		{2,0b10},
-		{2,0b11},
-		{4,0b001},
-		{5,0b00001},
-		{5,0b00010},
-		{5,0b00011},
-		{8,0b00000000},
-		{8,0b00000001},
-		{8,0b00000010},
-		{8,0b00000011},
-		{8,0b00000100},
-		{8,0b00000101},
-		{8,0b00000110},
-		{8,0b00000111}
-	};
 
 	private long mDeltaLong;
 
@@ -57,22 +37,14 @@ public class StyxEncoder implements Encoder
 	private LZJB mLzjbKeys;
 	private LZJB mLzjbBytes;
 	private LZJB mLzjbDates;
+	
+	private Huffman mTypeHuffman;
 
-	private TreeMap<FieldType,Integer> mStatistics = new TreeMap<>();
-	private TreeMap<String,Integer> mStatisticsOperations = new TreeMap<>();
+	private TreeMap<FieldType2,Integer> mStatistics = new TreeMap<>();
 
 
 	public StyxEncoder()
 	{
-		mFreqFieldType.encode(FieldType.INT.ordinal());
-		mFreqFieldType.encode(FieldType.STRING.ordinal());
-		mFreqFieldType.encode(FieldType.DOUBLE.ordinal());
-		mFreqFieldType.encode(FieldType.BUNDLE.ordinal());
-		mFreqFieldType.encode(FieldType.DATE.ordinal());
-		mFreqFieldType.encode(FieldType.LONG.ordinal());
-		mFreqFieldType.encode(FieldType.BOOLEAN.ordinal());
-		mFreqFieldType.encode(FieldType.NULL.ordinal());
-		mFreqFieldType.encode(FieldType.EMPTY.ordinal());
 	}
 
 
@@ -106,6 +78,44 @@ public class StyxEncoder implements Encoder
 		mStrings = new HashMap<>();
 		mHeaders = new HashMap<>();
 
+		int[] histogram = new int[64];
+		buildHistogram(aBundle, histogram);
+
+//		for (int i : histogram) Log.out.print(i+",");
+//		Log.out.println();
+
+		mTypeHuffman = new Huffman(64).buildTree(histogram);
+
+//			int[] lengths = mTypeHuffman.extractLengths();
+//			int[][] codebook = mTypeHuffman.extractCodebook();
+//			Log.out.println("---------------------------");
+//			for (int i : lengths) Log.out.print(i+",");
+//			Log.out.println();
+//			Log.out.println("---------------------------");
+//			Log.out.print("(");
+//			for (int i : codebook[0])
+//			{
+//				Log.out.print(i+",");
+//			}
+//			Log.out.print("),(");
+//			for (int i : codebook[1])
+//			{
+//				Log.out.print(i+",");
+//			}
+//			Log.out.println(")");
+//			Log.out.println("---------------------------------");
+
+			mTypeHuffman.encodeCodebook(mOutput);
+
+//			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//			BitOutputStream bos = new BitOutputStream(baos);
+////			mTypeHuffman.encodeLengths(bos);
+//			mTypeHuffman.encodeCodebook(bos);
+//			bos.close();
+//			Log.out.println("#"+baos.size());
+			
+//			mOutput.writeBits(aValue, aLength);
+
 		writeBundle(aBundle);
 
 		mOutput.finish();
@@ -114,9 +124,52 @@ public class StyxEncoder implements Encoder
 	}
 
 
-	public String getStatistics()
+	private void buildHistogram(Bundle aBundle, int[] aHistogram) throws IOException
 	{
-		return "" + mStatistics;
+		if (aBundle == null)
+		{
+			return;
+		}
+
+		String[] keys = aBundle.keySet().toArray(new String[aBundle.size()]);
+		
+		for (String key : keys)
+		{
+			FieldType2 fieldType = aBundle.getType(key);
+
+			aHistogram[fieldType.ordinal()]++;
+
+			switch (fieldType)
+			{
+				case BUNDLE:
+					buildHistogram(aBundle.getBundle(key), aHistogram);
+					break;
+				case BUNDLE_ARRAY:
+					for (Bundle b : aBundle.getBundleArray(key))
+					{
+						buildHistogram(b, aHistogram);
+					}
+					break;
+				case BUNDLE_ARRAYLIST:
+					for (Bundle b : aBundle.getBundleArrayList(key))
+					{
+						buildHistogram(b, aHistogram);
+					}
+					break;
+				case BUNDLE_MATRIX:
+					for (Bundle[] bb : aBundle.getBundleMatrix(key))
+					{
+						if (bb != null)
+						{
+							for (Bundle b : bb)
+							{
+								buildHistogram(b, aHistogram);
+							}
+						}
+					}
+					break;
+			}
+		}
 	}
 
 
@@ -126,169 +179,108 @@ public class StyxEncoder implements Encoder
 
 		for (String key : keys)
 		{
+			FieldType2 fieldType = aBundle.getType(key);
 			Object value = aBundle.get(key);
-			FieldType fieldType = FieldType.classify(value);
+			
+			if (value == null)
+			{
+				continue;
+			}
 
 			mStatistics.put(fieldType, mStatistics.getOrDefault(fieldType, 0) + 1);
 
-			if (fieldType != FieldType.NULL && fieldType != FieldType.EMPTY)
+			if (fieldType.name().endsWith("_MATRIX"))
 			{
-				Class<? extends Object> cls = value.getClass();
-
-				if (cls.isArray())
-				{
-					if (cls.getComponentType().isArray())
-					{
-						writeMatrix(fieldType, value);
-					}
-					else
-					{
-						writeArray(fieldType, value);
-					}
-				}
-				else if (List.class.isAssignableFrom(cls))
-				{
-					writeArray(fieldType, ((List)value).toArray());
-				}
-				else
-				{
-					writeValue(fieldType, value);
-				}
+				writeMatrix(fieldType, value);
+			}
+			else if (fieldType.name().endsWith("_ARRAY"))
+			{
+				writeArray(fieldType, value);
+			}
+			else if (fieldType.name().endsWith("_ARRAYLIST"))
+			{
+				writeArray(fieldType, ((List)value).toArray());
+			}
+			else
+			{
+				writeValue(fieldType, value);
 			}
 		}
 	}
 
+	private HashMap<Integer,Integer> mLastHeaderIndex = new HashMap<>();
+	private int mPrevHeaderIndex;
 
 	private String[] writeBundleHeader(Bundle aBundle) throws IOException
 	{
-		int initialKeyCount = mKeys.size();
 		String[] keys = aBundle.keySet().toArray(new String[aBundle.size()]);
 
-
 		StringBuilder signature = new StringBuilder();
-		boolean onlyLiterals = true;
 
 		for (String key : keys)
 		{
 			Object value = aBundle.get(key);
-			FieldType fieldType = FieldType.classify(value);
+			
+			if (value == null)
+			{
+				continue;
+			}
 
-			signature.append(fieldType.ordinal());
+			signature.append(aBundle.getType(key).ordinal());
 			signature.append(":");
 			signature.append(key);
-			signature.append(":");
-
-			if (fieldType != FieldType.NULL && fieldType != FieldType.EMPTY)
-			{
-				Class<? extends Object> cls = value.getClass();
-
-				if (cls.isArray())
-				{
-					onlyLiterals = false;
-					if (cls.getComponentType().isArray())
-					{
-						signature.append("1:");
-					}
-					else
-					{
-						signature.append("2:");
-					}
-				}
-				else if (List.class.isAssignableFrom(cls))
-				{
-					onlyLiterals = false;
-					signature.append("3:");
-				}
-				else
-				{
-					signature.append("4:");
-				}
-			}
 		}
 
-		Integer header = mHeaders.get(signature.toString());
-		if (header != null)
-		{
-			inc("dup");
-
-			mOutput.writeBit(1);
-//			mOutput.writeVariableInt(header, 3, 0, false);
-//			mOutput.writeVariableInt(tblHeaders.encode(header), 1, 0, false);
-			mOutput.writeExpGolomb(mFreqHeaders.encode(header), 1);
-			return keys;
-		}
-
-		inc("hdr");
-
-		mHeaders.put(signature.toString(), mHeaders.size());
+//		Integer header = mHeaders.get(signature.toString());
+//		if (header != null)
+//		{
+//			mOutput.writeBit(1);
+//
+//			if (header.intValue() == mLastHeaderIndex.getOrDefault(mPrevHeaderIndex, -1))
+//			{
+//				mOutput.writeBit(1);
+//				mPrevHeaderIndex = header;
+//			}
+//			else
+//			{
+//				if (mLastHeaderIndex.containsKey(mPrevHeaderIndex))
+//				{
+//					mOutput.writeBit(0);
+//				}
+//				
+//				mLastHeaderIndex.put(mPrevHeaderIndex, header);
+//				mPrevHeaderIndex = header;
+//
+//				mOutput.writeExpGolomb(mFreqHeaders.encode(header), 1);
+//			}
+//			return keys;
+//		}
+//
+//		mHeaders.put(signature.toString(), mHeaders.size());
+//
+//		mLastHeaderIndex.put(mPrevHeaderIndex, mHeaders.size() - 1);
+//		mPrevHeaderIndex = mHeaders.size() - 1;
 
 		mOutput.writeBit(0);
-//		mOutput.writeVariableInt(tblKeysCount.encode(keys.length), 3, 0, false);
 		mOutput.writeExpGolomb(mFreqKeysCount.encode(keys.length), 2);
-
-		mOutput.writeBit(onlyLiterals);
-
-		FieldType prevFieldType = null;
 
 		for (String key : keys)
 		{
+			FieldType2 fieldType = aBundle.getType(key);
 			Object value = aBundle.get(key);
-			FieldType fieldType = FieldType.classify(value);
-
-			if (fieldType == prevFieldType)
+			
+			if (value == null)
 			{
-				mOutput.writeBit(1);
-//				int n = mFreqFieldType.encode(0);
-//				mOutput.writeBits(mHuffmanFieldType[n][1], mHuffmanFieldType[n][0]);
+				continue;
 			}
-			else
-			{
-				prevFieldType = fieldType;
+			
+			Log.out.print(fieldType.ordinal() + ",");
 
-				mOutput.writeBit(0);
-
-
-
-//				mOutput.writeBits(fieldType.ordinal(), 4);
-//				mOutput.writeExpGolomb(tblFieldType.encode(fieldType.ordinal()), 1);
-//				int n = mFreqFieldType.encode(1 + fieldType.ordinal());
-				int n = mFreqFieldType.encode(fieldType.ordinal());
-				mOutput.writeBits(mHuffmanFieldType[n][1], mHuffmanFieldType[n][0]);
-
-				if (fieldType != FieldType.NULL && fieldType != FieldType.EMPTY && !onlyLiterals)
-				{
-					Class<? extends Object> cls = value.getClass();
-
-					if (cls.isArray())
-					{
-						if (cls.getComponentType().isArray())
-						{
-							mOutput.writeBits(0b111, 3);
-						}
-						else
-						{
-							mOutput.writeBits(0b110, 3);
-						}
-					}
-					else if (List.class.isAssignableFrom(cls))
-					{
-						mOutput.writeBits(0b10, 2);
-					}
-					else
-					{
-						mOutput.writeBits(0b0, 1);
-					}
-				}
-			}
+			mTypeHuffman.encode(mOutput, fieldType.ordinal());
 
 			if (mKeys.containsKey(key))
 			{
-				inc("key");
-
 				mOutput.writeBit(0);
-//				mOutput.writeVariableInt(mKeys.get(key), 3, 0, false);
-//				mOutput.writeBitsInRange(mKeys.get(key), initialKeyCount);
-//				mOutput.writeVariableInt(tblKeys.encode(mKeys.get(key)), 3, 0, false);
 				mOutput.writeExpGolomb(mFreqKeys.encode(mKeys.get(key)), 3);
 			}
 			else
@@ -296,23 +288,21 @@ public class StyxEncoder implements Encoder
 				byte[] buffer = Convert.encodeUTF8(key);
 
 				mOutput.writeBit(1);
-//				mOutput.writeVariableInt(buffer.length, 3, 0, false);
-//				mOutput.writeVariableInt(tblKeyLengths.encode(buffer.length), 3, 0, false);
 				mOutput.writeExpGolomb(mFreqKeyLengths.encode(key.length()), 3);
-//				mOutput.write(buffer);
 				mLzjbKeys.write(mOutput, buffer);
 
 				mKeys.put(key, mKeys.size());
 			}
 		}
+		Log.out.println();
 
 		return keys;
 	}
 
 
-	private void writeMatrix(FieldType aFieldType, Object aValue) throws ArrayIndexOutOfBoundsException, IOException, IllegalArgumentException
+	private void writeMatrix(FieldType2 aFieldType, Object aValue) throws ArrayIndexOutOfBoundsException, IOException, IllegalArgumentException
 	{
-		if (aFieldType == FieldType.BYTE)
+		if (aFieldType == FieldType2.BYTE_MATRIX)
 		{
 			writeByteMatrix(aValue);
 			return;
@@ -338,12 +328,10 @@ public class StyxEncoder implements Encoder
 		if (full)
 		{
 			mOutput.writeBit(0);
-//			mOutput.writeVariableInt(rows, 3, 1, false);
 			mOutput.writeExpGolomb(rows, 3);
 			if (rows > 0)
 			{
 				int cols = Array.getLength(Array.get(aValue, 0));
-//				mOutput.writeVariableInt(cols, 3, 1, false);
 				mOutput.writeExpGolomb(cols, 3);
 				for (int i = 0; i < rows; i++)
 				{
@@ -359,7 +347,6 @@ public class StyxEncoder implements Encoder
 		{
 			int len = Array.getLength(aValue);
 			mOutput.writeBit(1);
-//			mOutput.writeVariableInt(len, 3, 1, false);
 			mOutput.writeExpGolomb(len, 3);
 			for (int i = 0; i < len; i++)
 			{
@@ -383,9 +370,9 @@ public class StyxEncoder implements Encoder
 		byte[][] buf = (byte[][])aValue;
 		boolean full = true;
 
-		for (int i = 0; i < buf.length; i++)
+		for (byte[] item : buf)
 		{
-			if (buf[i] == null || buf[i].length != buf[0].length)
+			if (item == null || item.length != buf[0].length)
 			{
 				full = false;
 				break;
@@ -395,20 +382,16 @@ public class StyxEncoder implements Encoder
 		if (full)
 		{
 			mOutput.writeBit(0);
-//			mOutput.writeVariableInt(buf.length, 3, 1, false);
 			mOutput.writeExpGolomb(buf.length, 3);
-//			mOutput.writeVariableInt(buf[0].length, 3, 1, false);
 			mOutput.writeExpGolomb(buf[0].length, 3);
-			for (int i = 0; i < buf.length; i++)
+			for (byte[] item : buf)
 			{
-//				mOutput.write(buf[i]);
-				mLzjbBytes.write(mOutput, buf[i]);
+				mLzjbBytes.write(mOutput, item);
 			}
 		}
 		else
 		{
 			mOutput.writeBit(1);
-//			mOutput.writeVariableInt(buf.length, 3, 1, false);
 			mOutput.writeExpGolomb(buf.length, 3);
 			for (int i = 0; i < buf.length; i++)
 			{
@@ -420,9 +403,7 @@ public class StyxEncoder implements Encoder
 				else
 				{
 					mOutput.writeBit(0);
-//					mOutput.writeVariableInt(buf[i].length, 3, 1, false);
 					mOutput.writeExpGolomb(buf[i].length, 3);
-//					mOutput.write(buf[i]);
 					mLzjbBytes.write(mOutput, buf[i]);
 				}
 			}
@@ -432,16 +413,14 @@ public class StyxEncoder implements Encoder
 
 	private void writeByteArray(byte[] aValue) throws IOException
 	{
-//		mOutput.writeVariableInt(aValue.length, 3, 1, false);
 		mOutput.writeExpGolomb(aValue.length, 3);
-//		mOutput.write(aValue);
 		mLzjbBytes.write(mOutput, aValue);
 	}
 
 
-	private void writeArray(FieldType aFieldType, Object aValue) throws IOException
+	private void writeArray(FieldType2 aFieldType, Object aValue) throws IOException
 	{
-		if (aFieldType == FieldType.BYTE)
+		if (aFieldType == FieldType2.BYTE_ARRAY)
 		{
 			writeByteArray((byte[])aValue);
 			return;
@@ -460,7 +439,6 @@ public class StyxEncoder implements Encoder
 		}
 
 		mOutput.writeBit(hasNull);
-//		mOutput.writeVariableInt(length, 3, 0, false);
 		mOutput.writeExpGolomb(length, 3);
 
 		for (int i = 0; i < length; i++)
@@ -480,46 +458,76 @@ public class StyxEncoder implements Encoder
 	}
 
 
-	private void writeValue(FieldType aFieldType, Object aValue) throws IOException
+	private void writeValue(FieldType2 aFieldType, Object aValue) throws IOException
 	{
 		switch (aFieldType)
 		{
 			case BOOLEAN:
+			case BOOLEAN_ARRAY:
+			case BOOLEAN_ARRAYLIST:
+			case BOOLEAN_MATRIX:
 				mOutput.writeBit((Boolean)aValue);
 				break;
 			case BYTE:
+			case BYTE_ARRAY:
+			case BYTE_ARRAYLIST:
+			case BYTE_MATRIX:
 				mOutput.writeBits(0xff & (Byte)aValue, 8);
 				break;
 			case SHORT:
+			case SHORT_ARRAY:
+			case SHORT_ARRAYLIST:
+			case SHORT_MATRIX:
 				mOutput.writeVariableInt((Short)aValue, 3, 0, true);
 				break;
 			case CHAR:
+			case CHAR_ARRAY:
+			case CHAR_ARRAYLIST:
+			case CHAR_MATRIX:
 				mOutput.writeVariableInt((Character)aValue, 3, 0, false);
 				break;
 			case INT:
+			case INT_ARRAY:
+			case INT_ARRAYLIST:
+			case INT_MATRIX:
 				mOutput.writeVariableInt((Integer)aValue, 3, 0, true);
 				break;
 			case LONG:
-//				mOutput.writeVariableLong((Long)aValue, 3, 0, true);
+			case LONG_ARRAY:
+			case LONG_ARRAYLIST:
+			case LONG_MATRIX:
 				mOutput.writeVariableLong((Long)aValue-mDeltaLong, 3, 1, true);
 				mDeltaLong = (Long)aValue;
 				break;
 			case FLOAT:
+			case FLOAT_ARRAY:
+			case FLOAT_ARRAYLIST:
+			case FLOAT_MATRIX:
 				mOutput.writeVariableInt(Float.floatToIntBits((Float)aValue), 3, 1, false);
 				break;
 			case DOUBLE:
+			case DOUBLE_ARRAY:
+			case DOUBLE_ARRAYLIST:
+			case DOUBLE_MATRIX:
 				mOutput.writeVariableLong(Double.doubleToLongBits((Double)aValue), 3, 1, false);
 				break;
 			case STRING:
+			case STRING_ARRAY:
+			case STRING_ARRAYLIST:
+			case STRING_MATRIX:
 				packString(aValue);
 				break;
 			case DATE:
-				long time = ((Date)aValue).getTime();
-//				mOutput.writeVariableLong(time, 7, 0, false);
-//				mOutput.writeVariableLong(time-mDeltaDate, 3, 1, true);
+			case DATE_ARRAY:
+			case DATE_ARRAYLIST:
+			case DATE_MATRIX:
+//				mOutput.writeVariableLong(((Date)aValue).getTime(), 7, 0, true);
 				mLzjbDates.write(mOutput, new SimpleDateFormat("yyyyMMddHHmmssSSS").format(aValue).getBytes());
 				break;
 			case BUNDLE:
+			case BUNDLE_ARRAY:
+			case BUNDLE_ARRAYLIST:
+			case BUNDLE_MATRIX:
 				writeBundle((Bundle)aValue);
 				break;
 			default:
@@ -535,11 +543,7 @@ public class StyxEncoder implements Encoder
 
 		if (index != null)
 		{
-			inc("str");
-
 			mOutput.writeBit(1);
-//			mOutput.writeVariableInt(index, 3, 0, false);
-//			mOutput.writeVariableInt(tblStrings.encode(index), 3, 0, false);
 			mOutput.writeExpGolomb(mFreqStrings.encode(index), 3);
 			return true;
 		}
@@ -547,11 +551,8 @@ public class StyxEncoder implements Encoder
 		byte[] buffer = Convert.encodeUTF8((String)aValue);
 
 		mOutput.writeBit(0);
-//		mOutput.writeVariableInt(buffer.length, 3, 0, false);
-//		mOutput.writeVariableInt(tblStringLengths.encode(buffer.length), 3, 0, false);
 		mOutput.writeExpGolomb(mFreqStringLengths.encode(buffer.length), 3);
 
-//		mOutput.write(buffer);
 		mLzjbStrings.write(mOutput, buffer);
 
 		mStrings.put(s, mStrings.size());
@@ -560,8 +561,8 @@ public class StyxEncoder implements Encoder
 	}
 
 
-	private void inc(String aOperation)
+	public String getStatistics()
 	{
-		mStatisticsOperations.put(aOperation, mStatisticsOperations.getOrDefault(aOperation, 0) + 1);
+		return "" + mStatistics;
 	}
 }
