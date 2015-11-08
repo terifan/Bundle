@@ -231,35 +231,35 @@ public class StyxEncoder implements Encoder
 			signature.append(key);
 		}
 
-//		Integer header = mHeaders.get(signature.toString());
-//		if (header != null)
-//		{
-//			mOutput.writeBit(1);
-//
-//			if (header.intValue() == mLastHeaderIndex.getOrDefault(mPrevHeaderIndex, -1))
-//			{
-//				mOutput.writeBit(1);
-//				mPrevHeaderIndex = header;
-//			}
-//			else
-//			{
-//				if (mLastHeaderIndex.containsKey(mPrevHeaderIndex))
-//				{
-//					mOutput.writeBit(0);
-//				}
-//				
-//				mLastHeaderIndex.put(mPrevHeaderIndex, header);
-//				mPrevHeaderIndex = header;
-//
-//				mOutput.writeExpGolomb(mFreqHeaders.encode(header), 1);
-//			}
-//			return keys;
-//		}
-//
-//		mHeaders.put(signature.toString(), mHeaders.size());
-//
-//		mLastHeaderIndex.put(mPrevHeaderIndex, mHeaders.size() - 1);
-//		mPrevHeaderIndex = mHeaders.size() - 1;
+		Integer header = mHeaders.get(signature.toString());
+		if (header != null)
+		{
+			mOutput.writeBit(1);
+
+			if (header.intValue() == mLastHeaderIndex.getOrDefault(mPrevHeaderIndex, -1))
+			{
+				mOutput.writeBit(1);
+				mPrevHeaderIndex = header;
+			}
+			else
+			{
+				if (mLastHeaderIndex.containsKey(mPrevHeaderIndex))
+				{
+					mOutput.writeBit(0);
+				}
+				
+				mLastHeaderIndex.put(mPrevHeaderIndex, header);
+				mPrevHeaderIndex = header;
+
+				mOutput.writeExpGolomb(mFreqHeaders.encode(header), 1);
+			}
+			return keys;
+		}
+
+		mHeaders.put(signature.toString(), mHeaders.size());
+
+		mLastHeaderIndex.put(mPrevHeaderIndex, mHeaders.size() - 1);
+		mPrevHeaderIndex = mHeaders.size() - 1;
 
 		mOutput.writeBit(0);
 		mOutput.writeExpGolomb(mFreqKeysCount.encode(keys.length), 2);
@@ -274,8 +274,6 @@ public class StyxEncoder implements Encoder
 				continue;
 			}
 			
-			Log.out.print(fieldType.ordinal() + ",");
-
 			mTypeHuffman.encode(mOutput, fieldType.ordinal());
 
 			if (mKeys.containsKey(key))
@@ -294,7 +292,6 @@ public class StyxEncoder implements Encoder
 				mKeys.put(key, mKeys.size());
 			}
 		}
-		Log.out.println();
 
 		return keys;
 	}
