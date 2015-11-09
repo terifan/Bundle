@@ -7,7 +7,7 @@ import org.terifan.bundle.io.BitOutputStream;
 import org.terifan.bundle.bundle_test.Log;
 
 
-public class LZJB
+public class Deflate
 {
 	private final static int WINDOW_SIZE_BITS = 15; //16;
 	private final static int POINTERS_SIZE_BITS = 12;
@@ -71,7 +71,7 @@ public class LZJB
 		{27, 12, 12289}, {28, 13, 16385}, {29, 13, 24577}
 	};
 
-	public LZJB() throws IOException
+	public Deflate() throws IOException
 	{
 //		huffmanDistance = new Huffman(W + 1);
 		huffmanLiteral = new Huffman(285);
@@ -271,10 +271,6 @@ public class LZJB
 				else if (distance == distances[1] - 3) d = 15;
 				else d = 16 + distance;
 
-//				aBitOutputStream.writeBit(1);
-//				aBitOutputStream.writeBits(huffmanDistance[d][0], huffmanDistance[d][1]);
-//				aBitOutputStream.writeBits(huffmanLength[l][0], huffmanLength[l][1]);
-
 				for (int[] lit : literalCodes)
 				{
 					if (matchLen < lit[2]+(1<<lit[1]))
@@ -372,7 +368,7 @@ public class LZJB
 	{
 		try
 		{
-			LZJB compressor = new LZJB();
+			Deflate compressor = new Deflate();
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			try (BitOutputStream bos = new BitOutputStream(baos))
 			{

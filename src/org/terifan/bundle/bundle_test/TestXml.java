@@ -11,7 +11,7 @@ import org.terifan.bundle.BinaryEncoder;
 import org.terifan.bundle.io.BitOutputStream;
 import org.terifan.bundle.Bundle;
 import org.terifan.bundle.ConvertXml;
-import org.terifan.bundle.compression.LZJB;
+import org.terifan.bundle.compression.Deflate;
 import org.terifan.bundle.TextDecoder;
 import org.terifan.bundle.TextEncoder;
 import org.xml.sax.SAXException;
@@ -82,7 +82,7 @@ public class TestXml
 		
 		ByteArrayOutputStream lzjbXml = new ByteArrayOutputStream();
 		BitOutputStream bos = new BitOutputStream(lzjbXml);
-		new LZJB().write(bos, xml);
+		new Deflate().write(bos, xml);
 
 //		if (aFilename.equals("tiny.xml"))
 //		{

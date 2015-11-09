@@ -2,7 +2,7 @@ package org.terifan.bundle;
 
 import org.terifan.bundle.io.BitOutputStream;
 import org.terifan.bundle.compression.FrequencyTable;
-import org.terifan.bundle.compression.LZJB;
+import org.terifan.bundle.compression.Deflate;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -34,10 +34,10 @@ public class StyxEncoder implements Encoder
 
 	private long mDeltaLong;
 
-	private LZJB mLzjbStrings;
-	private LZJB mLzjbKeys;
-	private LZJB mLzjbBytes;
-	private LZJB mLzjbDates;
+	private Deflate mLzjbStrings;
+	private Deflate mLzjbKeys;
+	private Deflate mLzjbBytes;
+	private Deflate mLzjbDates;
 	
 	private Huffman mTypeHuffman;
 	private Huffman mBundleHuffman;
@@ -78,10 +78,10 @@ public class StyxEncoder implements Encoder
 		mFreqKeyLengths = new FrequencyTable(50);
 		mFreqKeysCount = new FrequencyTable(1000);
 		
-		mLzjbStrings = new LZJB();
-		mLzjbKeys = new LZJB();
-		mLzjbBytes = new LZJB();
-		mLzjbDates = new LZJB();
+		mLzjbStrings = new Deflate();
+		mLzjbKeys = new Deflate();
+		mLzjbBytes = new Deflate();
+		mLzjbDates = new Deflate();
 
 		mOutput = new BitOutputStream(aOutputStream);
 		mKeys = new TreeMap<>();
