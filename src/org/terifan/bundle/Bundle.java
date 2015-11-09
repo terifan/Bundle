@@ -22,7 +22,6 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 
 	private final Map<String, Object> mValues;
 	private final Map<String, FieldType2> mTypes;
-	private boolean mStrict;
 
 
 	/**
@@ -42,19 +41,6 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	{
 		this();
 		putAll(aOther);
-	}
-
-
-	public Bundle setStrict(boolean aStrict)
-	{
-		mStrict = aStrict;
-		return this;
-	}
-
-
-	public boolean isStrict()
-	{
-		return mStrict;
 	}
 
 
@@ -136,7 +122,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		try
 		{
-			return ((Bundle)o).setStrict(mStrict);
+			return (Bundle)o;
 		}
 		catch (ClassCastException e)
 		{
@@ -436,7 +422,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		try
 		{
-			if (mStrict || o instanceof Boolean)
+			if (o instanceof Boolean)
 			{
 				return (Boolean)o;
 			}
@@ -524,10 +510,6 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		try
 		{
-			if (mStrict)
-			{
-				return (Byte)o;
-			}
 			return ((Number)o).byteValue();
 		}
 		catch (ClassCastException e)
@@ -612,10 +594,6 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		try
 		{
-			if (mStrict || o instanceof Character)
-			{
-				return (Character)o;
-			}
 			return (char)((Number)o).shortValue();
 		}
 		catch (ClassCastException e)
@@ -700,10 +678,6 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		try
 		{
-			if (mStrict)
-			{
-				return (Double)o;
-			}
 			return ((Number)o).doubleValue();
 		}
 		catch (ClassCastException e)
@@ -788,10 +762,6 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		try
 		{
-			if (mStrict)
-			{
-				return (Float)o;
-			}
 			return ((Number)o).floatValue();
 		}
 		catch (ClassCastException e)
@@ -867,10 +837,6 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		try
 		{
-			if (mStrict)
-			{
-				return (Integer)o;
-			}
 			return ((Number)o).intValue();
 		}
 		catch (ClassCastException e)
@@ -964,10 +930,6 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		try
 		{
-			if (mStrict)
-			{
-				return (Long)o;
-			}
 			return ((Number)o).longValue();
 		}
 		catch (ClassCastException e)
@@ -1052,10 +1014,6 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		try
 		{
-			if (mStrict)
-			{
-				return (Short)o;
-			}
 			return ((Number)o).shortValue();
 		}
 		catch (ClassCastException e)
@@ -1226,7 +1184,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 		try
 		{
-			if (!mStrict && !(o instanceof Date))
+			if (o instanceof Date)
 			{
 				if (o instanceof Long)
 				{

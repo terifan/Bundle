@@ -21,6 +21,7 @@ public class Huffman
 	private final int mSymbolCount;
 	private int[] mDecoderLookup;
 	private int mMaxCodeLength;
+	private int[] mFrequencies;
 
 
 	/**
@@ -40,9 +41,9 @@ public class Huffman
 			mNodes[i].mFrequency = 1;
 		}
 
-		int[] freq = new int[aSymbolCount];
-		Arrays.fill(freq, 1);
-		buildTree(freq);
+		mFrequencies = new int[aSymbolCount];
+		Arrays.fill(mFrequencies, 1);
+		buildTree(mFrequencies);
 	}
 
 
@@ -54,9 +55,14 @@ public class Huffman
 	 */
 	public Huffman buildTree(int... aFrequencies)
 	{
-		if (aFrequencies.length != mSymbolCount)
+		if (aFrequencies.length > 0)
 		{
-			throw new IllegalArgumentException();
+			if (aFrequencies.length != mSymbolCount)
+			{
+				throw new IllegalArgumentException();
+			}
+
+			System.arraycopy(aFrequencies, 0, mFrequencies, 0, mSymbolCount);
 		}
 
 		Node[] nodes = mNodes.clone();
@@ -66,9 +72,9 @@ public class Huffman
 		{
 			mNodes[i].mCode = 0;
 			mNodes[i].mLength = 0;
-			mNodes[i].mFrequency = aFrequencies[i];
+			mNodes[i].mFrequency = mFrequencies[i];
 
-			if (aFrequencies[i] > 0)
+			if (mFrequencies[i] > 0)
 			{
 				len++;
 			}
@@ -275,7 +281,7 @@ public class Huffman
 	{
 		if (aSymbol < 0 || aSymbol >= mSymbolCount)
 		{
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Illegal symbol: " + aSymbol);
 		}
 
 		Node node = mNodes[aSymbol];
@@ -297,6 +303,18 @@ public class Huffman
 	public int getMaxCodeLength()
 	{
 		return mMaxCodeLength;
+	}
+	
+	
+	public long getCumulativeFrequency()
+	{
+		long freq = 0;
+		for (Node node : mNodes)
+		{
+			freq += node.mFrequency;
+		}
+
+		return freq;
 	}
 
 
@@ -465,6 +483,25 @@ public class Huffman
 		}
 //		Log.out.print(")");
 //		Log.out.println();
+	}
+
+
+	public void increment(int aIndex)
+	{
+		mFrequencies[aIndex]++;
+	}
+
+
+	public void buildCustom(int[][] aTree)
+	{
+		for (int i = 0; i < mSymbolCount; i++)
+		{
+			mNodes[i].mCode = aTree[i][0];
+			mNodes[i].mLength = aTree[i][1];
+			mNodes[i].mFrequency = 1;
+		}
+
+//		updateDecoderLookup();
 	}
 	
 

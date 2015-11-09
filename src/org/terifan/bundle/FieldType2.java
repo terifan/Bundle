@@ -1,7 +1,7 @@
 package org.terifan.bundle;
 
 
-public enum FieldType2
+enum FieldType2
 {
 	BOOLEAN,
 	BYTE,

@@ -9,10 +9,11 @@ import org.terifan.bundle.bundle_test.Log;
 
 public class LZJB
 {
-	private final static int WINDOW_SIZE_BITS = 16;
+	private final static int WINDOW_SIZE_BITS = 15; //16;
 	private final static int POINTERS_SIZE_BITS = 12;
 	private final static int POINTER_MAX_CHAIN = 8;
-	private final static int MAX_MATCH = 1264;
+//	private final static int MAX_MATCH = 1264;
+	private final static int MAX_MATCH = 258;
 
 	private final static int W = (1 << WINDOW_SIZE_BITS) - 1;
 	private final static int P = (1 << POINTERS_SIZE_BITS) - 1;
@@ -22,43 +23,91 @@ public class LZJB
 	
 	private int mTotal;
 	
-	private FrequencyTable[] mLiteralStats = new FrequencyTable[64];
-	private FrequencyTable mLengthStats = new FrequencyTable(W + 1);
+//	private FrequencyTable[] mLiteralStats = new FrequencyTable[64];
+//	private FrequencyTable mLengthStats = new FrequencyTable(W + 1);
 
 	private int[] distances = {
 		4,8,9,10
 	};
 
-	private int[][] huffmanLength;
-	private int[][] huffmanDistance;
-	private int[][] huffmanLiteral;
+//	Huffman huffmanDistance;
+	Huffman huffmanLiteral;
+
+	static int[][] kBlockLengthPrefixCode = {
+		{   1,  2}, {    5,  2}, {  9,   2}, {  13,  2},
+		{  17,  3}, {   25,  3}, {  33,  3}, {  41,  3},
+		{  49,  4}, {   65,  4}, {  81,  4}, {  97,  4},
+		{ 113,  5}, {  145,  5}, { 177,  5}, { 209,  5},
+		{ 241,  6}, {  305,  6}, { 369,  7}, { 497,  8},
+		{ 753,  9}, { 1265, 10}, {2289, 11}, {4337, 12},
+		{8433, 13}, {16625, 24}
+	};
+
+	static int[][] literalCodes = 
+	{
+		{257, 0,  3}, {258, 0,  4}, {259, 0,  5}, 
+		{260, 0,  6}, {261, 0,  7}, {262, 0,  8}, 
+		{263, 0,  9}, {264, 0, 10}, {265, 1, 11}, 
+		{266, 1, 13}, {267, 1, 15}, {268, 1, 17}, 
+		{269, 2, 19}, {270, 2, 23}, {271, 2, 27}, 
+		{272, 2, 31}, {273, 3, 35}, {274, 3, 43}, 
+		{275, 3, 51}, {276, 3, 59}, {277, 4, 67},
+		{278, 4, 83}, {279, 4, 99}, {280, 4, 115},
+		{281, 5, 131}, {282, 5, 163}, {283, 5, 195},
+		{284, 5, 227}, {285, 0, 258}
+	};
+
+	static int[][] distanceCodes = 
+	{
+		{0, 0, 1}, {1, 0, 2}, {2, 0, 3}, 
+		{3, 0, 4}, {4, 1, 5}, {5, 1, 7}, 
+		{6, 2, 9}, {7, 2, 13}, {8, 3, 17}, 
+		{9, 3, 25}, {10, 4, 33}, {11, 4, 49}, 
+		{12, 5, 65}, {13, 5, 97}, {14, 6, 129}, 
+		{15, 6, 193}, {16, 7, 257}, {17, 7, 385}, 
+		{18, 8, 513}, {19, 8, 769}, {20, 9, 1025},
+		{21, 9, 1537}, {22, 10, 2049}, {23, 10, 3073},
+		{24, 11, 4097}, {25, 11, 6145}, {26, 12, 8193},
+		{27, 12, 12289}, {28, 13, 16385}, {29, 13, 24577}
+	};
 
 	public LZJB() throws IOException
 	{
-		huffmanLength = constructSuffixTree(3,3,5,6,7,10);
-		huffmanDistance = constructSuffixTree(1,4,6,9,11,12,14,14,15);
-		huffmanLiteral = constructSuffixTree(4,4,5,6,7);
-		
-		for (int i = 0; i < mLiteralStats.length; i++)
-		{
-			mLiteralStats[i] = new FrequencyTable(256);
+//		huffmanDistance = new Huffman(W + 1);
+		huffmanLiteral = new Huffman(285);
 
-			mLiteralStats[i].encode(' ');
-			mLiteralStats[i].encode('.');
-			mLiteralStats[i].encode(',');
-			for (int j = '0'; j <= '9'; j++)
+		int[][] tree = new int[285][2];
+		for (int d = 0; d < 285; d++)
+		{
+			if (d <= 143) 
 			{
-				mLiteralStats[i].encode(j);
+				tree[d][0] = 0b00110000 + d;
+				tree[d][1] = 8;
 			}
-			for (int j = 'a'; j <= 'z'; j++)
+			else if (d <= 255) 
 			{
-				mLiteralStats[i].encode(j);
+				tree[d][0] = 0b110010000 + d - 144;
+				tree[d][1] = 9;
 			}
-			for (int j = 'A'; j <= 'Z'; j++)
+			else if (d <= 279) 
 			{
-				mLiteralStats[i].encode(j);
+				tree[d][0] = 0b0000000 + d - 256;
+				tree[d][1] = 7;
+			}
+			else 
+			{
+				tree[d][0] = 0b11000000 + d - 280;
+				tree[d][1] = 8;
 			}
 		}
+
+		huffmanLiteral.buildCustom(tree);
+		
+		
+//		for (int i = 0; i < mLiteralStats.length; i++)
+//		{
+//			mLiteralStats[i] = new FrequencyTable(256);
+//		}
 
 //		byte[] buf = new byte[122784];
 //		try (InputStream in = getClass().getResourceAsStream("dic.bin"))
@@ -159,14 +208,6 @@ public class LZJB
 	
 	private void flushBlock(BitOutputStream aBitOutputStream, int[][] aCommands, int aCommandCount, byte[] aBuffer) throws IOException
 	{
-		boolean fail = false;
-		for (int i = 0; i < aCommandCount; i++)
-		{
-			fail |= aCommands[i][0] == 1;
-		}
-		
-		aBitOutputStream.writeBit(fail ? 1 : 0);
-
 		for (int i = 0; i < aCommandCount; i++)
 		{
 			int matchLen = aCommands[i][0];
@@ -197,21 +238,18 @@ public class LZJB
 				
 				int literal = 0xff & aBuffer[offset - matchLen];
 
-				int ch = mLiteralStats[context].encode(literal);
+//				int ch = mLiteralStats[context].encode(literal);
 
-				if (!fail)
-				{
-					aBitOutputStream.writeBit(0);
-				}
-
-				aBitOutputStream.writeBits(huffmanLiteral[ch][0], huffmanLiteral[ch][1]);
-
-//				Log.out.print((char)aBuffer[offset - matchLen]);
+//				literal = 0xff & (literal - context);
+				
+				huffmanLiteral.encode(aBitOutputStream, literal);
+				
+//				Log.out.print((char)literal);
 			}
 			else
 			{
 //				Log.out.print("["+(windowPosition - matchPosition - 1)+","+(matchLen - 3)+"]");
-
+				
 				int distance = windowPosition - matchPosition - 1;
 				int d;
 				
@@ -233,11 +271,36 @@ public class LZJB
 				else if (distance == distances[1] - 3) d = 15;
 				else d = 16 + distance;
 
-				int l = mLengthStats.encode(matchLen - 3);
+//				aBitOutputStream.writeBit(1);
+//				aBitOutputStream.writeBits(huffmanDistance[d][0], huffmanDistance[d][1]);
+//				aBitOutputStream.writeBits(huffmanLength[l][0], huffmanLength[l][1]);
 
-				aBitOutputStream.writeBit(1);
-				aBitOutputStream.writeBits(huffmanDistance[d][0], huffmanDistance[d][1]);
-				aBitOutputStream.writeBits(huffmanLength[l][0], huffmanLength[l][1]);
+				for (int[] lit : literalCodes)
+				{
+					if (matchLen < lit[2]+(1<<lit[1]))
+					{
+//						Log.out.print("[" + (lit[0] - 1) + "-" + (matchLen - lit[2]) + ",");
+						huffmanLiteral.encode(aBitOutputStream, lit[0] - 1);
+						aBitOutputStream.writeBits(matchLen - lit[2], lit[1]);
+						break;
+					}
+				}
+
+				for (int[] dist : distanceCodes)
+				{
+					if (d < dist[2] + (1<<dist[1]))
+					{
+						aBitOutputStream.writeBits(dist[0], 5);
+						aBitOutputStream.writeBits(d - dist[2], dist[1]);
+
+//						huffmanDistance.encode(aBitOutputStream, d - dist[2]);
+
+//						Log.out.print("" + dist[0] + "-" + d + "],");
+						
+						break;
+					}
+				}
+
 
 				distances[3] = distances[2];
 				distances[2] = distances[1];

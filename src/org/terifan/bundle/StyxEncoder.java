@@ -23,13 +23,14 @@ public class StyxEncoder implements Encoder
 
 	private HashMap<String,Integer> mStrings;
 	private HashMap<String,Integer> mHeaders;
+	private HashMap<String,Integer> mHeaderTypes;
 
-	private FrequencyTable mFreqHeaders = new FrequencyTable(1000);
-	private FrequencyTable mFreqStrings = new FrequencyTable(1000);
-	private FrequencyTable mFreqStringLengths = new FrequencyTable(1000);
-	private FrequencyTable mFreqKeys = new FrequencyTable(1000);
-	private FrequencyTable mFreqKeyLengths = new FrequencyTable(50);
-	private FrequencyTable mFreqKeysCount = new FrequencyTable(1000);
+	private FrequencyTable mFreqHeaders;
+	private FrequencyTable mFreqStrings;
+	private FrequencyTable mFreqStringLengths;
+	private FrequencyTable mFreqKeys;
+	private FrequencyTable mFreqKeyLengths;
+	private FrequencyTable mFreqKeysCount;
 
 	private long mDeltaLong;
 
@@ -39,8 +40,9 @@ public class StyxEncoder implements Encoder
 	private LZJB mLzjbDates;
 	
 	private Huffman mTypeHuffman;
+	private Huffman mBundleHuffman;
 
-	private TreeMap<FieldType2,Integer> mStatistics = new TreeMap<>();
+	private TreeMap<FieldType2,Integer> mStatistics;
 
 
 	public StyxEncoder()
@@ -67,6 +69,15 @@ public class StyxEncoder implements Encoder
 	@Override
 	public void marshal(Bundle aBundle, OutputStream aOutputStream) throws IOException
 	{
+		mStatistics = new TreeMap<>();
+
+		mFreqHeaders = new FrequencyTable(1000);
+		mFreqStrings = new FrequencyTable(1000);
+		mFreqStringLengths = new FrequencyTable(1000);
+		mFreqKeys = new FrequencyTable(1000);
+		mFreqKeyLengths = new FrequencyTable(50);
+		mFreqKeysCount = new FrequencyTable(1000);
+		
 		mLzjbStrings = new LZJB();
 		mLzjbKeys = new LZJB();
 		mLzjbBytes = new LZJB();
@@ -77,44 +88,29 @@ public class StyxEncoder implements Encoder
 
 		mStrings = new HashMap<>();
 		mHeaders = new HashMap<>();
+		mHeaderTypes = new HashMap<>();
 
-		int[] histogram = new int[64];
-		buildHistogram(aBundle, histogram);
+		int[] typeHistogram = new int[64];
+		HashMap<Integer,Integer> headerHistogram = new HashMap<>();
 
-//		for (int i : histogram) Log.out.print(i+",");
-//		Log.out.println();
+		buildHistogram(aBundle, typeHistogram, headerHistogram);
 
-		mTypeHuffman = new Huffman(64).buildTree(histogram);
+		mTypeHuffman = new Huffman(64).buildTree(typeHistogram);
+//		mTypeHuffman.encodeCodebook(mOutput);
 
-//			int[] lengths = mTypeHuffman.extractLengths();
-//			int[][] codebook = mTypeHuffman.extractCodebook();
-//			Log.out.println("---------------------------");
-//			for (int i : lengths) Log.out.print(i+",");
-//			Log.out.println();
-//			Log.out.println("---------------------------");
-//			Log.out.print("(");
-//			for (int i : codebook[0])
-//			{
-//				Log.out.print(i+",");
-//			}
-//			Log.out.print("),(");
-//			for (int i : codebook[1])
-//			{
-//				Log.out.print(i+",");
-//			}
-//			Log.out.println(")");
-//			Log.out.println("---------------------------------");
 
-			mTypeHuffman.encodeCodebook(mOutput);
+		int[] bundleHistogramInt = new int[headerHistogram.size()];
+		for (int i = 0; i < bundleHistogramInt.length; i++)
+		{
+			bundleHistogramInt[i] = 1; // headerHistogram.get(i);
+		}
 
-//			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//			BitOutputStream bos = new BitOutputStream(baos);
-////			mTypeHuffman.encodeLengths(bos);
-//			mTypeHuffman.encodeCodebook(bos);
-//			bos.close();
-//			Log.out.println("#"+baos.size());
-			
-//			mOutput.writeBits(aValue, aLength);
+		mOutput.writeExpGolomb(bundleHistogramInt.length, 4);
+
+		mBundleHuffman = new Huffman(bundleHistogramInt.length);
+//		mBundleHuffman = new Huffman(bundleHistogramInt.length).buildTree(bundleHistogramInt);
+//		mBundleHuffman.encodeCodebook(mOutput);
+
 
 		writeBundle(aBundle);
 
@@ -124,7 +120,7 @@ public class StyxEncoder implements Encoder
 	}
 
 
-	private void buildHistogram(Bundle aBundle, int[] aHistogram) throws IOException
+	private void buildHistogram(Bundle aBundle, int[] aHistogram, HashMap<Integer,Integer> aHeaderHistogram) throws IOException
 	{
 		if (aBundle == null)
 		{
@@ -132,7 +128,21 @@ public class StyxEncoder implements Encoder
 		}
 
 		String[] keys = aBundle.keySet().toArray(new String[aBundle.size()]);
-		
+
+		String signature = buildBundleSignature(aBundle, keys);
+
+		Integer header = mHeaderTypes.get(signature);
+		if (header != null)
+		{
+			aHeaderHistogram.put(header, aHeaderHistogram.get(header) + 1);
+		}
+		else
+		{
+			aHeaderHistogram.put(mHeaderTypes.size(), 1);
+			mHeaderTypes.put(signature, mHeaderTypes.size());
+		}
+
+
 		for (String key : keys)
 		{
 			FieldType2 fieldType = aBundle.getType(key);
@@ -142,18 +152,18 @@ public class StyxEncoder implements Encoder
 			switch (fieldType)
 			{
 				case BUNDLE:
-					buildHistogram(aBundle.getBundle(key), aHistogram);
+					buildHistogram(aBundle.getBundle(key), aHistogram, aHeaderHistogram);
 					break;
 				case BUNDLE_ARRAY:
 					for (Bundle b : aBundle.getBundleArray(key))
 					{
-						buildHistogram(b, aHistogram);
+						buildHistogram(b, aHistogram, aHeaderHistogram);
 					}
 					break;
 				case BUNDLE_ARRAYLIST:
 					for (Bundle b : aBundle.getBundleArrayList(key))
 					{
-						buildHistogram(b, aHistogram);
+						buildHistogram(b, aHistogram, aHeaderHistogram);
 					}
 					break;
 				case BUNDLE_MATRIX:
@@ -163,7 +173,7 @@ public class StyxEncoder implements Encoder
 						{
 							for (Bundle b : bb)
 							{
-								buildHistogram(b, aHistogram);
+								buildHistogram(b, aHistogram, aHeaderHistogram);
 							}
 						}
 					}
@@ -181,11 +191,6 @@ public class StyxEncoder implements Encoder
 		{
 			FieldType2 fieldType = aBundle.getType(key);
 			Object value = aBundle.get(key);
-			
-			if (value == null)
-			{
-				continue;
-			}
 
 			mStatistics.put(fieldType, mStatistics.getOrDefault(fieldType, 0) + 1);
 
@@ -215,23 +220,9 @@ public class StyxEncoder implements Encoder
 	{
 		String[] keys = aBundle.keySet().toArray(new String[aBundle.size()]);
 
-		StringBuilder signature = new StringBuilder();
+		String signature = buildBundleSignature(aBundle, keys);
 
-		for (String key : keys)
-		{
-			Object value = aBundle.get(key);
-			
-			if (value == null)
-			{
-				continue;
-			}
-
-			signature.append(aBundle.getType(key).ordinal());
-			signature.append(":");
-			signature.append(key);
-		}
-
-		Integer header = mHeaders.get(signature.toString());
+		Integer header = mHeaders.get(signature);
 		if (header != null)
 		{
 			mOutput.writeBit(1);
@@ -251,15 +242,20 @@ public class StyxEncoder implements Encoder
 				mLastHeaderIndex.put(mPrevHeaderIndex, header);
 				mPrevHeaderIndex = header;
 
-				mOutput.writeExpGolomb(mFreqHeaders.encode(header), 1);
+//				mOutput.writeExpGolomb(mFreqHeaders.encode(header), 1);
+				mBundleHuffman.encode(mOutput, header);
+				mBundleHuffman.increment(header);
+				mBundleHuffman.buildTree();
 			}
+
 			return keys;
 		}
 
-		mHeaders.put(signature.toString(), mHeaders.size());
+		int headerIndex = mHeaders.size();
 
-		mLastHeaderIndex.put(mPrevHeaderIndex, mHeaders.size() - 1);
-		mPrevHeaderIndex = mHeaders.size() - 1;
+		mHeaders.put(signature, headerIndex);
+		mLastHeaderIndex.put(mPrevHeaderIndex, headerIndex);
+		mPrevHeaderIndex = headerIndex;
 
 		mOutput.writeBit(0);
 		mOutput.writeExpGolomb(mFreqKeysCount.encode(keys.length), 2);
@@ -273,8 +269,10 @@ public class StyxEncoder implements Encoder
 			{
 				continue;
 			}
-			
+
 			mTypeHuffman.encode(mOutput, fieldType.ordinal());
+			mTypeHuffman.increment(fieldType.ordinal());
+			mTypeHuffman.buildTree();
 
 			if (mKeys.containsKey(key))
 			{
@@ -294,6 +292,22 @@ public class StyxEncoder implements Encoder
 		}
 
 		return keys;
+	}
+
+
+	private String buildBundleSignature(Bundle aBundle, String[] aKeys)
+	{
+		StringBuilder signature = new StringBuilder();
+
+		for (String key : aKeys)
+		{
+			signature.append(aBundle.getType(key).ordinal());
+			signature.append(":");
+			signature.append(key);
+			signature.append(",");
+		}
+
+		return signature.toString();
 	}
 
 
@@ -560,6 +574,6 @@ public class StyxEncoder implements Encoder
 
 	public String getStatistics()
 	{
-		return "" + mStatistics;
+		return mBundleHuffman.getCumulativeFrequency() + ", " + mTypeHuffman.getCumulativeFrequency() + ", " + mStatistics;
 	}
 }
