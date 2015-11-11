@@ -16,7 +16,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 
-public final class Bundle implements Cloneable, Externalizable, Iterable<String>
+public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iterable<String>
 {
 	private final static long serialVersionUID = 1L;
 
@@ -1288,7 +1288,7 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	/**
 	 * Inserts all mappings from the given Bundle into this Bundle.
 	 */
-	public Bundle putAll(Bundle aOther)
+	public Bundle putAll(Bundle<T> aOther)
 	{
 		for (String key : aOther)
 		{
@@ -1552,10 +1552,10 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	/**
 	 * Inserts a double value into the mapping of this Bundle, replacing any existing value for the given key.
 	 */
-	public Bundle putDouble(String aKey, double aValue)
+	public T putDouble(String aKey, double aValue)
 	{
 		put(aKey, aValue, FieldType2.DOUBLE);
-		return this;
+		return (T)this;
 	}
 
 
@@ -1761,10 +1761,10 @@ public final class Bundle implements Cloneable, Externalizable, Iterable<String>
 	/**
 	 * Inserts a String value into the mapping of this Bundle, replacing any existing value for the given key.
 	 */
-	public Bundle putString(String aKey, String aValue)
+	public T putString(String aKey, String aValue)
 	{
 		put(aKey, aValue, FieldType2.STRING);
-		return this;
+		return (T)this;
 	}
 
 

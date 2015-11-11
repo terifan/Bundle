@@ -8,6 +8,7 @@ import java.lang.reflect.Array;
 import java.nio.ByteBuffer;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import org.terifan.bundle.bundle_test.Log;
 
 
@@ -76,7 +77,8 @@ public class BinaryEncoder implements Encoder
 
 	private String[] writeBundleHeader(Bundle aBundle) throws IOException
 	{
-		String[] keys = aBundle.keySet().toArray(new String[aBundle.size()]);
+		Set<String> keySet = aBundle.keySet();
+		String[] keys = keySet.toArray(new String[aBundle.size()]);
 
 		mOutput.writeVLC(keys.length);
 

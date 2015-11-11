@@ -11,6 +11,7 @@ import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.TreeMap;
 import org.terifan.bundle.bundle_test.Log;
 import org.terifan.bundle.compression.Huffman;
@@ -38,7 +39,7 @@ public class StyxEncoder implements Encoder
 	private Deflate mLzjbKeys;
 	private Deflate mLzjbBytes;
 	private Deflate mLzjbDates;
-	
+
 	private Huffman mTypeHuffman;
 	private Huffman mBundleHuffman;
 
@@ -77,7 +78,7 @@ public class StyxEncoder implements Encoder
 		mFreqKeys = new FrequencyTable(1000);
 		mFreqKeyLengths = new FrequencyTable(50);
 		mFreqKeysCount = new FrequencyTable(1000);
-		
+
 		mLzjbStrings = new Deflate();
 		mLzjbKeys = new Deflate();
 		mLzjbBytes = new Deflate();
@@ -127,7 +128,8 @@ public class StyxEncoder implements Encoder
 			return;
 		}
 
-		String[] keys = aBundle.keySet().toArray(new String[aBundle.size()]);
+		Set<String> keySet = aBundle.keySet();
+		String[] keys = keySet.toArray(new String[aBundle.size()]);
 
 		String signature = buildBundleSignature(aBundle, keys);
 
@@ -238,7 +240,7 @@ public class StyxEncoder implements Encoder
 				{
 					mOutput.writeBit(0);
 				}
-				
+
 				mLastHeaderIndex.put(mPrevHeaderIndex, header);
 				mPrevHeaderIndex = header;
 
@@ -264,7 +266,7 @@ public class StyxEncoder implements Encoder
 		{
 			FieldType2 fieldType = aBundle.getType(key);
 			Object value = aBundle.get(key);
-			
+
 			if (value == null)
 			{
 				continue;
