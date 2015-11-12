@@ -20,7 +20,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 
-public class XMLEncoder
+public class XMLEncoder<T extends Bundle>
 {
 	private final static String NS = "http://www.w3.org/2001/XMLSchema-instance";
 
@@ -109,7 +109,7 @@ public class XMLEncoder
 	}
 
 
-	private void writeBundle(Bundle aBundle, Node aElement) throws IOException
+	private void writeBundle(Bundle<T> aBundle, Node aElement) throws IOException
 	{
 		Document ownerDocument = aElement.getOwnerDocument() == null ? (Document)aElement : aElement.getOwnerDocument();
 
