@@ -8,7 +8,7 @@ import java.lang.reflect.Array;
 import java.nio.ByteBuffer;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
+import org.terifan.bundle.bundle_test.Log;
 
 
 public class BinaryEncoder implements Encoder
@@ -46,8 +46,13 @@ public class BinaryEncoder implements Encoder
 
 	private void writeBundle(Bundle aBundle) throws IOException
 	{
-		Set<String> keySet = aBundle.keySet();
-		String[] keys = keySet.toArray(new String[aBundle.size()]);
+		if (aBundle == null)
+		{
+			mOutput.writeVLC(-1);
+			return;
+		}
+
+		String[] keys = aBundle.keySet().toArray(new String[aBundle.size()]);
 
 		mOutput.writeVLC(keys.length);
 
@@ -63,42 +68,36 @@ public class BinaryEncoder implements Encoder
 		for (String key : keys)
 		{
 			writeString(key);
-		}
 
-		for (String key : keys)
-		{
 			Object value = aBundle.get(key);
-
 			int type = aBundle.getType(key);
+
 			ObjectType objectType = ObjectType.values()[type >> 8];
 			ValueType valueType = ValueType.values()[type & 0xff];
 
-			if (objectType == ObjectType.VALUE)
+			switch (objectType)
 			{
-				writeValue(valueType, value);
-				mOutput.align();
-			}
-			else if (objectType == ObjectType.ARRAY)
-			{
-				writeArray(valueType, value);
-			}
-			else if (objectType == ObjectType.ARRAYLIST)
-			{
-				writeArray(valueType, ((List)value).toArray());
-			}
-			else if (objectType == ObjectType.MATRIX)
-			{
-				writeMatrix(valueType, value);
-			}
-			else
-			{
-				throw new InternalError();
+				case VALUE:
+					writeValue(valueType, value);
+					mOutput.align();
+					break;
+				case ARRAY:
+					writeArray(valueType, value);
+					break;
+				case ARRAYLIST:
+					writeArray(valueType, ((List)value).toArray());
+					break;
+				case MATRIX:
+					writeMatrix(valueType, value);
+					break;
+				default:
+					throw new InternalError();
 			}
 		}
 	}
 
 
-	private void writeMatrix(ValueType aValueType, Object aValue) throws ArrayIndexOutOfBoundsException, IOException, IllegalArgumentException
+	private void writeMatrix(ValueType aValueType, Object aValue) throws IOException
 	{
 		int length = Array.getLength(aValue);
 		boolean hasNull = false;
@@ -208,13 +207,31 @@ public class BinaryEncoder implements Encoder
 				writeString((String)aValue);
 				break;
 			case DATE:
-				mOutput.writeVLC(((Date)aValue).getTime());
+				writeDate(aValue);
 				break;
 			case BUNDLE:
 				writeBundle((Bundle)aValue);
 				break;
 			default:
 				throw new IOException("Unsupported field type: " + aValueType);
+		}
+	}
+
+
+	private void writeDate(Object aValue) throws IOException
+	{
+		if (aValue == null)
+		{
+			mOutput.writeVLC(-1);
+		}
+		else
+		{
+			long time = ((Date)aValue).getTime();
+			if (time < 0)
+			{
+				throw new IllegalArgumentException("Negative time not supported: " + aValue);
+			}
+			mOutput.writeVLC(time);
 		}
 	}
 
@@ -227,8 +244,9 @@ public class BinaryEncoder implements Encoder
 		}
 		else
 		{
-			mOutput.writeVLC(aValue.length());
-			mOutput.write(Convert.encodeUTF8(aValue));
+			byte[] buf = Convert.encodeUTF8(aValue);
+			mOutput.writeVLC(buf.length);
+			mOutput.write(buf);
 		}
 	}
 }

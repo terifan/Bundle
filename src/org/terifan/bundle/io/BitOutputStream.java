@@ -46,9 +46,16 @@ public class BitOutputStream implements AutoCloseable
 
 	public void writeBits(int aValue, int aLength) throws IOException
 	{
-		while (aLength-- > 0)
+		if (aLength == 8 && mBitsToGo == 8)
 		{
-			writeBit((aValue >>> aLength) & 1);
+			mOutputStream.write(aValue);
+		}
+		else
+		{
+			while (aLength-- > 0)
+			{
+				writeBit((aValue >>> aLength) & 1);
+			}
 		}
 	}
 
@@ -265,22 +272,18 @@ public class BitOutputStream implements AutoCloseable
 	{
 		aValue = (aValue << 1) ^ (aValue >> 63);
 
-		for (int len = 0;;)
+		for (;;)
 		{
-			writeBits((int)(aValue & 127), 7);
+			int b = (int)(aValue & 127);
 			aValue >>>= 7;
-			len += 7;
 
 			if (aValue == 0)
 			{
-				if (len < 64)
-				{
-					writeBit(0);
-				}
+				writeBits(b, 8);
 				break;
 			}
 
-			writeBit(1);
+			writeBits(0x80 + b, 8);
 		}
 	}
 

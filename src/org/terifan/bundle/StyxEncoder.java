@@ -17,7 +17,7 @@ import org.terifan.bundle.bundle_test.Log;
 import org.terifan.bundle.compression.Huffman;
 
 
-public class StyxEncoder<T extends Bundle> implements Encoder
+public class StyxEncoder implements Encoder
 {
 	private TreeMap<String,Integer> mKeys;
 	private BitOutputStream mOutput;
@@ -121,7 +121,7 @@ public class StyxEncoder<T extends Bundle> implements Encoder
 	}
 
 
-	private void buildHistogram(Bundle<T> aBundle, int[] aHistogram, HashMap<Integer,Integer> aHeaderHistogram) throws IOException
+	private void buildHistogram(Bundle aBundle, int[] aHistogram, HashMap<Integer,Integer> aHeaderHistogram) throws IOException
 	{
 		if (aBundle == null)
 		{
@@ -222,7 +222,7 @@ public class StyxEncoder<T extends Bundle> implements Encoder
 	private HashMap<Integer,Integer> mLastHeaderIndex = new HashMap<>();
 	private int mPrevHeaderIndex;
 
-	private String[] writeBundleHeader(Bundle<T> aBundle) throws IOException
+	private String[] writeBundleHeader(Bundle aBundle) throws IOException
 	{
 		String[] keys = aBundle.keySet().toArray(new String[aBundle.size()]);
 

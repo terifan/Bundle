@@ -16,7 +16,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 
-public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iterable<String>
+public class Bundle implements Cloneable, Externalizable, Iterable<String>
 {
 	private final static long serialVersionUID = 1L;
 
@@ -85,7 +85,8 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	/**
 	 * Returns the value type associated with the key.
 	 */
-	public ValueType getValueType(String aKey)
+	@Deprecated
+	ValueType getValueType(String aKey)
 	{
 		return ValueType.values()[mTypes.get(aKey) & 0xff];
 	}
@@ -94,7 +95,8 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	/**
 	 * Returns the object type associated with the key.
 	 */
-	public ObjectType getObjectType(String aKey)
+	@Deprecated
+	ObjectType getObjectType(String aKey)
 	{
 		return ObjectType.values()[mTypes.get(aKey) >> 8];
 	}
@@ -1303,7 +1305,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	/**
 	 * Inserts all mappings from the given Bundle into this Bundle.
 	 */
-	public Bundle putAll(Bundle<T> aOther)
+	public Bundle putAll(Bundle aOther)
 	{
 		for (String key : aOther)
 		{
@@ -1332,7 +1334,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 
 	public Bundle putBundleMatrix(String aKey, Bundle[][] aValue)
 	{
-		put(aKey, aValue, ValueType.BUNDLE, ObjectType.ARRAYLIST);
+		put(aKey, aValue, ValueType.BUNDLE, ObjectType.MATRIX);
 		return this;
 	}
 
@@ -1567,10 +1569,10 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	/**
 	 * Inserts a double value into the mapping of this Bundle, replacing any existing value for the given key.
 	 */
-	public T putDouble(String aKey, double aValue)
+	public Bundle putDouble(String aKey, double aValue)
 	{
 		put(aKey, aValue, ValueType.DOUBLE, ObjectType.VALUE);
-		return (T)this;
+		return this;
 	}
 
 
@@ -1756,9 +1758,9 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	/**
 	 * Inserts a short array value into the mapping of this Bundle, replacing any existing value for the given key.
 	 */
-	public Bundle putShortArray(String aKey, short[][] aValue)
+	public Bundle putShortMatrix(String aKey, short[][] aValue)
 	{
-		put(aKey, aValue, ValueType.SHORT, ObjectType.ARRAY);
+		put(aKey, aValue, ValueType.SHORT, ObjectType.MATRIX);
 		return this;
 	}
 
@@ -1776,10 +1778,10 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	/**
 	 * Inserts a String value into the mapping of this Bundle, replacing any existing value for the given key.
 	 */
-	public T putString(String aKey, String aValue)
+	public Bundle putString(String aKey, String aValue)
 	{
 		put(aKey, aValue, ValueType.STRING, ObjectType.VALUE);
-		return (T)this;
+		return this;
 	}
 
 
@@ -2035,7 +2037,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 		}
 
 		mValues.put(aKey, aValue);
-		mTypes.put(aKey, aValueType.ordinal() + (aObjectType.ordinal() << 8));
+		mTypes.put(aKey, (aObjectType.ordinal() << 8) + aValueType.ordinal());
 	}
 
 

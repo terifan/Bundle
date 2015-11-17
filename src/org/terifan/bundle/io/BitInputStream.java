@@ -239,10 +239,10 @@ public class BitInputStream //extends InputStream
 		for (int len = 0;;)
 		{
 			long b = readBits(8);
-			result += (b >> 1) << len;
+			result += (0x7f & b) << len;
 			len += 7;
 
-			if (len >= 64 || (b & 1) == 0)
+			if (b < 128)
 			{
 				break;
 			}

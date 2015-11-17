@@ -8,6 +8,7 @@ import java.lang.reflect.Array;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Date;
+import org.terifan.bundle.bundle_test.Log;
 
 
 public class BinaryDecoder implements Decoder
@@ -66,35 +67,35 @@ public class BinaryDecoder implements Decoder
 
 	private Bundle readBundle(Bundle aBundle) throws IOException
 	{
-		int keyCount = (int)mInput.readVLC();
+		int entryCount = (int)mInput.readVLC();
 
-		String[] keys = new String[keyCount];
-		ValueType[] valueTypes = new ValueType[keyCount];
-		ObjectType[] objectTypes = new ObjectType[keyCount];
-
-		for (int i = 0; i < keyCount; i++)
+		if (entryCount == -1)
 		{
-			objectTypes[i] = ObjectType.values()[(int)mInput.readBits(2)];
-			valueTypes[i] = ValueType.values()[(int)mInput.readBits(4)];
+			return null;
+		}
+
+		int[] types = new int[entryCount];
+
+		for (int i = 0; i < entryCount; i++)
+		{
+			types[i] = (int)mInput.readBits(6);
 		}
 
 		mInput.align();
 
-		for (int i = 0; i < keyCount; i++)
+		for (int i = 0; i < entryCount; i++)
 		{
-			keys[i] = readString();
-		}
+			String key = readString();
 
-		for (int i = 0; i < keyCount; i++)
-		{
-			ValueType valueType = valueTypes[i];
-			ObjectType objectType = objectTypes[i];
+			ObjectType objectType = ObjectType.values()[types[i] >> 4];
+			ValueType valueType = ValueType.values()[types[i] & 0b1111];
 			Object value;
 
 			switch (objectType)
 			{
 				case VALUE:
 					value = readValue(valueType);
+					mInput.align();
 					break;
 				case ARRAYLIST:
 					value = readList(valueType);
@@ -109,7 +110,7 @@ public class BinaryDecoder implements Decoder
 					throw new IOException();
 			}
 
-			aBundle.put(keys[i], value, valueType, objectType);
+			aBundle.put(key, value, valueType, objectType);
 		}
 
 		return aBundle;
@@ -133,33 +134,29 @@ public class BinaryDecoder implements Decoder
 
 	private Object readMatrix(ValueType aValueType) throws IOException, ArrayIndexOutOfBoundsException, IllegalArgumentException, NegativeArraySizeException
 	{
-		long len = mInput.readVLC();
-		boolean[] nulls = null;
+		long length = mInput.readVLC();
+		boolean[] flags = null;
 
-		if (len < 0)
+		if (length < 0)
 		{
-			len = -len;
-			nulls = new boolean[(int)len];
+			length = -length;
+			flags = new boolean[(int)length];
 
-			for (int i = 0; i < len; i++)
+			for (int i = 0; i < length; i++)
 			{
-				nulls[i] = mInput.readBit() == 1;
+				flags[i] = mInput.readBit() == 0;
 			}
 
 			mInput.align();
 		}
 
-		Object array = Array.newInstance(aValueType.getPrimitiveType(), (int)len, 0);
+		Object array = Array.newInstance(aValueType.getPrimitiveType(), (int)length, 0);
 
-		for (int i = 0; i < len; i++)
+		for (int i = 0; i < length; i++)
 		{
-			Object value;
+			Object value = null;
 
-			if (nulls != null && nulls[i])
-			{
-				value = null;
-			}
-			else
+			if (flags == null || flags[i])
 			{
 				value = readArray(aValueType);
 			}
@@ -207,6 +204,8 @@ public class BinaryDecoder implements Decoder
 			list.add(value);
 		}
 
+		mInput.align();
+
 		return list;
 	}
 
@@ -234,7 +233,12 @@ public class BinaryDecoder implements Decoder
 			case STRING:
 				return readString();
 			case DATE:
-				return new Date(mInput.readVLC());
+				long time = mInput.readVLC();
+				if (time == -1)
+				{
+					return null;
+				}
+				return new Date(time);
 			case BUNDLE:
 				return readBundle(new Bundle());
 			default:

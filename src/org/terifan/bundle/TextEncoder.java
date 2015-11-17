@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 
-public class TextEncoder<T extends Bundle>
+public class TextEncoder
 {
 	private final static int SIMPLE_OBJECT_MAX_ELEMENTS = 5;
 
@@ -76,7 +76,7 @@ public class TextEncoder<T extends Bundle>
 	}
 
 
-	private void writeBundle(Bundle<T> aBundle) throws IOException
+	private void writeBundle(Bundle aBundle) throws IOException
 	{
 		mAppendable.append("{");
 
@@ -235,7 +235,7 @@ public class TextEncoder<T extends Bundle>
 	}
 
 
-	private boolean isSimple(Bundle<T> aBundle)
+	private boolean isSimple(Bundle aBundle)
 	{
 		boolean simple = aBundle.size() < SIMPLE_OBJECT_MAX_ELEMENTS;
 		if (simple)

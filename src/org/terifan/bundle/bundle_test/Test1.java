@@ -1,13 +1,42 @@
-package org.terifan.bundle;
+package org.terifan.bundle.bundle_test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Random;
+import org.terifan.bundle.BinaryDecoder;
+import org.terifan.bundle.BinaryEncoder;
+import org.terifan.bundle.Bundle;
+import org.terifan.bundle.TextEncoder;
 
 
-public class Util
+public class Test1
 {
+	public static void main(String ... args)
+	{
+		try
+		{
+			Bundle in = createComplexBundle();
+
+			Log.out.println(new TextEncoder().marshal(in));
+			Log.out.println("---------------------------------------------------------------------------------------------");
+
+			byte[] data = new BinaryEncoder().marshal(in);
+
+			Bundle out = new BinaryDecoder().unmarshal(data);
+
+			Log.hexDump(data);
+
+			Log.out.println(new TextEncoder().marshal(out));
+			Log.out.println("---------------------------------------------------------------------------------------------");
+			Log.out.println(new TextEncoder().marshal(out).equals(new TextEncoder().marshal(in)));
+		}
+		catch (Throwable e)
+		{
+			e.printStackTrace(System.out);
+		}
+	}
+
 	static Bundle createComplexBundle()
 	{
 		Bundle bundle = new Bundle()
@@ -20,7 +49,6 @@ public class Util
 
 		return bundle;
 	}
-
 
 	static Bundle createSimpleBundle()
 	{
