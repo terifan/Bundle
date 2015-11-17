@@ -116,7 +116,7 @@ public class XMLEncoder<T extends Bundle>
 		for (String key : aBundle.keySet())
 		{
 			Object value = aBundle.get(key);
-			FieldType fieldType = FieldType.classify(value);
+			FieldType_old fieldType = FieldType_old.classify(value);
 
 			if (fieldType == null)
 			{
@@ -145,19 +145,19 @@ public class XMLEncoder<T extends Bundle>
 					{
 						el2.setAttributeNS(NS, "xsi:nil", "true");
 					}
-					else if (fieldType == FieldType.BUNDLE)
+					else if (fieldType == FieldType_old.BUNDLE)
 					{
 						writeBundle((Bundle)o, el2);
 					}
-					else if (fieldType == FieldType.STRING)
+					else if (fieldType == FieldType_old.STRING)
 					{
 						el2.appendChild(ownerDocument.createCDATASection(o.toString()));
 					}
-					else if (fieldType == FieldType.CHAR)
+					else if (fieldType == FieldType_old.CHAR)
 					{
 						el2.appendChild(ownerDocument.createTextNode("" + (int)(Character)o));
 					}
-					else if (fieldType == FieldType.DATE)
+					else if (fieldType == FieldType_old.DATE)
 					{
 						el2.appendChild(ownerDocument.createTextNode(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS z (Z)").format(o)));
 					}
@@ -171,19 +171,19 @@ public class XMLEncoder<T extends Bundle>
 			{
 				Element el = (Element)aElement.appendChild(ownerDocument.createElement(key));
 				el.setAttribute("type", fieldType.name().toLowerCase());
-				if (fieldType == FieldType.BUNDLE)
+				if (fieldType == FieldType_old.BUNDLE)
 				{
 					writeBundle((Bundle)value, el);
 				}
-				else if (fieldType == FieldType.STRING)
+				else if (fieldType == FieldType_old.STRING)
 				{
 					el.appendChild(ownerDocument.createCDATASection(value.toString()));
 				}
-				else if (fieldType == FieldType.CHAR)
+				else if (fieldType == FieldType_old.CHAR)
 				{
 					el.appendChild(ownerDocument.createTextNode("" + (int)(Character)value));
 				}
-				else if (fieldType == FieldType.DATE)
+				else if (fieldType == FieldType_old.DATE)
 				{
 					el.appendChild(ownerDocument.createTextNode(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS z (Z)").format(value)));
 				}

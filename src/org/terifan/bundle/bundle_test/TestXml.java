@@ -74,12 +74,13 @@ public class TestXml
 
 //		Log.out.println(new TextEncoder().marshal(bundle));
 
-		StyxEncoder binaryEncoder = new StyxEncoder();
-		BinaryEncoder binaryEncoderRef = new BinaryEncoder();
-		byte[] stx = binaryEncoder.marshal(bundle);
-		byte[] bin = binaryEncoderRef.marshal(bundle);
+		StyxEncoder styxEncoder = new StyxEncoder();
+		BinaryEncoder binaryEncoder = new BinaryEncoder();
+
+		byte[] stx = new byte[0]; //styxEncoder.marshal(bundle);
+		byte[] bin = binaryEncoder.marshal(bundle);
 		String txt = new TextEncoder().marshal(bundle, true);
-		
+
 		ByteArrayOutputStream lzjbXml = new ByteArrayOutputStream();
 		BitOutputStream bos = new BitOutputStream(lzjbXml);
 		new Deflate().write(bos, xml);
@@ -99,7 +100,7 @@ public class TestXml
 		int d3 = stx.length - zipTxt.length;
 		int d4 = zipBin.length - zipTxt.length;
 
-		Log.out.printf(FORMAT, aFilename, xml.length, zipXml.length, lzjbXml.size(), txt.length(), zipTxt.length, stx.length, zipStx.length, aExpectedLength, bin.length, zipBin.length, d1, d2, d3, d4, binaryEncoder.getStatistics());
+		Log.out.printf(FORMAT, aFilename, xml.length, zipXml.length, lzjbXml.size(), txt.length(), zipTxt.length, stx.length, zipStx.length, aExpectedLength, bin.length, zipBin.length, d1, d2, d3, d4, ""+styxEncoder.getStatistics());
 
 		sums[0] += xml.length;
 		sums[1] += zipXml.length;

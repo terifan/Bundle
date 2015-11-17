@@ -9,7 +9,6 @@ import java.nio.ByteBuffer;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-import org.terifan.bundle.bundle_test.Log;
 
 
 public class BinaryEncoder implements Encoder
@@ -47,36 +46,6 @@ public class BinaryEncoder implements Encoder
 
 	private void writeBundle(Bundle aBundle) throws IOException
 	{
-		String[] keys = writeBundleHeader(aBundle);
-
-		for (String key : keys)
-		{
-			Object value = aBundle.get(key);
-			FieldType2 fieldType = aBundle.getType(key);
-
-			if (fieldType.name().endsWith("_MATRIX"))
-			{
-				writeMatrix(fieldType, value);
-			}
-			else if (fieldType.name().endsWith("_ARRAY"))
-			{
-				writeArray(fieldType, value);
-			}
-			else if (fieldType.name().endsWith("_ARRAYLIST"))
-			{
-				writeArray(fieldType, ((List)value).toArray());
-			}
-			else
-			{
-				writeValue(fieldType, value);
-				mOutput.align();
-			}
-		}
-	}
-
-
-	private String[] writeBundleHeader(Bundle aBundle) throws IOException
-	{
 		Set<String> keySet = aBundle.keySet();
 		String[] keys = keySet.toArray(new String[aBundle.size()]);
 
@@ -84,7 +53,9 @@ public class BinaryEncoder implements Encoder
 
 		for (String key : keys)
 		{
-			mOutput.writeBits(aBundle.getType(key).ordinal(), 6);
+			int type = aBundle.getType(key);
+			mOutput.writeBits(type >> 8, 2);
+			mOutput.writeBits(type & 0xff, 4);
 		}
 
 		mOutput.align();
@@ -94,11 +65,40 @@ public class BinaryEncoder implements Encoder
 			writeString(key);
 		}
 
-		return keys;
+		for (String key : keys)
+		{
+			Object value = aBundle.get(key);
+
+			int type = aBundle.getType(key);
+			ObjectType objectType = ObjectType.values()[type >> 8];
+			ValueType valueType = ValueType.values()[type & 0xff];
+
+			if (objectType == ObjectType.VALUE)
+			{
+				writeValue(valueType, value);
+				mOutput.align();
+			}
+			else if (objectType == ObjectType.ARRAY)
+			{
+				writeArray(valueType, value);
+			}
+			else if (objectType == ObjectType.ARRAYLIST)
+			{
+				writeArray(valueType, ((List)value).toArray());
+			}
+			else if (objectType == ObjectType.MATRIX)
+			{
+				writeMatrix(valueType, value);
+			}
+			else
+			{
+				throw new InternalError();
+			}
+		}
 	}
 
 
-	private void writeMatrix(FieldType2 aFieldType, Object aValue) throws ArrayIndexOutOfBoundsException, IOException, IllegalArgumentException
+	private void writeMatrix(ValueType aValueType, Object aValue) throws ArrayIndexOutOfBoundsException, IOException, IllegalArgumentException
 	{
 		int length = Array.getLength(aValue);
 		boolean hasNull = false;
@@ -130,13 +130,13 @@ public class BinaryEncoder implements Encoder
 
 			if (item != null)
 			{
-				writeArray(aFieldType, item);
+				writeArray(aValueType, item);
 			}
 		}
 	}
 
 
-	private void writeArray(FieldType2 aFieldType, Object aValue) throws IOException
+	private void writeArray(ValueType aValueType, Object aValue) throws IOException
 	{
 		int length = Array.getLength(aValue);
 		boolean hasNull = false;
@@ -168,7 +168,7 @@ public class BinaryEncoder implements Encoder
 
 			if (item != null)
 			{
-				writeValue(aFieldType, item);
+				writeValue(aValueType, item);
 			}
 		}
 
@@ -176,85 +176,59 @@ public class BinaryEncoder implements Encoder
 	}
 
 
-	private void writeValue(FieldType2 aFieldType, Object aValue) throws IOException
+	private void writeValue(ValueType aValueType, Object aValue) throws IOException
 	{
-		switch (aFieldType)
+		switch (aValueType)
 		{
 			case BOOLEAN:
-			case BOOLEAN_ARRAY:
-			case BOOLEAN_ARRAYLIST:
-			case BOOLEAN_MATRIX:
 				mOutput.writeBit((Boolean)aValue);
 				break;
 			case BYTE:
-			case BYTE_ARRAY:
-			case BYTE_ARRAYLIST:
-			case BYTE_MATRIX:
 				mOutput.writeBits(0xff & (Byte)aValue, 8);
 				break;
 			case SHORT:
-			case SHORT_ARRAY:
-			case SHORT_ARRAYLIST:
-			case SHORT_MATRIX:
 				mOutput.writeVLC((Short)aValue);
 				break;
 			case CHAR:
-			case CHAR_ARRAY:
-			case CHAR_ARRAYLIST:
-			case CHAR_MATRIX:
 				mOutput.writeVLC((Character)aValue);
 				break;
 			case INT:
-			case INT_ARRAY:
-			case INT_ARRAYLIST:
-			case INT_MATRIX:
 				mOutput.writeVLC((Integer)aValue);
 				break;
 			case LONG:
-			case LONG_ARRAY:
-			case LONG_ARRAYLIST:
-			case LONG_MATRIX:
 				mOutput.writeVLC((Long)aValue);
 				break;
 			case FLOAT:
-			case FLOAT_ARRAY:
-			case FLOAT_ARRAYLIST:
-			case FLOAT_MATRIX:
 				mOutput.writeVLC(Float.floatToIntBits((Float)aValue));
 				break;
 			case DOUBLE:
-			case DOUBLE_ARRAY:
-			case DOUBLE_ARRAYLIST:
-			case DOUBLE_MATRIX:
 				mOutput.writeVLC(Double.doubleToLongBits((Double)aValue));
 				break;
 			case STRING:
-			case STRING_ARRAY:
-			case STRING_ARRAYLIST:
-			case STRING_MATRIX:
 				writeString((String)aValue);
 				break;
 			case DATE:
-			case DATE_ARRAY:
-			case DATE_ARRAYLIST:
-			case DATE_MATRIX:
 				mOutput.writeVLC(((Date)aValue).getTime());
 				break;
 			case BUNDLE:
-			case BUNDLE_ARRAY:
-			case BUNDLE_ARRAYLIST:
-			case BUNDLE_MATRIX:
 				writeBundle((Bundle)aValue);
 				break;
 			default:
-				throw new IOException("Unsupported field type: " + aFieldType);
+				throw new IOException("Unsupported field type: " + aValueType);
 		}
 	}
 
 
 	private void writeString(String aValue) throws IOException
 	{
-		mOutput.writeVLC(aValue.length());
-		mOutput.write(Convert.encodeUTF8(aValue));
+		if (aValue == null)
+		{
+			mOutput.writeVLC(-1);
+		}
+		else
+		{
+			mOutput.writeVLC(aValue.length());
+			mOutput.write(Convert.encodeUTF8(aValue));
+		}
 	}
 }

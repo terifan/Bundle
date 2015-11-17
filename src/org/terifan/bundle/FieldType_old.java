@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 
-enum FieldType
+enum FieldType_old
 {
 	BOOLEAN(Boolean.class, Boolean.TYPE),
 	BYTE(Byte.class, Byte.TYPE),
@@ -24,7 +24,7 @@ enum FieldType
 	private final Class mPrimitiveType;
 
 
-	private FieldType(Class aComponentType, Class aPrimitiveType)
+	private FieldType_old(Class aComponentType, Class aPrimitiveType)
 	{
 		mComponentType = aComponentType;
 		mPrimitiveType = aPrimitiveType;
@@ -43,7 +43,7 @@ enum FieldType
 	}
 
 
-	static FieldType classify(Object aObject)
+	static FieldType_old classify(Object aObject)
 	{
 		if (aObject == null)
 		{
@@ -76,7 +76,7 @@ enum FieldType
 				cls = cls.getComponentType();
 			}
 		}
-		for (FieldType fieldType : values())
+		for (FieldType_old fieldType : values())
 		{
 			if (fieldType.mComponentType != null && (fieldType.mComponentType.isAssignableFrom(cls) || fieldType.mPrimitiveType.isAssignableFrom(cls)))
 			{

@@ -21,7 +21,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	private final static long serialVersionUID = 1L;
 
 	private final Map<String, Object> mValues;
-	private final Map<String, FieldType2> mTypes;
+	private final Map<String, Integer> mTypes;
 
 
 	/**
@@ -85,7 +85,22 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	/**
 	 * Returns the value type associated with the key.
 	 */
-	public FieldType2 getType(String aKey)
+	public ValueType getValueType(String aKey)
+	{
+		return ValueType.values()[mTypes.get(aKey) & 0xff];
+	}
+
+
+	/**
+	 * Returns the object type associated with the key.
+	 */
+	public ObjectType getObjectType(String aKey)
+	{
+		return ObjectType.values()[mTypes.get(aKey) >> 8];
+	}
+
+
+	int getType(String aKey)
 	{
 		return mTypes.get(aKey);
 	}
@@ -1292,7 +1307,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	{
 		for (String key : aOther)
 		{
-			put(key, aOther.mValues.get(key), aOther.mTypes.get(key));
+			put(key, aOther.mValues.get(key), aOther.getValueType(key), aOther.getObjectType(key));
 		}
 		return this;
 	}
@@ -1303,28 +1318,28 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	 */
 	public Bundle putBundle(String aKey, Bundle aValue)
 	{
-		put(aKey, aValue, FieldType2.BUNDLE);
+		put(aKey, aValue, ValueType.BUNDLE, ObjectType.VALUE);
 		return this;
 	}
 
 
 	public Bundle putBundleArray(String aKey, Bundle... aValue)
 	{
-		put(aKey, aValue, FieldType2.BUNDLE_ARRAY);
+		put(aKey, aValue, ValueType.BUNDLE, ObjectType.ARRAY);
 		return this;
 	}
 
 
 	public Bundle putBundleMatrix(String aKey, Bundle[][] aValue)
 	{
-		put(aKey, aValue, FieldType2.BUNDLE_MATRIX);
+		put(aKey, aValue, ValueType.BUNDLE, ObjectType.ARRAYLIST);
 		return this;
 	}
 
 
 	public Bundle putBundleArrayList(String aKey, ArrayList<Bundle> aValue)
 	{
-		put(aKey, aValue, FieldType2.BUNDLE_ARRAYLIST);
+		put(aKey, aValue, ValueType.BUNDLE, ObjectType.ARRAYLIST);
 		return this;
 	}
 
@@ -1341,7 +1356,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 			bundle = new Bundle();
 			aValue.writeExternal(bundle);
 		}
-		put(aKey, bundle, FieldType2.BUNDLE);
+		put(aKey, bundle, ValueType.BUNDLE, ObjectType.VALUE);
 		return this;
 	}
 
@@ -1363,7 +1378,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 				aValues[i].writeExternal(bundles[i]);
 			}
 		}
-		put(aKey, bundles, FieldType2.BUNDLE_ARRAY);
+		put(aKey, bundles, ValueType.BUNDLE, ObjectType.ARRAY);
 		return this;
 	}
 
@@ -1392,7 +1407,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 				}
 			}
 		}
-		put(aKey, bundles, FieldType2.BUNDLE_MATRIX);
+		put(aKey, bundles, ValueType.BUNDLE, ObjectType.MATRIX);
 		return this;
 	}
 
@@ -1415,7 +1430,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 				bundles.add(bundle);
 			}
 		}
-		put(aKey, bundles, FieldType2.BUNDLE_ARRAYLIST);
+		put(aKey, bundles, ValueType.BUNDLE, ObjectType.ARRAYLIST);
 		return this;
 	}
 
@@ -1425,7 +1440,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	 */
 	public Bundle putBoolean(String aKey, boolean aValue)
 	{
-		put(aKey, aValue, FieldType2.BOOLEAN);
+		put(aKey, aValue, ValueType.BOOLEAN, ObjectType.VALUE);
 		return this;
 	}
 
@@ -1435,7 +1450,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	 */
 	public Bundle putBooleanArray(String aKey, boolean... aValue)
 	{
-		put(aKey, aValue, FieldType2.BOOLEAN_ARRAY);
+		put(aKey, aValue, ValueType.BOOLEAN, ObjectType.ARRAY);
 		return this;
 	}
 
@@ -1445,7 +1460,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	 */
 	public Bundle putBooleanMatrix(String aKey, boolean[][] aValue)
 	{
-		put(aKey, aValue, FieldType2.BOOLEAN_MATRIX);
+		put(aKey, aValue, ValueType.BOOLEAN, ObjectType.MATRIX);
 		return this;
 	}
 
@@ -1455,7 +1470,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	 */
 	public Bundle putBooleanArrayList(String aKey, ArrayList<Boolean> aValue)
 	{
-		put(aKey, aValue, FieldType2.BOOLEAN_ARRAYLIST);
+		put(aKey, aValue, ValueType.BOOLEAN, ObjectType.ARRAYLIST);
 		return this;
 	}
 
@@ -1474,7 +1489,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	 */
 	public Bundle putByte(String aKey, byte aValue)
 	{
-		put(aKey, aValue, FieldType2.BYTE);
+		put(aKey, aValue, ValueType.BYTE, ObjectType.VALUE);
 		return this;
 	}
 
@@ -1484,7 +1499,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	 */
 	public Bundle putByteArray(String aKey, byte... aValue)
 	{
-		put(aKey, aValue, FieldType2.BYTE_ARRAY);
+		put(aKey, aValue, ValueType.BYTE, ObjectType.ARRAY);
 		return this;
 	}
 
@@ -1494,7 +1509,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	 */
 	public Bundle putByteMatrix(String aKey, byte[][] aValue)
 	{
-		put(aKey, aValue, FieldType2.BYTE_MATRIX);
+		put(aKey, aValue, ValueType.BYTE, ObjectType.MATRIX);
 		return this;
 	}
 
@@ -1504,7 +1519,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	 */
 	public Bundle putByteArrayList(String aKey, ArrayList<Byte> aValue)
 	{
-		put(aKey, aValue, FieldType2.BYTE_ARRAYLIST);
+		put(aKey, aValue, ValueType.BYTE, ObjectType.ARRAYLIST);
 		return this;
 	}
 
@@ -1514,7 +1529,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	 */
 	public Bundle putChar(String aKey, char aValue)
 	{
-		put(aKey, aValue, FieldType2.CHAR);
+		put(aKey, aValue, ValueType.CHAR, ObjectType.VALUE);
 		return this;
 	}
 
@@ -1524,7 +1539,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	 */
 	public Bundle putCharArray(String aKey, char... aValue)
 	{
-		put(aKey, aValue, FieldType2.CHAR_ARRAY);
+		put(aKey, aValue, ValueType.CHAR, ObjectType.ARRAY);
 		return this;
 	}
 
@@ -1534,7 +1549,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	 */
 	public Bundle putCharMatrix(String aKey, char[][] aValue)
 	{
-		put(aKey, aValue, FieldType2.CHAR_MATRIX);
+		put(aKey, aValue, ValueType.CHAR, ObjectType.MATRIX);
 		return this;
 	}
 
@@ -1544,7 +1559,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	 */
 	public Bundle putCharArrayList(String aKey, ArrayList<Character> aValue)
 	{
-		put(aKey, aValue, FieldType2.CHAR_ARRAYLIST);
+		put(aKey, aValue, ValueType.CHAR, ObjectType.ARRAYLIST);
 		return this;
 	}
 
@@ -1554,7 +1569,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	 */
 	public T putDouble(String aKey, double aValue)
 	{
-		put(aKey, aValue, FieldType2.DOUBLE);
+		put(aKey, aValue, ValueType.DOUBLE, ObjectType.VALUE);
 		return (T)this;
 	}
 
@@ -1564,7 +1579,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	 */
 	public Bundle putDoubleArray(String aKey, double... aValue)
 	{
-		put(aKey, aValue, FieldType2.DOUBLE_ARRAY);
+		put(aKey, aValue, ValueType.DOUBLE, ObjectType.ARRAY);
 		return this;
 	}
 
@@ -1574,7 +1589,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	 */
 	public Bundle putDoubleMatrix(String aKey, double[][] aValue)
 	{
-		put(aKey, aValue, FieldType2.DOUBLE_MATRIX);
+		put(aKey, aValue, ValueType.DOUBLE, ObjectType.MATRIX);
 		return this;
 	}
 
@@ -1584,7 +1599,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	 */
 	public Bundle putDoubleArrayList(String aKey, ArrayList<Double> aValue)
 	{
-		put(aKey, aValue, FieldType2.DOUBLE_ARRAYLIST);
+		put(aKey, aValue, ValueType.DOUBLE, ObjectType.ARRAYLIST);
 		return this;
 	}
 
@@ -1594,7 +1609,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	 */
 	public Bundle putFloat(String aKey, float aValue)
 	{
-		put(aKey, aValue, FieldType2.FLOAT);
+		put(aKey, aValue, ValueType.FLOAT, ObjectType.VALUE);
 		return this;
 	}
 
@@ -1604,7 +1619,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	 */
 	public Bundle putFloatArray(String aKey, float... aValue)
 	{
-		put(aKey, aValue, FieldType2.FLOAT_ARRAY);
+		put(aKey, aValue, ValueType.FLOAT, ObjectType.ARRAY);
 		return this;
 	}
 
@@ -1614,7 +1629,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	 */
 	public Bundle putFloatMatrix(String aKey, float[][] aValue)
 	{
-		put(aKey, aValue, FieldType2.FLOAT_MATRIX);
+		put(aKey, aValue, ValueType.FLOAT, ObjectType.MATRIX);
 		return this;
 	}
 
@@ -1624,7 +1639,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	 */
 	public Bundle putFloatArrayList(String aKey, ArrayList<Float> aValue)
 	{
-		put(aKey, aValue, FieldType2.FLOAT_ARRAYLIST);
+		put(aKey, aValue, ValueType.FLOAT, ObjectType.ARRAYLIST);
 		return this;
 	}
 
@@ -1634,7 +1649,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	 */
 	public Bundle putInt(String aKey, int aValue)
 	{
-		put(aKey, aValue, FieldType2.INT);
+		put(aKey, aValue, ValueType.INT, ObjectType.VALUE);
 		return this;
 	}
 
@@ -1644,7 +1659,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	 */
 	public Bundle putIntArray(String aKey, int... aValue)
 	{
-		put(aKey, aValue, FieldType2.INT_ARRAY);
+		put(aKey, aValue, ValueType.INT, ObjectType.ARRAY);
 		return this;
 	}
 
@@ -1654,7 +1669,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	 */
 	public Bundle putIntMatrix(String aKey, int[][] aValue)
 	{
-		put(aKey, aValue, FieldType2.INT_MATRIX);
+		put(aKey, aValue, ValueType.INT, ObjectType.MATRIX);
 		return this;
 	}
 
@@ -1664,7 +1679,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	 */
 	public Bundle putIntArrayList(String aKey, ArrayList<Integer> aValue)
 	{
-		put(aKey, aValue, FieldType2.INT_ARRAYLIST);
+		put(aKey, aValue, ValueType.INT, ObjectType.ARRAYLIST);
 		return this;
 	}
 
@@ -1674,7 +1689,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	 */
 	public Bundle putLong(String aKey, long aValue)
 	{
-		put(aKey, aValue, FieldType2.LONG);
+		put(aKey, aValue, ValueType.LONG, ObjectType.VALUE);
 		return this;
 	}
 
@@ -1684,7 +1699,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	 */
 	public Bundle putLongArray(String aKey, long... aValue)
 	{
-		put(aKey, aValue, FieldType2.LONG_ARRAY);
+		put(aKey, aValue, ValueType.LONG, ObjectType.ARRAY);
 		return this;
 	}
 
@@ -1694,7 +1709,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	 */
 	public Bundle putLongMatrix(String aKey, long[][] aValue)
 	{
-		put(aKey, aValue, FieldType2.LONG_MATRIX);
+		put(aKey, aValue, ValueType.LONG, ObjectType.MATRIX);
 		return this;
 	}
 
@@ -1704,7 +1719,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	 */
 	public Bundle putLongArrayList(String aKey, ArrayList<Long> aValue)
 	{
-		put(aKey, aValue, FieldType2.LONG_ARRAYLIST);
+		put(aKey, aValue, ValueType.LONG, ObjectType.ARRAYLIST);
 		return this;
 	}
 
@@ -1723,7 +1738,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	 */
 	public Bundle putShort(String aKey, short aValue)
 	{
-		put(aKey, aValue, FieldType2.SHORT);
+		put(aKey, aValue, ValueType.SHORT, ObjectType.VALUE);
 		return this;
 	}
 
@@ -1733,7 +1748,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	 */
 	public Bundle putShortArray(String aKey, short... aValue)
 	{
-		put(aKey, aValue, FieldType2.SHORT_ARRAY);
+		put(aKey, aValue, ValueType.SHORT, ObjectType.ARRAY);
 		return this;
 	}
 
@@ -1743,7 +1758,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	 */
 	public Bundle putShortArray(String aKey, short[][] aValue)
 	{
-		put(aKey, aValue, FieldType2.SHORT_ARRAY);
+		put(aKey, aValue, ValueType.SHORT, ObjectType.ARRAY);
 		return this;
 	}
 
@@ -1753,7 +1768,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	 */
 	public Bundle putShortArrayList(String aKey, ArrayList<Short> aValue)
 	{
-		put(aKey, aValue, FieldType2.SHORT_ARRAYLIST);
+		put(aKey, aValue, ValueType.SHORT, ObjectType.ARRAYLIST);
 		return this;
 	}
 
@@ -1763,7 +1778,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	 */
 	public T putString(String aKey, String aValue)
 	{
-		put(aKey, aValue, FieldType2.STRING);
+		put(aKey, aValue, ValueType.STRING, ObjectType.VALUE);
 		return (T)this;
 	}
 
@@ -1773,7 +1788,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	 */
 	public Bundle putStringArray(String aKey, String... aValue)
 	{
-		put(aKey, aValue, FieldType2.STRING_ARRAY);
+		put(aKey, aValue, ValueType.STRING, ObjectType.ARRAY);
 		return this;
 	}
 
@@ -1783,7 +1798,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	 */
 	public Bundle putStringMatrix(String aKey, String[][] aValue)
 	{
-		put(aKey, aValue, FieldType2.STRING_MATRIX);
+		put(aKey, aValue, ValueType.STRING, ObjectType.MATRIX);
 		return this;
 	}
 
@@ -1793,7 +1808,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	 */
 	public Bundle putStringArrayList(String aKey, ArrayList<String> aValue)
 	{
-		put(aKey, aValue, FieldType2.STRING_ARRAYLIST);
+		put(aKey, aValue, ValueType.STRING, ObjectType.ARRAYLIST);
 		return this;
 	}
 
@@ -1803,7 +1818,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	 */
 	public Bundle putDate(String aKey, Date aValue)
 	{
-		put(aKey, aValue, FieldType2.DATE);
+		put(aKey, aValue, ValueType.DATE, ObjectType.VALUE);
 		return this;
 	}
 
@@ -1813,7 +1828,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	 */
 	public Bundle putDateArray(String aKey, Date... aValue)
 	{
-		put(aKey, aValue, FieldType2.DATE_ARRAY);
+		put(aKey, aValue, ValueType.DATE, ObjectType.ARRAY);
 		return this;
 	}
 
@@ -1823,7 +1838,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	 */
 	public Bundle putDateMatrix(String aKey, Date[][] aValue)
 	{
-		put(aKey, aValue, FieldType2.DATE_MATRIX);
+		put(aKey, aValue, ValueType.DATE, ObjectType.MATRIX);
 		return this;
 	}
 
@@ -1833,7 +1848,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	 */
 	public Bundle putDateArrayList(String aKey, ArrayList<Date> aValue)
 	{
-		put(aKey, aValue, FieldType2.DATE_ARRAYLIST);
+		put(aKey, aValue, ValueType.DATE, ObjectType.ARRAYLIST);
 		return this;
 	}
 
@@ -1954,85 +1969,65 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 	@Deprecated
 	void put(String aKey, Object aValue)
 	{
-		FieldType2 type = null;
+		ValueType type;
 
-		if (aValue == null) type = FieldType2.STRING;
-		else if (aValue instanceof Boolean) type = FieldType2.BOOLEAN;
-		else if (aValue instanceof Byte) type = FieldType2.BYTE;
-		else if (aValue instanceof Short) type = FieldType2.SHORT;
-		else if (aValue instanceof Character) type = FieldType2.CHAR;
-		else if (aValue instanceof Integer) type = FieldType2.INT;
-		else if (aValue instanceof Long) type = FieldType2.LONG;
-		else if (aValue instanceof Float) type = FieldType2.FLOAT;
-		else if (aValue instanceof Double) type = FieldType2.DOUBLE;
-		else if (aValue instanceof String) type = FieldType2.STRING;
-		else if (aValue instanceof Date) type = FieldType2.DATE;
-		else if (aValue instanceof Bundle) type = FieldType2.BUNDLE;
-		else if (aValue.getClass().isArray() && aValue.getClass().getComponentType().isArray())
+		if (aValue == null)
 		{
-			Object v = aValue.getClass().getComponentType().getComponentType();
-			if (v == Boolean.TYPE) type = FieldType2.BOOLEAN_MATRIX;
-			else if (v == Byte.TYPE) type = FieldType2.BYTE_MATRIX;
-			else if (v == Short.TYPE) type = FieldType2.SHORT_MATRIX;
-			else if (v == Character.TYPE) type = FieldType2.CHAR_MATRIX;
-			else if (v == Integer.TYPE) type = FieldType2.INT_MATRIX;
-			else if (v == Long.TYPE) type = FieldType2.LONG_MATRIX;
-			else if (v == Float.TYPE) type = FieldType2.FLOAT_MATRIX;
-			else if (v == Double.TYPE) type = FieldType2.DOUBLE_MATRIX;
-			else if (v == String.class) type = FieldType2.STRING_MATRIX;
-			else if (v == Date.class) type = FieldType2.DATE_MATRIX;
-			else if (v == Bundle.class) type = FieldType2.BUNDLE_MATRIX;
-			else throw new IllegalArgumentException("Unsupported type: " + aValue.getClass());
+			throw new IllegalArgumentException("Value is null");
 		}
-		else if (aValue.getClass().isArray())
-		{
-			Object v = aValue.getClass().getComponentType();
-			if (v == Boolean.TYPE) type = FieldType2.BOOLEAN_ARRAY;
-			else if (v == Byte.TYPE) type = FieldType2.BYTE_ARRAY;
-			else if (v == Short.TYPE) type = FieldType2.SHORT_ARRAY;
-			else if (v == Character.TYPE) type = FieldType2.CHAR_ARRAY;
-			else if (v == Integer.TYPE) type = FieldType2.INT_ARRAY;
-			else if (v == Long.TYPE) type = FieldType2.LONG_ARRAY;
-			else if (v == Float.TYPE) type = FieldType2.FLOAT_ARRAY;
-			else if (v == Double.TYPE) type = FieldType2.DOUBLE_ARRAY;
-			else if (v == String.class) type = FieldType2.STRING_ARRAY;
-			else if (v == Date.class) type = FieldType2.DATE_ARRAY;
-			else if (v == Bundle.class) type = FieldType2.BUNDLE_ARRAY;
-			else throw new IllegalArgumentException("Unsupported type: " + aValue.getClass());
-		}
-		else if (aValue instanceof ArrayList)
-		{
-			ArrayList list = (ArrayList)aValue;
-			Object v = list.get(0);
-			Class t = null;
-			if (v instanceof Boolean) {type = FieldType2.BOOLEAN_ARRAYLIST; t = Boolean.class;}
-			else if (v instanceof Byte) {type = FieldType2.BYTE_ARRAYLIST; t = Byte.class;}
-			else if (v instanceof Short) {type = FieldType2.SHORT_ARRAYLIST; t = Short.class;}
-			else if (v instanceof Character) {type = FieldType2.CHAR_ARRAYLIST; t = Character.class;}
-			else if (v instanceof Integer) {type = FieldType2.INT_ARRAYLIST; t = Integer.class;}
-			else if (v instanceof Long) {type = FieldType2.LONG_ARRAYLIST; t = Long.class;}
-			else if (v instanceof Float) {type = FieldType2.FLOAT_ARRAYLIST; t = Float.class;}
-			else if (v instanceof Double) {type = FieldType2.DOUBLE_ARRAYLIST; t = Double.class;}
-			else if (v instanceof String) {type = FieldType2.STRING_ARRAYLIST; t = String.class;}
-			else if (v instanceof Date) {type = FieldType2.DATE_ARRAYLIST; t = Date.class;}
-			else if (v instanceof Bundle) {type = FieldType2.BUNDLE_ARRAYLIST; t = Bundle.class;}
-			else throw new IllegalArgumentException("Unsupported type: " + aValue.getClass());
 
-			for (Object item : list)
-			{
-				if (item != null && item.getClass() != t)
+		ObjectType objectType = ObjectType.classify(aValue);
+
+		switch (objectType)
+		{
+			case VALUE:
+				type = ValueType.classify(aValue.getClass());
+				break;
+			case ARRAY:
+				type = ValueType.classify(aValue.getClass().getComponentType());
+				break;
+			case MATRIX:
+				type = ValueType.classify(aValue.getClass());
+				break;
+			case ARRAYLIST:
+				if (((ArrayList)aValue).isEmpty())
 				{
-					throw new IllegalArgumentException("Unsupported type in ArrayList: " + aValue.getClass());
+					throw new IllegalArgumentException("Failed to classify type of ArrayList: list is empty.");
 				}
-			}
-		}
-		else throw new IllegalArgumentException("Unsupported type: " + aValue.getClass());
 
-		put(aKey, aValue, type);
+				Class cls = null;
+				type = null;
+
+				for (Object item : (ArrayList)aValue)
+				{
+					if (item != null)
+					{
+						if (cls == null)
+						{
+							cls = item.getClass();
+							type = ValueType.classify(cls);
+						}
+						else if (item.getClass() != cls)
+						{
+							throw new IllegalArgumentException("Unsupported type in ArrayList: " + aValue.getClass());
+						}
+					}
+				}
+
+				if (type == null)
+				{
+					throw new IllegalArgumentException("Failed to classify type of ArrayList: all entries are null.");
+				}
+				break;
+			default:
+				throw new IllegalArgumentException("Failed to classify type: " + aValue.getClass());
+		}
+
+		put(aKey, aValue, type, objectType);
 	}
 
 
-	void put(String aKey, Object aValue, FieldType2 aType)
+	void put(String aKey, Object aValue, ValueType aValueType, ObjectType aObjectType)
 	{
 		if (aKey == null)
 		{
@@ -2040,7 +2035,7 @@ public class Bundle<T extends Bundle> implements Cloneable, Externalizable, Iter
 		}
 
 		mValues.put(aKey, aValue);
-		mTypes.put(aKey, aType);
+		mTypes.put(aKey, aValueType.ordinal() + (aObjectType.ordinal() << 8));
 	}
 
 

@@ -2,6 +2,7 @@ package org.terifan.bundle.io;
 
 import java.io.IOException;
 import java.io.InputStream;
+import org.terifan.bundle.bundle_test.Log;
 
 
 /**
@@ -79,7 +80,7 @@ public class BitInputStream //extends InputStream
 		while (mBitCount < aCount)
 		{
 			int i = mInputStream.read();
-			
+
 			if (i == -1)
 			{
 				i = 0;
@@ -228,5 +229,27 @@ public class BitInputStream //extends InputStream
 	public int getBitCount()
 	{
 		return mBitCount;
+	}
+
+
+	public long readVLC() throws IOException
+	{
+		long result = 0;
+
+		for (int len = 0;;)
+		{
+			long b = readBits(8);
+			result += (b >> 1) << len;
+			len += 7;
+
+			if (len >= 64 || (b & 1) == 0)
+			{
+				break;
+			}
+		}
+
+		result = (result >>> 1) ^ -(result & 1);
+
+		return result;
 	}
 }

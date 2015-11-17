@@ -26,10 +26,10 @@ public class Util
 		Random r = new Random();
 
 		Bundle bundle = new Bundle()
-			.putIntArrayList("empty_list", new ArrayList())
-
-			.putBoolean("boolean", r.nextBoolean())
-			.putBooleanArray("boolean_array", r.nextBoolean(), r.nextBoolean(), r.nextBoolean())
+//			.putIntArrayList("empty_list", new ArrayList())
+//
+//			.putBoolean("boolean", r.nextBoolean())
+//			.putBooleanArray("boolean_array", r.nextBoolean(), r.nextBoolean(), r.nextBoolean())
 
 			.putByte("byte", (byte)r.nextInt())
 			.putByteArray("byte_array", (byte)r.nextInt(), (byte)r.nextInt(), (byte)r.nextInt())
@@ -50,33 +50,33 @@ public class Util
 
 			.putLong("long", r.nextLong())
 			.putLongArray("long_array", r.nextLong(), r.nextLong(), r.nextLong())
-			.putLongMatrix("long_matrix_sq", new long[][]{{r.nextLong(),r.nextLong()},{r.nextLong(),r.nextLong()}})
+//			.putLongMatrix("long_matrix_sq", new long[][]{{r.nextLong(),r.nextLong()},{r.nextLong(),r.nextLong()}})
 
-			.putFloat("float", r.nextFloat())
-			.putFloatArray("float_array", r.nextFloat(), r.nextFloat(), r.nextFloat())
-			.putFloatMatrix("float_matrix_sq", new float[][]{{r.nextFloat(),r.nextFloat()},{r.nextFloat(),r.nextFloat()}})
-
-			.putDouble("double", r.nextDouble())
-			.putDoubleArray("double_array", r.nextDouble(), r.nextDouble(), r.nextDouble())
-			.putDoubleMatrix("double_matrix_sq", new double[][]{{r.nextDouble(),r.nextDouble()},{r.nextDouble(),r.nextDouble()}})
-
-			.putDate("date", new Date(r.nextLong() & -1))
-			.putDateArray("date_array", new Date(r.nextLong() & -1), new Date(r.nextLong() & -1), null)
-
-			.putString("string_null", null)
-			.putString("string", randomString(r))
-			.putStringArray("string_array", randomString(r), randomString(r), null)
-			.putStringArrayList("string_list", new ArrayList<>(Arrays.asList(randomString(r), randomString(r), null)))
-			.putStringMatrix("string_matrix", new String[][]{{randomString(r),randomString(r)},null,{randomString(r)},{}})
-			.putStringMatrix("string_matrix_sq", new String[][]{{randomString(r),randomString(r)},{randomString(r),randomString(r)}})
-
-			.putBundle("bundle", new Bundle()
-				.putInt("one", r.nextInt())
-				.putString("two", randomString(r))
-				.putBundle("bundle", new Bundle()
-					.putInt("three", r.nextInt())
-				)
-			)
+//			.putFloat("float", r.nextFloat())
+//			.putFloatArray("float_array", r.nextFloat(), r.nextFloat(), r.nextFloat())
+//			.putFloatMatrix("float_matrix_sq", new float[][]{{r.nextFloat(),r.nextFloat()},{r.nextFloat(),r.nextFloat()}})
+//
+//			.putDouble("double", r.nextDouble())
+//			.putDoubleArray("double_array", r.nextDouble(), r.nextDouble(), r.nextDouble())
+//			.putDoubleMatrix("double_matrix_sq", new double[][]{{r.nextDouble(),r.nextDouble()},{r.nextDouble(),r.nextDouble()}})
+//
+//			.putDate("date", new Date(r.nextLong() & -1))
+//			.putDateArray("date_array", new Date(r.nextLong() & -1), new Date(r.nextLong() & -1), null)
+//
+//			.putString("string_null", null)
+//			.putString("string", randomString(r))
+//			.putStringArray("string_array", randomString(r), randomString(r), null)
+//			.putStringArrayList("string_list", new ArrayList<>(Arrays.asList(randomString(r), randomString(r), null)))
+//			.putStringMatrix("string_matrix", new String[][]{{randomString(r),randomString(r)},null,{randomString(r)},{}})
+//			.putStringMatrix("string_matrix_sq", new String[][]{{randomString(r),randomString(r)},{randomString(r),randomString(r)}})
+//
+//			.putBundle("bundle", new Bundle()
+//				.putInt("one", r.nextInt())
+//				.putString("two", randomString(r))
+//				.putBundle("bundle", new Bundle()
+//					.putInt("three", r.nextInt())
+//				)
+//			)
 			;
 
 		return bundle;

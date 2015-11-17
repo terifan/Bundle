@@ -16,8 +16,10 @@ public class BinaryEncoderNGTest
 	@Test
 	public void testSomeMethod() throws IOException
 	{
-//		Bundle in = Util.createSimpleBundle();
-		Bundle in = Util.createComplexBundle();
+		Bundle in = Util.createSimpleBundle();
+//		Bundle in = Util.createComplexBundle();
+
+		Log.out.println(in);
 
 		byte[] data = new BinaryEncoder().marshal(in);
 

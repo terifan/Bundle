@@ -243,8 +243,8 @@ public class TextEncoder<T extends Bundle>
 			for (String key : aBundle.keySet())
 			{
 				Object value = aBundle.get(key);
-				FieldType fieldType = FieldType.classify(value);
-				if (value != null && (fieldType == FieldType.BUNDLE || value.getClass().isArray() || List.class.isAssignableFrom(value.getClass())))
+				FieldType_old fieldType = FieldType_old.classify(value);
+				if (value != null && (fieldType == FieldType_old.BUNDLE || value.getClass().isArray() || List.class.isAssignableFrom(value.getClass())))
 				{
 					simple = false;
 					break;

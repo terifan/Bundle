@@ -49,7 +49,7 @@ public class JavaEncoder
 		for (String key : keys)
 		{
 			Object value = aBundle.get(key);
-			FieldType fieldType = FieldType.classify(value);
+			FieldType_old fieldType = FieldType_old.classify(value);
 
 			if (value != null)
 			{
@@ -61,7 +61,7 @@ public class JavaEncoder
 					aAppendable.append("\n" + aIndent + ".put"+typeName+"Array(\"" + key + "\"");
 					for (int i = 0, sz = Array.getLength(value); i < sz; i++)
 					{
-						if (fieldType == FieldType.BUNDLE)
+						if (fieldType == FieldType_old.BUNDLE)
 						{
 							aAppendable.append("\n"+aIndent+"\t, ");
 							Bundle bundle = ((Bundle)Array.get(value, i));
@@ -92,7 +92,7 @@ public class JavaEncoder
 						aAppendable.append("Arrays.asList(");
 						for (int i = 0; i < sz; i++)
 						{
-							if (fieldType == FieldType.BUNDLE)
+							if (fieldType == FieldType_old.BUNDLE)
 							{
 								aAppendable.append("\n" + aIndent + "\t");
 								aAppendable.append(i == 0 ? "  " : ", ");
@@ -119,7 +119,7 @@ public class JavaEncoder
 				else
 				{
 					aAppendable.append("\n" + aIndent + ".put"+typeName+"(\"" + key + "\", ");
-					if (fieldType == FieldType.BUNDLE)
+					if (fieldType == FieldType_old.BUNDLE)
 					{
 						write((Bundle)value, aIndent + "\t", aAppendable);
 					}
@@ -134,7 +134,7 @@ public class JavaEncoder
 	}
 
 
-	private String valueToString(FieldType aFieldType, Object aValue)
+	private String valueToString(FieldType_old aFieldType, Object aValue)
 	{
 		if (aValue == null)
 		{

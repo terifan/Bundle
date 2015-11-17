@@ -109,7 +109,7 @@ public class XMLDecoder
 					case "array":
 					{
 						String compType = el2.getAttribute("component-type");
-						FieldType fieldType = FieldType.valueOf(compType.toUpperCase());
+						FieldType_old fieldType = FieldType_old.valueOf(compType.toUpperCase());
 						if ("true".equals(el2.getAttributeNS(NS, "nil")))
 						{
 							bundle.put(el2.getNodeName(), null);

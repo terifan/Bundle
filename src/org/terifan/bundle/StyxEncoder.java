@@ -43,7 +43,7 @@ public class StyxEncoder<T extends Bundle> implements Encoder
 	private Huffman mTypeHuffman;
 	private Huffman mBundleHuffman;
 
-	private TreeMap<FieldType2,Integer> mStatistics;
+	private TreeMap<ValueType,Integer> mStatistics;
 
 
 	public StyxEncoder()
@@ -147,39 +147,43 @@ public class StyxEncoder<T extends Bundle> implements Encoder
 
 		for (String key : keys)
 		{
-			FieldType2 fieldType = aBundle.getType(key);
+			ValueType fieldType = aBundle.getValueType(key);
 
 			aHistogram[fieldType.ordinal()]++;
 
-			switch (fieldType)
+			if (fieldType == ValueType.BUNDLE)
 			{
-				case BUNDLE:
-					buildHistogram(aBundle.getBundle(key), aHistogram, aHeaderHistogram);
-					break;
-				case BUNDLE_ARRAY:
-					for (Bundle b : aBundle.getBundleArray(key))
-					{
-						buildHistogram(b, aHistogram, aHeaderHistogram);
-					}
-					break;
-				case BUNDLE_ARRAYLIST:
-					for (Bundle b : aBundle.getBundleArrayList(key))
-					{
-						buildHistogram(b, aHistogram, aHeaderHistogram);
-					}
-					break;
-				case BUNDLE_MATRIX:
-					for (Bundle[] bb : aBundle.getBundleMatrix(key))
-					{
-						if (bb != null)
+				buildHistogram(aBundle.getBundle(key), aHistogram, aHeaderHistogram);
+			}
+			else
+			{
+				switch (aBundle.getObjectType(key))
+				{
+					case ARRAY:
+						for (Bundle b : aBundle.getBundleArray(key))
 						{
-							for (Bundle b : bb)
+							buildHistogram(b, aHistogram, aHeaderHistogram);
+						}
+						break;
+					case ARRAYLIST:
+						for (Bundle b : aBundle.getBundleArrayList(key))
+						{
+							buildHistogram(b, aHistogram, aHeaderHistogram);
+						}
+						break;
+					case MATRIX:
+						for (Bundle[] bb : aBundle.getBundleMatrix(key))
+						{
+							if (bb != null)
 							{
-								buildHistogram(b, aHistogram, aHeaderHistogram);
+								for (Bundle b : bb)
+								{
+									buildHistogram(b, aHistogram, aHeaderHistogram);
+								}
 							}
 						}
-					}
-					break;
+						break;
+				}
 			}
 		}
 	}
@@ -191,7 +195,7 @@ public class StyxEncoder<T extends Bundle> implements Encoder
 
 		for (String key : keys)
 		{
-			FieldType2 fieldType = aBundle.getType(key);
+			ValueType fieldType = aBundle.getValueType(key);
 			Object value = aBundle.get(key);
 
 			mStatistics.put(fieldType, mStatistics.getOrDefault(fieldType, 0) + 1);
@@ -264,7 +268,7 @@ public class StyxEncoder<T extends Bundle> implements Encoder
 
 		for (String key : keys)
 		{
-			FieldType2 fieldType = aBundle.getType(key);
+			ValueType fieldType = aBundle.getValueType(key);
 			Object value = aBundle.get(key);
 
 			if (value == null)
@@ -303,7 +307,7 @@ public class StyxEncoder<T extends Bundle> implements Encoder
 
 		for (String key : aKeys)
 		{
-			signature.append(aBundle.getType(key).ordinal());
+			signature.append(aBundle.getValueType(key).ordinal());
 			signature.append(":");
 			signature.append(key);
 			signature.append(",");
@@ -313,13 +317,13 @@ public class StyxEncoder<T extends Bundle> implements Encoder
 	}
 
 
-	private void writeMatrix(FieldType2 aFieldType, Object aValue) throws ArrayIndexOutOfBoundsException, IOException, IllegalArgumentException
+	private void writeMatrix(ValueType aFieldType, Object aValue) throws ArrayIndexOutOfBoundsException, IOException, IllegalArgumentException
 	{
-		if (aFieldType == FieldType2.BYTE_MATRIX)
-		{
-			writeByteMatrix(aValue);
-			return;
-		}
+//		if (aFieldType == FieldType2.BYTE_MATRIX)
+//		{
+//			writeByteMatrix(aValue);
+//			return;
+//		}
 
 		int rows = Array.getLength(aValue);
 		boolean full = true;
@@ -431,13 +435,13 @@ public class StyxEncoder<T extends Bundle> implements Encoder
 	}
 
 
-	private void writeArray(FieldType2 aFieldType, Object aValue) throws IOException
+	private void writeArray(ValueType aFieldType, Object aValue) throws IOException
 	{
-		if (aFieldType == FieldType2.BYTE_ARRAY)
-		{
-			writeByteArray((byte[])aValue);
-			return;
-		}
+//		if (aFieldType == FieldType2.BYTE_ARRAY)
+//		{
+//			writeByteArray((byte[])aValue);
+//			return;
+//		}
 
 		int length = Array.getLength(aValue);
 
@@ -471,76 +475,43 @@ public class StyxEncoder<T extends Bundle> implements Encoder
 	}
 
 
-	private void writeValue(FieldType2 aFieldType, Object aValue) throws IOException
+	private void writeValue(ValueType aFieldType, Object aValue) throws IOException
 	{
 		switch (aFieldType)
 		{
 			case BOOLEAN:
-			case BOOLEAN_ARRAY:
-			case BOOLEAN_ARRAYLIST:
-			case BOOLEAN_MATRIX:
 				mOutput.writeBit((Boolean)aValue);
 				break;
 			case BYTE:
-			case BYTE_ARRAY:
-			case BYTE_ARRAYLIST:
-			case BYTE_MATRIX:
 				mOutput.writeBits(0xff & (Byte)aValue, 8);
 				break;
 			case SHORT:
-			case SHORT_ARRAY:
-			case SHORT_ARRAYLIST:
-			case SHORT_MATRIX:
 				mOutput.writeVariableInt((Short)aValue, 3, 0, true);
 				break;
 			case CHAR:
-			case CHAR_ARRAY:
-			case CHAR_ARRAYLIST:
-			case CHAR_MATRIX:
 				mOutput.writeVariableInt((Character)aValue, 3, 0, false);
 				break;
 			case INT:
-			case INT_ARRAY:
-			case INT_ARRAYLIST:
-			case INT_MATRIX:
 				mOutput.writeVariableInt((Integer)aValue, 3, 0, true);
 				break;
 			case LONG:
-			case LONG_ARRAY:
-			case LONG_ARRAYLIST:
-			case LONG_MATRIX:
 				mOutput.writeVariableLong((Long)aValue-mDeltaLong, 3, 1, true);
 				mDeltaLong = (Long)aValue;
 				break;
 			case FLOAT:
-			case FLOAT_ARRAY:
-			case FLOAT_ARRAYLIST:
-			case FLOAT_MATRIX:
 				mOutput.writeVariableInt(Float.floatToIntBits((Float)aValue), 3, 1, false);
 				break;
 			case DOUBLE:
-			case DOUBLE_ARRAY:
-			case DOUBLE_ARRAYLIST:
-			case DOUBLE_MATRIX:
 				mOutput.writeVariableLong(Double.doubleToLongBits((Double)aValue), 3, 1, false);
 				break;
 			case STRING:
-			case STRING_ARRAY:
-			case STRING_ARRAYLIST:
-			case STRING_MATRIX:
 				packString(aValue);
 				break;
 			case DATE:
-			case DATE_ARRAY:
-			case DATE_ARRAYLIST:
-			case DATE_MATRIX:
 //				mOutput.writeVariableLong(((Date)aValue).getTime(), 7, 0, true);
 				mLzjbDates.write(mOutput, new SimpleDateFormat("yyyyMMddHHmmssSSS").format(aValue).getBytes());
 				break;
 			case BUNDLE:
-			case BUNDLE_ARRAY:
-			case BUNDLE_ARRAYLIST:
-			case BUNDLE_MATRIX:
 				writeBundle((Bundle)aValue);
 				break;
 			default:
@@ -576,6 +547,6 @@ public class StyxEncoder<T extends Bundle> implements Encoder
 
 	public String getStatistics()
 	{
-		return mBundleHuffman.getCumulativeFrequency() + ", " + mTypeHuffman.getCumulativeFrequency() + ", " + mStatistics;
+		return ""; //mBundleHuffman.getCumulativeFrequency() + ", " + mTypeHuffman.getCumulativeFrequency() + ", " + mStatistics;
 	}
 }
