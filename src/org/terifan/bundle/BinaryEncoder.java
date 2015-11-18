@@ -8,7 +8,6 @@ import java.lang.reflect.Array;
 import java.nio.ByteBuffer;
 import java.util.Date;
 import java.util.List;
-import org.terifan.bundle.bundle_test.Log;
 
 
 public class BinaryEncoder implements Encoder
@@ -48,25 +47,17 @@ public class BinaryEncoder implements Encoder
 	{
 		if (aBundle == null)
 		{
-			mOutput.writeVLC(-1);
+			mOutput.writeUVLC(0);
 			return;
 		}
 
 		String[] keys = aBundle.keySet().toArray(new String[aBundle.size()]);
 
-		mOutput.writeVLC(keys.length);
+		mOutput.writeUVLC(1 + keys.length);
 
 		for (String key : keys)
 		{
-			int type = aBundle.getType(key);
-			mOutput.writeBits(type >> 8, 2);
-			mOutput.writeBits(type & 0xff, 4);
-		}
-
-		mOutput.align();
-
-		for (String key : keys)
-		{
+			mOutput.writeBits(aBundle.getType(key), 8);
 			writeString(key);
 		}
 
@@ -75,8 +66,8 @@ public class BinaryEncoder implements Encoder
 			Object value = aBundle.get(key);
 			int type = aBundle.getType(key);
 
-			ObjectType objectType = ObjectType.values()[type >> 8];
-			ValueType valueType = ValueType.values()[type & 0xff];
+			ObjectType objectType = ObjectType.values()[type >> 4];
+			ValueType valueType = ValueType.values()[type & 15];
 
 			switch (objectType)
 			{
@@ -102,91 +93,87 @@ public class BinaryEncoder implements Encoder
 
 	private void writeMatrix(ValueType aValueType, Object aValue) throws IOException
 	{
-		int length = Array.getLength(aValue);
-		boolean hasNull = false;
-
-		for (int i = 0; i < length; i++)
+		writeSequence(new Sequence()
 		{
-			if (Array.get(aValue, i) == null)
+			@Override
+			public int size()
 			{
-				hasNull = true;
-				break;
-			}
-		}
-
-		mOutput.writeVLC(hasNull ? -length : length);
-
-		if (hasNull)
-		{
-			for (int i = 0; i < length; i++)
-			{
-				mOutput.writeBit(Array.get(aValue, i) == null);
+				return Array.getLength(aValue);
 			}
 
-			mOutput.align();
-		}
-
-		for (int i = 0; i < length; i++)
-		{
-			Object item = Array.get(aValue, i);
-
-			if (item != null)
+			@Override
+			public Object get(int aIndex)
 			{
-				writeArray(aValueType, item);
+				return Array.get(aValue, aIndex);
 			}
-		}
+
+			@Override
+			public void write(int aIndex) throws IOException
+			{
+				writeArray(aValueType, get(aIndex));
+			}
+		});
 	}
 
 
 	private void writeList(ValueType aValueType, Object aValue) throws IOException
 	{
-		List list = (List)aValue;
-		int length = list.size();
-		boolean hasNull = false;
-
-		for (int i = 0; i < length; i++)
+		writeSequence(new Sequence()
 		{
-			if (list.get(i) == null)
+			@Override
+			public int size()
 			{
-				hasNull = true;
-				break;
-			}
-		}
-
-		mOutput.writeVLC(hasNull ? -length : length);
-
-		if (hasNull)
-		{
-			for (int i = 0; i < length; i++)
-			{
-				mOutput.writeBit(list.get(i) == null);
+				return ((List)aValue).size();
 			}
 
-			mOutput.align();
-		}
-
-		for (int i = 0; i < length; i++)
-		{
-			Object item = list.get(i);
-
-			if (item != null)
+			@Override
+			public Object get(int aIndex)
 			{
-				writeValue(aValueType, item);
+				return ((List)aValue).get(aIndex);
 			}
-		}
 
-		mOutput.align();
+			@Override
+			public void write(int aIndex) throws IOException
+			{
+				writeValue(aValueType, get(aIndex));
+			}
+		});
 	}
 
 
-	private void writeArray(ValueType aValueType, Object aValue) throws IOException
+	private void writeArray(final ValueType aValueType, final Object aValue) throws IOException
 	{
-		int length = Array.getLength(aValue);
+		writeSequence(new Sequence()
+		{
+			@Override
+			public int size()
+			{
+				return Array.getLength(aValue);
+			}
+
+			@Override
+			public Object get(int aIndex)
+			{
+				return Array.get(aValue, aIndex);
+			}
+
+			@Override
+			public void write(int aIndex) throws IOException
+			{
+				writeValue(aValueType, get(aIndex));
+			}
+		});
+	}
+
+
+	private void writeSequence(Sequence aSequence) throws IOException
+	{
+		int length = aSequence.size();
 		boolean hasNull = false;
 
 		for (int i = 0; i < length; i++)
 		{
-			if (Array.get(aValue, i) == null)
+			if (aSequence.get(i) == null)
 			{
 				hasNull = true;
 				break;
@@ -199,7 +186,7 @@ public class BinaryEncoder implements Encoder
 		{
 			for (int i = 0; i < length; i++)
 			{
-				mOutput.writeBit(Array.get(aValue, i) == null);
+				mOutput.writeBit(aSequence.get(i) == null);
 			}
 
 			mOutput.align();
@@ -207,11 +194,11 @@ public class BinaryEncoder implements Encoder
 
 		for (int i = 0; i < length; i++)
 		{
-			Object item = Array.get(aValue, i);
+			Object item = aSequence.get(i);
 
 			if (item != null)
 			{
-				writeValue(aValueType, item);
+				aSequence.write(i);
 			}
 		}
 
@@ -233,7 +220,7 @@ public class BinaryEncoder implements Encoder
 				mOutput.writeVLC((Short)aValue);
 				break;
 			case CHAR:
-				mOutput.writeVLC((Character)aValue);
+				mOutput.writeUVLC((Character)aValue);
 				break;
 			case INT:
 				mOutput.writeVLC((Integer)aValue);
@@ -266,7 +253,7 @@ public class BinaryEncoder implements Encoder
 	{
 		if (aValue == null)
 		{
-			mOutput.writeVLC(-1);
+			mOutput.writeUVLC(0);
 		}
 		else
 		{
@@ -277,7 +264,7 @@ public class BinaryEncoder implements Encoder
 				throw new IllegalArgumentException("Negative time not supported: " + aValue);
 			}
 
-			mOutput.writeVLC(time);
+			mOutput.writeUVLC(1 + time);
 		}
 	}
 
@@ -286,13 +273,23 @@ public class BinaryEncoder implements Encoder
 	{
 		if (aValue == null)
 		{
-			mOutput.writeVLC(-1);
+			mOutput.writeUVLC(0);
 		}
 		else
 		{
 			byte[] buf = Convert.encodeUTF8(aValue);
-			mOutput.writeVLC(buf.length);
+			mOutput.writeUVLC(1 + buf.length);
 			mOutput.write(buf);
 		}
+	}
+
+
+	private static interface Sequence
+	{
+		int size();
+
+		Object get(int aIndex);
+
+		void write(int aIndex) throws IOException;
 	}
 }

@@ -2,7 +2,6 @@ package org.terifan.bundle.io;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import org.terifan.bundle.bundle_test.Log;
 
 
 /**
@@ -270,8 +269,12 @@ public class BitOutputStream implements AutoCloseable
 
 	public void writeVLC(long aValue) throws IOException
 	{
-		aValue = (aValue << 1) ^ (aValue >> 63);
+		writeUVLC((aValue << 1) ^ (aValue >> 63));
+	}
 
+
+	public void writeUVLC(long aValue) throws IOException
+	{
 		for (;;)
 		{
 			int b = (int)(aValue & 127);

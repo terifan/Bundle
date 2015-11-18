@@ -3,6 +3,7 @@ package org.terifan.bundle;
 import java.util.Date;
 
 
+// Maximum 16 values
 enum ValueType
 {
 	BOOLEAN(Boolean.class, Boolean.TYPE),

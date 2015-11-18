@@ -3,6 +3,7 @@ package org.terifan.bundle;
 import java.util.ArrayList;
 
 
+// Maximum 16 values
 enum ObjectType
 {
 	VALUE,

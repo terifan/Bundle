@@ -2,7 +2,6 @@ package org.terifan.bundle.io;
 
 import java.io.IOException;
 import java.io.InputStream;
-import org.terifan.bundle.bundle_test.Log;
 
 
 /**
@@ -234,6 +233,14 @@ public class BitInputStream //extends InputStream
 
 	public long readVLC() throws IOException
 	{
+		long result = readUVLC();
+
+		return (result >>> 1) ^ -(result & 1);
+	}
+
+
+	public long readUVLC() throws IOException
+	{
 		long result = 0;
 
 		for (int len = 0;;)
@@ -247,8 +254,6 @@ public class BitInputStream //extends InputStream
 				break;
 			}
 		}
-
-		result = (result >>> 1) ^ -(result & 1);
 
 		return result;
 	}

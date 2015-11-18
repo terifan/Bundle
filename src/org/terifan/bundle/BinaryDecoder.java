@@ -8,7 +8,6 @@ import java.lang.reflect.Array;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Date;
-import org.terifan.bundle.bundle_test.Log;
 
 
 public class BinaryDecoder implements Decoder
@@ -67,7 +66,7 @@ public class BinaryDecoder implements Decoder
 
 	private Bundle readBundle(Bundle aBundle) throws IOException
 	{
-		int entryCount = (int)mInput.readVLC();
+		int entryCount = (int)mInput.readUVLC() - 1;
 
 		if (entryCount == -1)
 		{
@@ -79,20 +78,14 @@ public class BinaryDecoder implements Decoder
 
 		for (int i = 0; i < entryCount; i++)
 		{
-			types[i] = (int)mInput.readBits(6);
-		}
-
-		mInput.align();
-
-		for (int i = 0; i < entryCount; i++)
-		{
+			types[i] = (int)mInput.readBits(8);
 			keys[i] = readString();
 		}
 
 		for (int i = 0; i < entryCount; i++)
 		{
 			ObjectType objectType = ObjectType.values()[types[i] >> 4];
-			ValueType valueType = ValueType.values()[types[i] & 0b1111];
+			ValueType valueType = ValueType.values()[types[i] & 15];
 			Object value;
 
 			switch (objectType)
@@ -121,43 +114,107 @@ public class BinaryDecoder implements Decoder
 	}
 
 
-	private Object readMatrix(ValueType aValueType) throws IOException, ArrayIndexOutOfBoundsException, IllegalArgumentException, NegativeArraySizeException
+	private Object readMatrix(ValueType aValueType) throws IOException
 	{
-		long length = mInput.readVLC();
-		boolean[] flags = null;
-
-		if (length < 0)
+		return readSequence(aValueType, new Sequence()
 		{
-			length = -length;
-			flags = new boolean[(int)length];
+			Object array;
 
-			for (int i = 0; i < length; i++)
+			@Override
+			public void allocate(int aSize)
 			{
-				flags[i] = mInput.readBit() == 0;
+				array = Array.newInstance(aValueType.getPrimitiveType(), aSize, 0);
 			}
 
-			mInput.align();
-		}
-
-		Object array = Array.newInstance(aValueType.getPrimitiveType(), (int)length, 0);
-
-		for (int i = 0; i < length; i++)
-		{
-			Object value = null;
-
-			if (flags == null || flags[i])
+			@Override
+			public Object read(ValueType aValueType) throws IOException
 			{
-				value = readArray(aValueType);
+				return readArray(aValueType);
 			}
 
-			Array.set(array, i, value);
-		}
+			@Override
+			public void put(int aIndex, Object aValue)
+			{
+				Array.set(array, aIndex, aValue);
+			}
 
-		return array;
+			@Override
+			public Object getResult()
+			{
+				return array;
+			}
+		});
 	}
 
 
-	private Object readArray(ValueType aValueType) throws IOException, ArrayIndexOutOfBoundsException, IllegalArgumentException, NegativeArraySizeException
+	private Object readArray(ValueType aValueType) throws IOException
+	{
+		return readSequence(aValueType, new Sequence()
+		{
+			Object array;
+
+			@Override
+			public void allocate(int aSize)
+			{
+				array = Array.newInstance(aValueType.getPrimitiveType(), aSize);
+			}
+
+			@Override
+			public Object read(ValueType aValueType) throws IOException
+			{
+				return readValue(aValueType);
+			}
+
+			@Override
+			public void put(int aIndex, Object aValue)
+			{
+				Array.set(array, aIndex, aValue);
+			}
+
+			@Override
+			public Object getResult()
+			{
+				return array;
+			}
+		});
+	}
+
+
+	private Object readList(ValueType aValueType) throws IOException
+	{
+		return readSequence(aValueType, new Sequence()
+		{
+			ArrayList list;
+
+			@Override
+			public void allocate(int aSize)
+			{
+				list = new ArrayList(aSize);
+			}
+
+			@Override
+			public Object read(ValueType aValueType) throws IOException
+			{
+				return readValue(aValueType);
+			}
+
+			@Override
+			public void put(int aIndex, Object aValue)
+			{
+				assert aIndex == list.size();
+				list.add(aValue);
+			}
+
+			@Override
+			public Object getResult()
+			{
+				return list;
+			}
+		});
+	}
+
+
+	private Object readSequence(ValueType aValueType, Sequence aSequence) throws IOException
 	{
 		long length = mInput.readVLC();
 		boolean[] flags = null;
@@ -175,7 +232,7 @@ public class BinaryDecoder implements Decoder
 			mInput.align();
 		}
 
-		Object array = Array.newInstance(aValueType.getPrimitiveType(), (int)length);
+		aSequence.allocate((int)length);
 
 		for (int i = 0; i < length; i++)
 		{
@@ -183,53 +240,15 @@ public class BinaryDecoder implements Decoder
 
 			if (flags == null || flags[i])
 			{
-				value = readValue(aValueType);
+				value = aSequence.read(aValueType);
 			}
 
-			Array.set(array, i, value);
+			aSequence.put(i, value);
 		}
 
 		mInput.align();
 
-		return array;
-	}
-
-
-	private ArrayList readList(ValueType aValueType) throws IOException
-	{
-		long length = mInput.readVLC();
-		boolean[] flags = null;
-
-		if (length < 0)
-		{
-			length = -length;
-			flags = new boolean[(int)length];
-
-			for (int i = 0; i < length; i++)
-			{
-				flags[i] = mInput.readBit() == 0;
-			}
-
-			mInput.align();
-		}
-
-		ArrayList list = new ArrayList((int)length);
-
-		for (int i = 0; i < length; i++)
-		{
-			Object value = null;
-
-			if (flags == null || flags[i])
-			{
-				value = readValue(aValueType);
-			}
-
-			list.add(value);
-		}
-
-		mInput.align();
-
-		return list;
+		return aSequence.getResult();
 	}
 
 
@@ -244,7 +263,7 @@ public class BinaryDecoder implements Decoder
 			case SHORT:
 				return (short)mInput.readVLC();
 			case CHAR:
-				return (char)mInput.readVLC();
+				return (char)mInput.readUVLC();
 			case INT:
 				return (int)mInput.readVLC();
 			case LONG:
@@ -267,7 +286,7 @@ public class BinaryDecoder implements Decoder
 
 	private Date readDate() throws IOException
 	{
-		long time = mInput.readVLC();
+		long time = mInput.readUVLC() - 1;
 
 		if (time == -1)
 		{
@@ -280,7 +299,7 @@ public class BinaryDecoder implements Decoder
 
 	private String readString() throws IOException
 	{
-		long len = mInput.readVLC();
+		long len = mInput.readUVLC() - 1;
 
 		if (len == -1)
 		{
@@ -295,5 +314,17 @@ public class BinaryDecoder implements Decoder
 		}
 
 		return Convert.decodeUTF8(buf, 0, buf.length);
+	}
+
+
+	private static interface Sequence
+	{
+		public void allocate(int aSize);
+
+		public Object read(ValueType aaValueType) throws IOException;
+
+		public void put(int aIndex, Object aValue);
+
+		public Object getResult();
 	}
 }

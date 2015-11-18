@@ -102,6 +102,9 @@ public class Bundle implements Cloneable, Externalizable, Iterable<String>
 	}
 
 
+	/**
+	 * Returns an 8 bit value representing the object type as high 4 bits and value type as low 4 bits.
+	 */
 	int getType(String aKey)
 	{
 		return mTypes.get(aKey);
@@ -2036,8 +2039,11 @@ public class Bundle implements Cloneable, Externalizable, Iterable<String>
 			throw new IllegalArgumentException("Provided key is null.");
 		}
 
+		assert aObjectType.ordinal() < 16;
+		assert aValueType.ordinal() < 16;
+
 		mValues.put(aKey, aValue);
-		mTypes.put(aKey, (aObjectType.ordinal() << 8) + aValueType.ordinal());
+		mTypes.put(aKey, (aObjectType.ordinal() << 4) + aValueType.ordinal());
 	}
 
 
