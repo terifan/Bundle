@@ -167,7 +167,7 @@ public class BitInputStream //extends InputStream
 	{
 		for (int n = 0, value = 0; n < 32; n+=7)
 		{
-			int b = (int)readBits(8);
+			int b = readBits(8);
 			value += (b & 127) << n;
 			if (b < 128)
 			{
@@ -191,8 +191,8 @@ public class BitInputStream //extends InputStream
 	{
 		for (long n = 0, value = 0; n < 64; n+=7)
 		{
-			long b = readBits(8);
-			value += (b & 127) << n;
+			int b = readBits(8);
+			value += (long)(b & 127) << n;
 			if (b < 128)
 			{
 				return value;

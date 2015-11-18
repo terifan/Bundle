@@ -78,7 +78,7 @@ public class BinaryDecoder implements Decoder
 
 		for (int i = 0; i < entryCount; i++)
 		{
-			types[i] = (int)mInput.readBits(8);
+			types[i] = mInput.readBits(8);
 			keys[i] = readString();
 		}
 

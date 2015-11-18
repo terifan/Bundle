@@ -10,16 +10,15 @@ import java.io.OutputStream;
 public class BitOutputStream implements AutoCloseable
 {
 	private OutputStream mOutputStream;
-	private int mBitsToGo;
-	private int mBitBuffer;
-	private long mBitsWritten;
+	private int mShift;
+	private int mBuffer;
 
 
 	public BitOutputStream(OutputStream aOutputStream)
 	{
 		mOutputStream = aOutputStream;
-		mBitBuffer = 0;
-		mBitsToGo = 8;
+		mBuffer = 0;
+		mShift = 8;
 	}
 
 
@@ -31,21 +30,20 @@ public class BitOutputStream implements AutoCloseable
 
 	public void writeBit(int aBit) throws IOException
 	{
-		mBitBuffer |= aBit << --mBitsToGo;
-		mBitsWritten++;
+		mBuffer |= aBit << --mShift;
 
-		if (mBitsToGo == 0)
+		if (mShift == 0)
 		{
-			mOutputStream.write(mBitBuffer & 0xFF);
-			mBitBuffer = 0;
-			mBitsToGo = 8;
+			mOutputStream.write(mBuffer & 0xFF);
+			mBuffer = 0;
+			mShift = 8;
 		}
 	}
 
 
 	public void writeBits(int aValue, int aLength) throws IOException
 	{
-		if (aLength == 8 && mBitsToGo == 8)
+		if (aLength == 8 && mShift == 8)
 		{
 			mOutputStream.write(aValue);
 		}
@@ -59,17 +57,6 @@ public class BitOutputStream implements AutoCloseable
 	}
 
 
-	public void writeBits(long aValue, int aLength) throws IOException
-	{
-		if (aLength > 32)
-		{
-			writeBits((int)(aValue >>> 32), aLength - 32);
-		}
-
-		writeBits((int)aValue, Math.min(aLength, 32));
-	}
-
-
 	public void write(byte[] aBuffer) throws IOException
 	{
 		write(aBuffer, 0, aBuffer.length);
@@ -78,7 +65,7 @@ public class BitOutputStream implements AutoCloseable
 
 	public void write(byte[] aBuffer, int aOffset, int aLength) throws IOException
 	{
-		if (mBitsToGo == 8)
+		if (mShift == 8)
 		{
 			mOutputStream.write(aBuffer, aOffset, aLength);
 		}
@@ -113,30 +100,9 @@ public class BitOutputStream implements AutoCloseable
 
 	public void align() throws IOException
 	{
-		if (mBitsToGo < 8)
+		if (mShift < 8)
 		{
-			writeBits(0, mBitsToGo);
-		}
-	}
-
-
-	public void writeExpGolomb(int val, int k) throws IOException
-	{
-		assert val >= 0 && val < (1<<30)-1;
-
-		while (val >= (1 << k))
-		{
-			writeBit(1);
-			val -= 1 << k;
-			k++;
-		}
-
-		writeBit(0);
-
-		while (k > 0)
-		{
-			k--;
-			writeBit((val >>> k) & 1);
+			writeBits(0, mShift);
 		}
 	}
 
@@ -185,6 +151,27 @@ public class BitOutputStream implements AutoCloseable
 			}
 
 			writeBits(128 + b, 8);
+		}
+	}
+
+
+	public void writeExpGolomb(int aValue, int k) throws IOException
+	{
+		assert aValue >= 0 && aValue < (1<<30)-1;
+
+		while (aValue >= (1 << k))
+		{
+			writeBit(1);
+			aValue -= 1 << k;
+			k++;
+		}
+
+		writeBit(0);
+
+		while (k > 0)
+		{
+			k--;
+			writeBit((aValue >>> k) & 1);
 		}
 	}
 
