@@ -16,6 +16,7 @@ public class Test1
 	{
 		try
 		{
+//			Bundle in = createSimpleBundle();
 			Bundle in = createComplexBundle();
 
 			Log.out.println(new TextEncoder().marshal(in));

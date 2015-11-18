@@ -38,7 +38,7 @@ enum ValueType
 	{
 		for (ValueType fieldType : values())
 		{
-			if (fieldType.mComponentType != null && (fieldType.mComponentType.isAssignableFrom(aClass) || fieldType.mPrimitiveType.isAssignableFrom(aClass)))
+			if (fieldType.mComponentType.isAssignableFrom(aClass) || fieldType.mPrimitiveType.isAssignableFrom(aClass))
 			{
 				return fieldType;
 			}

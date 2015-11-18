@@ -119,7 +119,7 @@ public class TestXml
 	}
 
 
-	private static byte[] fetch(InputStream aInput) throws IOException
+	static byte[] fetch(InputStream aInput) throws IOException
 	{
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		byte[] buffer = new byte[4096];
@@ -131,7 +131,7 @@ public class TestXml
 	}
 
 
-	private static byte[] zip(byte[] aData) throws IOException
+	static byte[] zip(byte[] aData) throws IOException
 	{
 		ByteArrayOutputStream zip = new ByteArrayOutputStream();
 		try (DeflaterOutputStream dos = new DeflaterOutputStream(zip))

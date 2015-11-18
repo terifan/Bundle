@@ -74,6 +74,7 @@ public class BinaryDecoder implements Decoder
 			return null;
 		}
 
+		String[] keys = new String[entryCount];
 		int[] types = new int[entryCount];
 
 		for (int i = 0; i < entryCount; i++)
@@ -85,8 +86,11 @@ public class BinaryDecoder implements Decoder
 
 		for (int i = 0; i < entryCount; i++)
 		{
-			String key = readString();
+			keys[i] = readString();
+		}
 
+		for (int i = 0; i < entryCount; i++)
+		{
 			ObjectType objectType = ObjectType.values()[types[i] >> 4];
 			ValueType valueType = ValueType.values()[types[i] & 0b1111];
 			Object value;
@@ -110,25 +114,10 @@ public class BinaryDecoder implements Decoder
 					throw new IOException();
 			}
 
-			aBundle.put(key, value, valueType, objectType);
+			aBundle.put(keys[i], value, valueType, objectType);
 		}
 
 		return aBundle;
-	}
-
-
-	private Object readArray(ValueType aValueType) throws IOException, ArrayIndexOutOfBoundsException, IllegalArgumentException, NegativeArraySizeException
-	{
-		ArrayList list = readList(aValueType);
-
-		Object array = Array.newInstance(aValueType.getPrimitiveType(), list.size());
-
-		for (int i = 0; i < list.size(); i++)
-		{
-			Array.set(array, i, list.get(i));
-		}
-
-		return array;
 	}
 
 
@@ -168,35 +157,69 @@ public class BinaryDecoder implements Decoder
 	}
 
 
-	private ArrayList readList(ValueType aValueType) throws IOException
+	private Object readArray(ValueType aValueType) throws IOException, ArrayIndexOutOfBoundsException, IllegalArgumentException, NegativeArraySizeException
 	{
-		long len = mInput.readVLC();
-		boolean[] nulls = null;
+		long length = mInput.readVLC();
+		boolean[] flags = null;
 
-		if (len < 0)
+		if (length < 0)
 		{
-			len = -len;
-			nulls = new boolean[(int)len];
+			length = -length;
+			flags = new boolean[(int)length];
 
-			for (int i = 0; i < len; i++)
+			for (int i = 0; i < length; i++)
 			{
-				nulls[i] = mInput.readBit() == 1;
+				flags[i] = mInput.readBit() == 0;
 			}
 
 			mInput.align();
 		}
 
-		ArrayList list = new ArrayList((int)len);
+		Object array = Array.newInstance(aValueType.getPrimitiveType(), (int)length);
 
-		for (int i = 0; i < len; i++)
+		for (int i = 0; i < length; i++)
 		{
-			Object value;
+			Object value = null;
 
-			if (nulls != null && nulls[i])
+			if (flags == null || flags[i])
 			{
-				value = null;
+				value = readValue(aValueType);
 			}
-			else
+
+			Array.set(array, i, value);
+		}
+
+		mInput.align();
+
+		return array;
+	}
+
+
+	private ArrayList readList(ValueType aValueType) throws IOException
+	{
+		long length = mInput.readVLC();
+		boolean[] flags = null;
+
+		if (length < 0)
+		{
+			length = -length;
+			flags = new boolean[(int)length];
+
+			for (int i = 0; i < length; i++)
+			{
+				flags[i] = mInput.readBit() == 0;
+			}
+
+			mInput.align();
+		}
+
+		ArrayList list = new ArrayList((int)length);
+
+		for (int i = 0; i < length; i++)
+		{
+			Object value = null;
+
+			if (flags == null || flags[i])
 			{
 				value = readValue(aValueType);
 			}
@@ -233,17 +256,25 @@ public class BinaryDecoder implements Decoder
 			case STRING:
 				return readString();
 			case DATE:
-				long time = mInput.readVLC();
-				if (time == -1)
-				{
-					return null;
-				}
-				return new Date(time);
+				return readDate();
 			case BUNDLE:
 				return readBundle(new Bundle());
 			default:
 				throw new IOException("Unsupported field type: " + aValueType);
 		}
+	}
+
+
+	private Date readDate() throws IOException
+	{
+		long time = mInput.readVLC();
+
+		if (time == -1)
+		{
+			return null;
+		}
+
+		return new Date(time);
 	}
 
 

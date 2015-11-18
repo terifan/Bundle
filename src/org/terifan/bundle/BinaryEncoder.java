@@ -68,7 +68,10 @@ public class BinaryEncoder implements Encoder
 		for (String key : keys)
 		{
 			writeString(key);
+		}
 
+		for (String key : keys)
+		{
 			Object value = aBundle.get(key);
 			int type = aBundle.getType(key);
 
@@ -85,7 +88,7 @@ public class BinaryEncoder implements Encoder
 					writeArray(valueType, value);
 					break;
 				case ARRAYLIST:
-					writeArray(valueType, ((List)value).toArray());
+					writeList(valueType, value);
 					break;
 				case MATRIX:
 					writeMatrix(valueType, value);
@@ -132,6 +135,47 @@ public class BinaryEncoder implements Encoder
 				writeArray(aValueType, item);
 			}
 		}
+	}
+
+
+	private void writeList(ValueType aValueType, Object aValue) throws IOException
+	{
+		List list = (List)aValue;
+		int length = list.size();
+		boolean hasNull = false;
+
+		for (int i = 0; i < length; i++)
+		{
+			if (list.get(i) == null)
+			{
+				hasNull = true;
+				break;
+			}
+		}
+
+		mOutput.writeVLC(hasNull ? -length : length);
+
+		if (hasNull)
+		{
+			for (int i = 0; i < length; i++)
+			{
+				mOutput.writeBit(list.get(i) == null);
+			}
+
+			mOutput.align();
+		}
+
+		for (int i = 0; i < length; i++)
+		{
+			Object item = list.get(i);
+
+			if (item != null)
+			{
+				writeValue(aValueType, item);
+			}
+		}
+
+		mOutput.align();
 	}
 
 
@@ -207,7 +251,7 @@ public class BinaryEncoder implements Encoder
 				writeString((String)aValue);
 				break;
 			case DATE:
-				writeDate(aValue);
+				writeDate((Date)aValue);
 				break;
 			case BUNDLE:
 				writeBundle((Bundle)aValue);
@@ -218,7 +262,7 @@ public class BinaryEncoder implements Encoder
 	}
 
 
-	private void writeDate(Object aValue) throws IOException
+	private void writeDate(Date aValue) throws IOException
 	{
 		if (aValue == null)
 		{
@@ -226,11 +270,13 @@ public class BinaryEncoder implements Encoder
 		}
 		else
 		{
-			long time = ((Date)aValue).getTime();
+			long time = aValue.getTime();
+
 			if (time < 0)
 			{
 				throw new IllegalArgumentException("Negative time not supported: " + aValue);
 			}
+
 			mOutput.writeVLC(time);
 		}
 	}
