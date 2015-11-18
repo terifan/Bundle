@@ -66,121 +66,7 @@ public class BitOutputStream implements AutoCloseable
 			writeBits((int)(aValue >>> 32), aLength - 32);
 		}
 
-		writeBits((int)(aValue), Math.min(aLength, 32));
-	}
-
-
-	/**
-	 * Write a variable number of bits to support all positive values in the range.
-	 *
-	 * E.g. writing a value in range of 100 will write 7 bits.
-	 *
-	 * @param aValue
-	 *   the value to write, greater or equal to zero
-	 * @param aRange
-	 *   the largest value that can be written
-	 */
-	public void writeBitsInRange(long aValue, long aRange) throws IOException
-	{
-		assert aValue >= 0 && aValue <= aRange;
-
-		writeBits(aValue, (int)Math.ceil(Math.log(aRange) / Math.log(2)));
-	}
-
-
-	/**
-	 * Encodes a number using a variable number of bits.
-	 *
-	 * E.g. value 319 encoded with step size 3 and increment 1 output this to the stream: 111 (1) 0111 (1) 00010 (0)
-	 *
-	 * @param aValue
-	 *   the value to encode
-	 * @param aStep
-	 *   the initial step size, between 1 and 32 bits
-	 * @param aIncrement
-	 *   for each chunk encoded the step size increase with this number, can be negative
-	 * @param aSigned
-	 *   true if the the input value may be signed
-	 */
-	public void writeVariableInt(int aValue, int aStep, int aIncrement, boolean aSigned) throws IOException
-	{
-		if (aStep <= 0 || aStep >= 32)
-		{
-			throw new IllegalArgumentException();
-		}
-
-		if (aSigned)
-		{
-			aValue = (aValue << 1) ^ (aValue >> 31);
-		}
-
-		for (int len = 0;;)
-		{
-			int chunk = Math.max(1, Math.min(aStep, 32 - len));
-			writeBits(aValue, chunk);
-			len += chunk;
-			aValue >>>= chunk;
-
-			if (aValue == 0)
-			{
-				if (len < 32)
-				{
-					writeBit(0);
-				}
-				break;
-			}
-
-			writeBit(1);
-
-			aStep += aIncrement;
-		}
-	}
-
-
-	/**
-	 * Encodes a number using a variable number of bits.
-	 *
-	 * @param aValue
-	 *   the value to encode
-	 * @param aStep
-	 *   the initial step size, between 1 and 64 bits
-	 * @param aIncrement
-	 *   for each chunk encoded the step size increase with this number, can be negative
-	 * @param aSigned
-	 *   true if the the input value may be signed
-	 */
-	public void writeVariableLong(long aValue, int aStep, int aIncrement, boolean aSigned) throws IOException
-	{
-		if (aStep <= 0 || aStep >= 64)
-		{
-			throw new IllegalArgumentException();
-		}
-
-		if (aSigned)
-		{
-			aValue = (aValue << 1) ^ (aValue >> 63);
-		}
-
-		for (int len = 0;;)
-		{
-			int chunk = Math.max(1, Math.min(aStep, 64 - len));
-			writeBits(aValue, chunk);
-			len += chunk;
-			aValue >>>= chunk;
-
-			if (aValue == 0)
-			{
-				if (len < 64)
-				{
-					writeBit(0);
-				}
-				break;
-			}
-
-			writeBit(1);
-
-			aStep += aIncrement;
-		}
+		writeBits((int)aValue, Math.min(aLength, 32));
 	}
 
 
@@ -234,18 +120,6 @@ public class BitOutputStream implements AutoCloseable
 	}
 
 
-	public int getBitCount()
-	{
-		return 8 - mBitsToGo;
-	}
-
-
-	public long getBitsWritten()
-	{
-		return mBitsWritten;
-	}
-
-
 	public void writeExpGolomb(int val, int k) throws IOException
 	{
 		assert val >= 0 && val < (1<<30)-1;
@@ -267,13 +141,13 @@ public class BitOutputStream implements AutoCloseable
 	}
 
 
-	public void writeVLC(long aValue) throws IOException
+	public void writeVar32S(long aValue) throws IOException
 	{
-		writeUVLC((aValue << 1) ^ (aValue >> 63));
+		writeVar32((aValue << 1) ^ (aValue >> 31));
 	}
 
 
-	public void writeUVLC(long aValue) throws IOException
+	public void writeVar32(long aValue) throws IOException
 	{
 		for (;;)
 		{
@@ -286,13 +160,39 @@ public class BitOutputStream implements AutoCloseable
 				break;
 			}
 
-			writeBits(0x80 + b, 8);
+			writeBits(128 + b, 8);
+		}
+	}
+
+
+	public void writeVar64S(long aValue) throws IOException
+	{
+		writeVar64((aValue << 1) ^ (aValue >> 63));
+	}
+
+
+	public void writeVar64(long aValue) throws IOException
+	{
+		for (;;)
+		{
+			int b = (int)(aValue & 127);
+			aValue >>>= 7;
+
+			if (aValue == 0)
+			{
+				writeBits(b, 8);
+				break;
+			}
+
+			writeBits(128 + b, 8);
 		}
 	}
 
 
 	public void writeUnary(int aSymbol) throws IOException
 	{
+		assert aSymbol >= 0;
+
 		int l = aSymbol;
 		while (l-- > 0)
 		{

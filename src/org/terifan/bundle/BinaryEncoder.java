@@ -47,13 +47,13 @@ public class BinaryEncoder implements Encoder
 	{
 		if (aBundle == null)
 		{
-			mOutput.writeUVLC(0);
+			mOutput.writeVar32(0);
 			return;
 		}
 
 		String[] keys = aBundle.keySet().toArray(new String[aBundle.size()]);
 
-		mOutput.writeUVLC(1 + keys.length);
+		mOutput.writeVar32(1 + keys.length);
 
 		for (String key : keys)
 		{
@@ -180,7 +180,7 @@ public class BinaryEncoder implements Encoder
 			}
 		}
 
-		mOutput.writeVLC(hasNull ? -length : length);
+		mOutput.writeVar32S(hasNull ? -length : length);
 
 		if (hasNull)
 		{
@@ -217,22 +217,22 @@ public class BinaryEncoder implements Encoder
 				mOutput.writeBits(0xff & (Byte)aValue, 8);
 				break;
 			case SHORT:
-				mOutput.writeVLC((Short)aValue);
+				mOutput.writeVar32S((Short)aValue);
 				break;
 			case CHAR:
-				mOutput.writeUVLC((Character)aValue);
+				mOutput.writeVar32((Character)aValue);
 				break;
 			case INT:
-				mOutput.writeVLC((Integer)aValue);
+				mOutput.writeVar32S((Integer)aValue);
 				break;
 			case LONG:
-				mOutput.writeVLC((Long)aValue);
+				mOutput.writeVar64S((Long)aValue);
 				break;
 			case FLOAT:
-				mOutput.writeVLC(Float.floatToIntBits((Float)aValue));
+				mOutput.writeVar32S(Float.floatToIntBits((Float)aValue));
 				break;
 			case DOUBLE:
-				mOutput.writeVLC(Double.doubleToLongBits((Double)aValue));
+				mOutput.writeVar64S(Double.doubleToLongBits((Double)aValue));
 				break;
 			case STRING:
 				writeString((String)aValue);
@@ -253,7 +253,7 @@ public class BinaryEncoder implements Encoder
 	{
 		if (aValue == null)
 		{
-			mOutput.writeUVLC(0);
+			mOutput.writeVar64(0);
 		}
 		else
 		{
@@ -264,7 +264,7 @@ public class BinaryEncoder implements Encoder
 				throw new IllegalArgumentException("Negative time not supported: " + aValue);
 			}
 
-			mOutput.writeUVLC(1 + time);
+			mOutput.writeVar64(1 + time);
 		}
 	}
 
@@ -273,12 +273,12 @@ public class BinaryEncoder implements Encoder
 	{
 		if (aValue == null)
 		{
-			mOutput.writeUVLC(0);
+			mOutput.writeVar32(0);
 		}
 		else
 		{
 			byte[] buf = Convert.encodeUTF8(aValue);
-			mOutput.writeUVLC(1 + buf.length);
+			mOutput.writeVar32(1 + buf.length);
 			mOutput.write(buf);
 		}
 	}

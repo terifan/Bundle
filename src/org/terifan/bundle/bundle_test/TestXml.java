@@ -100,7 +100,7 @@ public class TestXml
 		int d3 = stx.length - zipTxt.length;
 		int d4 = zipBin.length - zipTxt.length;
 
-		Log.out.printf(FORMAT, aFilename, xml.length, zipXml.length, lzjbXml.size(), txt.length(), zipTxt.length, stx.length, zipStx.length, aExpectedLength, bin.length, zipBin.length, d1, d2, d3, d4, ""+styxEncoder.getStatistics());
+		Log.out.printf(FORMAT, aFilename, xml.length, zipXml.length, lzjbXml.size(), txt.length(), zipTxt.length, stx.length, zipStx.length, aExpectedLength, bin.length, zipBin.length, d1, d2, d3, d4, ""); //styxEncoder.getStatistics()
 
 		sums[0] += xml.length;
 		sums[1] += zipXml.length;

@@ -66,7 +66,7 @@ public class BinaryDecoder implements Decoder
 
 	private Bundle readBundle(Bundle aBundle) throws IOException
 	{
-		int entryCount = (int)mInput.readUVLC() - 1;
+		int entryCount = mInput.readVar32() - 1;
 
 		if (entryCount == -1)
 		{
@@ -216,13 +216,13 @@ public class BinaryDecoder implements Decoder
 
 	private Object readSequence(ValueType aValueType, Sequence aSequence) throws IOException
 	{
-		long length = mInput.readVLC();
+		int length = mInput.readVar32S();
 		boolean[] flags = null;
 
 		if (length < 0)
 		{
 			length = -length;
-			flags = new boolean[(int)length];
+			flags = new boolean[length];
 
 			for (int i = 0; i < length; i++)
 			{
@@ -232,7 +232,7 @@ public class BinaryDecoder implements Decoder
 			mInput.align();
 		}
 
-		aSequence.allocate((int)length);
+		aSequence.allocate(length);
 
 		for (int i = 0; i < length; i++)
 		{
@@ -261,17 +261,17 @@ public class BinaryDecoder implements Decoder
 			case BYTE:
 				return (byte)mInput.readBits(8);
 			case SHORT:
-				return (short)mInput.readVLC();
+				return (short)mInput.readVar32S();
 			case CHAR:
-				return (char)mInput.readUVLC();
+				return (char)mInput.readVar32();
 			case INT:
-				return (int)mInput.readVLC();
+				return mInput.readVar32S();
 			case LONG:
-				return mInput.readVLC();
+				return mInput.readVar64S();
 			case FLOAT:
-				return Float.intBitsToFloat((int)mInput.readVLC());
+				return Float.intBitsToFloat(mInput.readVar32S());
 			case DOUBLE:
-				return Double.longBitsToDouble(mInput.readVLC());
+				return Double.longBitsToDouble(mInput.readVar64S());
 			case STRING:
 				return readString();
 			case DATE:
@@ -286,7 +286,7 @@ public class BinaryDecoder implements Decoder
 
 	private Date readDate() throws IOException
 	{
-		long time = mInput.readUVLC() - 1;
+		long time = mInput.readVar64() - 1;
 
 		if (time == -1)
 		{
@@ -299,14 +299,14 @@ public class BinaryDecoder implements Decoder
 
 	private String readString() throws IOException
 	{
-		long len = mInput.readUVLC() - 1;
+		int len = mInput.readVar32() - 1;
 
 		if (len == -1)
 		{
 			return null;
 		}
 
-		byte[] buf = new byte[(int)len];
+		byte[] buf = new byte[len];
 
 		if (mInput.read(buf) != buf.length)
 		{

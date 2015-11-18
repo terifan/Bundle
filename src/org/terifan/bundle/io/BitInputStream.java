@@ -44,14 +44,16 @@ public class BitInputStream //extends InputStream
 	}
 
 
-	public long readBits(int aCount) throws IOException
+	public int readBits(int aCount) throws IOException
 	{
-		long output = 0;
+		assert aCount <= 24;
+
+		int output = 0;
 
 		while (aCount > mBitCount)
 		{
 			aCount -= mBitCount;
-			output |= (long)mBitBuffer << aCount;
+			output |= mBitBuffer << aCount;
 			mBitBuffer = mInputStream.read();
 			mBitCount = 8;
 
@@ -67,7 +69,7 @@ public class BitInputStream //extends InputStream
 		{
 			mBitCount -= aCount;
 			output |= mBitBuffer >> mBitCount;
-			mBitBuffer &= (1L << mBitCount) - 1;
+			mBitBuffer &= (1 << mBitCount) - 1;
 		}
 
 		return output;
@@ -91,84 +93,6 @@ public class BitInputStream //extends InputStream
 		}
 
 		return mBitBuffer >>> (mBitCount - aCount);
-	}
-
-
-	/**
-	 * Read a variable number of bits to support all positive values in the range.
-	 *
-	 * E.g. reading a value in range of 100 will read 7 bits.
-	 *
-	 * @param aRange
-	 *   the largest value that can be read
-	 */
-	public long readBitsInRange(long aRange) throws IOException
-	{
-		return readBits((int)Math.ceil(Math.log(aRange) / Math.log(2)));
-	}
-
-
-	public int readVariableInt(int aStep, int aIncrement, boolean aSigned) throws IOException
-	{
-		if (aStep <= 0 || aStep >= 32)
-		{
-			throw new IllegalArgumentException();
-		}
-
-		int result = 0;
-
-		for (int len = 0;;)
-		{
-			int chunk = Math.max(1, Math.min(aStep, 32 - len));
-			result |= readBits(chunk) << len;
-			len += chunk;
-
-			if (len >= 32 || readBit() == 0)
-			{
-				break;
-			}
-
-			aStep = Math.max(aStep + aIncrement, 1);
-		}
-
-		if (aSigned)
-		{
-			result = ((result) >>> 1) ^ -(result & 1);
-		}
-
-		return result;
-	}
-
-
-	public long readVariableLong(int aStep, int aIncrement, boolean aSigned) throws IOException
-	{
-		if (aStep <= 0 || aStep >= 64)
-		{
-			throw new IllegalArgumentException();
-		}
-
-		long result = 0;
-
-		for (int len = 0;;)
-		{
-			int chunk = Math.max(1, Math.min(aStep, 64 - len));
-			result |= readBits(chunk) << len;
-			len += chunk;
-
-			if (len >= 64 || readBit() == 0)
-			{
-				break;
-			}
-
-			aStep = Math.max(aStep + aIncrement, 1);
-		}
-
-		if (aSigned)
-		{
-			result = (result >>> 1) ^ -(result & 1);
-		}
-
-		return result;
 	}
 
 
@@ -231,30 +155,50 @@ public class BitInputStream //extends InputStream
 	}
 
 
-	public long readVLC() throws IOException
+	public int readVar32S() throws IOException
 	{
-		long result = readUVLC();
+		int result = readVar32();
 
 		return (result >>> 1) ^ -(result & 1);
 	}
 
 
-	public long readUVLC() throws IOException
+	public int readVar32() throws IOException
 	{
-		long result = 0;
-
-		for (int len = 0;;)
+		for (int n = 0, value = 0; n < 32; n+=7)
 		{
-			long b = readBits(8);
-			result += (0x7f & b) << len;
-			len += 7;
-
+			int b = (int)readBits(8);
+			value += (b & 127) << n;
 			if (b < 128)
 			{
-				break;
+				return value;
 			}
 		}
 
-		return result;
+		throw new IllegalStateException("Variable int32 exceeds maximum length");
+	}
+
+
+	public long readVar64S() throws IOException
+	{
+		long result = readVar64();
+
+		return (result >>> 1) ^ -(result & 1);
+	}
+
+
+	public long readVar64() throws IOException
+	{
+		for (long n = 0, value = 0; n < 64; n+=7)
+		{
+			long b = readBits(8);
+			value += (b & 127) << n;
+			if (b < 128)
+			{
+				return value;
+			}
+		}
+
+		throw new IllegalStateException("Variable int64 exceeds maximum length");
 	}
 }
