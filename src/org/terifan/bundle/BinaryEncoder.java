@@ -57,7 +57,7 @@ public class BinaryEncoder implements Encoder
 
 		for (String key : keys)
 		{
-			mOutput.writeBits(aBundle.getType(key), 8);
+			mOutput.writeVar32(aBundle.getType(key));
 			writeString(key);
 		}
 
@@ -93,76 +93,19 @@ public class BinaryEncoder implements Encoder
 
 	private void writeMatrix(ValueType aValueType, Object aValue) throws IOException
 	{
-		writeSequence(new Sequence()
-		{
-			@Override
-			public int size()
-			{
-				return Array.getLength(aValue);
-			}
-
-			@Override
-			public Object get(int aIndex)
-			{
-				return Array.get(aValue, aIndex);
-			}
-
-			@Override
-			public void write(int aIndex) throws IOException
-			{
-				writeArray(aValueType, get(aIndex));
-			}
-		});
+		writeSequence(new MatrixSequence(aValue, aValueType));
 	}
 
 
 	private void writeList(ValueType aValueType, Object aValue) throws IOException
 	{
-		writeSequence(new Sequence()
-		{
-			@Override
-			public int size()
-			{
-				return ((List)aValue).size();
-			}
-
-			@Override
-			public Object get(int aIndex)
-			{
-				return ((List)aValue).get(aIndex);
-			}
-
-			@Override
-			public void write(int aIndex) throws IOException
-			{
-				writeValue(aValueType, get(aIndex));
-			}
-		});
+		writeSequence(new ListSequence(aValue, aValueType));
 	}
 
 
-	private void writeArray(final ValueType aValueType, final Object aValue) throws IOException
+	private void writeArray( ValueType aValueType, Object aValue) throws IOException
 	{
-		writeSequence(new Sequence()
-		{
-			@Override
-			public int size()
-			{
-				return Array.getLength(aValue);
-			}
-
-			@Override
-			public Object get(int aIndex)
-			{
-				return Array.get(aValue, aIndex);
-			}
-
-			@Override
-			public void write(int aIndex) throws IOException
-			{
-				writeValue(aValueType, get(aIndex));
-			}
-		});
+		writeSequence(new ArraySequence(aValue, aValueType));
 	}
 
 
@@ -291,5 +234,110 @@ public class BinaryEncoder implements Encoder
 		Object get(int aIndex);
 
 		void write(int aIndex) throws IOException;
+	}
+
+
+	private class MatrixSequence implements Sequence
+	{
+		private Object mValue;
+		private ValueType mValueType;
+
+
+		public MatrixSequence(Object aValue, ValueType aValueType)
+		{
+			mValue = aValue;
+			mValueType = aValueType;
+		}
+
+
+		@Override
+		public int size()
+		{
+			return Array.getLength(mValue);
+		}
+
+
+		@Override
+		public Object get(int aIndex)
+		{
+			return Array.get(mValue, aIndex);
+		}
+
+
+		@Override
+		public void write(int aIndex) throws IOException
+		{
+			writeArray(mValueType, get(aIndex));
+		}
+	}
+
+
+	private class ArraySequence implements Sequence
+	{
+		private Object mValue;
+		private ValueType mValueType;
+
+
+		public ArraySequence(Object aValue, ValueType aValueType)
+		{
+			mValue = aValue;
+			mValueType = aValueType;
+		}
+
+
+		@Override
+		public int size()
+		{
+			return Array.getLength(mValue);
+		}
+
+
+		@Override
+		public Object get(int aIndex)
+		{
+			return Array.get(mValue, aIndex);
+		}
+
+
+		@Override
+		public void write(int aIndex) throws IOException
+		{
+			writeValue(mValueType, get(aIndex));
+		}
+	}
+
+
+	private class ListSequence implements Sequence
+	{
+		private Object mValue;
+		private ValueType mValueType;
+
+
+		public ListSequence(Object aValue, ValueType aValueType)
+		{
+			mValue = aValue;
+			mValueType = aValueType;
+		}
+
+
+		@Override
+		public int size()
+		{
+			return ((List)mValue).size();
+		}
+
+
+		@Override
+		public Object get(int aIndex)
+		{
+			return ((List)mValue).get(aIndex);
+		}
+
+
+		@Override
+		public void write(int aIndex) throws IOException
+		{
+			writeValue(mValueType, get(aIndex));
+		}
 	}
 }

@@ -78,7 +78,7 @@ public class BinaryDecoder implements Decoder
 
 		for (int i = 0; i < entryCount; i++)
 		{
-			types[i] = mInput.readBits(8);
+			types[i] = mInput.readVar32();
 			keys[i] = readString();
 		}
 
@@ -116,101 +116,19 @@ public class BinaryDecoder implements Decoder
 
 	private Object readMatrix(ValueType aValueType) throws IOException
 	{
-		return readSequence(aValueType, new Sequence()
-		{
-			Object array;
-
-			@Override
-			public void allocate(int aSize)
-			{
-				array = Array.newInstance(aValueType.getPrimitiveType(), aSize, 0);
-			}
-
-			@Override
-			public Object read(ValueType aValueType) throws IOException
-			{
-				return readArray(aValueType);
-			}
-
-			@Override
-			public void put(int aIndex, Object aValue)
-			{
-				Array.set(array, aIndex, aValue);
-			}
-
-			@Override
-			public Object getResult()
-			{
-				return array;
-			}
-		});
+		return readSequence(aValueType, new MatrixSequence(aValueType));
 	}
 
 
 	private Object readArray(ValueType aValueType) throws IOException
 	{
-		return readSequence(aValueType, new Sequence()
-		{
-			Object array;
-
-			@Override
-			public void allocate(int aSize)
-			{
-				array = Array.newInstance(aValueType.getPrimitiveType(), aSize);
-			}
-
-			@Override
-			public Object read(ValueType aValueType) throws IOException
-			{
-				return readValue(aValueType);
-			}
-
-			@Override
-			public void put(int aIndex, Object aValue)
-			{
-				Array.set(array, aIndex, aValue);
-			}
-
-			@Override
-			public Object getResult()
-			{
-				return array;
-			}
-		});
+		return readSequence(aValueType, new ArraySequence(aValueType));
 	}
 
 
 	private Object readList(ValueType aValueType) throws IOException
 	{
-		return readSequence(aValueType, new Sequence()
-		{
-			ArrayList list;
-
-			@Override
-			public void allocate(int aSize)
-			{
-				list = new ArrayList(aSize);
-			}
-
-			@Override
-			public Object read(ValueType aValueType) throws IOException
-			{
-				return readValue(aValueType);
-			}
-
-			@Override
-			public void put(int aIndex, Object aValue)
-			{
-				assert aIndex == list.size();
-				list.add(aValue);
-			}
-
-			@Override
-			public Object getResult()
-			{
-				return list;
-			}
-		});
+		return readSequence(aValueType, new ListSequence());
 	}
 
 
@@ -326,5 +244,122 @@ public class BinaryDecoder implements Decoder
 		public void put(int aIndex, Object aValue);
 
 		public Object getResult();
+	}
+
+
+	private class ListSequence implements Sequence
+	{
+		private ArrayList mList;
+
+
+		@Override
+		public void allocate(int aSize)
+		{
+			mList = new ArrayList(aSize);
+		}
+
+
+		@Override
+		public Object read(ValueType aValueType) throws IOException
+		{
+			return readValue(aValueType);
+		}
+
+
+		@Override
+		public void put(int aIndex, Object aValue)
+		{
+			assert aIndex == mList.size();
+			mList.add(aValue);
+		}
+
+
+		@Override
+		public Object getResult()
+		{
+			return mList;
+		}
+	}
+
+
+	private class ArraySequence implements Sequence
+	{
+		private ValueType mValueType;
+		private Object mArray;
+
+
+		public ArraySequence(ValueType aValueType)
+		{
+			mValueType = aValueType;
+		}
+
+
+		@Override
+		public void allocate(int aSize)
+		{
+			mArray = Array.newInstance(mValueType.getPrimitiveType(), aSize);
+		}
+
+
+		@Override
+		public Object read(ValueType aValueType) throws IOException
+		{
+			return readValue(aValueType);
+		}
+
+
+		@Override
+		public void put(int aIndex, Object aValue)
+		{
+			Array.set(mArray, aIndex, aValue);
+		}
+
+
+		@Override
+		public Object getResult()
+		{
+			return mArray;
+		}
+	}
+
+
+	private class MatrixSequence implements Sequence
+	{
+		private ValueType mValueType;
+		private Object mArray;
+
+
+		public MatrixSequence(ValueType aValueType)
+		{
+			mValueType = aValueType;
+		}
+
+
+		@Override
+		public void allocate(int aSize)
+		{
+			mArray = Array.newInstance(mValueType.getPrimitiveType(), aSize, 0);
+		}
+
+
+		@Override
+		public Object read(ValueType aValueType) throws IOException
+		{
+			return readArray(aValueType);
+		}
+
+
+		@Override
+		public void put(int aIndex, Object aValue)
+		{
+			Array.set(mArray, aIndex, aValue);
+		}
+
+
+		@Override
+		public Object getResult()
+		{
+			return mArray;
+		}
 	}
 }

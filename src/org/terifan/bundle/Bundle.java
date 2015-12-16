@@ -2,8 +2,10 @@ package org.terifan.bundle;
 
 import java.io.Externalizable;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+import java.io.OutputStream;
 import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -79,26 +81,6 @@ public class Bundle implements Cloneable, Externalizable, Iterable<String>
 	public boolean containsKey(String aKey)
 	{
 		return mValues.containsKey(aKey);
-	}
-
-
-	/**
-	 * Returns the value type associated with the key.
-	 */
-	@Deprecated
-	ValueType getValueType(String aKey)
-	{
-		return ValueType.values()[mTypes.get(aKey) & 0xff];
-	}
-
-
-	/**
-	 * Returns the object type associated with the key.
-	 */
-	@Deprecated
-	ObjectType getObjectType(String aKey)
-	{
-		return ObjectType.values()[mTypes.get(aKey) >> 8];
 	}
 
 
@@ -1312,7 +1294,8 @@ public class Bundle implements Cloneable, Externalizable, Iterable<String>
 	{
 		for (String key : aOther)
 		{
-			put(key, aOther.mValues.get(key), aOther.getValueType(key), aOther.getObjectType(key));
+			mValues.put(key, aOther.mValues.get(key));
+			mTypes.put(key, aOther.mTypes.get(key));
 		}
 		return this;
 	}
@@ -2062,72 +2045,53 @@ public class Bundle implements Cloneable, Externalizable, Iterable<String>
 
 
 	@Override
-	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException
+	public void readExternal(ObjectInput aIn) throws IOException, ClassNotFoundException
 	{
-		byte[] buf = new byte[in.readInt()];
-		in.read(buf);
-		new BinaryDecoder().unmarshal(this, buf);
+		new BinaryDecoder().unmarshal(this, new InputStream()
+		{
+			@Override
+			public int read() throws IOException
+			{
+				return aIn.read();
+			}
+			@Override
+			public int read(byte[] aBuffer, int aOffset, int aLength) throws IOException
+			{
+				return aIn.read(aBuffer, aOffset, aLength);
+			}
+		});
 	}
 
 
 	@Override
-	public void writeExternal(ObjectOutput out) throws IOException
+	public void writeExternal(ObjectOutput aOut) throws IOException
 	{
-		byte[] buf = new BinaryEncoder().marshal(this);
-		out.writeInt(buf.length);
-		out.write(buf);
+		new BinaryEncoder().marshal(this, new OutputStream()
+		{
+			@Override
+			public void write(int aByte) throws IOException
+			{
+				aOut.write(aByte);
+			}
+			@Override
+			public void write(byte[] aBuffer, int aOffset, int aLength) throws IOException
+			{
+				aOut.write(aBuffer, aOffset, aLength);
+			}
+		});
 	}
 
 
-//	public static Bundle createBundle(Map<String,?> aMap, ConvertValue aConvertValue)
-//	{
-//		return createBundle(aMap, null, aConvertValue);
-//	}
-//
-//
-//	public static Bundle createBundle(Map<?,?> aMap, ConvertValue aConvertKey, ConvertValue aConvertValue)
-//	{
-//		Bundle bundle = new Bundle();
-//
-//		for (Entry entry : aMap.entrySet())
-//		{
-//			Object key = entry.getKey();
-//			Object value = entry.getValue();
-//
-//			if (aConvertKey != null)
-//			{
-//				key = aConvertKey.convert(key);
-//			}
-//			if (aConvertValue != null)
-//			{
-//				value = aConvertValue.convert(value);
-//			}
-//
-//			if (key != null)
-//			{
-//				if (!(key instanceof String))
-//				{
-//					throw new IllegalStateException("A key was not converted to String: " + entry.getKey());
-//				}
-//
-//				bundle.put((String)key, value);
-//			}
-//		}
-//
-//		return bundle;
-//	}
-//
-//
-//	public interface ConvertValue
-//	{
-//		/**
-//		 * Return the value as a standard Java type or other type supported by the Bundle implementation.
-//		 *
-//		 * @param aValue
-//		 *   a java object.
-//		 * @return
-//		 *   a standard Java type or other type supported by the Bundle implementation.
-//		 */
-//		Object convert(Object aValue);
-//	}
+	public Bundle readExternal(InputStream aIn) throws IOException
+	{
+		new BinaryDecoder().unmarshal(this, aIn);
+		return this;
+	}
+
+
+	public Bundle writeExternal(OutputStream out) throws IOException
+	{
+		new BinaryEncoder().marshal(this, out);
+		return this;
+	}
 }
