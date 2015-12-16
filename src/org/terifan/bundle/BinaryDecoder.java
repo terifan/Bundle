@@ -84,55 +84,55 @@ public class BinaryDecoder implements Decoder
 
 		for (int i = 0; i < entryCount; i++)
 		{
-			ObjectType objectType = ObjectType.values()[types[i] >> 4];
-			ValueType valueType = ValueType.values()[types[i] & 15];
+			int objectType = FieldType.collectionType(types[i]);
+			int valueType = FieldType.valueType(types[i]);
 			Object value;
 
 			switch (objectType)
 			{
-				case VALUE:
+				case FieldType.VALUE:
 					value = readValue(valueType);
 					mInput.align();
 					break;
-				case ARRAYLIST:
+				case FieldType.ARRAYLIST:
 					value = readList(valueType);
 					break;
-				case ARRAY:
+				case FieldType.ARRAY:
 					value = readArray(valueType);
 					break;
-				case MATRIX:
+				case FieldType.MATRIX:
 					value = readMatrix(valueType);
 					break;
 				default:
 					throw new IOException();
 			}
 
-			aBundle.put(keys[i], value, valueType, objectType);
+			aBundle.put(keys[i], value, objectType, valueType);
 		}
 
 		return aBundle;
 	}
 
 
-	private Object readMatrix(ValueType aValueType) throws IOException
+	private Object readMatrix(int aValueType) throws IOException
 	{
 		return readSequence(aValueType, new MatrixSequence(aValueType));
 	}
 
 
-	private Object readArray(ValueType aValueType) throws IOException
+	private Object readArray(int aValueType) throws IOException
 	{
 		return readSequence(aValueType, new ArraySequence(aValueType));
 	}
 
 
-	private Object readList(ValueType aValueType) throws IOException
+	private Object readList(int aValueType) throws IOException
 	{
 		return readSequence(aValueType, new ListSequence());
 	}
 
 
-	private Object readSequence(ValueType aValueType, Sequence aSequence) throws IOException
+	private Object readSequence(int aValueType, Sequence aSequence) throws IOException
 	{
 		int length = mInput.readVar32S();
 		boolean[] flags = null;
@@ -170,31 +170,31 @@ public class BinaryDecoder implements Decoder
 	}
 
 
-	private Object readValue(ValueType aValueType) throws IOException
+	private Object readValue(int aValueType) throws IOException
 	{
 		switch (aValueType)
 		{
-			case BOOLEAN:
+			case FieldType.BOOLEAN:
 				return mInput.readBit() == 1;
-			case BYTE:
+			case FieldType.BYTE:
 				return (byte)mInput.readBits(8);
-			case SHORT:
+			case FieldType.SHORT:
 				return (short)mInput.readVar32S();
-			case CHAR:
+			case FieldType.CHAR:
 				return (char)mInput.readVar32();
-			case INT:
+			case FieldType.INT:
 				return mInput.readVar32S();
-			case LONG:
+			case FieldType.LONG:
 				return mInput.readVar64S();
-			case FLOAT:
+			case FieldType.FLOAT:
 				return Float.intBitsToFloat(mInput.readVar32S());
-			case DOUBLE:
+			case FieldType.DOUBLE:
 				return Double.longBitsToDouble(mInput.readVar64S());
-			case STRING:
+			case FieldType.STRING:
 				return readString();
-			case DATE:
+			case FieldType.DATE:
 				return readDate();
-			case BUNDLE:
+			case FieldType.BUNDLE:
 				return readBundle(new Bundle());
 			default:
 				throw new IOException("Unsupported field type: " + aValueType);
@@ -231,7 +231,7 @@ public class BinaryDecoder implements Decoder
 			throw new IOException("Unexpected end of stream");
 		}
 
-		return Convert.decodeUTF8(buf, 0, buf.length);
+		return UTF8.decodeUTF8(buf, 0, buf.length);
 	}
 
 
@@ -239,7 +239,7 @@ public class BinaryDecoder implements Decoder
 	{
 		public void allocate(int aSize);
 
-		public Object read(ValueType aaValueType) throws IOException;
+		public Object read(int aaValueType) throws IOException;
 
 		public void put(int aIndex, Object aValue);
 
@@ -260,7 +260,7 @@ public class BinaryDecoder implements Decoder
 
 
 		@Override
-		public Object read(ValueType aValueType) throws IOException
+		public Object read(int aValueType) throws IOException
 		{
 			return readValue(aValueType);
 		}
@@ -284,11 +284,11 @@ public class BinaryDecoder implements Decoder
 
 	private class ArraySequence implements Sequence
 	{
-		private ValueType mValueType;
+		private int mValueType;
 		private Object mArray;
 
 
-		public ArraySequence(ValueType aValueType)
+		public ArraySequence(int aValueType)
 		{
 			mValueType = aValueType;
 		}
@@ -297,12 +297,12 @@ public class BinaryDecoder implements Decoder
 		@Override
 		public void allocate(int aSize)
 		{
-			mArray = Array.newInstance(mValueType.getPrimitiveType(), aSize);
+			mArray = Array.newInstance(FieldType.getPrimitiveType(mValueType), aSize);
 		}
 
 
 		@Override
-		public Object read(ValueType aValueType) throws IOException
+		public Object read(int aValueType) throws IOException
 		{
 			return readValue(aValueType);
 		}
@@ -325,11 +325,11 @@ public class BinaryDecoder implements Decoder
 
 	private class MatrixSequence implements Sequence
 	{
-		private ValueType mValueType;
+		private int mValueType;
 		private Object mArray;
 
 
-		public MatrixSequence(ValueType aValueType)
+		public MatrixSequence(int aValueType)
 		{
 			mValueType = aValueType;
 		}
@@ -338,12 +338,12 @@ public class BinaryDecoder implements Decoder
 		@Override
 		public void allocate(int aSize)
 		{
-			mArray = Array.newInstance(mValueType.getPrimitiveType(), aSize, 0);
+			mArray = Array.newInstance(FieldType.getPrimitiveType(mValueType), aSize, 0);
 		}
 
 
 		@Override
-		public Object read(ValueType aValueType) throws IOException
+		public Object read(int aValueType) throws IOException
 		{
 			return readArray(aValueType);
 		}

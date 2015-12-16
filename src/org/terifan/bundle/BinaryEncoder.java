@@ -66,22 +66,22 @@ public class BinaryEncoder implements Encoder
 			Object value = aBundle.get(key);
 			int type = aBundle.getType(key);
 
-			ObjectType objectType = ObjectType.values()[type >> 4];
-			ValueType valueType = ValueType.values()[type & 15];
+			int objectType = FieldType.collectionType(type);
+			int valueType = FieldType.valueType(type);
 
 			switch (objectType)
 			{
-				case VALUE:
+				case FieldType.VALUE:
 					writeValue(valueType, value);
 					mOutput.align();
 					break;
-				case ARRAY:
+				case FieldType.ARRAY:
 					writeArray(valueType, value);
 					break;
-				case ARRAYLIST:
+				case FieldType.ARRAYLIST:
 					writeList(valueType, value);
 					break;
-				case MATRIX:
+				case FieldType.MATRIX:
 					writeMatrix(valueType, value);
 					break;
 				default:
@@ -91,19 +91,19 @@ public class BinaryEncoder implements Encoder
 	}
 
 
-	private void writeMatrix(ValueType aValueType, Object aValue) throws IOException
+	private void writeMatrix(int aValueType, Object aValue) throws IOException
 	{
 		writeSequence(new MatrixSequence(aValue, aValueType));
 	}
 
 
-	private void writeList(ValueType aValueType, Object aValue) throws IOException
+	private void writeList(int aValueType, Object aValue) throws IOException
 	{
 		writeSequence(new ListSequence(aValue, aValueType));
 	}
 
 
-	private void writeArray( ValueType aValueType, Object aValue) throws IOException
+	private void writeArray( int aValueType, Object aValue) throws IOException
 	{
 		writeSequence(new ArraySequence(aValue, aValueType));
 	}
@@ -149,41 +149,41 @@ public class BinaryEncoder implements Encoder
 	}
 
 
-	private void writeValue(ValueType aValueType, Object aValue) throws IOException
+	private void writeValue(int aValueType, Object aValue) throws IOException
 	{
 		switch (aValueType)
 		{
-			case BOOLEAN:
+			case FieldType.BOOLEAN:
 				mOutput.writeBit((Boolean)aValue);
 				break;
-			case BYTE:
+			case FieldType.BYTE:
 				mOutput.writeBits(0xff & (Byte)aValue, 8);
 				break;
-			case SHORT:
+			case FieldType.SHORT:
 				mOutput.writeVar32S((Short)aValue);
 				break;
-			case CHAR:
+			case FieldType.CHAR:
 				mOutput.writeVar32((Character)aValue);
 				break;
-			case INT:
+			case FieldType.INT:
 				mOutput.writeVar32S((Integer)aValue);
 				break;
-			case LONG:
+			case FieldType.LONG:
 				mOutput.writeVar64S((Long)aValue);
 				break;
-			case FLOAT:
+			case FieldType.FLOAT:
 				mOutput.writeVar32S(Float.floatToIntBits((Float)aValue));
 				break;
-			case DOUBLE:
+			case FieldType.DOUBLE:
 				mOutput.writeVar64S(Double.doubleToLongBits((Double)aValue));
 				break;
-			case STRING:
+			case FieldType.STRING:
 				writeString((String)aValue);
 				break;
-			case DATE:
+			case FieldType.DATE:
 				writeDate((Date)aValue);
 				break;
-			case BUNDLE:
+			case FieldType.BUNDLE:
 				writeBundle((Bundle)aValue);
 				break;
 			default:
@@ -220,7 +220,7 @@ public class BinaryEncoder implements Encoder
 		}
 		else
 		{
-			byte[] buf = Convert.encodeUTF8(aValue);
+			byte[] buf = UTF8.encodeUTF8(aValue);
 			mOutput.writeVar32(1 + buf.length);
 			mOutput.write(buf);
 		}
@@ -240,10 +240,10 @@ public class BinaryEncoder implements Encoder
 	private class MatrixSequence implements Sequence
 	{
 		private Object mValue;
-		private ValueType mValueType;
+		private int mValueType;
 
 
-		public MatrixSequence(Object aValue, ValueType aValueType)
+		public MatrixSequence(Object aValue, int aValueType)
 		{
 			mValue = aValue;
 			mValueType = aValueType;
@@ -275,10 +275,10 @@ public class BinaryEncoder implements Encoder
 	private class ArraySequence implements Sequence
 	{
 		private Object mValue;
-		private ValueType mValueType;
+		private int mValueType;
 
 
-		public ArraySequence(Object aValue, ValueType aValueType)
+		public ArraySequence(Object aValue, int aValueType)
 		{
 			mValue = aValue;
 			mValueType = aValueType;
@@ -310,10 +310,10 @@ public class BinaryEncoder implements Encoder
 	private class ListSequence implements Sequence
 	{
 		private Object mValue;
-		private ValueType mValueType;
+		private int mValueType;
 
 
-		public ListSequence(Object aValue, ValueType aValueType)
+		public ListSequence(Object aValue, int aValueType)
 		{
 			mValue = aValue;
 			mValueType = aValueType;

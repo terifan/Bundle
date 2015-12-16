@@ -243,8 +243,11 @@ public class TextEncoder
 			for (String key : aBundle.keySet())
 			{
 				Object value = aBundle.get(key);
-				FieldType_old fieldType = FieldType_old.classify(value);
-				if (value != null && (fieldType == FieldType_old.BUNDLE || value.getClass().isArray() || List.class.isAssignableFrom(value.getClass())))
+				int fieldType = aBundle.getType(key);
+				_ObjectType objectType = _ObjectType.values()[fieldType >> 4];
+				_ValueType valueType = _ValueType.values()[fieldType & 15];
+
+				if (value != null && (valueType == _ValueType.BUNDLE || objectType != _ObjectType.VALUE))
 				{
 					simple = false;
 					break;
