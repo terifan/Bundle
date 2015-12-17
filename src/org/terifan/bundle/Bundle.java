@@ -1,12 +1,18 @@
 package org.terifan.bundle;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.Externalizable;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.OutputStream;
+import java.io.PrintStream;
+import java.io.StringReader;
 import java.lang.reflect.Array;
+import java.nio.ByteBuffer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,7 +22,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
-import static org.terifan.bundle.bundle_test.Log.e;
 
 
 public class Bundle implements Cloneable, Externalizable, Iterable<String>
@@ -1869,7 +1874,7 @@ public class Bundle implements Cloneable, Externalizable, Iterable<String>
 	{
 		try
 		{
-			return new JSONEncoder().marshal(this, true);
+			return marshalJSON(true);
 		}
 		catch (IOException e)
 		{
@@ -2032,16 +2037,88 @@ public class Bundle implements Cloneable, Externalizable, Iterable<String>
 	}
 
 
-	public Bundle readExternal(InputStream aIn) throws IOException
+	public byte[] marshal() throws IOException
 	{
-		new BinaryDecoder().unmarshal(this, aIn);
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		new BinaryEncoder().marshal(this, baos);
+		return baos.toByteArray();
+	}
+
+
+	public String marshalJSON() throws IOException
+	{
+		return marshalJSON(false);
+	}
+
+
+	public String marshalJSON(boolean aFlat) throws IOException
+	{
+		StringBuilder sb = new StringBuilder(1<<17);
+		new JSONEncoder().marshal(this, sb, aFlat);
+		return sb.toString();
+	}
+
+
+	public Bundle marshal(OutputStream aOutputStream) throws IOException
+	{
+		new BinaryEncoder().marshal(this, aOutputStream);
 		return this;
 	}
 
 
-	public Bundle writeExternal(OutputStream out) throws IOException
+	public Bundle marshal(ByteBuffer aByteBuffer) throws IOException
 	{
-		new BinaryEncoder().marshal(this, out);
+		new BinaryEncoder().marshal(this, new ByteBufferOutputStream(aByteBuffer));
+		return this;
+	}
+
+
+	public Bundle marshalJSON(OutputStream aOutputStream) throws IOException
+	{
+		return marshalJSON(aOutputStream, false);
+	}
+
+
+	public Bundle marshalJSON(OutputStream aOutputStream, boolean aFlat) throws IOException
+	{
+		PrintStream out = new PrintStream(aOutputStream);
+		new JSONEncoder().marshal(this, out, aFlat);
+		out.flush();
+		return this;
+	}
+
+
+	public Bundle unmarshal(byte[] aData) throws IOException
+	{
+		new BinaryDecoder().unmarshal(this, new ByteArrayInputStream(aData));
+		return this;
+	}
+
+
+	public Bundle unmarshalJSON(String aJSON) throws IOException
+	{
+		new JSONDecoder().unmarshal(new StringReader(aJSON), this);
+		return this;
+	}
+
+
+	public Bundle unmarshal(InputStream aInputStream) throws IOException
+	{
+		new BinaryDecoder().unmarshal(this, aInputStream);
+		return this;
+	}
+
+
+	public Bundle unmarshal(ByteBuffer aByteBuffer) throws IOException
+	{
+		new BinaryDecoder().unmarshal(this, new ByteBufferInputStream(aByteBuffer));
+		return this;
+	}
+
+
+	public Bundle unmarshalJSON(InputStream aInputStream) throws IOException
+	{
+		new JSONDecoder().unmarshal(new InputStreamReader(aInputStream), this);
 		return this;
 	}
 }

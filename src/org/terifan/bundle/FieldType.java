@@ -5,11 +5,13 @@ import java.util.Date;
 
 class FieldType
 {
+	// can't be zero
 	public final static int VALUE = 0x10;
 	public final static int ARRAY = 0x20;
 	public final static int ARRAYLIST = 0x30;
 	public final static int MATRIX = 0x40;
 
+	// can't be zero
 	public final static int BOOLEAN = 0x01;
 	public final static int BYTE = 0x02;
 	public final static int SHORT = 0x03;
@@ -68,69 +70,4 @@ class FieldType
 
 		return aCollectionType + aValueType;
 	}
-
-
-//	static int classify(Class aClass)
-//	{
-//		int collectionType;
-//
-//		if (aClass.isArray() && aClass.getComponentType().isArray())
-//		{
-//			collectionType = MATRIX;
-//		}
-//		else if (aClass.isArray())
-//		{
-//			collectionType = ARRAY;
-//		}
-//		else if (List.class.isAssignableFrom(aClass))
-//		{
-//			collectionType = ARRAYLIST;
-//		}
-//		else
-//		{
-//			collectionType = VALUE;
-//		}
-//
-//		while (aClass.isArray())
-//		{
-//			aClass = aClass.getComponentType();
-//		}
-//
-//		for (ValueType valueType : ValueType.values())
-//		{
-//			if (valueType.mComponentType.isAssignableFrom(aClass) || valueType.mPrimitiveType.isAssignableFrom(aClass))
-//			{
-//				return encode(collectionType, valueType.mType);
-//			}
-//		}
-//
-//		throw new IllegalArgumentException("Unsupported type: " + collectionType + " " + aClass.getCanonicalName());
-//	}
-//
-//
-//	private enum ValueType
-//	{
-//		BOOLEAN(Boolean.class, Boolean.TYPE),
-//		BYTE(Byte.class, Byte.TYPE),
-//		SHORT(Short.class, Short.TYPE),
-//		CHAR(Character.class, Character.TYPE),
-//		INT(Integer.class, Integer.TYPE),
-//		LONG(Long.class, Long.TYPE),
-//		FLOAT(Float.class, Float.TYPE),
-//		DOUBLE(Double.class, Double.TYPE),
-//		STRING(String.class, String.class),
-//		BUNDLE(Bundle.class, Bundle.class),
-//		DATE(Date.class, Date.class);
-//
-//		private final Class mComponentType;
-//		private final Class mPrimitiveType;
-//		private final int mType;
-//
-//		private ValueType(Class aComponentType, Class aPrimitiveType)
-//		{
-//			mComponentType = aComponentType;
-//			mPrimitiveType = aPrimitiveType;
-//			mType = ordinal() + 1;
-//		}
-//	}
 }

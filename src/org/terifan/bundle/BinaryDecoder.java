@@ -1,62 +1,19 @@
 package org.terifan.bundle;
 
 import org.terifan.bundle.io.BitInputStream;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Array;
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 
-public class BinaryDecoder implements Decoder
+class BinaryDecoder
 {
 	private BitInputStream mInput;
 
 
-	public BinaryDecoder()
-	{
-	}
-
-
-	@Override
-	public Bundle unmarshal(byte[] aBuffer) throws IOException
-	{
-		return unmarshal(new Bundle(), aBuffer);
-	}
-
-
-	@Override
-	public Bundle unmarshal(Bundle aBundle, byte[] aBuffer) throws IOException
-	{
-		return unmarshal(aBundle, new ByteArrayInputStream(aBuffer));
-	}
-
-
-	@Override
-	public Bundle unmarshal(ByteBuffer aBuffer) throws IOException
-	{
-		return unmarshal(new Bundle(), aBuffer);
-	}
-
-
-	@Override
-	public Bundle unmarshal(Bundle aBundle, ByteBuffer aBuffer) throws IOException
-	{
-		return unmarshal(aBundle, new ByteBufferInputStream(aBuffer));
-	}
-
-
-	@Override
-	public Bundle unmarshal(InputStream aInputStream) throws IOException
-	{
-		return unmarshal(new Bundle(), aInputStream);
-	}
-
-
-	@Override
 	public Bundle unmarshal(Bundle aBundle, InputStream aInputStream) throws IOException
 	{
 		mInput = new BitInputStream(aInputStream);

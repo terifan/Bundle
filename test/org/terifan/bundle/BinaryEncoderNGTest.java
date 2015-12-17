@@ -1,7 +1,6 @@
 package org.terifan.bundle;
 
 import java.io.IOException;
-import org.terifan.bundle.bundle_test.Log;
 import static org.testng.Assert.*;
 import org.testng.annotations.Test;
 
@@ -13,16 +12,12 @@ public class BinaryEncoderNGTest
 	{
 		Bundle in = Util.createComplexBundle();
 
-		byte[] data = new BinaryEncoder().marshal(in);
+		byte[] data = in.marshal();
 
-		Log.out.println(data.length);
+//		Log.hexDump(data);
 
-		Bundle out = new BinaryDecoder().unmarshal(data);
+		Bundle out = new Bundle().unmarshal(data);
 
 		assertEquals(in, out);
-
-//		Log.out.println(out);
-		
-//		Log.hexDump(data);
 	}
 }

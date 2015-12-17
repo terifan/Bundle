@@ -1,174 +1,29 @@
 package org.terifan.bundle;
 
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.PushbackReader;
 import java.io.Reader;
-import java.io.StringReader;
 import java.lang.reflect.Array;
-import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import org.terifan.bundle.bundle_test.Log;
 
 
-public class JSONDecoder
+class JSONDecoder
 {
 	private static SimpleDateFormat mDateFormatter;
 
 
-	/**
-	 * Reads the provided string and returns a Bundle.
-	 *
-	 * @param aURL
-	 *   the path of a serialized Bundle
-	 * @return
-	 *   the read Bundle
-	 */
-	public Bundle unmarshal(URL aURL) throws IOException
-	{
-		return unmarshal(aURL, new Bundle());
-	}
-
-
-	/**
-	 * Reads the provided string and returns a Bundle.
-	 *
-	 * @param aURL
-	 *   the path of a serialized Bundle
-	 * @return
-	 *   the read Bundle
-	 */
-	public Bundle unmarshal(URL aURL, Bundle aBundle) throws IOException
-	{
-		return unmarshal(aURL.openConnection().getInputStream(), aBundle);
-	}
-
-
-	/**
-	 * Reads the provided string and returns a Bundle.
-	 *
-	 * @param aString
-	 *   the serialized Bundle
-	 * @return
-	 *   the read Bundle
-	 */
-	public Bundle unmarshal(String aString) throws IOException
-	{
-		return readBundle(new PushbackReader(new StringReader(aString)), new Bundle());
-	}
-
-
-	/**
-	 * Reads the provided string and returns a Bundle.
-	 *
-	 * @param aString
-	 *   the serialized Bundle
-	 * @return
-	 *   the read Bundle
-	 */
-	public Bundle unmarshal(String aString, Bundle aBundle) throws IOException
-	{
-		return readBundle(new PushbackReader(new StringReader(aString)), aBundle);
-	}
-
-
-	/**
-	 * Reads the provided string and returns a Bundle.
-	 *
-	 * @param aReader
-	 *   the serialized Bundle
-	 * @return
-	 *   the read Bundle
-	 */
-	public Bundle unmarshal(Reader aReader) throws IOException
-	{
-		return readBundle(new PushbackReader(aReader), new Bundle());
-	}
-
-
-	/**
-	 * Reads the provided string and returns a Bundle.
-	 *
-	 * @param aReader
-	 *   the serialized Bundle
-	 * @return
-	 *   the read Bundle
-	 */
 	public Bundle unmarshal(Reader aReader, Bundle aBundle) throws IOException
 	{
-		return readBundle(new PushbackReader(aReader), aBundle);
-	}
+		PushbackReader reader = new PushbackReader(aReader);
 
-
-	/**
-	 * Reads the provided string and returns a Bundle.
-	 *
-	 * @param aFile
-	 *   the serialized Bundle
-	 * @return
-	 *   the read Bundle
-	 */
-	public Bundle unmarshal(File aFile) throws IOException
-	{
-		return readBundle(new PushbackReader(new FileReader(aFile)), new Bundle());
-	}
-
-
-	/**
-	 * Reads the provided string and returns a Bundle.
-	 *
-	 * @param aFile
-	 *   the serialized Bundle
-	 * @return
-	 *   the read Bundle
-	 */
-	public Bundle unmarshal(File aFile, Bundle aBundle) throws IOException
-	{
-		return readBundle(new PushbackReader(new FileReader(aFile)), aBundle);
-	}
-
-
-	/**
-	 * Reads the provided string and returns a Bundle.
-	 *
-	 * @param aInputStream
-	 *   the serialized Bundle
-	 * @return
-	 *   the read Bundle
-	 */
-	public Bundle unmarshal(InputStream aInputStream) throws IOException
-	{
-		return readBundle(new PushbackReader(new InputStreamReader(aInputStream)), new Bundle());
-	}
-
-
-	/**
-	 * Reads the provided string and returns a Bundle.
-	 *
-	 * @param aInputStream
-	 *   the serialized Bundle
-	 * @return
-	 *   the read Bundle
-	 */
-	public Bundle unmarshal(InputStream aInputStream, Bundle aBundle) throws IOException
-	{
-		return readBundle(new PushbackReader(new InputStreamReader(aInputStream)), aBundle);
-	}
-
-
-	private Bundle readBundle(PushbackReader aReader, Bundle aBundle) throws IOException
-	{
-		if (aReader.read() != '{')
+		if (reader.read() != '{')
 		{
 			throw new IOException("Expected a start curly bracket in bundle start.");
 		}
 
-		return readBundleImpl(aReader, aBundle);
+		return readBundleImpl(reader, aBundle);
 	}
 
 
@@ -457,30 +312,6 @@ public class JSONDecoder
 			{
 				return (char)c;
 			}
-		}
-	}
-
-
-	public static void main(String ... args)
-	{
-		try
-		{
-			Bundle b = new Bundle()
-				.putInt("a", 1)
-				.putIntArray("b", 1, 2, 3)
-				.putString("c", "A")
-				.putStringArray("d", "A", "B", "C")
-				.putBundle("e", new Bundle()
-					.putInt("f", 7)
-				)
-				;
-
-			Log.out.println(new JSONEncoder().marshal(b));
-			Log.out.println(new JSONEncoder().marshal(new JSONDecoder().unmarshal(new JSONEncoder().marshal(b))));
-		}
-		catch (Throwable e)
-		{
-			e.printStackTrace(System.out);
 		}
 	}
 }

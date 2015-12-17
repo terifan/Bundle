@@ -1,7 +1,5 @@
 package org.terifan.bundle;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
@@ -9,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 
-public class JSONEncoder
+class JSONEncoder
 {
 	private final static int SIMPLE_OBJECT_MAX_ELEMENTS = 5;
 
@@ -19,60 +17,13 @@ public class JSONEncoder
 	private int mIndent;
 
 
-	public void marshal(Bundle aBundle, File aOutput) throws IOException
-	{
-		marshal(aBundle, aOutput, false);
-	}
-
-
-	public void marshal(Bundle aBundle, File aOutput, boolean aFlat) throws IOException
-	{
-		try (FileWriter fw = new FileWriter(aOutput))
-		{
-			marshal(aBundle, fw, aFlat);
-		}
-	}
-
-
-	public String marshal(Bundle aBundle) throws IOException
-	{
-		return marshal(aBundle, false);
-	}
-
-
-	/**
-	 * Returns the provided Bundle as a JSON string.
-	 *
-	 * @return
-	 *   the Bundle as a JSON string
-	 */
-	public String marshal(Bundle aBundle, boolean aFlat) throws IOException
-	{
-		return marshal(aBundle, new StringBuilder(1<<17), aFlat).toString();
-	}
-
-
-	/**
-	 * Returns the provided Bundle as a JSON string.
-	 *
-	 * @return
-	 *   the Bundle as a JSON string
-	 */
-	public Appendable marshal(Bundle aBundle, Appendable aAppendable) throws IOException
-	{
-		return marshal(aBundle, aAppendable, false);
-	}
-
-
-	public Appendable marshal(Bundle aBundle, Appendable aAppendable, boolean aFlat) throws IOException
+	public void marshal(Bundle aBundle, Appendable aAppendable, boolean aFlat) throws IOException
 	{
 		mAppendable = aAppendable;
 		mFlat = aFlat;
 		mIndent = 0;
 
 		writeBundle(aBundle);
-
-		return aAppendable;
 	}
 
 

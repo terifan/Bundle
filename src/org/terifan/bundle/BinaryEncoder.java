@@ -1,37 +1,18 @@
 package org.terifan.bundle;
 
 import org.terifan.bundle.io.BitOutputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Array;
-import java.nio.ByteBuffer;
 import java.util.Date;
 import java.util.List;
 
 
-public class BinaryEncoder implements Encoder
+class BinaryEncoder
 {
 	private BitOutputStream mOutput;
 
 
-	@Override
-	public byte[] marshal(Bundle aBundle) throws IOException
-	{
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		marshal(aBundle, baos);
-		return baos.toByteArray();
-	}
-
-
-	@Override
-	public void marshal(Bundle aBundle, ByteBuffer aBuffer) throws IOException
-	{
-		marshal(aBundle, new ByteBufferOutputStream(aBuffer));
-	}
-
-
-	@Override
 	public void marshal(Bundle aBundle, OutputStream aOutputStream) throws IOException
 	{
 		mOutput = new BitOutputStream(aOutputStream);
