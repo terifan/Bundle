@@ -1,6 +1,5 @@
 package org.terifan.bundle;
 
-import org.terifan.bundle.io.BitOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Array;

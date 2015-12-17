@@ -1,4 +1,4 @@
-package org.terifan.bundle.io;
+package org.terifan.bundle;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -7,7 +7,7 @@ import java.io.OutputStream;
 /**
  * BitOutputStream writes bits to the underlying byte stream.
  */
-public class BitOutputStream implements AutoCloseable
+class BitOutputStream implements AutoCloseable
 {
 	private OutputStream mOutputStream;
 	private int mShift;
