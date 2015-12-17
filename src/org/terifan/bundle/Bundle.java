@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.OutputStream;
-import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.io.StringReader;
 import java.lang.reflect.Array;
 import java.nio.ByteBuffer;
@@ -2002,7 +2002,7 @@ public class Bundle implements Cloneable, Externalizable, Iterable<String>
 	@Override
 	public void readExternal(ObjectInput aIn) throws IOException, ClassNotFoundException
 	{
-		new BinaryDecoder().unmarshal(this, new InputStream()
+		unmarshal(new InputStream()
 		{
 			@Override
 			public int read() throws IOException
@@ -2021,7 +2021,7 @@ public class Bundle implements Cloneable, Externalizable, Iterable<String>
 	@Override
 	public void writeExternal(ObjectOutput aOut) throws IOException
 	{
-		new BinaryEncoder().marshal(this, new OutputStream()
+		marshal(new OutputStream()
 		{
 			@Override
 			public void write(int aByte) throws IOException
@@ -2039,23 +2039,9 @@ public class Bundle implements Cloneable, Externalizable, Iterable<String>
 
 	public byte[] marshal() throws IOException
 	{
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ByteArrayOutputStream baos = new ByteArrayOutputStream(4096);
 		new BinaryEncoder().marshal(this, baos);
 		return baos.toByteArray();
-	}
-
-
-	public String marshalJSON() throws IOException
-	{
-		return marshalJSON(false);
-	}
-
-
-	public String marshalJSON(boolean aFlat) throws IOException
-	{
-		StringBuilder sb = new StringBuilder(1<<17);
-		new JSONEncoder().marshal(this, sb, aFlat);
-		return sb.toString();
 	}
 
 
@@ -2073,6 +2059,20 @@ public class Bundle implements Cloneable, Externalizable, Iterable<String>
 	}
 
 
+	public String marshalJSON() throws IOException
+	{
+		return marshalJSON(false);
+	}
+
+
+	public String marshalJSON(boolean aFlat) throws IOException
+	{
+		StringBuilder sb = new StringBuilder(4096);
+		new JSONEncoder().marshal(this, sb, aFlat);
+		return sb.toString();
+	}
+
+
 	public Bundle marshalJSON(OutputStream aOutputStream) throws IOException
 	{
 		return marshalJSON(aOutputStream, false);
@@ -2081,7 +2081,7 @@ public class Bundle implements Cloneable, Externalizable, Iterable<String>
 
 	public Bundle marshalJSON(OutputStream aOutputStream, boolean aFlat) throws IOException
 	{
-		PrintStream out = new PrintStream(aOutputStream);
+		PrintWriter out = new PrintWriter(aOutputStream);
 		new JSONEncoder().marshal(this, out, aFlat);
 		out.flush();
 		return this;
@@ -2091,13 +2091,6 @@ public class Bundle implements Cloneable, Externalizable, Iterable<String>
 	public Bundle unmarshal(byte[] aData) throws IOException
 	{
 		new BinaryDecoder().unmarshal(this, new ByteArrayInputStream(aData));
-		return this;
-	}
-
-
-	public Bundle unmarshalJSON(String aJSON) throws IOException
-	{
-		new JSONDecoder().unmarshal(new StringReader(aJSON), this);
 		return this;
 	}
 
@@ -2112,6 +2105,13 @@ public class Bundle implements Cloneable, Externalizable, Iterable<String>
 	public Bundle unmarshal(ByteBuffer aByteBuffer) throws IOException
 	{
 		new BinaryDecoder().unmarshal(this, new ByteBufferInputStream(aByteBuffer));
+		return this;
+	}
+
+
+	public Bundle unmarshalJSON(String aJSON) throws IOException
+	{
+		new JSONDecoder().unmarshal(new StringReader(aJSON), this);
 		return this;
 	}
 

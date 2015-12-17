@@ -16,6 +16,8 @@ class BinaryEncoder
 	{
 		mOutput = new BitOutputStream(aOutputStream);
 
+		mOutput.writeVar32(0); // version
+		
 		writeBundle(aBundle);
 
 		mOutput.finish();

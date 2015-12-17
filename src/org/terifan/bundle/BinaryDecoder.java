@@ -17,6 +17,12 @@ class BinaryDecoder
 	{
 		mInput = new BitInputStream(aInputStream);
 
+		int version = mInput.readVar32();
+		if (version != 0)
+		{
+			throw new IllegalArgumentException("Unsupported version");
+		}
+		
 		return readBundle(aBundle);
 	}
 
