@@ -8,6 +8,7 @@ import java.lang.reflect.Array;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 public class BinaryDecoder implements Decoder
@@ -66,73 +67,48 @@ public class BinaryDecoder implements Decoder
 
 	private Bundle readBundle(Bundle aBundle) throws IOException
 	{
-		int entryCount = mInput.readVar32() - 1;
-
-		if (entryCount == -1)
-		{
-			return null;
-		}
-
-		String[] keys = new String[entryCount];
-		int[] types = new int[entryCount];
+		int entryCount = mInput.readVar32();
 
 		for (int i = 0; i < entryCount; i++)
 		{
-			types[i] = mInput.readVar32();
-			keys[i] = readString();
-		}
-
-		for (int i = 0; i < entryCount; i++)
-		{
-			int objectType = FieldType.collectionType(types[i]);
-			int valueType = FieldType.valueType(types[i]);
+			String key = (String)readValue(FieldType.STRING);
+			int fieldType = mInput.readVar32S();
 			Object value;
 
-			switch (objectType)
+			if (fieldType < 0)
 			{
-				case FieldType.VALUE:
-					value = readValue(valueType);
-					mInput.align();
-					break;
-				case FieldType.ARRAYLIST:
-					value = readList(valueType);
-					break;
-				case FieldType.ARRAY:
-					value = readArray(valueType);
-					break;
-				case FieldType.MATRIX:
-					value = readMatrix(valueType);
-					break;
-				default:
-					throw new IOException();
+				value = null;
+				fieldType = -fieldType;
+			}
+			else
+			{
+				int collectionType = FieldType.collectionType(fieldType);
+				int valueType = FieldType.valueType(fieldType);
+
+				switch (collectionType)
+				{
+					case FieldType.VALUE:
+						value = readValue(valueType);
+						mInput.align();
+						break;
+					case FieldType.ARRAY:
+					case FieldType.ARRAYLIST:
+					case FieldType.MATRIX:
+						value = readSequence(collectionType, valueType);
+						break;
+					default:
+						throw new IOException();
+				}
 			}
 
-			aBundle.put(keys[i], value, types[i]);
+			aBundle.put(key, value, fieldType);
 		}
 
 		return aBundle;
 	}
 
 
-	private Object readMatrix(int aValueType) throws IOException
-	{
-		return readSequence(aValueType, new MatrixSequence(aValueType));
-	}
-
-
-	private Object readArray(int aValueType) throws IOException
-	{
-		return readSequence(aValueType, new ArraySequence(aValueType));
-	}
-
-
-	private Object readList(int aValueType) throws IOException
-	{
-		return readSequence(aValueType, new ListSequence());
-	}
-
-
-	private Object readSequence(int aValueType, Sequence aSequence) throws IOException
+	private Object readSequence(final int aCollectionType, final int aValueType) throws IOException
 	{
 		int length = mInput.readVar32S();
 		boolean[] flags = null;
@@ -150,23 +126,54 @@ public class BinaryDecoder implements Decoder
 			mInput.align();
 		}
 
-		aSequence.allocate(length);
+		Object sequence;
+
+		if (aCollectionType == FieldType.ARRAYLIST)
+		{
+			sequence = new ArrayList(length);
+		}
+		else if (aCollectionType == FieldType.ARRAY)
+		{
+			sequence = Array.newInstance(FieldType.getPrimitiveType(aValueType), length);
+		}
+		else
+		{
+			sequence = Array.newInstance(FieldType.getPrimitiveType(aValueType), length, 0);
+		}
 
 		for (int i = 0; i < length; i++)
 		{
-			Object value = null;
+			Object value;
 
 			if (flags == null || flags[i])
 			{
-				value = aSequence.read(aValueType);
+				if (aCollectionType == FieldType.MATRIX)
+				{
+					value = readSequence(FieldType.ARRAY, aValueType);
+				}
+				else
+				{
+					value = readValue(aValueType);
+				}
+			}
+			else
+			{
+				value = null;
 			}
 
-			aSequence.put(i, value);
+			if (aCollectionType == FieldType.ARRAYLIST)
+			{
+				((List)sequence).add(value);
+			}
+			else
+			{
+				Array.set(sequence, i, value);
+			}
 		}
 
 		mInput.align();
 
-		return aSequence.getResult();
+		return sequence;
 	}
 
 
@@ -191,175 +198,18 @@ public class BinaryDecoder implements Decoder
 			case FieldType.DOUBLE:
 				return Double.longBitsToDouble(mInput.readVar64S());
 			case FieldType.STRING:
-				return readString();
+				byte[] buf = new byte[mInput.readVar32()];
+				if (mInput.read(buf) != buf.length)
+				{
+					throw new IOException("Unexpected end of stream");
+				}
+				return UTF8.decodeUTF8(buf, 0, buf.length);
 			case FieldType.DATE:
-				return readDate();
+				return new Date(mInput.readVar64S());
 			case FieldType.BUNDLE:
 				return readBundle(new Bundle());
 			default:
 				throw new IOException("Unsupported field type: " + aValueType);
-		}
-	}
-
-
-	private Date readDate() throws IOException
-	{
-		long time = mInput.readVar64() - 1;
-
-		if (time == -1)
-		{
-			return null;
-		}
-
-		return new Date(time);
-	}
-
-
-	private String readString() throws IOException
-	{
-		int len = mInput.readVar32() - 1;
-
-		if (len == -1)
-		{
-			return null;
-		}
-
-		byte[] buf = new byte[len];
-
-		if (mInput.read(buf) != buf.length)
-		{
-			throw new IOException("Unexpected end of stream");
-		}
-
-		return UTF8.decodeUTF8(buf, 0, buf.length);
-	}
-
-
-	private static interface Sequence
-	{
-		public void allocate(int aSize);
-
-		public Object read(int aaValueType) throws IOException;
-
-		public void put(int aIndex, Object aValue);
-
-		public Object getResult();
-	}
-
-
-	private class ListSequence implements Sequence
-	{
-		private ArrayList mList;
-
-
-		@Override
-		public void allocate(int aSize)
-		{
-			mList = new ArrayList(aSize);
-		}
-
-
-		@Override
-		public Object read(int aValueType) throws IOException
-		{
-			return readValue(aValueType);
-		}
-
-
-		@Override
-		public void put(int aIndex, Object aValue)
-		{
-			assert aIndex == mList.size();
-			mList.add(aValue);
-		}
-
-
-		@Override
-		public Object getResult()
-		{
-			return mList;
-		}
-	}
-
-
-	private class ArraySequence implements Sequence
-	{
-		private int mValueType;
-		private Object mArray;
-
-
-		public ArraySequence(int aValueType)
-		{
-			mValueType = aValueType;
-		}
-
-
-		@Override
-		public void allocate(int aSize)
-		{
-			mArray = Array.newInstance(FieldType.getPrimitiveType(mValueType), aSize);
-		}
-
-
-		@Override
-		public Object read(int aValueType) throws IOException
-		{
-			return readValue(aValueType);
-		}
-
-
-		@Override
-		public void put(int aIndex, Object aValue)
-		{
-			Array.set(mArray, aIndex, aValue);
-		}
-
-
-		@Override
-		public Object getResult()
-		{
-			return mArray;
-		}
-	}
-
-
-	private class MatrixSequence implements Sequence
-	{
-		private int mValueType;
-		private Object mArray;
-
-
-		public MatrixSequence(int aValueType)
-		{
-			mValueType = aValueType;
-		}
-
-
-		@Override
-		public void allocate(int aSize)
-		{
-			mArray = Array.newInstance(FieldType.getPrimitiveType(mValueType), aSize, 0);
-		}
-
-
-		@Override
-		public Object read(int aValueType) throws IOException
-		{
-			return readArray(aValueType);
-		}
-
-
-		@Override
-		public void put(int aIndex, Object aValue)
-		{
-			Array.set(mArray, aIndex, aValue);
-		}
-
-
-		@Override
-		public Object getResult()
-		{
-			return mArray;
 		}
 	}
 }

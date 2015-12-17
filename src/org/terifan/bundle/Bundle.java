@@ -16,6 +16,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import static org.terifan.bundle.bundle_test.Log.e;
 
 
 public class Bundle implements Cloneable, Externalizable, Iterable<String>
@@ -1866,7 +1867,14 @@ public class Bundle implements Cloneable, Externalizable, Iterable<String>
 	@Override
 	public String toString()
 	{
-		return mValues.toString();
+		try
+		{
+			return new JSONEncoder().marshal(this, true);
+		}
+		catch (IOException e)
+		{
+			throw new IllegalStateException(e);
+		}
 	}
 
 

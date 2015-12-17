@@ -11,6 +11,7 @@ public class Util
 	static Bundle createComplexBundle()
 	{
 		Bundle bundle = new Bundle()
+//			.putIntArray("null", null)
 			.putBundle("bundle", createSimpleBundle())
 			.putBundleArray("bundle_array", createSimpleBundle(), createSimpleBundle())
 			.putBundleArrayList("bundle_list", new ArrayList<>(Arrays.asList(createSimpleBundle(), createSimpleBundle())))

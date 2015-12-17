@@ -45,78 +45,60 @@ public class BinaryEncoder implements Encoder
 
 	private void writeBundle(Bundle aBundle) throws IOException
 	{
-		if (aBundle == null)
-		{
-			mOutput.writeVar32(0);
-			return;
-		}
+		mOutput.writeVar32(aBundle.size());
 
-		String[] keys = aBundle.keySet().toArray(new String[aBundle.size()]);
-
-		mOutput.writeVar32(1 + keys.length);
-
-		for (String key : keys)
-		{
-			mOutput.writeVar32(aBundle.getType(key));
-			writeString(key);
-		}
-
-		for (String key : keys)
+		for (String key : aBundle.keySet())
 		{
 			Object value = aBundle.get(key);
-			int type = aBundle.getType(key);
+			int fieldType = aBundle.getType(key);
 
-			int objectType = FieldType.collectionType(type);
-			int valueType = FieldType.valueType(type);
+			writeValue(key, FieldType.STRING);
+			mOutput.writeVar32S(value == null ? -fieldType : fieldType);
 
-			switch (objectType)
+			if (value != null)
 			{
-				case FieldType.VALUE:
-					writeValue(valueType, value);
-					mOutput.align();
-					break;
-				case FieldType.ARRAY:
-					writeArray(valueType, value);
-					break;
-				case FieldType.ARRAYLIST:
-					writeList(valueType, value);
-					break;
-				case FieldType.MATRIX:
-					writeMatrix(valueType, value);
-					break;
-				default:
-					throw new InternalError();
+				int collectionType = FieldType.collectionType(fieldType);
+				int valueType = FieldType.valueType(fieldType);
+
+				switch (collectionType)
+				{
+					case FieldType.VALUE:
+						writeValue(value, valueType);
+						mOutput.align();
+						break;
+					case FieldType.ARRAY:
+					case FieldType.ARRAYLIST:
+					case FieldType.MATRIX:
+						writeSequence(value, collectionType, valueType);
+						break;
+					default:
+						throw new InternalError();
+				}
 			}
 		}
 	}
 
 
-	private void writeMatrix(int aValueType, Object aValue) throws IOException
+	private void writeSequence(Object aSequence, final int aCollectionType, final int aValueType) throws IOException
 	{
-		writeSequence(new MatrixSequence(aValue, aValueType));
-	}
+		final int length;
 
+		if (aCollectionType == FieldType.ARRAYLIST)
+		{
+			length = ((List)aSequence).size();
+		}
+		else
+		{
+			length = Array.getLength(aSequence);
+		}
 
-	private void writeList(int aValueType, Object aValue) throws IOException
-	{
-		writeSequence(new ListSequence(aValue, aValueType));
-	}
-
-
-	private void writeArray( int aValueType, Object aValue) throws IOException
-	{
-		writeSequence(new ArraySequence(aValue, aValueType));
-	}
-
-
-	private void writeSequence(Sequence aSequence) throws IOException
-	{
-		int length = aSequence.size();
 		boolean hasNull = false;
 
 		for (int i = 0; i < length; i++)
 		{
-			if (aSequence.get(i) == null)
+			Object value = getElement(aCollectionType, aSequence, i);
+
+			if (value == null)
 			{
 				hasNull = true;
 				break;
@@ -129,7 +111,9 @@ public class BinaryEncoder implements Encoder
 		{
 			for (int i = 0; i < length; i++)
 			{
-				mOutput.writeBit(aSequence.get(i) == null);
+				Object value = getElement(aCollectionType, aSequence, i);
+
+				mOutput.writeBit(value == null);
 			}
 
 			mOutput.align();
@@ -137,11 +121,18 @@ public class BinaryEncoder implements Encoder
 
 		for (int i = 0; i < length; i++)
 		{
-			Object item = aSequence.get(i);
+			Object value = getElement(aCollectionType, aSequence, i);
 
-			if (item != null)
+			if (value != null)
 			{
-				aSequence.write(i);
+				if (aCollectionType == FieldType.MATRIX)
+				{
+					writeSequence(value, FieldType.ARRAY, aValueType);
+				}
+				else
+				{
+					writeValue(value, aValueType);
+				}
 			}
 		}
 
@@ -149,7 +140,24 @@ public class BinaryEncoder implements Encoder
 	}
 
 
-	private void writeValue(int aValueType, Object aValue) throws IOException
+	private Object getElement(int aCollectionType, Object aValue, int aIndex)
+	{
+		Object value;
+
+		if (aCollectionType == FieldType.ARRAYLIST)
+		{
+			value = ((List)aValue).get(aIndex);
+		}
+		else
+		{
+			value = Array.get(aValue, aIndex);
+		}
+		
+		return value;
+	}
+
+
+	private void writeValue(Object aValue, int aValueType) throws IOException
 	{
 		switch (aValueType)
 		{
@@ -178,166 +186,18 @@ public class BinaryEncoder implements Encoder
 				mOutput.writeVar64S(Double.doubleToLongBits((Double)aValue));
 				break;
 			case FieldType.STRING:
-				writeString((String)aValue);
+				byte[] buf = UTF8.encodeUTF8((String)aValue);
+				mOutput.writeVar32(buf.length);
+				mOutput.write(buf);
 				break;
 			case FieldType.DATE:
-				writeDate((Date)aValue);
+				mOutput.writeVar64S(((Date)aValue).getTime());
 				break;
 			case FieldType.BUNDLE:
 				writeBundle((Bundle)aValue);
 				break;
 			default:
 				throw new IOException("Unsupported field type: " + aValueType);
-		}
-	}
-
-
-	private void writeDate(Date aValue) throws IOException
-	{
-		if (aValue == null)
-		{
-			mOutput.writeVar64(0);
-		}
-		else
-		{
-			long time = aValue.getTime();
-
-			if (time < 0)
-			{
-				throw new IllegalArgumentException("Negative time not supported: " + aValue);
-			}
-
-			mOutput.writeVar64(1 + time);
-		}
-	}
-
-
-	private void writeString(String aValue) throws IOException
-	{
-		if (aValue == null)
-		{
-			mOutput.writeVar32(0);
-		}
-		else
-		{
-			byte[] buf = UTF8.encodeUTF8(aValue);
-			mOutput.writeVar32(1 + buf.length);
-			mOutput.write(buf);
-		}
-	}
-
-
-	private static interface Sequence
-	{
-		int size();
-
-		Object get(int aIndex);
-
-		void write(int aIndex) throws IOException;
-	}
-
-
-	private class MatrixSequence implements Sequence
-	{
-		private Object mValue;
-		private int mValueType;
-
-
-		public MatrixSequence(Object aValue, int aValueType)
-		{
-			mValue = aValue;
-			mValueType = aValueType;
-		}
-
-
-		@Override
-		public int size()
-		{
-			return Array.getLength(mValue);
-		}
-
-
-		@Override
-		public Object get(int aIndex)
-		{
-			return Array.get(mValue, aIndex);
-		}
-
-
-		@Override
-		public void write(int aIndex) throws IOException
-		{
-			writeArray(mValueType, get(aIndex));
-		}
-	}
-
-
-	private class ArraySequence implements Sequence
-	{
-		private Object mValue;
-		private int mValueType;
-
-
-		public ArraySequence(Object aValue, int aValueType)
-		{
-			mValue = aValue;
-			mValueType = aValueType;
-		}
-
-
-		@Override
-		public int size()
-		{
-			return Array.getLength(mValue);
-		}
-
-
-		@Override
-		public Object get(int aIndex)
-		{
-			return Array.get(mValue, aIndex);
-		}
-
-
-		@Override
-		public void write(int aIndex) throws IOException
-		{
-			writeValue(mValueType, get(aIndex));
-		}
-	}
-
-
-	private class ListSequence implements Sequence
-	{
-		private Object mValue;
-		private int mValueType;
-
-
-		public ListSequence(Object aValue, int aValueType)
-		{
-			mValue = aValue;
-			mValueType = aValueType;
-		}
-
-
-		@Override
-		public int size()
-		{
-			return ((List)mValue).size();
-		}
-
-
-		@Override
-		public Object get(int aIndex)
-		{
-			return ((List)mValue).get(aIndex);
-		}
-
-
-		@Override
-		public void write(int aIndex) throws IOException
-		{
-			writeValue(mValueType, get(aIndex));
 		}
 	}
 }
