@@ -79,9 +79,9 @@ public class Util
 			.putDoubleMatrix("double_matrix_sq", new double[][]{{r.nextDouble(),r.nextDouble(),r.nextDouble()},{r.nextDouble(),r.nextDouble()}})
 
 			.putDate("date_null", null)
-			.putDate("date", new Date(r.nextLong() & Long.MAX_VALUE))
-			.putDateArray("date_array", new Date(r.nextLong() & Long.MAX_VALUE), new Date(r.nextLong() & Long.MAX_VALUE), null)
-			.putDateArrayList("date_list", new ArrayList<>(Arrays.asList(new Date(r.nextLong() & Long.MAX_VALUE), new Date(r.nextLong() & Long.MAX_VALUE), null)))
+			.putDate("date", new Date(r.nextLong() & 0x3FFFFFFFFFFL))
+			.putDateArray("date_array", new Date(r.nextLong() & 0x3FFFFFFFFFFL), new Date(r.nextLong() & 0x3FFFFFFFFFFL), null)
+			.putDateArrayList("date_list", new ArrayList<>(Arrays.asList(new Date(r.nextLong() & 0x3FFFFFFFFFFL), new Date(r.nextLong() & 0x3FFFFFFFFFFL), null)))
 
 			.putString("string_null", null)
 			.putString("string", randomString(r))

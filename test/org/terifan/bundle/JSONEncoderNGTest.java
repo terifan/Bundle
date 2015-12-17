@@ -16,8 +16,8 @@ public class JSONEncoderNGTest
 	@Test
 	public void testSomeMethod() throws IOException
 	{
-		Bundle in = Util.createSimpleBundle();
-//		Bundle in = Util.createComplexBundle();
+//		Bundle in = Util.createSimpleBundle();
+		Bundle in = Util.createComplexBundle();
 
 		String data = new JSONEncoder().marshal(in);
 

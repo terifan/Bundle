@@ -287,9 +287,7 @@ public class JSONDecoder
 
 		if (c == 'n')
 		{
-			readChar(aReader);
-			readChar(aReader);
-			readChar(aReader);
+			readNull(aReader);
 			return null;
 		}
 		else if (c != '[')
@@ -310,6 +308,10 @@ public class JSONDecoder
 			if (list.isEmpty())
 			{
 				aReader.unread(c);
+			}
+			else if (c != ',')
+			{
+				throw new IOException("Expected comma sign between elements in array: found ascii " + c);
 			}
 
 			list.add(readValue(aReader, aFieldType));
@@ -335,18 +337,16 @@ public class JSONDecoder
 	{
 		if (FieldType.valueType(aFieldType) == FieldType.BUNDLE)
 		{
-			int c = aReader.read();
+			int c = readChar(aReader);
 
 			if (c == 'n')
 			{
-				aReader.read();
-				aReader.read();
-				aReader.read();
+				readNull(aReader);
 				return null;
 			}
 			if (c != '{')
 			{
-				throw new IllegalStateException();
+				throw new IllegalStateException(""+c);
 			}
 
 			return readBundleImpl(aReader, new Bundle());
@@ -354,13 +354,31 @@ public class JSONDecoder
 
 		StringBuilder sb = new StringBuilder();
 
+		char t = '\0';
+
+		switch (FieldType.valueType(aFieldType))
+		{
+			case FieldType.STRING:
+			case FieldType.DATE:
+				t = readChar(aReader);
+				if (t == 'n')
+				{
+					readNull(aReader);
+					return null;
+				}
+				break;
+		}
+
 		for (;;)
 		{
 			int c = aReader.read();
 
-			if (c == '}' || c == ']' || c == ',' || c == '=' || c == ':')
+			if (c == t || t == '\0' && (c == '}' || c == ']' || c == ',' || c == '=' || c == ':'))
 			{
-				aReader.unread(c);
+				if (c != t)
+				{
+					aReader.unread(c);
+				}
 				break;
 			}
 			if (c == '\\')
@@ -410,10 +428,19 @@ public class JSONDecoder
 					throw new IOException(e);
 				}
 			case FieldType.STRING:
-				return value.substring(1, value.length() - 1);
+				return value;
 		}
 
 		throw new IllegalStateException();
+	}
+
+
+	private void readNull(PushbackReader aReader) throws IOException
+	{
+		if (Character.toLowerCase(aReader.read()) != 'u' || Character.toLowerCase(aReader.read()) != 'l' || Character.toLowerCase(aReader.read()) != 'l')
+		{
+			throw new IllegalArgumentException();
+		}
 	}
 
 
@@ -438,7 +465,18 @@ public class JSONDecoder
 	{
 		try
 		{
-			Log.out.println(new JSONEncoder().marshal(new JSONDecoder().unmarshal("{'25!a':'x', '37!b':[1,2,3], '26!c':{'21!d':1}, '71!d':[[1,2],[3,4]], '74!e':[[{'21!f':1}]]}")));
+			Bundle b = new Bundle()
+				.putInt("a", 1)
+				.putIntArray("b", 1, 2, 3)
+				.putString("c", "A")
+				.putStringArray("d", "A", "B", "C")
+				.putBundle("e", new Bundle()
+					.putInt("f", 7)
+				)
+				;
+
+			Log.out.println(new JSONEncoder().marshal(b));
+			Log.out.println(new JSONEncoder().marshal(new JSONDecoder().unmarshal(new JSONEncoder().marshal(b))));
 		}
 		catch (Throwable e)
 		{
