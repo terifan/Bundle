@@ -6,9 +6,9 @@ import static org.testng.Assert.*;
 import org.testng.annotations.Test;
 
 
-public class TextEncoderNGTest
+public class JSONEncoderNGTest
 {
-	public TextEncoderNGTest()
+	public JSONEncoderNGTest()
 	{
 	}
 
