@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import org.terifan.bundle.bundle_test.Log;
 
 
-public class TextDecoder
+public class JSONDecoder
 {
 	private static SimpleDateFormat mDateFormatter;
 
@@ -438,7 +438,7 @@ public class TextDecoder
 	{
 		try
 		{
-			Log.out.println(new TextEncoder().marshal(new TextDecoder().unmarshal("{'25!a':'x', '37!b':[1,2,3], '26!c':{'21!d':1}, '71!d':[[1,2],[3,4]], '74!e':[[{'21!f':1}]]}")));
+			Log.out.println(new JSONEncoder().marshal(new JSONDecoder().unmarshal("{'25!a':'x', '37!b':[1,2,3], '26!c':{'21!d':1}, '71!d':[[1,2],[3,4]], '74!e':[[{'21!f':1}]]}")));
 		}
 		catch (Throwable e)
 		{

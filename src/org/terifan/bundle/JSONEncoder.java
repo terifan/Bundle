@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 
-public class TextEncoder
+public class JSONEncoder
 {
 	private final static int SIMPLE_OBJECT_MAX_ELEMENTS = 5;
 

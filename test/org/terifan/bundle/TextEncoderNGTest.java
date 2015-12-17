@@ -19,11 +19,11 @@ public class TextEncoderNGTest
 		Bundle in = Util.createSimpleBundle();
 //		Bundle in = Util.createComplexBundle();
 
-		String data = new TextEncoder().marshal(in);
+		String data = new JSONEncoder().marshal(in);
 
 		Log.out.println(data);
 
-		Bundle out = new TextDecoder().unmarshal(data);
+		Bundle out = new JSONDecoder().unmarshal(data);
 
 		assertEquals(in, out);
 	}
