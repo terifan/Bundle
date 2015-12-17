@@ -21,10 +21,10 @@ public class TextEncoderNGTest
 
 		String data = new TextEncoder().marshal(in);
 
-//		Bundle out = new TextDecoder().unmarshal(data);
-
 		Log.out.println(data);
 
-//		assertEquals(in, out);
+		Bundle out = new TextDecoder().unmarshal(data);
+
+		assertEquals(in, out);
 	}
 }

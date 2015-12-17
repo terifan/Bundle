@@ -1954,7 +1954,13 @@ public class Bundle implements Cloneable, Externalizable, Iterable<String>
 	}
 
 
-	void put(String aKey, Object aValue, int aCollectionType, int aValueType)
+	private void put(String aKey, Object aValue, int aCollectionType, int aValueType)
+	{
+		put(aKey, aValue, FieldType.encode(aCollectionType, aValueType));
+	}
+
+
+	void put(String aKey, Object aValue, int aFieldType)
 	{
 		if (aKey == null)
 		{
@@ -1962,7 +1968,7 @@ public class Bundle implements Cloneable, Externalizable, Iterable<String>
 		}
 
 		mValues.put(aKey, aValue);
-		mTypes.put(aKey, FieldType.encode(aCollectionType, aValueType));
+		mTypes.put(aKey, aFieldType);
 	}
 
 

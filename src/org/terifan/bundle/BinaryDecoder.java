@@ -107,7 +107,7 @@ public class BinaryDecoder implements Decoder
 					throw new IOException();
 			}
 
-			aBundle.put(keys[i], value, objectType, valueType);
+			aBundle.put(keys[i], value, types[i]);
 		}
 
 		return aBundle;

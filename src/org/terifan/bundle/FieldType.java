@@ -1,7 +1,6 @@
 package org.terifan.bundle;
 
 import java.util.Date;
-import java.util.List;
 
 
 class FieldType
@@ -23,6 +22,20 @@ class FieldType
 	public final static int BUNDLE = 0x0a;
 	public final static int DATE = 0x0b;
 
+	private final static Class[] TYPES =
+	{
+		Boolean.TYPE,
+		Byte.TYPE,
+		Short.TYPE,
+		Character.TYPE,
+		Integer.TYPE,
+		Long.TYPE,
+		Float.TYPE,
+		Double.TYPE,
+		String.class,
+		Bundle.class,
+		Date.class
+	};
 
 
 	private FieldType()
@@ -32,7 +45,7 @@ class FieldType
 
 	static Class getPrimitiveType(int aFieldType)
 	{
-		return ValueType.values()[valueType(aFieldType) - 1].mPrimitiveType;
+		return TYPES[valueType(aFieldType) - 1];
 	}
 
 
@@ -57,62 +70,67 @@ class FieldType
 	}
 
 
-	static int classify(Class aClass)
-	{
-		int collectionType;
-
-		if (aClass.isArray() && aClass.getComponentType().isArray())
-		{
-			collectionType = MATRIX;
-		}
-		else if (aClass.isArray())
-		{
-			collectionType = ARRAY;
-		}
-		else if (aClass.isAssignableFrom(List.class))
-		{
-			collectionType = ARRAYLIST;
-		}
-		else
-		{
-			collectionType = VALUE;
-		}
-
-		for (ValueType valueType : ValueType.values())
-		{
-			if (valueType.mComponentType.isAssignableFrom(aClass) || valueType.mPrimitiveType.isAssignableFrom(aClass))
-			{
-				return encode(collectionType, valueType.mType);
-			}
-		}
-
-		throw new IllegalArgumentException("Unsupported type: " + aClass);
-	}
-
-
-	private enum ValueType
-	{
-		BOOLEAN(Boolean.class, Boolean.TYPE),
-		BYTE(Byte.class, Byte.TYPE),
-		SHORT(Short.class, Short.TYPE),
-		CHAR(Character.class, Character.TYPE),
-		INT(Integer.class, Integer.TYPE),
-		LONG(Long.class, Long.TYPE),
-		FLOAT(Float.class, Float.TYPE),
-		DOUBLE(Double.class, Double.TYPE),
-		STRING(String.class, String.class),
-		BUNDLE(Bundle.class, Bundle.class),
-		DATE(Date.class, Date.class);
-
-		private final Class mComponentType;
-		private final Class mPrimitiveType;
-		private final int mType;
-
-		private ValueType(Class aComponentType, Class aPrimitiveType)
-		{
-			mComponentType = aComponentType;
-			mPrimitiveType = aPrimitiveType;
-			mType = ordinal() + 1;
-		}
-	}
+//	static int classify(Class aClass)
+//	{
+//		int collectionType;
+//
+//		if (aClass.isArray() && aClass.getComponentType().isArray())
+//		{
+//			collectionType = MATRIX;
+//		}
+//		else if (aClass.isArray())
+//		{
+//			collectionType = ARRAY;
+//		}
+//		else if (List.class.isAssignableFrom(aClass))
+//		{
+//			collectionType = ARRAYLIST;
+//		}
+//		else
+//		{
+//			collectionType = VALUE;
+//		}
+//
+//		while (aClass.isArray())
+//		{
+//			aClass = aClass.getComponentType();
+//		}
+//
+//		for (ValueType valueType : ValueType.values())
+//		{
+//			if (valueType.mComponentType.isAssignableFrom(aClass) || valueType.mPrimitiveType.isAssignableFrom(aClass))
+//			{
+//				return encode(collectionType, valueType.mType);
+//			}
+//		}
+//
+//		throw new IllegalArgumentException("Unsupported type: " + collectionType + " " + aClass.getCanonicalName());
+//	}
+//
+//
+//	private enum ValueType
+//	{
+//		BOOLEAN(Boolean.class, Boolean.TYPE),
+//		BYTE(Byte.class, Byte.TYPE),
+//		SHORT(Short.class, Short.TYPE),
+//		CHAR(Character.class, Character.TYPE),
+//		INT(Integer.class, Integer.TYPE),
+//		LONG(Long.class, Long.TYPE),
+//		FLOAT(Float.class, Float.TYPE),
+//		DOUBLE(Double.class, Double.TYPE),
+//		STRING(String.class, String.class),
+//		BUNDLE(Bundle.class, Bundle.class),
+//		DATE(Date.class, Date.class);
+//
+//		private final Class mComponentType;
+//		private final Class mPrimitiveType;
+//		private final int mType;
+//
+//		private ValueType(Class aComponentType, Class aPrimitiveType)
+//		{
+//			mComponentType = aComponentType;
+//			mPrimitiveType = aPrimitiveType;
+//			mType = ordinal() + 1;
+//		}
+//	}
 }

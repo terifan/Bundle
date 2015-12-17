@@ -93,7 +93,7 @@ public class TextEncoder
 
 			for (String key : aBundle.keySet())
 			{
-				if (key.contains("\"") || key.contains("'"))
+				if (key.contains("\"") || key.contains("'") || key.contains("\n") || key.contains("\r") || key.contains("\t"))
 				{
 					throw new IOException("Name contains illegal character: " + key);
 				}
@@ -118,25 +118,26 @@ public class TextEncoder
 				}
 				first = false;
 
+				String skey = aBundle.getType(key) + "!" + key;
+				mAppendable.append("\"").append(skey).append("\": ");
+
 				if (value == null)
 				{
-					mAppendable.append("\"").append(key).append("\": ");
 					mAppendable.append("null");
 				}
 				else
 				{
-					Class<? extends Object> cls = value.getClass();
-					boolean isList = List.class.isAssignableFrom(cls);
-
-					if (cls.isArray() || isList)
+					if (List.class.isAssignableFrom(value.getClass()))
 					{
-						mAppendable.append("\"").append(key).append("\": ");
+						value = ((List)value).toArray();
+					}
 
-						writeArray(isList, value);
+					if (value.getClass().isArray())
+					{
+						writeArray(value);
 					}
 					else
 					{
-						mAppendable.append("\"").append(key).append("\": ");
 						writeValue(value);
 					}
 				}
@@ -153,17 +154,9 @@ public class TextEncoder
 	}
 
 
-	private void writeArray(boolean aIsList, Object aValue) throws IOException
+	private void writeArray(Object aValue) throws IOException
 	{
-		if (aIsList)
-		{
-			aValue = ((List)aValue).toArray();
-			mAppendable.append("<");
-		}
-		else
-		{
-			mAppendable.append("[");
-		}
+		mAppendable.append("[");
 
 		int len = Array.getLength(aValue);
 
@@ -196,7 +189,7 @@ public class TextEncoder
 				Object v = Array.get(aValue, i);
 				if (v != null && v.getClass().isArray())
 				{
-					writeArray(false, v);
+					writeArray(v);
 				}
 				else
 				{
@@ -212,7 +205,7 @@ public class TextEncoder
 			}
 		}
 
-		mAppendable.append(aIsList ? ">" : "]");
+		mAppendable.append("]");
 	}
 
 
@@ -244,10 +237,11 @@ public class TextEncoder
 			{
 				Object value = aBundle.get(key);
 				int fieldType = aBundle.getType(key);
-				_ObjectType objectType = _ObjectType.values()[fieldType >> 4];
-				_ValueType valueType = _ValueType.values()[fieldType & 15];
 
-				if (value != null && (valueType == _ValueType.BUNDLE || objectType != _ObjectType.VALUE))
+				int collectionType = FieldType.collectionType(fieldType);
+				int valueType = FieldType.valueType(fieldType);
+
+				if (value != null && (valueType == FieldType.BUNDLE || collectionType != FieldType.VALUE))
 				{
 					simple = false;
 					break;
@@ -270,46 +264,13 @@ public class TextEncoder
 		{
 			mAppendable.append("\"").append(escapeString(aValue.toString())).append("\"");
 		}
-		else if (aValue instanceof Integer)
-		{
-			mAppendable.append(aValue.toString());
-		}
-		else if (aValue instanceof Double)
-		{
-			String v = aValue.toString();
-			if (!v.contains("."))
-			{
-				v += ".0";
-			}
-			mAppendable.append(v);
-		}
-		else if (aValue instanceof Long)
-		{
-			mAppendable.append(aValue + "L");
-		}
-		else if (aValue instanceof Float)
-		{
-			mAppendable.append(aValue + "f");
-		}
-		else if (aValue instanceof Character)
-		{
-			mAppendable.append((int)(Character)aValue + "c");
-		}
-		else if (aValue instanceof Short)
-		{
-			mAppendable.append(aValue + "s");
-		}
-		else if (aValue instanceof Byte)
-		{
-			mAppendable.append(aValue + "b");
-		}
-		else if (aValue instanceof Boolean)
-		{
-			mAppendable.append(aValue.toString());
-		}
 		else if (aValue instanceof Bundle)
 		{
 			writeBundle((Bundle)aValue);
+		}
+		else if (aValue instanceof Character)
+		{
+			mAppendable.append("" + (int)(Character)aValue);
 		}
 		else if (aValue instanceof Date)
 		{
@@ -317,11 +278,11 @@ public class TextEncoder
 			{
 				mDateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 			}
-			mAppendable.append("#").append(mDateFormatter.format(aValue)).append("#");
+			mAppendable.append("\"").append(mDateFormatter.format(aValue)).append("\"");
 		}
 		else
 		{
-			throw new IllegalArgumentException("Bad type: " + aValue.getClass());
+			mAppendable.append(aValue.toString());
 		}
 	}
 

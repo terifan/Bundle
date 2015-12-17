@@ -13,7 +13,7 @@ import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import org.terifan.bundle.bundle_test.Log;
 
 
 public class TextDecoder
@@ -192,119 +192,47 @@ public class TextDecoder
 				throw new IOException("Expected comma sign between elements in bundle: found ascii " + c);
 			}
 
-			Object key = readValue(aReader, true);
+			String key = readString(aReader, readChar(aReader));
 
-			if (!(key instanceof String))
+			if (!key.contains("!"))
 			{
-				throw new IOException("Key must be string.");
+				throw new IllegalStateException();
 			}
+
+			int fieldType = Integer.parseInt(key.substring(0, key.indexOf("!")));
+			key = key.substring(key.indexOf("!") + 1);
 
 			char d = readChar(aReader);
+
 			if (d != ':' && d != '=')
 			{
-				throw new IOException("Exptected colon sign after key: key=" + key);
+				throw new IOException("Expected colon sign after key: key=" + key);
 			}
 
-			aBundle.put(key.toString(), readValue(aReader, false));
+			Object value;
+
+			switch (FieldType.collectionType(fieldType))
+			{
+				case FieldType.ARRAY:
+				case FieldType.ARRAYLIST:
+					value = readArray(aReader, fieldType);
+					break;
+				case FieldType.MATRIX:
+					value = readMatrix(aReader, fieldType);
+					break;
+				default:
+					value = readValue(aReader, fieldType);
+					break;
+			}
+
+			aBundle.put(key, value, fieldType);
 		}
 
 		return aBundle;
 	}
 
 
-	private Object readValue(PushbackReader aReader, boolean aKeyField) throws IOException
-	{
-		char c = readChar(aReader);
-
-		if (c == '{')
-		{
-			return readBundleImpl(aReader, new Bundle());
-		}
-		if (c == '[' || c == '<')
-		{
-			Object arr = readArray(aReader, c == '[');
-			replaceNullMatrix(arr);
-			return arr;
-		}
-		if (c == '\"' || c == '\'')
-		{
-			return readString(aReader, c);
-		}
-		if (c == '#')
-		{
-			return readDate(aReader);
-		}
-
-		aReader.unread(c);
-
-		String sb = readValue(aReader);
-
-		if (aKeyField)
-		{
-			return sb;
-		}
-
-		return processValue(sb);
-	}
-
-
-	private void replaceNullMatrix(Object aArr)
-	{
-		if (aArr != null && aArr.getClass().isArray() && aArr.getClass().getComponentType().isArray())
-		{
-			Class type = null;
-			boolean hasNull = false;
-			for (int i = 0; i < Array.getLength(aArr); i++)
-			{
-				Object v = Array.get(aArr, i);
-				if (v == null)
-				{
-					hasNull = true;
-				}
-				else
-				{
-					type = v.getClass().getComponentType();
-				}
-			}
-			if (hasNull)
-			{
-				for (int i = 0; i < Array.getLength(aArr); i++)
-				{
-					Object v = Array.get(aArr, i);
-					if (v == null)
-					{
-						Array.set(aArr, i, Array.newInstance(type, 0));
-					}
-				}
-			}
-		}
-	}
-
-
-	private String readValue(PushbackReader aReader) throws IOException
-	{
-		StringBuilder sb = new StringBuilder();
-
-		for (;;)
-		{
-			int c = aReader.read();
-
-			if (c == '}' || c == ']' || c == '>' || c == ',' || c == ':' || c == '=')
-			{
-				aReader.unread(c);
-				return sb.toString().trim();
-			}
-			if (c == '\\')
-			{
-				c = aReader.read();
-			}
-
-			sb.append((char)c);
-		}
-	}
-
-
-	private Object readString(PushbackReader aReader, char aTerminator) throws IOException
+	private String readString(PushbackReader aReader, char aTerminator) throws IOException
 	{
 		StringBuilder sb = new StringBuilder();
 
@@ -326,103 +254,23 @@ public class TextDecoder
 	}
 
 
-	private Date readDate(PushbackReader aReader) throws IOException
+	private Object readMatrix(PushbackReader aReader, int aFieldType) throws IOException
 	{
-		StringBuilder sb = new StringBuilder();
-
-		for (;;)
-		{
-			int c = aReader.read();
-
-			if (c == '#')
-			{
-				break;
-			}
-			if (c == '\\')
-			{
-				c = aReader.read();
-			}
-
-			sb.append((char)c);
-		}
-
-		if (mDateFormatter == null)
-		{
-			mDateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-		}
-		try
-		{
-			return mDateFormatter.parse(sb.toString());
-		}
-		catch (ParseException e)
-		{
-			throw new IOException(e);
-		}
-	}
-
-
-	private Object readArray(PushbackReader aReader, boolean aArray) throws IOException
-	{
-		char terminator = aArray ? ']' : '>';
 		ArrayList list = new ArrayList();
-		Class type = null;
 
 		for (;;)
 		{
 			int c = readChar(aReader);
 
-			if (c == terminator)
+			if (c == ']')
 			{
 				break;
 			}
 
-			if (list.isEmpty())
-			{
-				aReader.unread(c);
-			}
-			else if (c != ',')
-			{
-				throw new IOException("Expected comma between elements in array.");
-			}
-
-			Object value = readValue(aReader, false);
-
-			if (value != null)
-			{
-				Class other = value.getClass();
-				if (type == null)
-				{
-					type = other;
-				}
-				else if (other != type)
-				{
-					throw new IOException("Array contains mixed types: expected=" + type + ", found=" + other);
-				}
-			}
-
-			list.add(value);
+			list.add(readArray(aReader, aFieldType));
 		}
 
-		if (!aArray)
-		{
-			return list;
-		}
-		if (list.isEmpty())
-		{
-			return null;
-		}
-		
-		if (type == null)
-		{
-			String s = "";
-			for (int i = 0; i < 20; i++)
-			{
-				s += (char)aReader.read();
-			}
-			throw new IllegalArgumentException("Error near: " + s.replace("\n", " ").replace("\r", " ").replace("\t", " "));
-		}
-		
-		Object array = Array.newInstance(getPrimitiveType(type), list.size());
+		Object array = Array.newInstance(FieldType.getPrimitiveType(aFieldType), list.size(), 0);
 
 		for (int i = 0; i < list.size(); i++)
 		{
@@ -433,41 +281,139 @@ public class TextDecoder
 	}
 
 
-	private Class getPrimitiveType(Class aType)
+	private Object readArray(PushbackReader aReader, int aFieldType) throws IOException
 	{
-		if (aType == Boolean.class)
+		int c = readChar(aReader);
+
+		if (c == 'n')
 		{
-			return Boolean.TYPE;
+			readChar(aReader);
+			readChar(aReader);
+			readChar(aReader);
+			return null;
 		}
-		if (aType == Byte.class)
+		else if (c != '[')
 		{
-			return Byte.TYPE;
+			throw new IllegalStateException();
 		}
-		if (aType == Short.class)
+
+		ArrayList list = new ArrayList();
+
+		for (;;)
 		{
-			return Short.TYPE;
+			c = readChar(aReader);
+
+			if (c == ']')
+			{
+				break;
+			}
+			if (list.isEmpty())
+			{
+				aReader.unread(c);
+			}
+
+			list.add(readValue(aReader, aFieldType));
 		}
-		if (aType == Character.class)
+
+		if (FieldType.collectionType(aFieldType) == FieldType.ARRAYLIST)
 		{
-			return Character.TYPE;
+			return list;
 		}
-		if (aType == Integer.class)
+
+		Object array = Array.newInstance(FieldType.getPrimitiveType(aFieldType), list.size());
+
+		for (int i = 0; i < list.size(); i++)
 		{
-			return Integer.TYPE;
+			Array.set(array, i, list.get(i));
 		}
-		if (aType == Long.class)
+
+		return array;
+	}
+
+
+	private Object readValue(PushbackReader aReader, int aFieldType) throws IOException
+	{
+		if (FieldType.valueType(aFieldType) == FieldType.BUNDLE)
 		{
-			return Long.TYPE;
+			int c = aReader.read();
+
+			if (c == 'n')
+			{
+				aReader.read();
+				aReader.read();
+				aReader.read();
+				return null;
+			}
+			if (c != '{')
+			{
+				throw new IllegalStateException();
+			}
+
+			return readBundleImpl(aReader, new Bundle());
 		}
-		if (aType == Float.class)
+
+		StringBuilder sb = new StringBuilder();
+
+		for (;;)
 		{
-			return Float.TYPE;
+			int c = aReader.read();
+
+			if (c == '}' || c == ']' || c == ',' || c == '=' || c == ':')
+			{
+				aReader.unread(c);
+				break;
+			}
+			if (c == '\\')
+			{
+				c = aReader.read();
+			}
+
+			sb.append((char)c);
 		}
-		if (aType == Double.class)
+
+		String value = sb.toString().trim();
+
+		if (value.equals("null"))
 		{
-			return Double.TYPE;
+			return null;
 		}
-		return aType;
+
+		switch (FieldType.valueType(aFieldType))
+		{
+			case FieldType.BOOLEAN:
+				return Boolean.parseBoolean(value);
+			case FieldType.BYTE:
+				return Byte.parseByte(value);
+			case FieldType.SHORT:
+				return Short.parseShort(value);
+			case FieldType.CHAR:
+				return (char)Integer.parseInt(value);
+			case FieldType.INT:
+				return Integer.parseInt(value);
+			case FieldType.LONG:
+				return Long.parseLong(value);
+			case FieldType.FLOAT:
+				return Float.parseFloat(value);
+			case FieldType.DOUBLE:
+				return Double.parseDouble(value);
+			case FieldType.DATE:
+				if (mDateFormatter == null)
+				{
+					mDateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+				}
+				try
+				{
+					return mDateFormatter.parse(value);
+				}
+				catch (ParseException e)
+				{
+					throw new IOException(e);
+				}
+			case FieldType.STRING:
+				return value.substring(1, value.length() - 1);
+		}
+
+		throw new IllegalStateException();
 	}
 
 
@@ -488,121 +434,15 @@ public class TextDecoder
 	}
 
 
-	private Object processValue(String aValue) throws IOException
+	public static void main(String ... args)
 	{
-		if (aValue.equals("null"))
+		try
 		{
-			return null;
+			Log.out.println(new TextEncoder().marshal(new TextDecoder().unmarshal("{'25!a':'x', '37!b':[1,2,3], '26!c':{'21!d':1}, '71!d':[[1,2],[3,4]], '74!e':[[{'21!f':1}]]}")));
 		}
-		if (aValue.equals("true"))
+		catch (Throwable e)
 		{
-			return Boolean.TRUE;
+			e.printStackTrace(System.out);
 		}
-		if (aValue.equals("false"))
-		{
-			return Boolean.FALSE;
-		}
-
-		char suffix = Character.toLowerCase(aValue.charAt(aValue.length() - 1));
-
-		if (suffix == 'b')
-		{
-			return Byte.decode(trim(aValue));
-		}
-		if (suffix == 'c')
-		{
-			return (char)Integer.parseInt(trim(aValue));
-		}
-		if (suffix == 's')
-		{
-			return Short.decode(trim(aValue));
-		}
-		if (suffix == 'l')
-		{
-			return Long.decode(trim(aValue));
-		}
-		if (suffix == 'f')
-		{
-			return Float.parseFloat(trim(aValue));
-		}
-		if (suffix == 'd')
-		{
-			return Double.parseDouble(trim(aValue));
-		}
-		if (aValue.contains("."))
-		{
-			return Double.parseDouble(aValue);
-		}
-
-		return Integer.decode(aValue);
 	}
-
-
-	private String trim(String aString)
-	{
-		return aString.substring(0, aString.length() - 1);
-	}
-
-
-//	public static void main(String ... args)
-//	{
-//		try
-//		{
-//			Bundle bundle = new Bundle()
-//				.putBoolean("boolean", true)
-//				.putByte("byte", 97)
-//				.putShort("short", 1000)
-//				.putChar("char", (char)97)
-//				.putInt("int", 64646464)
-//				.putLong("long", 6464646464646464646L)
-//				.putFloat("float", 3.14f)
-//				.putDouble("double", 7)
-//				.putDate("date", new Date())
-//				.putString("string", "string")
-//				.putString("null", null)
-//				.putBundle("bundle", new Bundle()
-//					.putByte("a", 1)
-//					.putByte("b", 2)
-//				)
-//				.putIntArray("ints", 1,2,3)
-//				.putByteArray("bytes", (byte)1,(byte)2,(byte)3)
-//				.putStringArray("strings", "a", "b", "c")
-//				.putIntArrayList("intList", new ArrayList<>(Arrays.asList(1,2,3)));
-//
-//			String s = new TextEncoder().marshal(bundle);
-//
-//			Log.out.println(s);
-//
-//			Bundle unmarshaled = new TextDecoder().unmarshal(s);
-//
-//			Log.out.println(unmarshaled);
-//
-//			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//			ObjectOutputStream oos = new ObjectOutputStream(baos);
-//			bundle.writeExternal(oos);
-//			oos.close();
-//
-//			bundle = new Bundle();
-//			ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-//			ObjectInputStream ois = new ObjectInputStream(bais);
-//			bundle.readExternal(ois);
-//			ois.close();
-//
-//
-//
-////			baos = new ByteArrayOutputStream();
-////			new BinaryEncoder().marshal(bundle, baos);
-////
-////			Debug.hexDump(baos.toByteArray());
-////
-////			bais = new ByteArrayInputStream(baos.toByteArray());
-////			Bundle unbundled = new BinaryDecoder().unmarshal(bais);
-////
-////			Log.out.println(unbundled);
-//		}
-//		catch (Throwable e)
-//		{
-//			e.printStackTrace(System.out);
-//		}
-//	}
 }
