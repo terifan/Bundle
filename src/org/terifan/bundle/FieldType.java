@@ -25,6 +25,10 @@ class FieldType
 	public final static int DATE = 0x0b;
 	public final static int OBJECT = 0x0c;
 
+	// prefix codes used by json encoder
+	final static String[] COLLECTION_TYPES = {"","a","l","m"};
+	final static String[] VALUE_TYPES = {"z","b","a","c","i","l","f","d","s","m","t","o"};
+
 	private final static Class[] TYPES =
 	{
 		Boolean.TYPE,

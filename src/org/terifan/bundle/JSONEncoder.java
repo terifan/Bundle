@@ -7,14 +7,13 @@ import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.Base64;
 import java.util.List;
+import static org.terifan.bundle.FieldType.COLLECTION_TYPES;
+import static org.terifan.bundle.FieldType.VALUE_TYPES;
 
 
 class JSONEncoder
 {
 	private final static int SIMPLE_OBJECT_MAX_ELEMENTS = 5;
-
-	final static String[] COLLECTION_TYPES = {"","a","l","m"};
-	final static String[] VALUE_TYPES = {"z","b","a","c","i","l","f","d","s","m","t","o"};
 
 	private SimpleDateFormat mDateFormatter;
 	private Appendable mAppendable;

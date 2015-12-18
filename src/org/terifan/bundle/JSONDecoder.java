@@ -11,8 +11,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
-import static org.terifan.bundle.JSONEncoder.COLLECTION_TYPES;
-import static org.terifan.bundle.JSONEncoder.VALUE_TYPES;
+import static org.terifan.bundle.FieldType.COLLECTION_TYPES;
+import static org.terifan.bundle.FieldType.VALUE_TYPES;
 
 
 class JSONDecoder
