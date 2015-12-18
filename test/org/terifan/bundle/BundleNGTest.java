@@ -14,7 +14,7 @@ public class BundleNGTest
 
 		byte[] data = in.marshal();
 
-//		Log.hexDump(data);
+		Log.hexDump(data);
 
 		Bundle out = new Bundle().unmarshal(data);
 
