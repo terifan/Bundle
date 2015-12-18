@@ -21,7 +21,7 @@ public class BundleNGTest
 		assertEquals(in, out);
 	}
 
-	
+
 	@Test
 	public void testMarshalJSON() throws IOException
 	{

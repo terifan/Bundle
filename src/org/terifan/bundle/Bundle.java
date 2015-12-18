@@ -10,6 +10,7 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.io.StringReader;
 import java.lang.reflect.Array;
 import java.nio.ByteBuffer;
@@ -1174,6 +1175,91 @@ public class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 * Returns the value associated with the given key, or null if no mapping of the desired type exists for the given key or a null value
 	 * is explicitly associated with the key.
 	 */
+	public Serializable getSerializable(String aKey)
+	{
+		return getSerializable(aKey, null);
+	}
+
+
+	/**
+	 * Returns the value associated with the given key, or aDefaultValue if no mapping of the desired type exists for the given key.
+	 */
+	public Serializable getSerializable(String aKey, Serializable aDefaultValue)
+	{
+		Object o = mValues.get(aKey);
+		if (o == null)
+		{
+			return aDefaultValue;
+		}
+		try
+		{
+			return (Serializable)o;
+		}
+		catch (ClassCastException e)
+		{
+			return typeWarning(aKey, o, Serializable.class, aDefaultValue, e);
+		}
+	}
+
+
+	/**
+	 * Returns the value associated with the given key, or null if no mapping of the desired type exists for the given key or a null value
+	 * is explicitly associated with the key.
+	 */
+	public Serializable[] getSerializableArray(String aKey)
+	{
+		Object o = mValues.get(aKey);
+		try
+		{
+			return (Serializable[])o;
+		}
+		catch (ClassCastException e)
+		{
+			return typeWarning(aKey, o, Serializable[].class, null, e);
+		}
+	}
+
+
+	/**
+	 * Returns the value associated with the given key, or null if no mapping of the desired type exists for the given key or a null value
+	 * is explicitly associated with the key.
+	 */
+	public Serializable[][] getSerializableMatrix(String aKey)
+	{
+		Object o = mValues.get(aKey);
+		try
+		{
+			return (Serializable[][])o;
+		}
+		catch (ClassCastException e)
+		{
+			return typeWarning(aKey, o, Serializable[][].class, null, e);
+		}
+	}
+
+
+	/**
+	 * Returns the value associated with the given key, or null if no mapping of the desired type exists for the given key or a null value
+	 * is explicitly associated with the key.
+	 */
+	public ArrayList<Serializable> getSerializableArrayList(String aKey)
+	{
+		Object o = mValues.get(aKey);
+		try
+		{
+			return (ArrayList<Serializable>)o;
+		}
+		catch (ClassCastException e)
+		{
+			return typeWarning(aKey, o, ArrayList.class, null, e);
+		}
+	}
+
+
+	/**
+	 * Returns the value associated with the given key, or null if no mapping of the desired type exists for the given key or a null value
+	 * is explicitly associated with the key.
+	 */
 	public Date getDate(String aKey)
 	{
 		return getDate(aKey, null);
@@ -1803,6 +1889,46 @@ public class Bundle implements Cloneable, Externalizable, Iterable<String>
 	public Bundle putStringArrayList(String aKey, ArrayList<String> aValue)
 	{
 		put(aKey, aValue, FieldType.ARRAYLIST, FieldType.STRING);
+		return this;
+	}
+
+
+	/**
+	 * Inserts a Serializable value into the mapping of this Bundle, replacing any existing value for the given key.
+	 */
+	public Bundle putSerializable(String aKey, Serializable aValue)
+	{
+		put(aKey, aValue, FieldType.VALUE, FieldType.OBJECT);
+		return this;
+	}
+
+
+	/**
+	 * Inserts a Serializable array value into the mapping of this Bundle, replacing any existing value for the given key.
+	 */
+	public Bundle putSerializableArray(String aKey, Serializable... aValue)
+	{
+		put(aKey, aValue, FieldType.ARRAY, FieldType.OBJECT);
+		return this;
+	}
+
+
+	/**
+	 * Inserts a Serializable array value into the mapping of this Bundle, replacing any existing value for the given key.
+	 */
+	public Bundle putSerializableMatrix(String aKey, Serializable[][] aValue)
+	{
+		put(aKey, aValue, FieldType.MATRIX, FieldType.OBJECT);
+		return this;
+	}
+
+
+	/**
+	 * Inserts an ArrayList value into the mapping of this Bundle, replacing any existing value for the given key.
+	 */
+	public Bundle putSerializableArrayList(String aKey, ArrayList<Serializable> aValue)
+	{
+		put(aKey, aValue, FieldType.ARRAYLIST, FieldType.OBJECT);
 		return this;
 	}
 

@@ -1,15 +1,15 @@
 package org.terifan.bundle;
 
+import java.io.Serializable;
 import java.util.Date;
 
 
 class FieldType
 {
-	// can't be zero
-	public final static int VALUE = 0x10;
-	public final static int ARRAY = 0x20;
-	public final static int ARRAYLIST = 0x30;
-	public final static int MATRIX = 0x40;
+	public final static int VALUE = 0x00;
+	public final static int ARRAY = 0x10;
+	public final static int ARRAYLIST = 0x20;
+	public final static int MATRIX = 0x30;
 
 	// can't be zero
 	public final static int BOOLEAN = 0x01;
@@ -23,6 +23,7 @@ class FieldType
 	public final static int STRING = 0x09;
 	public final static int BUNDLE = 0x0a;
 	public final static int DATE = 0x0b;
+	public final static int OBJECT = 0x0c;
 
 	private final static Class[] TYPES =
 	{
@@ -36,7 +37,8 @@ class FieldType
 		Double.TYPE,
 		String.class,
 		Bundle.class,
-		Date.class
+		Date.class,
+		Serializable.class
 	};
 
 
@@ -66,7 +68,7 @@ class FieldType
 	static int encode(int aCollectionType, int aValueType)
 	{
 		assert (aCollectionType & ~0xf0) == 0 : aCollectionType;
-		assert (aValueType & ~0x0f) == 0 : aValueType;
+		assert (aValueType & ~0x0f) == 0 && (aValueType & 0x0f) != 0 : aValueType;
 
 		return aCollectionType + aValueType;
 	}

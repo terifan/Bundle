@@ -1,7 +1,9 @@
 package org.terifan.bundle;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,7 +24,7 @@ class BinaryDecoder
 		{
 			throw new IllegalArgumentException("Unsupported version");
 		}
-		
+
 		return readBundle(aBundle);
 	}
 
@@ -159,17 +161,35 @@ class BinaryDecoder
 				return Float.intBitsToFloat(mInput.readVar32S());
 			case FieldType.DOUBLE:
 				return Double.longBitsToDouble(mInput.readVar64S());
+			case FieldType.DATE:
+				return new Date(mInput.readVar64S());
+			case FieldType.BUNDLE:
+				return readBundle(new Bundle());
 			case FieldType.STRING:
+			{
 				byte[] buf = new byte[mInput.readVar32()];
 				if (mInput.read(buf) != buf.length)
 				{
 					throw new IOException("Unexpected end of stream");
 				}
 				return UTF8.decodeUTF8(buf, 0, buf.length);
-			case FieldType.DATE:
-				return new Date(mInput.readVar64S());
-			case FieldType.BUNDLE:
-				return readBundle(new Bundle());
+			}
+			case FieldType.OBJECT:
+			{
+				byte[] buf = new byte[mInput.readVar32()];
+				if (mInput.read(buf) != buf.length)
+				{
+					throw new IOException("Unexpected end of stream");
+				}
+				try (ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(buf)))
+				{
+					return ois.readObject();
+				}
+				catch (ClassNotFoundException e)
+				{
+					throw new IOException(e);
+				}
+			}
 			default:
 				throw new IOException("Unsupported field type: " + aValueType);
 		}

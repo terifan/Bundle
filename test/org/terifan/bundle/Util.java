@@ -3,7 +3,9 @@ package org.terifan.bundle;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Random;
+import java.util.UUID;
 
 
 public class Util
@@ -99,6 +101,12 @@ public class Util
 					.putInt("three", r.nextInt())
 				)
 			)
+
+			.putSerializable("serializable_null", null)
+			.putSerializable("serializable", new GregorianCalendar())
+			.putSerializableArray("serializable_array", new GregorianCalendar(), null, UUID.randomUUID())
+			.putSerializableArrayList("serializable_arraylist", new ArrayList<>(Arrays.asList(new GregorianCalendar())))
+			.putSerializableMatrix("serializable_matrix", new UUID[][]{{UUID.randomUUID(),UUID.randomUUID()},{UUID.randomUUID(),UUID.randomUUID()}})
 			;
 
 		return bundle;

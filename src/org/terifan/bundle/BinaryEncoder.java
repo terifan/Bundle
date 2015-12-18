@@ -1,6 +1,8 @@
 package org.terifan.bundle;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Array;
 import java.util.Date;
@@ -17,7 +19,7 @@ class BinaryEncoder
 		mOutput = new BitOutputStream(aOutputStream);
 
 		mOutput.writeVar32(0); // version
-		
+
 		writeBundle(aBundle);
 
 		mOutput.finish();
@@ -134,7 +136,7 @@ class BinaryEncoder
 		{
 			value = Array.get(aValue, aIndex);
 		}
-		
+
 		return value;
 	}
 
@@ -167,17 +169,30 @@ class BinaryEncoder
 			case FieldType.DOUBLE:
 				mOutput.writeVar64S(Double.doubleToLongBits((Double)aValue));
 				break;
-			case FieldType.STRING:
-				byte[] buf = UTF8.encodeUTF8((String)aValue);
-				mOutput.writeVar32(buf.length);
-				mOutput.write(buf);
-				break;
 			case FieldType.DATE:
 				mOutput.writeVar64S(((Date)aValue).getTime());
 				break;
 			case FieldType.BUNDLE:
 				writeBundle((Bundle)aValue);
 				break;
+			case FieldType.STRING:
+			{
+				byte[] buf = UTF8.encodeUTF8((String)aValue);
+				mOutput.writeVar32(buf.length);
+				mOutput.write(buf);
+				break;
+			}
+			case FieldType.OBJECT:
+			{
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				try (ObjectOutputStream oos = new ObjectOutputStream(baos))
+				{
+					oos.writeObject(aValue);
+				}
+				mOutput.writeVar32(baos.size());
+				mOutput.write(baos.toByteArray());
+				break;
+			}
 			default:
 				throw new IOException("Unsupported field type: " + aValueType);
 		}

@@ -1,17 +1,38 @@
 package org.terifan.bundle;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.PushbackReader;
 import java.io.Reader;
 import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Base64;
+import java.util.HashMap;
+import static org.terifan.bundle.JSONEncoder.COLLECTION_TYPES;
+import static org.terifan.bundle.JSONEncoder.VALUE_TYPES;
 
 
 class JSONDecoder
 {
 	private static SimpleDateFormat mDateFormatter;
+
+	private final static HashMap<Character,Integer> VALUE_TYPE_MAP = new HashMap<>();
+	private final static HashMap<Character,Integer> COLLECTION_TYPE_MAP = new HashMap<>();
+
+	static
+	{
+		for (String s : VALUE_TYPES)
+		{
+			VALUE_TYPE_MAP.put(s.charAt(0), VALUE_TYPE_MAP.size());
+		}
+		for (String s : COLLECTION_TYPES)
+		{
+			COLLECTION_TYPE_MAP.put(s.isEmpty() ? '!' : s.charAt(0), COLLECTION_TYPE_MAP.size());
+		}
+	}
 
 
 	public Bundle unmarshal(Reader aReader, Bundle aBundle) throws IOException
@@ -54,7 +75,8 @@ class JSONDecoder
 				throw new IllegalStateException();
 			}
 
-			int fieldType = Integer.parseInt(key.substring(0, key.indexOf("!")));
+			int fieldType = decodeKey(key);
+
 			key = key.substring(key.indexOf("!") + 1);
 
 			char d = readChar(aReader);
@@ -215,6 +237,7 @@ class JSONDecoder
 		{
 			case FieldType.STRING:
 			case FieldType.DATE:
+			case FieldType.OBJECT:
 				t = readChar(aReader);
 				if (t == 'n')
 				{
@@ -284,6 +307,16 @@ class JSONDecoder
 				}
 			case FieldType.STRING:
 				return value;
+			case FieldType.OBJECT:
+				byte[] buf = Base64.getDecoder().decode(value);
+				try (ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(buf)))
+				{
+					return ois.readObject();
+				}
+				catch (ClassNotFoundException e)
+				{
+					throw new IOException(e);
+				}
 		}
 
 		throw new IllegalStateException();
@@ -313,5 +346,11 @@ class JSONDecoder
 				return (char)c;
 			}
 		}
+	}
+
+
+	private int decodeKey(String aKey)
+	{
+		return FieldType.encode(COLLECTION_TYPE_MAP.get(aKey.charAt(1)) << 4, VALUE_TYPE_MAP.get(aKey.charAt(0)) + 1);
 	}
 }
