@@ -11,7 +11,7 @@ import static org.terifan.bundle.FieldType.COLLECTION_TYPES;
 import static org.terifan.bundle.FieldType.VALUE_TYPES;
 
 
-class JSONEncoder
+class PSONEncoder
 {
 	private final static int SIMPLE_OBJECT_MAX_ELEMENTS = 5;
 
@@ -108,7 +108,15 @@ class JSONEncoder
 
 	private static String encodeKey(int aFieldType, String aKey)
 	{
-		return VALUE_TYPES[FieldType.valueType(aFieldType) - 1] + COLLECTION_TYPES[FieldType.collectionType(aFieldType) >> 4] + "!" + aKey;
+		int valueType = FieldType.valueType(aFieldType);
+		int collectionType = FieldType.collectionType(aFieldType);
+
+		if (valueType == FieldType.STRING || valueType == FieldType.DOUBLE || valueType == FieldType.INT || valueType == FieldType.BOOLEAN)
+		{
+			return aKey;
+		}
+
+		return VALUE_TYPES[valueType - 1] + COLLECTION_TYPES[collectionType >> 4] + "!" + aKey;
 	}
 
 

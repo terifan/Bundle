@@ -15,7 +15,7 @@ import static org.terifan.bundle.FieldType.COLLECTION_TYPES;
 import static org.terifan.bundle.FieldType.VALUE_TYPES;
 
 
-class JSONDecoder
+class PSONDecoder
 {
 	private static SimpleDateFormat mDateFormatter;
 
@@ -37,7 +37,7 @@ class JSONDecoder
 
 	public Bundle unmarshal(Reader aReader, Bundle aBundle) throws IOException
 	{
-		PushbackReader reader = new PushbackReader(aReader);
+		PushbackReader reader = new PushbackReader(aReader, 20);
 
 		if (reader.read() != '{')
 		{
@@ -69,15 +69,17 @@ class JSONDecoder
 			}
 
 			String key = readString(aReader, readChar(aReader));
+			int fieldType;
 
-			if (!key.contains("!"))
+			if (key.contains("!"))
 			{
-				throw new IllegalStateException();
+				fieldType = decodeKey(key);
+				key = key.substring(key.indexOf("!") + 1);
 			}
-
-			int fieldType = decodeKey(key);
-
-			key = key.substring(key.indexOf("!") + 1);
+			else
+			{
+				fieldType = lookAheadForFieldType(aReader, key);
+			}
 
 			char d = readChar(aReader);
 
@@ -115,7 +117,7 @@ class JSONDecoder
 
 		for (;;)
 		{
-			int c = aReader.read();
+			int c = readByte(aReader);
 
 			if (c == aTerminator)
 			{
@@ -123,7 +125,7 @@ class JSONDecoder
 			}
 			if (c == '\\')
 			{
-				c = aReader.read();
+				c = readByte(aReader);
 			}
 
 			sb.append((char)c);
@@ -249,7 +251,7 @@ class JSONDecoder
 
 		for (;;)
 		{
-			int c = aReader.read();
+			int c = readByte(aReader);
 
 			if (c == t || t == '\0' && (c == '}' || c == ']' || c == ',' || c == '=' || c == ':'))
 			{
@@ -261,7 +263,7 @@ class JSONDecoder
 			}
 			if (c == '\\')
 			{
-				c = aReader.read();
+				c = readByte(aReader);
 			}
 
 			sb.append((char)c);
@@ -325,7 +327,7 @@ class JSONDecoder
 
 	private void readNull(PushbackReader aReader) throws IOException
 	{
-		if (Character.toLowerCase(aReader.read()) != 'u' || Character.toLowerCase(aReader.read()) != 'l' || Character.toLowerCase(aReader.read()) != 'l')
+		if (Character.toLowerCase(readByte(aReader)) != 'u' || Character.toLowerCase(readByte(aReader)) != 'l' || Character.toLowerCase(readByte(aReader)) != 'l')
 		{
 			throw new IllegalArgumentException();
 		}
@@ -336,11 +338,7 @@ class JSONDecoder
 	{
 		for (;;)
 		{
-			int c = aReader.read();
-			if (c == -1)
-			{
-				throw new IOException();
-			}
+			int c = readByte(aReader);
 			if (!Character.isWhitespace((char)c))
 			{
 				return (char)c;
@@ -349,8 +347,108 @@ class JSONDecoder
 	}
 
 
+	private int readByte(PushbackReader aReader) throws IOException
+	{
+		int c = aReader.read();
+		if (c == -1)
+		{
+			throw new IOException("Unexpected end of stream.");
+		}
+		return c;
+	}
+
+
 	private int decodeKey(String aKey)
 	{
 		return FieldType.encode(COLLECTION_TYPE_MAP.get(aKey.charAt(1)) << 4, VALUE_TYPE_MAP.get(aKey.charAt(0)) + 1);
+	}
+
+
+	private int lookAheadForFieldType(PushbackReader aReader, String aKey) throws IOException
+	{
+		char d = readChar(aReader);
+
+		if (d != ':' && d != '=')
+		{
+			throw new IOException("Expected colon sign after key: key=" + aKey);
+		}
+
+		int result = lookAheadForFieldTypeImpl(aReader, aKey);
+
+		aReader.unread(':');
+
+		System.out.println(FieldType.toString(result));
+
+		return result;
+	}
+
+
+	private int lookAheadForFieldTypeImpl(PushbackReader aReader, String aKey) throws IOException
+	{
+		char d = readChar(aReader);
+
+		if (d == '[')
+		{
+			int result = lookAheadForFieldTypeImpl(aReader, aKey);
+
+			aReader.unread('[');
+
+			int collectionType = FieldType.collectionType(result);
+
+			if (collectionType == FieldType.MATRIX)
+			{
+				throw new IOException("Three or more dimensions of an array is not supported.");
+			}
+			if (collectionType == FieldType.ARRAY)
+			{
+				return FieldType.encode(FieldType.MATRIX, FieldType.valueType(result));
+			}
+
+			return FieldType.encode(FieldType.ARRAY, FieldType.valueType(result));
+		}
+
+		if (d >= '0' && d <= '9' || d == '-' || d == '+')
+		{
+			aReader.unread(d);
+
+			boolean dbl = false;
+
+			char[] tmp = new char[20];
+			int len = 0;
+			for (; ; len++)
+			{
+				d = readChar(aReader);
+				tmp[len] = d;
+				if (d == '.')
+				{
+					dbl = true;
+				}
+				if (!(d >= '0' && d <= '9' || d == '-' || d == '+' || d == '.'))
+				{
+					break;
+				}
+			}
+
+			aReader.unread(tmp, 0, len + 1);
+
+			return FieldType.encode(FieldType.VALUE, dbl ? FieldType.DOUBLE : FieldType.INT);
+		}
+
+		aReader.unread(d);
+
+		if (d == 'n' || d == 'N' || d == '\'' || d == '\"' || d == ']')
+		{
+			return FieldType.encode(FieldType.VALUE, FieldType.STRING);
+		}
+		if (d == 't' || d == 'T' || d == 'f' || d == 'F')
+		{
+			return FieldType.encode(FieldType.VALUE, FieldType.BOOLEAN);
+		}
+		if (d == '.')
+		{
+			return FieldType.encode(FieldType.VALUE, FieldType.DOUBLE);
+		}
+
+		throw new IOException();
 	}
 }

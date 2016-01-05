@@ -2000,7 +2000,7 @@ public class Bundle implements Cloneable, Externalizable, Iterable<String>
 	{
 		try
 		{
-			return marshalJSON(true);
+			return marshalPSON(true);
 		}
 		catch (IOException e)
 		{
@@ -2185,30 +2185,30 @@ public class Bundle implements Cloneable, Externalizable, Iterable<String>
 	}
 
 
-	public String marshalJSON() throws IOException
+	public String marshalPSON() throws IOException
 	{
-		return marshalJSON(false);
+		return marshalPSON(false);
 	}
 
 
-	public String marshalJSON(boolean aFlat) throws IOException
+	public String marshalPSON(boolean aFlat) throws IOException
 	{
 		StringBuilder sb = new StringBuilder(4096);
-		new JSONEncoder().marshal(this, sb, aFlat);
+		new PSONEncoder().marshal(this, sb, aFlat);
 		return sb.toString();
 	}
 
 
-	public Bundle marshalJSON(OutputStream aOutputStream) throws IOException
+	public Bundle marshalPSON(OutputStream aOutputStream) throws IOException
 	{
-		return marshalJSON(aOutputStream, false);
+		return marshalPSON(aOutputStream, false);
 	}
 
 
-	public Bundle marshalJSON(OutputStream aOutputStream, boolean aFlat) throws IOException
+	public Bundle marshalPSON(OutputStream aOutputStream, boolean aFlat) throws IOException
 	{
 		PrintWriter out = new PrintWriter(aOutputStream);
-		new JSONEncoder().marshal(this, out, aFlat);
+		new PSONEncoder().marshal(this, out, aFlat);
 		out.flush();
 		return this;
 	}
@@ -2235,16 +2235,16 @@ public class Bundle implements Cloneable, Externalizable, Iterable<String>
 	}
 
 
-	public Bundle unmarshalJSON(String aJSON) throws IOException
+	public Bundle unmarshalPSON(String aPSON) throws IOException
 	{
-		new JSONDecoder().unmarshal(new StringReader(aJSON), this);
+		new PSONDecoder().unmarshal(new StringReader(aPSON), this);
 		return this;
 	}
 
 
-	public Bundle unmarshalJSON(InputStream aInputStream) throws IOException
+	public Bundle unmarshalPSON(InputStream aInputStream) throws IOException
 	{
-		new JSONDecoder().unmarshal(new InputStreamReader(aInputStream), this);
+		new PSONDecoder().unmarshal(new InputStreamReader(aInputStream), this);
 		return this;
 	}
 }

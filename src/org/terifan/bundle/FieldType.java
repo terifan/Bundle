@@ -11,7 +11,7 @@ class FieldType
 	public final static int ARRAYLIST = 0x20;
 	public final static int MATRIX = 0x30;
 
-	// can't be zero
+	// must not be zero
 	public final static int BOOLEAN = 0x01;
 	public final static int BYTE = 0x02;
 	public final static int SHORT = 0x03;
@@ -25,9 +25,9 @@ class FieldType
 	public final static int DATE = 0x0b;
 	public final static int OBJECT = 0x0c;
 
-	// prefix codes used by json encoder
-	final static String[] COLLECTION_TYPES = {"","a","l","m"};
-	final static String[] VALUE_TYPES = {"z","b","a","c","i","l","f","d","s","m","t","o"};
+	// prefix codes used by pson encoder
+	final static String[] COLLECTION_TYPES = {"","a","q","m"};
+	final static String[] VALUE_TYPES = {"z","x","y","c","i","l","f","d","s","b","t","o"};
 
 	private final static Class[] TYPES =
 	{
@@ -75,5 +75,25 @@ class FieldType
 		assert (aValueType & ~0x0f) == 0 && (aValueType & 0x0f) != 0 : aValueType;
 
 		return aCollectionType + aValueType;
+	}
+
+
+	static String toString(int aCode)
+	{
+		String type = getPrimitiveType(aCode).getSimpleName();
+
+		switch (collectionType(aCode))
+		{
+			case VALUE:
+				return type;
+			case ARRAY:
+				return type + "[]";
+			case MATRIX:
+				return type + "[][]";
+			case ARRAYLIST:
+				return "List<" + type + ">";
+			default:
+				throw new IllegalArgumentException();
+		}
 	}
 }
