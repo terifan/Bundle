@@ -377,7 +377,7 @@ class PSONDecoder
 
 		aReader.unread(':');
 
-		System.out.println(FieldType.toString(result));
+//		System.out.println(FieldType.toString(result));
 
 		return result;
 	}

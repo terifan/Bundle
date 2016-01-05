@@ -40,16 +40,22 @@ public class BundleNGTest
 	@Test
 	public void testMarshalPSON2() throws IOException
 	{
-		String in = "{\"a\": \"4\", \"b\": null, \"c\": true, \"d\": 123, \"e\": 3.14, \"aa\": [\"4\"], \"bb\": [null], \"cc\": [true], \"dd\": [123], \"ee\": [3.14], \"aaa\": [[\"4\"]], \"bbb\": [[null]], \"ccc\": [[true]], \"ddd\": [[123]], \"eee\": [[3.14]]}";
+		String in = "{"
+			+ "\"a\": \"s\", \"aa\": [\"s\", \"t\"], \"aaa\": [[\"s\", \"t\"], [\"u\", \"v\"]]"
+			+ ", \"b\": null, \"bb\": [null, null], \"bbb\": [[null, null], [null]]"
+			+ ", \"c\": true, \"cc\": [true, false], \"ccc\": [[true, false], [true]]"
+			+ ", \"d\": 123, \"dd\": [123, 456], \"ddd\": [[123, 456], [789, 12]]"
+			+ ", \"e\": 3.14, \"ee\": [3.14, 9.72], \"eee\": [[3.14, 9.72], [-3.14, 0.72]]"
+			+ "}";
 
-		Log.out.println(in);
+//		Log.out.println(in);
 
 		Bundle bundle = new Bundle().unmarshalPSON(in);
 
-		String out = bundle.marshalPSON();
+		String out = bundle.marshalPSON(true);
 
-		Log.out.println(out);
+//		Log.out.println(out);
 
-//		assertEquals(in, out);
+		assertEquals(in, out);
 	}
 }
