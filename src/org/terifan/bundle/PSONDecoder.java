@@ -37,7 +37,7 @@ class PSONDecoder
 
 	public Bundle unmarshal(Reader aReader, Bundle aBundle) throws IOException
 	{
-		PushbackReader reader = new PushbackReader(aReader, 20);
+		PushbackReader reader = new PushbackReader(aReader, 30);
 
 		if (reader.read() != '{')
 		{
@@ -71,6 +71,8 @@ class PSONDecoder
 			String key = readString(aReader, readChar(aReader));
 			int fieldType;
 
+//			System.out.println(key);
+			
 			if (key.contains("!"))
 			{
 				fieldType = decodeKey(key);
@@ -171,7 +173,7 @@ class PSONDecoder
 		}
 		else if (c != '[')
 		{
-			throw new IllegalStateException();
+			throw new IllegalStateException("Expected start bracket; found: " + (char)c);
 		}
 
 		ArrayList list = new ArrayList();
@@ -225,7 +227,7 @@ class PSONDecoder
 			}
 			if (c != '{')
 			{
-				throw new IllegalStateException(""+c);
+				throw new IllegalStateException("Expected start curly: found: " + (char)c);
 			}
 
 			return readBundleImpl(aReader, new Bundle());
@@ -423,7 +425,7 @@ class PSONDecoder
 				{
 					dbl = true;
 				}
-				if (!(d >= '0' && d <= '9' || d == '-' || d == '+' || d == '.'))
+				if (!(d >= '0' && d <= '9' || d == '-' || d == '+' || d == '.' || d == 'e' || d == 'E'))
 				{
 					break;
 				}
@@ -449,6 +451,16 @@ class PSONDecoder
 			return FieldType.encode(FieldType.VALUE, FieldType.DOUBLE);
 		}
 
+//		System.out.print((char)readByte(aReader));
+//		System.out.print((char)readByte(aReader));
+//		System.out.print((char)readByte(aReader));
+//		System.out.print((char)readByte(aReader));
+//		System.out.print((char)readByte(aReader));
+//		System.out.print((char)readByte(aReader));
+//		System.out.print((char)readByte(aReader));
+//		System.out.print((char)readByte(aReader));
+//		System.out.print((char)readByte(aReader));
+		
 		throw new IOException();
 	}
 }
