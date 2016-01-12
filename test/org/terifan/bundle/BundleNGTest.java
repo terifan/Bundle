@@ -1,6 +1,8 @@
 package org.terifan.bundle;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import static org.testng.Assert.*;
 import org.testng.annotations.Test;
 
@@ -14,7 +16,7 @@ public class BundleNGTest
 
 		byte[] data = in.marshal();
 
-		Log.hexDump(data);
+//		Log.hexDump(data);
 
 		Bundle out = new Bundle().unmarshal(data);
 
@@ -26,6 +28,10 @@ public class BundleNGTest
 	public void testMarshalPSON() throws IOException
 	{
 		Bundle in = Util.createComplexBundle();
+//		Bundle in = Util.createSimpleBundle();
+
+//		Bundle in = new Bundle();
+//		in.putBundle("a", new Bundle().putIntArrayList("a", new ArrayList<>(Arrays.asList(1, null, 2))));
 
 		String data = in.marshalPSON();
 

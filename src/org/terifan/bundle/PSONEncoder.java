@@ -19,6 +19,7 @@ class PSONEncoder
 	private Appendable mAppendable;
 	private boolean mFlat;
 	private int mIndent;
+	private boolean mEncodeFieldFormat = true;
 
 
 	public void marshal(Bundle aBundle, Appendable aAppendable, boolean aFlat) throws IOException
@@ -71,7 +72,15 @@ class PSONEncoder
 				first = false;
 
 				int fieldType = aBundle.getType(key);
-				mAppendable.append("\"").append(encodeKey(fieldType, key)).append("\": ");
+
+				mAppendable.append("\"");
+
+				if (mEncodeFieldFormat)
+				{
+					mAppendable.append(encodeKey(fieldType, value));
+				}
+
+				mAppendable.append(key).append("\": ");
 
 				if (value == null)
 				{
@@ -106,17 +115,34 @@ class PSONEncoder
 	}
 
 
-	private static String encodeKey(int aFieldType, String aKey)
+	private static String encodeKey(int aFieldType, Object aValue)
 	{
 		int valueType = FieldType.valueType(aFieldType);
 		int collectionType = FieldType.collectionType(aFieldType);
 
-		if (valueType == FieldType.STRING || valueType == FieldType.DOUBLE || valueType == FieldType.INT || valueType == FieldType.BOOLEAN)
+		boolean hasNull = false;
+
+		if (aValue != null)
 		{
-			return aKey;
+			if (List.class.isAssignableFrom(aValue.getClass()))
+			{
+				for (Object o : (List)aValue)
+				{
+					if (o == null)
+					{
+						hasNull = true;
+						break;
+					}
+				}
+			}
 		}
 
-		return VALUE_TYPES[valueType - 1] + COLLECTION_TYPES[collectionType >> 4] + "!" + aKey;
+		if (!hasNull && (valueType == FieldType.STRING || valueType == FieldType.DOUBLE || valueType == FieldType.INT || valueType == FieldType.BOOLEAN || valueType == FieldType.BUNDLE))
+		{
+			return "";
+		}
+
+		return VALUE_TYPES[valueType - 1] + COLLECTION_TYPES[collectionType >> 4] + "!";
 	}
 
 

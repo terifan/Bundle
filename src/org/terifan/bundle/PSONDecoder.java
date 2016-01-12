@@ -19,6 +19,7 @@ class PSONDecoder
 {
 	private static SimpleDateFormat mDateFormatter;
 
+	private final static int PBLN = 30;
 	private final static HashMap<Character,Integer> VALUE_TYPE_MAP = new HashMap<>();
 	private final static HashMap<Character,Integer> COLLECTION_TYPE_MAP = new HashMap<>();
 
@@ -37,7 +38,7 @@ class PSONDecoder
 
 	public Bundle unmarshal(Reader aReader, Bundle aBundle) throws IOException
 	{
-		PushbackReader reader = new PushbackReader(aReader, 30);
+		PushbackReader reader = new PushbackReader(aReader, PBLN);
 
 		if (reader.read() != '{')
 		{
@@ -72,7 +73,7 @@ class PSONDecoder
 			int fieldType;
 
 //			System.out.println(key);
-			
+
 			if (key.contains("!"))
 			{
 				fieldType = decodeKey(key);
@@ -415,7 +416,7 @@ class PSONDecoder
 
 			boolean dbl = false;
 
-			char[] tmp = new char[20];
+			char[] tmp = new char[PBLN];
 			int len = 0;
 			for (; ; len++)
 			{
@@ -450,6 +451,10 @@ class PSONDecoder
 		{
 			return FieldType.encode(FieldType.VALUE, FieldType.DOUBLE);
 		}
+		if (d == '{')
+		{
+			return FieldType.encode(FieldType.VALUE, FieldType.BUNDLE);
+		}
 
 //		System.out.print((char)readByte(aReader));
 //		System.out.print((char)readByte(aReader));
@@ -460,7 +465,7 @@ class PSONDecoder
 //		System.out.print((char)readByte(aReader));
 //		System.out.print((char)readByte(aReader));
 //		System.out.print((char)readByte(aReader));
-		
-		throw new IOException();
+
+		throw new IOException("" + d);
 	}
 }
