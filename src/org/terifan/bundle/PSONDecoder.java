@@ -19,9 +19,9 @@ class PSONDecoder
 {
 	private static SimpleDateFormat mDateFormatter;
 
-	private final static int PBLN = 30;
 	private final static HashMap<Character,Integer> VALUE_TYPE_MAP = new HashMap<>();
 	private final static HashMap<Character,Integer> COLLECTION_TYPE_MAP = new HashMap<>();
+	private final static int PUSHBACK_LEN = 100;
 
 	static
 	{
@@ -38,7 +38,7 @@ class PSONDecoder
 
 	public Bundle unmarshal(Reader aReader, Bundle aBundle) throws IOException
 	{
-		PushbackReader reader = new PushbackReader(aReader, PBLN);
+		PushbackReader reader = new PushbackReader(aReader, PUSHBACK_LEN);
 
 		if (reader.read() != '{')
 		{
@@ -410,14 +410,14 @@ class PSONDecoder
 			return FieldType.encode(FieldType.ARRAY, FieldType.valueType(result));
 		}
 
-		if (d >= '0' && d <= '9' || d == '-' || d == '+')
+		if (d >= '0' && d <= '9' || d == '-' || d == '+' || d == '.')
 		{
 			aReader.unread(d);
 
 			boolean dbl = false;
-
-			char[] tmp = new char[PBLN];
+			char[] tmp = new char[PUSHBACK_LEN];
 			int len = 0;
+
 			for (; ; len++)
 			{
 				d = readChar(aReader);
