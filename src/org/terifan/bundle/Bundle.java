@@ -67,17 +67,15 @@ public class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 * Clones the current Bundle.
 	 */
 	@Override
-	public Object clone() throws CloneNotSupportedException
+	public Bundle clone()
 	{
 		try
 		{
-			Bundle b = (Bundle)super.clone();
-			b.putAll(this);
-			return b;
+			return (Bundle)super.clone();
 		}
 		catch (CloneNotSupportedException e)
 		{
-			throw new InternalError();
+			throw new IllegalStateException(e);
 		}
 	}
 
@@ -585,85 +583,85 @@ public class Bundle implements Cloneable, Externalizable, Iterable<String>
 	/**
 	 * Returns the value associated with the given key, or 0 if no mapping of the desired type exists for the given key.
 	 */
-	public char getChar(String aKey)
-	{
-		return getChar(aKey, (char)0);
-	}
-
-
-	/**
-	 * Returns the value associated with the given key, or 0 if no mapping of the desired type exists for the given key.
-	 */
-	public char getChar(String aKey, char aDefaultValue)
-	{
-		Object o = mValues.get(aKey);
-		if (o == null)
-		{
-			return aDefaultValue;
-		}
-		try
-		{
-			return (char)((Number)o).shortValue();
-		}
-		catch (ClassCastException e)
-		{
-			return typeWarning(aKey, o, Character.class, aDefaultValue, e);
-		}
-	}
-
-
-	/**
-	 * Returns the value associated with the given key, or null if no mapping of the desired type exists for the given key or a null value
-	 * is explicitly associated with the key.
-	 */
-	public char[] getCharArray(String aKey)
-	{
-		Object o = mValues.get(aKey);
-		try
-		{
-			return (char[])o;
-		}
-		catch (ClassCastException e)
-		{
-			return typeWarning(aKey, o, char[].class, null, e);
-		}
-	}
-
-
-	/**
-	 * Returns the value associated with the given key, or null if no mapping of the desired type exists for the given key or a null value
-	 * is explicitly associated with the key.
-	 */
-	public char[][] getCharMatrix(String aKey)
-	{
-		Object o = mValues.get(aKey);
-		try
-		{
-			return (char[][])o;
-		}
-		catch (ClassCastException e)
-		{
-			return typeWarning(aKey, o, char[][].class, null, e);
-		}
-	}
-
-
-	/**
-	 * Returns the value associated with the given key, or null if no mapping of the desired type exists for the given key or a null value
-	 * is explicitly associated with the key.
-	 */
-	public ArrayList<Character> getCharArrayList(String aKey)
-	{
-		Object o = mValues.get(aKey);
-		try
-		{
-			return (ArrayList<Character>)o;
-		}
-		catch (ClassCastException e)
-		{
-			return typeWarning(aKey, o, ArrayList.class, null, e);
-		}
-	}
+//	public char getChar(String aKey)
+//	{
+//		return getChar(aKey, (char)0);
+//	}
+//
+//
+//	/**
+//	 * Returns the value associated with the given key, or 0 if no mapping of the desired type exists for the given key.
+//	 */
+//	public char getChar(String aKey, char aDefaultValue)
+//	{
+//		Object o = mValues.get(aKey);
+//		if (o == null)
+//		{
+//			return aDefaultValue;
+//		}
+//		try
+//		{
+//			return (char)((Number)o).shortValue();
+//		}
+//		catch (ClassCastException e)
+//		{
+//			return typeWarning(aKey, o, Character.class, aDefaultValue, e);
+//		}
+//	}
+//
+//
+//	/**
+//	 * Returns the value associated with the given key, or null if no mapping of the desired type exists for the given key or a null value
+//	 * is explicitly associated with the key.
+//	 */
+//	public char[] getCharArray(String aKey)
+//	{
+//		Object o = mValues.get(aKey);
+//		try
+//		{
+//			return (char[])o;
+//		}
+//		catch (ClassCastException e)
+//		{
+//			return typeWarning(aKey, o, char[].class, null, e);
+//		}
+//	}
+//
+//
+//	/**
+//	 * Returns the value associated with the given key, or null if no mapping of the desired type exists for the given key or a null value
+//	 * is explicitly associated with the key.
+//	 */
+//	public char[][] getCharMatrix(String aKey)
+//	{
+//		Object o = mValues.get(aKey);
+//		try
+//		{
+//			return (char[][])o;
+//		}
+//		catch (ClassCastException e)
+//		{
+//			return typeWarning(aKey, o, char[][].class, null, e);
+//		}
+//	}
+//
+//
+//	/**
+//	 * Returns the value associated with the given key, or null if no mapping of the desired type exists for the given key or a null value
+//	 * is explicitly associated with the key.
+//	 */
+//	public ArrayList<Character> getCharArrayList(String aKey)
+//	{
+//		Object o = mValues.get(aKey);
+//		try
+//		{
+//			return (ArrayList<Character>)o;
+//		}
+//		catch (ClassCastException e)
+//		{
+//			return typeWarning(aKey, o, ArrayList.class, null, e);
+//		}
+//	}
 
 
 	/**
