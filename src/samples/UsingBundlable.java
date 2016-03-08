@@ -52,36 +52,6 @@ public class UsingBundlable
 		}
 	}
 
-	public static class Friend implements Bundlable
-	{
-		String name;
-		Hobby[] hobbies;
-
-		public Friend()
-		{
-		}
-
-		public Friend(String aName, Hobby... aHobbies)
-		{
-			this.name = aName;
-			this.hobbies = aHobbies;
-		}
-
-		@Override
-		public void readExternal(Bundle aBundle) throws IOException
-		{
-			name = aBundle.getString("name");
-			hobbies = aBundle.getBundlableArray("hobbies", Hobby.class);
-		}
-
-		@Override
-		public void writeExternal(Bundle aBundle) throws IOException
-		{
-			aBundle.putString("name", name);
-			aBundle.putBundlableArray("hobbies", hobbies);
-		}
-	}
-
 	public static class Person implements Bundlable
 	{
 		String name;
@@ -109,6 +79,36 @@ public class UsingBundlable
 		{
 			aBundle.putString("name", name);
 			aBundle.putBundlableArray("friends", friends);
+		}
+	}
+
+	public static class Friend implements Bundlable
+	{
+		String name;
+		Hobby[] hobbies;
+
+		public Friend()
+		{
+		}
+
+		public Friend(String aName, Hobby... aHobbies)
+		{
+			this.name = aName;
+			this.hobbies = aHobbies;
+		}
+
+		@Override
+		public void readExternal(Bundle aBundle) throws IOException
+		{
+			name = aBundle.getString("name");
+			hobbies = aBundle.getBundlableArray("hobbies", Hobby.class);
+		}
+
+		@Override
+		public void writeExternal(Bundle aBundle) throws IOException
+		{
+			aBundle.putString("name", name);
+			aBundle.putBundlableArray("hobbies", hobbies);
 		}
 	}
 
