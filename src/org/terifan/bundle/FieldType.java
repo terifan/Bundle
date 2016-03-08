@@ -23,7 +23,7 @@ class FieldType
 	public final static int STRING = 0x09;
 	public final static int BUNDLE = 0x0a;
 	public final static int DATE = 0x0b;
-	public final static int OBJECT = 0x0c;
+	public final static int SERIALIZABLE = 0x0c;
 
 	// prefix codes used by pson encoder
 	final static String[] COLLECTION_TYPES = {"","a","q","m"};
@@ -51,19 +51,19 @@ class FieldType
 	}
 
 
-	static Class getPrimitiveType(int aFieldType)
+	static Class classTypeOf(int aFieldType)
 	{
-		return TYPES[valueType(aFieldType) - 1];
+		return TYPES[valueTypeOf(aFieldType) - 1];
 	}
 
 
-	static int collectionType(int aFieldType)
+	static int collectionTypeOf(int aFieldType)
 	{
 		return aFieldType & 0xf0;
 	}
 
 
-	static int valueType(int aFieldType)
+	static int valueTypeOf(int aFieldType)
 	{
 		return aFieldType & 0x0f;
 	}
@@ -80,9 +80,9 @@ class FieldType
 
 	static String toString(int aCode)
 	{
-		String type = getPrimitiveType(aCode).getSimpleName();
+		String type = classTypeOf(aCode).getSimpleName();
 
-		switch (collectionType(aCode))
+		switch (collectionTypeOf(aCode))
 		{
 			case VALUE:
 				return type;

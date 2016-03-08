@@ -93,7 +93,7 @@ class PSONDecoder
 
 			Object value;
 
-			switch (FieldType.collectionType(fieldType))
+			switch (FieldType.collectionTypeOf(fieldType))
 			{
 				case FieldType.ARRAY:
 				case FieldType.ARRAYLIST:
@@ -152,7 +152,7 @@ class PSONDecoder
 			list.add(readArray(aReader, aFieldType));
 		}
 
-		Object array = Array.newInstance(FieldType.getPrimitiveType(aFieldType), list.size(), 0);
+		Object array = Array.newInstance(FieldType.classTypeOf(aFieldType), list.size(), 0);
 
 		for (int i = 0; i < list.size(); i++)
 		{
@@ -199,12 +199,12 @@ class PSONDecoder
 			list.add(readValue(aReader, aFieldType));
 		}
 
-		if (FieldType.collectionType(aFieldType) == FieldType.ARRAYLIST)
+		if (FieldType.collectionTypeOf(aFieldType) == FieldType.ARRAYLIST)
 		{
 			return list;
 		}
 
-		Object array = Array.newInstance(FieldType.getPrimitiveType(aFieldType), list.size());
+		Object array = Array.newInstance(FieldType.classTypeOf(aFieldType), list.size());
 
 		for (int i = 0; i < list.size(); i++)
 		{
@@ -217,7 +217,7 @@ class PSONDecoder
 
 	private Object readValue(PushbackReader aReader, int aFieldType) throws IOException
 	{
-		if (FieldType.valueType(aFieldType) == FieldType.BUNDLE)
+		if (FieldType.valueTypeOf(aFieldType) == FieldType.BUNDLE)
 		{
 			int c = readChar(aReader);
 
@@ -238,11 +238,11 @@ class PSONDecoder
 
 		char t = '\0';
 
-		switch (FieldType.valueType(aFieldType))
+		switch (FieldType.valueTypeOf(aFieldType))
 		{
 			case FieldType.STRING:
 			case FieldType.DATE:
-			case FieldType.OBJECT:
+			case FieldType.SERIALIZABLE:
 				t = readChar(aReader);
 				if (t == 'n')
 				{
@@ -279,7 +279,7 @@ class PSONDecoder
 			return null;
 		}
 
-		switch (FieldType.valueType(aFieldType))
+		switch (FieldType.valueTypeOf(aFieldType))
 		{
 			case FieldType.BOOLEAN:
 				return Boolean.parseBoolean(value);
@@ -312,7 +312,7 @@ class PSONDecoder
 				}
 			case FieldType.STRING:
 				return value;
-			case FieldType.OBJECT:
+			case FieldType.SERIALIZABLE:
 				byte[] buf = Base64.getDecoder().decode(value);
 				try (ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(buf)))
 				{
@@ -396,7 +396,7 @@ class PSONDecoder
 
 			aReader.unread('[');
 
-			int collectionType = FieldType.collectionType(result);
+			int collectionType = FieldType.collectionTypeOf(result);
 
 			if (collectionType == FieldType.MATRIX)
 			{
@@ -404,10 +404,10 @@ class PSONDecoder
 			}
 			if (collectionType == FieldType.ARRAY)
 			{
-				return FieldType.encode(FieldType.MATRIX, FieldType.valueType(result));
+				return FieldType.encode(FieldType.MATRIX, FieldType.valueTypeOf(result));
 			}
 
-			return FieldType.encode(FieldType.ARRAY, FieldType.valueType(result));
+			return FieldType.encode(FieldType.ARRAY, FieldType.valueTypeOf(result));
 		}
 
 		if (d >= '0' && d <= '9' || d == '-' || d == '+' || d == '.')

@@ -1,6 +1,8 @@
 package samples;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.zip.DeflaterOutputStream;
 import org.terifan.bundle.Bundlable;
 import org.terifan.bundle.Bundle;
 
@@ -25,6 +27,20 @@ public class UsingBundlable
 				person.writeExternal(bundle);
 
 				pson = bundle.marshalPSON(true);
+
+				System.out.println(bundle.marshal().length);
+
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				DeflaterOutputStream dos = new DeflaterOutputStream(baos);
+				dos.write("{\"friends\": [{\"hobbies\": [{\"name\": \"diving\"}, {\"name\": \"baking\"}], \"name\": \"olle\"}, {\"hobbies\": [{\"name\": \"skating\"}], \"name\": \"kurt\"}], \"name\": \"stig\"}".getBytes());
+				dos.close();
+				System.out.println(baos.size());
+
+				baos = new ByteArrayOutputStream();
+				dos = new DeflaterOutputStream(baos);
+				dos.write(bundle.marshal());
+				dos.close();
+				System.out.println(baos.size());
 			}
 
 			System.out.println(pson);

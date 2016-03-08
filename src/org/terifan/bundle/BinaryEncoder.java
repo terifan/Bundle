@@ -41,8 +41,8 @@ class BinaryEncoder
 
 			if (value != null)
 			{
-				int collectionType = FieldType.collectionType(fieldType);
-				int valueType = FieldType.valueType(fieldType);
+				int collectionType = FieldType.collectionTypeOf(fieldType);
+				int valueType = FieldType.valueTypeOf(fieldType);
 
 				switch (collectionType)
 				{
@@ -182,7 +182,7 @@ class BinaryEncoder
 				mOutput.write(buf);
 				break;
 			}
-			case FieldType.OBJECT:
+			case FieldType.SERIALIZABLE:
 			{
 				ByteArrayOutputStream baos = new ByteArrayOutputStream();
 				try (ObjectOutputStream oos = new ObjectOutputStream(baos))

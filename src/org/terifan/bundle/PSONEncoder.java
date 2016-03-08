@@ -117,8 +117,8 @@ class PSONEncoder
 
 	private static String encodeKey(int aFieldType, Object aValue)
 	{
-		int valueType = FieldType.valueType(aFieldType);
-		int collectionType = FieldType.collectionType(aFieldType);
+		int valueType = FieldType.valueTypeOf(aFieldType);
+		int collectionType = FieldType.collectionTypeOf(aFieldType);
 
 		boolean hasNull = false;
 
@@ -239,8 +239,8 @@ class PSONEncoder
 				Object value = aBundle.get(key);
 				int fieldType = aBundle.getType(key);
 
-				int collectionType = FieldType.collectionType(fieldType);
-				int valueType = FieldType.valueType(fieldType);
+				int collectionType = FieldType.collectionTypeOf(fieldType);
+				int valueType = FieldType.valueTypeOf(fieldType);
 
 				if (value != null && (valueType == FieldType.BUNDLE || collectionType != FieldType.VALUE))
 				{
@@ -261,7 +261,7 @@ class PSONEncoder
 			return;
 		}
 
-		switch (FieldType.valueType(aFieldType))
+		switch (FieldType.valueTypeOf(aFieldType))
 		{
 			case FieldType.CHAR:
 				mAppendable.append("" + (int)(Character)aValue);
@@ -279,7 +279,7 @@ class PSONEncoder
 			case FieldType.BUNDLE:
 				writeBundle((Bundle)aValue);
 				break;
-			case FieldType.OBJECT:
+			case FieldType.SERIALIZABLE:
 				ByteArrayOutputStream baos = new ByteArrayOutputStream();
 				try (ObjectOutputStream oos = new ObjectOutputStream(baos))
 				{

@@ -46,8 +46,8 @@ class BinaryDecoder
 			}
 			else
 			{
-				int collectionType = FieldType.collectionType(fieldType);
-				int valueType = FieldType.valueType(fieldType);
+				int collectionType = FieldType.collectionTypeOf(fieldType);
+				int valueType = FieldType.valueTypeOf(fieldType);
 
 				switch (collectionType)
 				{
@@ -98,11 +98,11 @@ class BinaryDecoder
 		}
 		else if (aCollectionType == FieldType.ARRAY)
 		{
-			sequence = Array.newInstance(FieldType.getPrimitiveType(aValueType), length);
+			sequence = Array.newInstance(FieldType.classTypeOf(aValueType), length);
 		}
 		else
 		{
-			sequence = Array.newInstance(FieldType.getPrimitiveType(aValueType), length, 0);
+			sequence = Array.newInstance(FieldType.classTypeOf(aValueType), length, 0);
 		}
 
 		for (int i = 0; i < length; i++)
@@ -174,7 +174,7 @@ class BinaryDecoder
 				}
 				return UTF8.decodeUTF8(buf, 0, buf.length);
 			}
-			case FieldType.OBJECT:
+			case FieldType.SERIALIZABLE:
 			{
 				byte[] buf = new byte[mInput.readVar32()];
 				if (mInput.read(buf) != buf.length)

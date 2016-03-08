@@ -1896,7 +1896,7 @@ public class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putSerializable(String aKey, Serializable aValue)
 	{
-		put(aKey, aValue, FieldType.VALUE, FieldType.OBJECT);
+		put(aKey, aValue, FieldType.VALUE, FieldType.SERIALIZABLE);
 		return this;
 	}
 
@@ -1906,7 +1906,7 @@ public class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putSerializableArray(String aKey, Serializable... aValue)
 	{
-		put(aKey, aValue, FieldType.ARRAY, FieldType.OBJECT);
+		put(aKey, aValue, FieldType.ARRAY, FieldType.SERIALIZABLE);
 		return this;
 	}
 
@@ -1916,7 +1916,7 @@ public class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putSerializableMatrix(String aKey, Serializable[][] aValue)
 	{
-		put(aKey, aValue, FieldType.MATRIX, FieldType.OBJECT);
+		put(aKey, aValue, FieldType.MATRIX, FieldType.SERIALIZABLE);
 		return this;
 	}
 
@@ -1926,7 +1926,7 @@ public class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle putSerializableArrayList(String aKey, ArrayList<Serializable> aValue)
 	{
-		put(aKey, aValue, FieldType.ARRAYLIST, FieldType.OBJECT);
+		put(aKey, aValue, FieldType.ARRAYLIST, FieldType.SERIALIZABLE);
 		return this;
 	}
 
