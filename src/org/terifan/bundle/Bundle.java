@@ -180,7 +180,21 @@ public class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public ArrayList<Bundle> getBundleArrayList(String aKey)
 	{
+		return getBundleArrayList(aKey, (ArrayList<Bundle>)null);
+	}
+
+
+	/**
+	 * Returns the value associated with the given key, or null if no mapping of the desired type exists for the given key or a null value
+	 * is explicitly associated with the key.
+	 */
+	public ArrayList<Bundle> getBundleArrayList(String aKey, ArrayList<Bundle> aDefault)
+	{
 		Object o = mValues.get(aKey);
+		if (o == null)
+		{
+			return aDefault;
+		}
 		try
 		{
 			return (ArrayList<Bundle>)o;
@@ -189,6 +203,17 @@ public class Bundle implements Cloneable, Externalizable, Iterable<String>
 		{
 			return typeWarning(aKey, o, ArrayList.class, null, e);
 		}
+	}
+
+
+	public ArrayList<Bundle> getBundleArrayList(String aKey, BundleProcessor aProcessor)
+	{
+		ArrayList<Bundle> list = getBundleArrayList(aKey, new ArrayList<>());
+		for (Bundle item : list)
+		{
+			aProcessor.process(item);
+		}
+		return list;
 	}
 
 
@@ -359,12 +384,12 @@ public class Bundle implements Cloneable, Externalizable, Iterable<String>
 		{
 			ArrayList<Bundle> bundles = getBundleArrayList(aKey);
 
+			ArrayList<T> items = new ArrayList<>();
+
 			if (bundles == null)
 			{
-				return null;
+				return items;
 			}
-
-			ArrayList<T> items = new ArrayList<>();
 
 			for (Bundle bundle : bundles)
 			{
@@ -388,12 +413,12 @@ public class Bundle implements Cloneable, Externalizable, Iterable<String>
 	{
 		ArrayList<Bundle> bundles = getBundleArrayList(aKey);
 
+		ArrayList<T> items = new ArrayList<>();
+
 		if (bundles == null)
 		{
-			return null;
+			return items;
 		}
-
-		ArrayList<T> items = new ArrayList<>();
 
 		for (Bundle bundle : bundles)
 		{

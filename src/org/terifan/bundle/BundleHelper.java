@@ -65,4 +65,62 @@ public class BundleHelper
 
 		return map;
 	}
+
+
+	public static Point getPoint(Bundle aBundle, Point aPoint)
+	{
+		return aBundle == null ? aPoint : new Point(aBundle.getInt("x", 0), aBundle.getInt("y", 0));
+	}
+
+
+	public static Dimension getDimension(Bundle aBundle, Dimension aDimension)
+	{
+		return aBundle == null ? aDimension : new Dimension(aBundle.getInt("width", 0), aBundle.getInt("height", 0));
+	}
+
+
+	public static Rectangle getRectangle(Bundle aBundle, Rectangle aRectangle)
+	{
+		return aBundle == null ? aRectangle : new Rectangle(aBundle.getInt("x", 0), aBundle.getInt("y", 0), aBundle.getInt("width", 0), aBundle.getInt("height", 0));
+	}
+
+
+	public static Color getColor(String aString)
+	{
+		if (aString == null)
+		{
+			return null;
+		}
+		switch (aString)
+		{
+			case "BLACK":
+				return Color.BLACK;
+			case "BLUE":
+				return Color.BLUE;
+			case "CYAN":
+				return Color.CYAN;
+			case "DARK_GRAY":
+				return Color.DARK_GRAY;
+			case "GRAY":
+				return Color.GRAY;
+			case "GREEN":
+				return Color.GREEN;
+			case "LIGHT_GRAY":
+				return Color.LIGHT_GRAY;
+			case "MAGENTA":
+				return Color.MAGENTA;
+			case "ORANGE":
+				return Color.ORANGE;
+			case "PINK":
+				return Color.PINK;
+			case "RED":
+				return Color.RED;
+			case "WHITE":
+				return Color.WHITE;
+			case "YELLOW":
+				return Color.YELLOW;
+		}
+
+		return new Color(Integer.parseInt(aString, 16));
+	}
 }
