@@ -1,8 +1,6 @@
 package org.terifan.bundle;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import static org.testng.Assert.*;
 import org.testng.annotations.Test;
 
@@ -12,11 +10,12 @@ public class BundleNGTest
 	@Test
 	public void testMarshal() throws IOException
 	{
-		Bundle in = Util.createComplexBundle();
+//		Bundle in = Util.createComplexBundle();
+		Bundle in = new Bundle().putString("string1", "value1").putString("string2", "value2").putIntArray("ints", 1,2,3);
 
 		byte[] data = in.marshal();
 
-//		Log.hexDump(data);
+		Log.hexDump(data);
 
 		Bundle out = new Bundle().unmarshal(data);
 
