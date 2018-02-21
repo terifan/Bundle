@@ -92,17 +92,17 @@ class BinaryDecoder
 
 		Object sequence;
 
-		if (aCollectionType == FieldType.ARRAYLIST)
+		switch (aCollectionType)
 		{
-			sequence = new ArrayList(length);
-		}
-		else if (aCollectionType == FieldType.ARRAY)
-		{
-			sequence = Array.newInstance(FieldType.classTypeOf(aValueType), length);
-		}
-		else
-		{
-			sequence = Array.newInstance(FieldType.classTypeOf(aValueType), length, 0);
+			case FieldType.ARRAYLIST:
+				sequence = new ArrayList(length);
+				break;
+			case FieldType.ARRAY:
+				sequence = Array.newInstance(FieldType.classTypeOf(aValueType), length);
+				break;
+			default:
+				sequence = Array.newInstance(FieldType.classTypeOf(aValueType), length, 0);
+				break;
 		}
 
 		for (int i = 0; i < length; i++)

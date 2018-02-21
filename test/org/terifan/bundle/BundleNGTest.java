@@ -21,6 +21,8 @@ public class BundleNGTest
 		Bundle out = new Bundle().unmarshal(data);
 
 		assertEquals(in, out);
+		
+		System.out.println(data.length);
 	}
 
 
