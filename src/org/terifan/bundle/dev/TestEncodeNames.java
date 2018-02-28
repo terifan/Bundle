@@ -2,9 +2,8 @@ package org.terifan.bundle.dev;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 
-public class TestEncodeNames 
+public class TestEncodeNames
 {
 	public static void main(String... args)
 	{
@@ -14,7 +13,7 @@ public class TestEncodeNames
 
 			// 58
 //			String[] names = "Changed,Count,Created,Create Time,Coordinate,Color,Client,Closed,Clear,Colorful".split(",");
-			
+
 			String[] names = "ImageWidth,ImageHeight,ImageDescription,Orientation,Make,Model,XResolution,YResolution,ResolutionUnit,Software,DateTime,WhitePoint,PrimaryChromaticities,YCbCrCoefficients,YCbCrPositioning,ReferenceBlackWhite,Copyright,ExifOffset,ExposureTime,FNumber,ExposureProgram,ISOSpeedRatings,ExifVersion,DateTimeOriginal,DateTimeDigitized,ComponentConfiguration,CompressedBitsPerPixel,ShutterSpeedValue,ApertureValue,BrightnessValue,ExposureBiasValue,MaxApertureValue,SubjectDistance,MeteringMode,LightSource,Flash,FocalLength,MakerNote,UserComment,FlashPixVersion,ColorSpace,ExifImageWidth,ExifImageHeight,RelatedSoundFile,ExifInteroperabilityOffset,FocalPlaneXResolution,FocalPlaneYResolution,FocalPlaneResolutionUnit,SensingMethod,FileSource,SceneType,ThumbWidth,ThumbHeight,ThumbBitsPerSample,ThumbCompression,ThumbPhotometricInterpretation,ThumbStripOffsets,ThumbSamplesPerPixel,ThumbRowsPerStrip,ThumbStripByteConunts,ThumbXResolution,ThumbYResolution,ThumbPlanarConfiguration,ThumbResolutionUnit,ThumbJpegIFOffset,ThumbJpegIFByteCount,ThumbYCbCrCoefficients,ThumbYCbCrSubSampling,ThumbYCbCrPositioning,ThumbReferenceBlackWhite,RatingNumber,RatingPercent,ImageNumber,Title,ImageUniqueID,Comment,Author,Tags,Subject".split(",");
 
 //			for (int i = 0; i < names.length; i++)
@@ -26,7 +25,7 @@ public class TestEncodeNames
 //				}
 //				names[i] = s;
 //			}
-			
+
 			Arrays.sort(names);
 
 			Node root = new Node();
@@ -34,7 +33,7 @@ public class TestEncodeNames
 			for (String name : names)
 			{
 				System.out.println(name);
-				
+
 				Node bestChild = null;
 				Node node = root;
 				int lastBest = 0;
@@ -62,14 +61,14 @@ public class TestEncodeNames
 							bestChild = child;
 						}
 					}
-					
+
 					if (bestMatches>0)System.out.println("\t"+name+" "+bestChild.text+" "+bestMatches);
-					
+
 					if (bestMatches <= lastBest)
 					{
 						break;
 					}
-					
+
 					lastBest = bestMatches;
 					node = bestChild;
 				}
@@ -85,9 +84,9 @@ public class TestEncodeNames
 			}
 
 			System.out.println();
-			
+
 			root.print();
-			
+
 //			System.out.println();
 //
 //			root.serialize();
@@ -97,8 +96,8 @@ public class TestEncodeNames
 			e.printStackTrace(System.out);
 		}
 	}
-	
-	
+
+
 	private static class Node
 	{
 		String text;
@@ -117,13 +116,13 @@ public class TestEncodeNames
 			this.matches = lastBest;
 		}
 
-		
+
 		public void print()
 		{
 			print(0);
 		}
 
-		
+
 		private void print(int aIndent)
 		{
 			for (int i = 0; i <aIndent; i++)
@@ -131,20 +130,20 @@ public class TestEncodeNames
 				System.out.print(".. ");
 			}
 			System.out.println(text+" ("+matches+")");
-			
+
 			for (Node child : children)
 			{
 				child.print(aIndent + 1);
 			}
 		}
 
-		
+
 		public void serialize()
 		{
 			serialize(0);
 		}
 
-		
+
 		private void serialize(int aMatches)
 		{
 			if (text != null)
