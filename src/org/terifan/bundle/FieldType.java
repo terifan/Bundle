@@ -46,6 +46,61 @@ class FieldType
 	};
 
 
+	static int classify(Object aValue)
+	{
+		if (aValue instanceof Boolean)
+		{
+			return encode(VALUE, BOOLEAN);
+		}
+		if (aValue instanceof Byte)
+		{
+			return encode(VALUE, BYTE);
+		}
+		if (aValue instanceof Short)
+		{
+			return encode(VALUE, SHORT);
+		}
+		if (aValue instanceof Character)
+		{
+			return encode(VALUE, CHAR);
+		}
+		if (aValue instanceof Integer)
+		{
+			return encode(VALUE, INT);
+		}
+		if (aValue instanceof Long)
+		{
+			return encode(VALUE, LONG);
+		}
+		if (aValue instanceof Float)
+		{
+			return encode(VALUE, FLOAT);
+		}
+		if (aValue instanceof Double)
+		{
+			return encode(VALUE, DOUBLE);
+		}
+		if (aValue instanceof String)
+		{
+			return encode(VALUE, STRING);
+		}
+		if (aValue instanceof Bundle)
+		{
+			return encode(VALUE, BUNDLE);
+		}
+		if (aValue instanceof Date)
+		{
+			return encode(VALUE, DATE);
+		}
+		if (aValue instanceof Serializable)
+		{
+			return encode(VALUE, SERIALIZABLE);
+		}
+
+		throw new IllegalArgumentException("Unsupported type: " + aValue.getClass());
+	}
+
+
 	private FieldType()
 	{
 	}

@@ -21,8 +21,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 
 public class Bundle implements Cloneable, Externalizable, Iterable<String>
@@ -2269,5 +2271,143 @@ public class Bundle implements Cloneable, Externalizable, Iterable<String>
 	{
 		new PSONDecoder().unmarshal(new InputStreamReader(aInputStream), this);
 		return this;
+	}
+
+
+	public void visit(BundleVisitor aVisitor)
+	{
+		visit(Integer.MAX_VALUE, false, null, aVisitor);
+	}
+
+
+	/**
+	 * Recursively visit the values of this Bundle.
+	 *
+	 * @param aMaxDepth
+	 *   the max depth, level 0 include only the immediate children of this Bundle
+	 * @param aVisitValues
+	 *   true if each value in array, arraylists and matricies should invoke the process method of the visitor.
+	 * @param aAbortCondition
+	 *   null or an AtomicBoolean, recursion will stop when this is true
+	 * @param aVisitor
+	 *   the visitor callback
+	 */
+	public void visit(int aMaxDepth, boolean aVisitValues, AtomicBoolean aAbortCondition, BundleVisitor aVisitor)
+	{
+		if (aMaxDepth < 0 || aAbortCondition != null && aAbortCondition.get())
+		{
+			return;
+		}
+
+		aMaxDepth--;
+
+		for (Entry<String,Object> entry : mValues.entrySet())
+		{
+			String key = entry.getKey();
+			Integer fieldType = mTypes.get(key);
+			Object value = entry.getValue();
+			int collectionTypeOf = FieldType.collectionTypeOf(fieldType);
+
+			if (FieldType.valueTypeOf(fieldType) == FieldType.BUNDLE)
+			{
+				if (aVisitValues)
+				{
+					aVisitor.process(this, key, value);
+				}
+
+				switch (collectionTypeOf)
+				{
+					case FieldType.ARRAY:
+						int len = Array.getLength(value);
+						for (int i = 0; i < len; i++)
+						{
+							Bundle childBundle = (Bundle)Array.get(value, i);
+							visitChildBundle(aVisitor, entry, childBundle, aMaxDepth, aAbortCondition);
+						}
+						break;
+					case FieldType.ARRAYLIST:
+						for (Bundle childBundle : (ArrayList<Bundle>)value)
+						{
+							visitChildBundle(aVisitor, entry, childBundle, aMaxDepth, aAbortCondition);
+						}
+						break;
+					case FieldType.MATRIX:
+						int rows = Array.getLength(value);
+						for (int i = 0; i < rows; i++)
+						{
+							Object v = Array.get(value, i);
+							int cols = Array.getLength(value);
+							for (int j = 0; j < cols; j++)
+							{
+								Bundle childBundle = (Bundle)Array.get(v, j);
+								visitChildBundle(aVisitor, entry, childBundle, aMaxDepth, aAbortCondition);
+							}
+						}
+						break;
+					default:
+						Bundle childBundle = (Bundle)entry.getValue();
+						visitChildBundle(aVisitor, entry, childBundle, aMaxDepth, aAbortCondition);
+						break;
+				}
+			}
+			else
+			{
+				if (!aVisitValues)
+				{
+					aVisitor.process(this, key, value);
+				}
+				else
+				{
+					switch (collectionTypeOf)
+					{
+						case FieldType.ARRAY:
+							int len = Array.getLength(value);
+							for (int i = 0; i < len; i++)
+							{
+								Object newValue = aVisitor.process(this, key, Array.get(value, i));
+								Array.set(value, i, newValue);
+							}
+							break;
+						case FieldType.ARRAYLIST:
+						{
+							ArrayList list = (ArrayList)value;
+							for (int i = 0; i < list.size(); i++)
+							{
+								Object newValue = aVisitor.process(this, key, list.get(i));
+								list.set(i, newValue);
+							}
+							break;
+						}
+						case FieldType.MATRIX:
+							int rows = Array.getLength(value);
+							for (int i = 0; i < rows; i++)
+							{
+								Object v = Array.get(value, i);
+								int cols = Array.getLength(value);
+								for (int j = 0; j < cols; j++)
+								{
+									Object newValue = aVisitor.process(this, key, Array.get(v, j));
+									Array.set(v, j, newValue);
+								}
+							}
+							break;
+						default:
+							Object newValue = aVisitor.process(this, key, value);
+							put(key, newValue, FieldType.classify(newValue));
+							break;
+					}
+				}
+			}
+		}
+	}
+
+
+	protected void visitChildBundle(BundleVisitor aVisitor, Entry<String, Object> aEntry, Bundle aChildBundle, int aMaxDepth, AtomicBoolean aAbortCondition)
+	{
+		aVisitor.entering(this, aEntry.getKey(), aChildBundle);
+
+		aChildBundle.visit(aMaxDepth, false, aAbortCondition, aVisitor);
+
+		aVisitor.leaving(this, aEntry.getKey(), aChildBundle);
 	}
 }

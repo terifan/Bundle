@@ -13,7 +13,7 @@ import static org.terifan.bundle.FieldType.VALUE_TYPES;
 
 class PSONEncoder
 {
-	private final static int SIMPLE_OBJECT_MAX_ELEMENTS = 5;
+	private final static int SIMPLE_OBJECT_MAX_ELEMENTS = 1;
 
 	private SimpleDateFormat mDateFormatter;
 	private Appendable mAppendable;
