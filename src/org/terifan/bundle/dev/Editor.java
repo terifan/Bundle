@@ -1,6 +1,7 @@
 package org.terifan.bundle.dev;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -81,7 +82,7 @@ public class Editor
 
 						String type = value.getClass().getSimpleName();
 
-						if (value instanceof Bundle)
+						if (value instanceof Bundle || value instanceof Bundle[] || value instanceof Bundle[][] || (value instanceof ArrayList && ((ArrayList)value).size() > 0 && (((ArrayList)value).get(0) instanceof Bundle)))
 						{
 							value = "";
 						}

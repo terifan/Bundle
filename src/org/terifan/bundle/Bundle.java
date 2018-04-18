@@ -2336,7 +2336,7 @@ public class Bundle implements Cloneable, Externalizable, Iterable<String>
 						for (int i = 0; i < rows; i++)
 						{
 							Object v = Array.get(value, i);
-							int cols = Array.getLength(value);
+							int cols = Array.getLength(v);
 							for (int j = 0; j < cols; j++)
 							{
 								Bundle childBundle = (Bundle)Array.get(v, j);
