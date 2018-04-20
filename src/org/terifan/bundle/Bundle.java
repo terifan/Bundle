@@ -2322,31 +2322,34 @@ public class Bundle implements Cloneable, Externalizable, Iterable<String>
 						for (int i = 0; i < len; i++)
 						{
 							Bundle childBundle = (Bundle)Array.get(value, i);
-							visitChildBundle(aVisitor, entry, childBundle, aMaxDepth, aAbortCondition);
+							visitChildBundle(aVisitor, entry, childBundle, aMaxDepth, aAbortCondition, i);
 						}
 						break;
 					case FieldType.ARRAYLIST:
+					{
+						int i = 0;
 						for (Bundle childBundle : (ArrayList<Bundle>)value)
 						{
-							visitChildBundle(aVisitor, entry, childBundle, aMaxDepth, aAbortCondition);
+							visitChildBundle(aVisitor, entry, childBundle, aMaxDepth, aAbortCondition, i++);
 						}
 						break;
+					}
 					case FieldType.MATRIX:
 						int rows = Array.getLength(value);
-						for (int i = 0; i < rows; i++)
+						for (int i = 0, k = 0; i < rows; i++)
 						{
 							Object v = Array.get(value, i);
 							int cols = Array.getLength(v);
 							for (int j = 0; j < cols; j++)
 							{
 								Bundle childBundle = (Bundle)Array.get(v, j);
-								visitChildBundle(aVisitor, entry, childBundle, aMaxDepth, aAbortCondition);
+								visitChildBundle(aVisitor, entry, childBundle, aMaxDepth, aAbortCondition, k++);
 							}
 						}
 						break;
 					default:
 						Bundle childBundle = (Bundle)entry.getValue();
-						visitChildBundle(aVisitor, entry, childBundle, aMaxDepth, aAbortCondition);
+						visitChildBundle(aVisitor, entry, childBundle, aMaxDepth, aAbortCondition, -1);
 						break;
 				}
 			}
@@ -2402,12 +2405,12 @@ public class Bundle implements Cloneable, Externalizable, Iterable<String>
 	}
 
 
-	protected void visitChildBundle(BundleVisitor aVisitor, Entry<String, Object> aEntry, Bundle aChildBundle, int aMaxDepth, AtomicBoolean aAbortCondition)
+	protected void visitChildBundle(BundleVisitor aVisitor, Entry<String, Object> aEntry, Bundle aChildBundle, int aMaxDepth, AtomicBoolean aAbortCondition, int aIndex)
 	{
-		aVisitor.entering(this, aEntry.getKey(), aChildBundle);
+		aVisitor.entering(this, aEntry.getKey(), aChildBundle, aIndex);
 
 		aChildBundle.visit(aMaxDepth, false, aAbortCondition, aVisitor);
 
-		aVisitor.leaving(this, aEntry.getKey(), aChildBundle);
+		aVisitor.leaving(this, aEntry.getKey(), aChildBundle, aIndex);
 	}
 }

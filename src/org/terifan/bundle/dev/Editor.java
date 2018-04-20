@@ -32,20 +32,44 @@ public class Editor
 			DefaultMutableTreeNode root = new DefaultMutableTreeNode(new TreeNode(bundle, null));
 
 			ArrayDeque<DefaultMutableTreeNode> stack = new ArrayDeque<>();
+			ArrayDeque<DefaultMutableTreeNode> arrays = new ArrayDeque<>();
 			stack.add(root);
 
 			bundle.visit(new BundleVisitor()
 				{
 					@Override
-					public void entering(Bundle aParentBundle, String aKey, Bundle aChildBundle)
+					public void entering(Bundle aParentBundle, String aKey, Bundle aChildBundle, int aIndex)
 					{
-						DefaultMutableTreeNode node = new DefaultMutableTreeNode(new TreeNode(aChildBundle, aKey));
-						stack.peek().add(node);
-						stack.add(node);
+						if (aIndex == 0)
+						{
+							DefaultMutableTreeNode node = new DefaultMutableTreeNode(aKey);
+							stack.peekLast().add(node);
+							stack.add(node);
+
+							arrays.add(node);
+						}
+
+						if (aIndex > -1)
+						{
+							DefaultMutableTreeNode node = new DefaultMutableTreeNode(new TreeNode(aChildBundle, ""+aIndex));
+							arrays.peekLast().add(node);
+							stack.add(node);
+						}
+						else
+						{
+							DefaultMutableTreeNode node = new DefaultMutableTreeNode(new TreeNode(aChildBundle, aKey));
+							stack.peekLast().add(node);
+							stack.add(node);
+						}
 					}
 					@Override
-					public void leaving(Bundle aParentBundle, String aKey, Bundle aChildBundle)
+					public void leaving(Bundle aParentBundle, String aKey, Bundle aChildBundle, int aIndex)
 					{
+						if (aIndex == 0)
+						{
+							stack.removeLast();
+						}
+
 						stack.removeLast();
 					}
 					@Override

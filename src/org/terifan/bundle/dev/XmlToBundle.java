@@ -37,13 +37,13 @@ public class XmlToBundle
 				ArrayDeque<Bundle> struct = new ArrayDeque<>();
 
 				@Override
-				public void entering(Bundle aParentBundle, String aKey, Bundle aChildBundle)
+				public void entering(Bundle aParentBundle, String aKey, Bundle aChildBundle, int aIndex)
 				{
 					path.addLast(aKey);
 					struct.addLast(aChildBundle);
 				}
 				@Override
-				public void leaving(Bundle aParentBundle, String aKey, Bundle aChildBundle)
+				public void leaving(Bundle aParentBundle, String aKey, Bundle aChildBundle, int aIndex)
 				{
 					path.removeLast();
 					struct.removeLast();
@@ -110,13 +110,13 @@ public class XmlToBundle
 				ArrayDeque<Bundle> struct = new ArrayDeque<>();
 
 				@Override
-				public void entering(Bundle aParentBundle, String aKey, Bundle aChildBundle)
+				public void entering(Bundle aParentBundle, String aKey, Bundle aChildBundle, int aIndex)
 				{
 					path.addLast(aKey);
 					struct.addLast(aChildBundle);
 				}
 				@Override
-				public void leaving(Bundle aParentBundle, String aKey, Bundle aChildBundle)
+				public void leaving(Bundle aParentBundle, String aKey, Bundle aChildBundle, int aIndex)
 				{
 					path.removeLast();
 					struct.removeLast();

@@ -12,6 +12,20 @@ class BundleGenerator
 	public static Bundle create()
 	{
 		return new Bundle()
+			.putBundle("bundle-one", new Bundle()
+				.putBundle("bundle-two", createBundle()
+					.putBundle("last", createSingleBundle(11))
+				)
+				.putBundle("last-two", createSingleBundle(12))
+			)
+			.putBundle("last-one", createSingleBundle(13))
+			;
+	}
+
+
+	public static Bundle createBundle()
+	{
+		return new Bundle()
 			.putBundle("bundle", createSingleBundle(0))
 			.putBundleArray("bundleArray", createSingleBundle(1), createSingleBundle(2), createSingleBundle(3))
 			.putBundleArrayList("bundleArrayList", new ArrayList<>(Arrays.asList(createSingleBundle(4), createSingleBundle(5), createSingleBundle(6))))
