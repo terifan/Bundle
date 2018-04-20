@@ -38,6 +38,16 @@ public class Editor
 			bundle.visit(new BundleVisitor()
 				{
 					@Override
+					public void enteringArray(int aIndex0, int aIndex1)
+					{
+					}
+
+					@Override
+					public void leavingArray(int aIndex0, int aIndex1)
+					{
+					}
+
+					@Override
 					public void entering(Bundle aParentBundle, String aKey, Bundle aChildBundle, int aIndex)
 					{
 						if (aIndex == 0)
@@ -98,20 +108,25 @@ public class Editor
 				{
 					DefaultTableModel dataModel = new DefaultTableModel(new Object[]{"Name","Type","Value"}, 0);
 
-					Bundle bundle = ((TreeNode)(((DefaultMutableTreeNode)aEvent.getPath().getLastPathComponent())).getUserObject()).bundle;
+					Object userObject = (((DefaultMutableTreeNode)aEvent.getPath().getLastPathComponent())).getUserObject();
 
-					for (String key : bundle.keySet())
+					if (userObject instanceof TreeNode)
 					{
-						Object value = bundle.get(key);
+						Bundle bundle = ((TreeNode)userObject).bundle;
 
-						String type = value.getClass().getSimpleName();
-
-						if (value instanceof Bundle || value instanceof Bundle[] || value instanceof Bundle[][] || (value instanceof ArrayList && ((ArrayList)value).size() > 0 && (((ArrayList)value).get(0) instanceof Bundle)))
+						for (String key : bundle.keySet())
 						{
-							value = "";
-						}
+							Object value = bundle.get(key);
 
-						dataModel.addRow(new Object[]{key, type, value});
+							String type = value.getClass().getSimpleName();
+
+							if (value instanceof Bundle || value instanceof Bundle[] || value instanceof Bundle[][] || (value instanceof ArrayList && ((ArrayList)value).size() > 0 && (((ArrayList)value).get(0) instanceof Bundle)))
+							{
+								value = "";
+							}
+
+							dataModel.addRow(new Object[]{key, type, value});
+						}
 					}
 
 					panel.setModel(dataModel);

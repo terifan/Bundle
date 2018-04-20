@@ -2340,10 +2340,15 @@ public class Bundle implements Cloneable, Externalizable, Iterable<String>
 						{
 							Object v = Array.get(value, i);
 							int cols = Array.getLength(v);
+
 							for (int j = 0; j < cols; j++)
 							{
+								aVisitor.enteringArray(i, j);
+
 								Bundle childBundle = (Bundle)Array.get(v, j);
-								visitChildBundle(aVisitor, entry, childBundle, aMaxDepth, aAbortCondition, k++);
+								visitChildBundle(aVisitor, entry, childBundle, aMaxDepth, aAbortCondition, j);
+
+								aVisitor.leavingArray(i, j);
 							}
 						}
 						break;
