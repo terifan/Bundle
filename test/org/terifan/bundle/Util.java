@@ -42,18 +42,6 @@ public class Util
 			.putByteMatrix("byte_matrix", new byte[][]{{(byte)r.nextInt(), (byte)r.nextInt()}, null, {(byte)r.nextInt(), (byte)r.nextInt()}, {}})
 			.putByteMatrix("byte_matrix_sq", new byte[][]{{(byte)r.nextInt(), (byte)r.nextInt(), (byte)r.nextInt()}, {(byte)r.nextInt(), (byte)r.nextInt(), (byte)r.nextInt()}})
 
-			.putShort("short", (short)r.nextInt())
-			.putShortArray("short_array", (short)r.nextInt(), (short)r.nextInt(), (short)r.nextInt())
-			.putShortArrayList("short_list", new ArrayList<>(Arrays.asList((short)r.nextInt(), (short)r.nextInt(), null, (short)r.nextInt())))
-			.putShortMatrix("short_matrix", new short[][]{{(short)r.nextInt(), (short)r.nextInt()},null,{(short)r.nextInt(), (short)r.nextInt()}, {}})
-			.putShortMatrix("short_matrix_sq", new short[][]{{(short)r.nextInt(), (short)r.nextInt(), (short)r.nextInt()}, {(short)r.nextInt(), (short)r.nextInt(), (short)r.nextInt()}})
-
-			.putChar("char", (char)r.nextInt())
-			.putCharArray("char_array", (char)r.nextInt(), (char)r.nextInt(), (char)r.nextInt())
-			.putCharArrayList("char_list", new ArrayList<>(Arrays.asList((char)r.nextInt(), (char)r.nextInt(), null, (char)r.nextInt())))
-			.putCharMatrix("char_matrix", new char[][]{{(char)r.nextInt(), (char)r.nextInt(), (char)r.nextInt()}, null, {(char)r.nextInt(), (char)r.nextInt()}, {}})
-			.putCharMatrix("char_matrix_sq", new char[][]{{(char)r.nextInt(), (char)r.nextInt(), (char)r.nextInt()}, {(char)r.nextInt(), (char)r.nextInt(), (char)r.nextInt()}})
-
 			.putInt("int", r.nextInt())
 			.putIntArray("int_array", r.nextInt(), r.nextInt(), r.nextInt())
 			.putIntArray("int_array_empty")

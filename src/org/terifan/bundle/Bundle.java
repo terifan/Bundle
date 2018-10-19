@@ -40,7 +40,7 @@ public class Bundle implements Cloneable, Externalizable, Iterable<String>
 	 */
 	public Bundle()
 	{
-		mValues = new TreeMap<>();
+		mValues = new HashMap<>();
 		mTypes = new HashMap<>();
 	}
 
@@ -1027,88 +1027,88 @@ public class Bundle implements Cloneable, Externalizable, Iterable<String>
 	}
 
 
-	/**
-	 * Returns the value associated with the given key, or 0 if no mapping of the desired type exists for the given key.
-	 */
-	public short getShort(String aKey)
-	{
-		return getShort(aKey, (short)0);
-	}
-
-
-	/**
-	 * Returns the value associated with the given key, or aDefaultValue if no mapping of the desired type exists for the given key.
-	 */
-	public short getShort(String aKey, short aDefaultValue)
-	{
-		Object o = mValues.get(aKey);
-		if (o == null)
-		{
-			return aDefaultValue;
-		}
-		try
-		{
-			return ((Number)o).shortValue();
-		}
-		catch (ClassCastException e)
-		{
-			return typeWarning(aKey, o, Short.class, aDefaultValue, e);
-		}
-	}
-
-
-	/**
-	 * Returns the value associated with the given key, or null if no mapping of the desired type exists for the given key or a null value
-	 * is explicitly associated with the key.
-	 */
-	public short[] getShortArray(String aKey)
-	{
-		Object o = mValues.get(aKey);
-		try
-		{
-			return (short[])o;
-		}
-		catch (ClassCastException e)
-		{
-			return typeWarning(aKey, o, short[].class, null, e);
-		}
-	}
-
-
-	/**
-	 * Returns the value associated with the given key, or null if no mapping of the desired type exists for the given key or a null value
-	 * is explicitly associated with the key.
-	 */
-	public short[][] getShortMatrix(String aKey)
-	{
-		Object o = mValues.get(aKey);
-		try
-		{
-			return (short[][])o;
-		}
-		catch (ClassCastException e)
-		{
-			return typeWarning(aKey, o, short[][].class, null, e);
-		}
-	}
-
-
-	/**
-	 * Returns the value associated with the given key, or null if no mapping of the desired type exists for the given key or a null value
-	 * is explicitly associated with the key.
-	 */
-	public ArrayList<Short> getShortArrayList(String aKey)
-	{
-		Object o = mValues.get(aKey);
-		try
-		{
-			return (ArrayList<Short>)o;
-		}
-		catch (ClassCastException e)
-		{
-			return typeWarning(aKey, o, ArrayList.class, null, e);
-		}
-	}
+//	/**
+//	 * Returns the value associated with the given key, or 0 if no mapping of the desired type exists for the given key.
+//	 */
+//	public short getShort(String aKey)
+//	{
+//		return getShort(aKey, (short)0);
+//	}
+//
+//
+//	/**
+//	 * Returns the value associated with the given key, or aDefaultValue if no mapping of the desired type exists for the given key.
+//	 */
+//	public short getShort(String aKey, short aDefaultValue)
+//	{
+//		Object o = mValues.get(aKey);
+//		if (o == null)
+//		{
+//			return aDefaultValue;
+//		}
+//		try
+//		{
+//			return ((Number)o).shortValue();
+//		}
+//		catch (ClassCastException e)
+//		{
+//			return typeWarning(aKey, o, Short.class, aDefaultValue, e);
+//		}
+//	}
+//
+//
+//	/**
+//	 * Returns the value associated with the given key, or null if no mapping of the desired type exists for the given key or a null value
+//	 * is explicitly associated with the key.
+//	 */
+//	public short[] getShortArray(String aKey)
+//	{
+//		Object o = mValues.get(aKey);
+//		try
+//		{
+//			return (short[])o;
+//		}
+//		catch (ClassCastException e)
+//		{
+//			return typeWarning(aKey, o, short[].class, null, e);
+//		}
+//	}
+//
+//
+//	/**
+//	 * Returns the value associated with the given key, or null if no mapping of the desired type exists for the given key or a null value
+//	 * is explicitly associated with the key.
+//	 */
+//	public short[][] getShortMatrix(String aKey)
+//	{
+//		Object o = mValues.get(aKey);
+//		try
+//		{
+//			return (short[][])o;
+//		}
+//		catch (ClassCastException e)
+//		{
+//			return typeWarning(aKey, o, short[][].class, null, e);
+//		}
+//	}
+//
+//
+//	/**
+//	 * Returns the value associated with the given key, or null if no mapping of the desired type exists for the given key or a null value
+//	 * is explicitly associated with the key.
+//	 */
+//	public ArrayList<Short> getShortArrayList(String aKey)
+//	{
+//		Object o = mValues.get(aKey);
+//		try
+//		{
+//			return (ArrayList<Short>)o;
+//		}
+//		catch (ClassCastException e)
+//		{
+//			return typeWarning(aKey, o, ArrayList.class, null, e);
+//		}
+//	}
 
 
 	/**
@@ -1629,44 +1629,44 @@ public class Bundle implements Cloneable, Externalizable, Iterable<String>
 	}
 
 
-	/**
-	 * Inserts a char value into the mapping of this Bundle, replacing any existing value for the given key.
-	 */
-	public Bundle putChar(String aKey, char aValue)
-	{
-		put(aKey, aValue, FieldType.VALUE, FieldType.CHAR);
-		return this;
-	}
-
-
-	/**
-	 * Inserts a char array value into the mapping of this Bundle, replacing any existing value for the given key.
-	 */
-	public Bundle putCharArray(String aKey, char... aValue)
-	{
-		put(aKey, aValue, FieldType.ARRAY, FieldType.CHAR);
-		return this;
-	}
-
-
-	/**
-	 * Inserts a char array value into the mapping of this Bundle, replacing any existing value for the given key.
-	 */
-	public Bundle putCharMatrix(String aKey, char[][] aValue)
-	{
-		put(aKey, aValue, FieldType.MATRIX, FieldType.CHAR);
-		return this;
-	}
-
-
-	/**
-	 * Inserts a char array value into the mapping of this Bundle, replacing any existing value for the given key.
-	 */
-	public Bundle putCharArrayList(String aKey, ArrayList<Character> aValue)
-	{
-		put(aKey, aValue, FieldType.ARRAYLIST, FieldType.CHAR);
-		return this;
-	}
+//	/**
+//	 * Inserts a char value into the mapping of this Bundle, replacing any existing value for the given key.
+//	 */
+//	public Bundle putChar(String aKey, char aValue)
+//	{
+//		put(aKey, aValue, FieldType.VALUE, FieldType.CHAR);
+//		return this;
+//	}
+//
+//
+//	/**
+//	 * Inserts a char array value into the mapping of this Bundle, replacing any existing value for the given key.
+//	 */
+//	public Bundle putCharArray(String aKey, char... aValue)
+//	{
+//		put(aKey, aValue, FieldType.ARRAY, FieldType.CHAR);
+//		return this;
+//	}
+//
+//
+//	/**
+//	 * Inserts a char array value into the mapping of this Bundle, replacing any existing value for the given key.
+//	 */
+//	public Bundle putCharMatrix(String aKey, char[][] aValue)
+//	{
+//		put(aKey, aValue, FieldType.MATRIX, FieldType.CHAR);
+//		return this;
+//	}
+//
+//
+//	/**
+//	 * Inserts a char array value into the mapping of this Bundle, replacing any existing value for the given key.
+//	 */
+//	public Bundle putCharArrayList(String aKey, ArrayList<Character> aValue)
+//	{
+//		put(aKey, aValue, FieldType.ARRAYLIST, FieldType.CHAR);
+//		return this;
+//	}
 
 
 	/**
@@ -1829,53 +1829,53 @@ public class Bundle implements Cloneable, Externalizable, Iterable<String>
 	}
 
 
-	/**
-	 * Inserts a short value into the mapping of this Bundle, replacing any existing value for the given key.
-	 */
-	public Bundle putShort(String aKey, int aValue)
-	{
-		return putShort(aKey, (short)aValue);
-	}
-
-
-	/**
-	 * Inserts a short value into the mapping of this Bundle, replacing any existing value for the given key.
-	 */
-	public Bundle putShort(String aKey, short aValue)
-	{
-		put(aKey, aValue, FieldType.VALUE, FieldType.SHORT);
-		return this;
-	}
-
-
-	/**
-	 * Inserts a short array value into the mapping of this Bundle, replacing any existing value for the given key.
-	 */
-	public Bundle putShortArray(String aKey, short... aValue)
-	{
-		put(aKey, aValue, FieldType.ARRAY, FieldType.SHORT);
-		return this;
-	}
-
-
-	/**
-	 * Inserts a short array value into the mapping of this Bundle, replacing any existing value for the given key.
-	 */
-	public Bundle putShortMatrix(String aKey, short[][] aValue)
-	{
-		put(aKey, aValue, FieldType.MATRIX, FieldType.SHORT);
-		return this;
-	}
-
-
-	/**
-	 * Inserts a short list value into the mapping of this Bundle, replacing any existing value for the given key.
-	 */
-	public Bundle putShortArrayList(String aKey, ArrayList<Short> aValue)
-	{
-		put(aKey, aValue, FieldType.ARRAYLIST, FieldType.SHORT);
-		return this;
-	}
+//	/**
+//	 * Inserts a short value into the mapping of this Bundle, replacing any existing value for the given key.
+//	 */
+//	public Bundle putShort(String aKey, int aValue)
+//	{
+//		return putShort(aKey, (short)aValue);
+//	}
+//
+//
+//	/**
+//	 * Inserts a short value into the mapping of this Bundle, replacing any existing value for the given key.
+//	 */
+//	public Bundle putShort(String aKey, short aValue)
+//	{
+//		put(aKey, aValue, FieldType.VALUE, FieldType.SHORT);
+//		return this;
+//	}
+//
+//
+//	/**
+//	 * Inserts a short array value into the mapping of this Bundle, replacing any existing value for the given key.
+//	 */
+//	public Bundle putShortArray(String aKey, short... aValue)
+//	{
+//		put(aKey, aValue, FieldType.ARRAY, FieldType.SHORT);
+//		return this;
+//	}
+//
+//
+//	/**
+//	 * Inserts a short array value into the mapping of this Bundle, replacing any existing value for the given key.
+//	 */
+//	public Bundle putShortMatrix(String aKey, short[][] aValue)
+//	{
+//		put(aKey, aValue, FieldType.MATRIX, FieldType.SHORT);
+//		return this;
+//	}
+//
+//
+//	/**
+//	 * Inserts a short list value into the mapping of this Bundle, replacing any existing value for the given key.
+//	 */
+//	public Bundle putShortArrayList(String aKey, ArrayList<Short> aValue)
+//	{
+//		put(aKey, aValue, FieldType.ARRAYLIST, FieldType.SHORT);
+//		return this;
+//	}
 
 
 	/**
