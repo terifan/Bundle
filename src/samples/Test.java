@@ -29,9 +29,9 @@ public class Test
 				.putBundle("bundle", new BundleX().putString("key", "value"))
 				.putString("string", "text")
 				.putBundle("color", new Color(196,128,20))
-//				.putArray("colors", new BundleArray().add(new Color(196,128,20), new Color(96,128,220)))
-				.putObject("rgb", new Color(196,128,20));
-//				.putObjectArray("rgbs", new NumberArray().add(new Color(196,128,20), new Color(96,128,220)))
+				.putArray("colors", new BundleArray().add(new Color(196,128,20), new Color(96,128,220)))
+				.putObject("rgb", new Color(196,128,20))
+				.putArray("rgbs", new NumberArray().add(new Color(196,128,20), new Color(96,128,220)))
 			;
 
 			System.out.println(bundle.getBundle("numbers").getNumberArray("ints").get(1));

@@ -14,6 +14,7 @@ import java.util.Spliterator;
 import java.util.Spliterators;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
+import org.terifan.bundle.Bundle;
 
 
 public class BundleX implements Serializable
@@ -360,11 +361,27 @@ public class BundleX implements Serializable
 	}
 
 
+	public static abstract class BundleArrayValueType<T, U> extends BundleArrayType<T>
+	{
+		private static final long serialVersionUID = 1L;
+
+
+		public U add(BundlableValueX... aObject)
+		{
+			for (BundlableValueX o : aObject)
+			{
+				mValues.add((T)o.writeExternal());
+			}
+			return (U)this;
+		}
+	}
+
+
 	public static abstract class BundleArrayType<T> implements Serializable, Iterable<T>
 	{
 		private static final long serialVersionUID = 1L;
 
-		private ArrayList<T> mValues;
+		protected ArrayList<T> mValues;
 
 
 		public BundleArrayType()
@@ -423,14 +440,11 @@ public class BundleX implements Serializable
 			{
 				if (v instanceof String)
 				{
-					builder.append("\"");
+					builder.append("\"").append(v).append("\"");
 				}
-
-				builder.append(v);
-
-				if (v instanceof String)
+				else
 				{
-					builder.append("\"");
+					builder.append(v);
 				}
 
 				if (--size > 0)
@@ -446,19 +460,19 @@ public class BundleX implements Serializable
 	}
 
 
-	public static class NumberArray extends BundleArrayType<Number>
+	public static class NumberArray extends BundleArrayValueType<Number, NumberArray>
 	{
 		private static final long serialVersionUID = 1L;
 	}
 
 
-	public static class BooleanArray extends BundleArrayType<Boolean>
+	public static class BooleanArray extends BundleArrayValueType<Boolean, BooleanArray>
 	{
 		private static final long serialVersionUID = 1L;
 	}
 
 
-	public static class StringArray extends BundleArrayType<String>
+	public static class StringArray extends BundleArrayValueType<String, StringArray>
 	{
 		private static final long serialVersionUID = 1L;
 	}
@@ -467,6 +481,27 @@ public class BundleX implements Serializable
 	public static class BundleArray extends BundleArrayType<BundleX>
 	{
 		private static final long serialVersionUID = 1L;
+
+
+		public BundleArray add(BundlableX aValue)
+		{
+			BundleX bundle = new BundleX();
+			aValue.writeExternal(bundle);
+			mValues.add(bundle);
+			return this;
+		}
+
+
+		public BundleArray add(BundlableX... aValues)
+		{
+			for (BundlableX o : aValues)
+			{
+				BundleX bundle = new BundleX();
+				o.writeExternal(bundle);
+				mValues.add(bundle);
+			}
+			return this;
+		}
 	}
 
 
