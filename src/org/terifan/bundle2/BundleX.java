@@ -14,7 +14,6 @@ import java.util.Spliterator;
 import java.util.Spliterators;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
-import org.terifan.bundle.Bundle;
 
 
 public class BundleX implements Serializable
@@ -75,7 +74,26 @@ public class BundleX implements Serializable
 
 	public Stream<Number> getNumberStream(String aKey)
 	{
-		return toStream(aKey);
+		return (Stream<Number>)toStream(aKey);
+	}
+
+
+	public Stream<String> getStringStream(String aKey)
+	{
+		return (Stream<String>)toStream(aKey);
+	}
+
+
+	public Stream<Boolean> getBooleanStream(String aKey)
+	{
+		return (Stream<Boolean>)toStream(aKey);
+	}
+
+
+	private Stream toStream(String aKey)
+	{
+		BundleArrayType array = (BundleArrayType)mValues.get(aKey);
+		return StreamSupport.stream(Spliterators.spliterator(new ArrayAccessor<>(array), array.size(), Spliterator.ORDERED), false);
 	}
 
 
@@ -127,20 +145,13 @@ public class BundleX implements Serializable
 	}
 
 
-	private Stream toStream(String aKey)
-	{
-		NumberArray array = (NumberArray)mValues.get(aKey);
-		return StreamSupport.stream(Spliterators.spliterator(new ArrayAccessor<>(array), array.size(), Spliterator.ORDERED), false);
-	}
-
-
 	private class ArrayAccessor<T> implements Iterator<T>
 	{
 		private int mIndex = 0;
-		private final NumberArray mArray;
+		private final BundleArrayType mArray;
 
 
-		private ArrayAccessor(NumberArray aArray)
+		private ArrayAccessor(BundleArrayType aArray)
 		{
 			mArray = aArray;
 		}
@@ -149,7 +160,7 @@ public class BundleX implements Serializable
 		@Override
 		public boolean hasNext()
 		{
-			return mIndex < size();
+			return mIndex < mArray.size();
 		}
 
 
