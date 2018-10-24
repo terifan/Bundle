@@ -1,6 +1,9 @@
 package samples;
 
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.terifan.bundle2.BundlableValueX;
 import org.terifan.bundle2.BundlableX;
 import org.terifan.bundle2.BundleX;
@@ -32,6 +35,7 @@ public class Test
 				.putArray("colors", new BundleArray().add(new Color(196,128,20), new Color(96,128,220)))
 				.putObject("rgb", new Color(196,128,20))
 				.putArray("rgbs", new NumberArray().add(new Color(196,128,20), new Color(96,128,220)))
+				.putObject("values", new PackedArray(96,128,220))
 			;
 
 			System.out.println(bundle.getBundle("numbers").getNumberArray("ints").get(1));
@@ -40,7 +44,13 @@ public class Test
 
 			System.out.println(bundle.getBundle("numbers").getNumberStream("ints").collect(Collectors.averagingDouble(e->(Integer)e)));
 
-			System.out.println(bundle.getObject(Color.class, "rgb"));
+			System.out.println(bundle.getStringStream("strings").collect(Collectors.averagingDouble(e->e==null?0:e.length())));
+
+			Color color = bundle.getObject(Color.class, "rgb");
+			System.out.println(color);
+
+			PackedArray pa = bundle.getObject(PackedArray.class, "values");
+			System.out.println(pa);
 
 			for (int v : bundle.getBundle("numbers").getIntArray("ints"))
 			{
@@ -119,6 +129,44 @@ public class Test
 		public String toString()
 		{
 			return "Color{r=" + r + ", g=" + g + ", b=" + b + '}';
+		}
+	}
+
+
+	static class PackedArray implements BundlableValueX<String>
+	{
+		private int[] mValues;
+
+
+		public PackedArray()
+		{
+		}
+
+
+		public PackedArray(int... aValues)
+		{
+			mValues = aValues;
+		}
+
+
+		@Override
+		public void readExternal(String aValue)
+		{
+			mValues = Stream.of(aValue.split(",")).mapToInt(Integer::parseInt).toArray();
+		}
+
+
+		@Override
+		public String writeExternal()
+		{
+			return Arrays.stream(mValues).mapToObj(Integer::toString).collect(Collectors.joining(","));
+		}
+
+
+		@Override
+		public String toString()
+		{
+			return "PackedArray{mValues=" + Arrays.toString(mValues) + '}';
 		}
 	}
 }
