@@ -35,6 +35,14 @@ public class BundleX implements Serializable
 	}
 
 
+	public BundleX(BundlableX aValue)
+	{
+		this();
+		
+		aValue.writeExternal(this);
+	}
+
+
 //	public BundleX(String aBundle)
 //	{
 //		this();
@@ -46,6 +54,12 @@ public class BundleX implements Serializable
 	public Object get(String aKey)
 	{
 		return mValues.get(aKey);
+	}
+
+
+	void put(String aKey, Object aValue)
+	{
+		mValues.put(aKey, aValue);
 	}
 
 

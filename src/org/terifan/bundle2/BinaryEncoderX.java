@@ -13,8 +13,8 @@ import org.terifan.bundle2.BundleX.StringArray;
 
 public class BinaryEncoderX
 {
-	private final static int VERSION = 0;
-	private final static HashMap<Class,Integer> TYPES = new HashMap<>();
+	final static int VERSION = 0;
+	final static HashMap<Class,Integer> TYPES = new HashMap<>();
 
 	static
 	{
@@ -63,7 +63,7 @@ public class BinaryEncoderX
 			}
 		}
 
-		mOutput.writeVar32(hasNull ? -aBundle.size() : aBundle.size());
+		mOutput.writeVar32S(hasNull ? -aBundle.size() : aBundle.size());
 
 		if (hasNull)
 		{
@@ -77,11 +77,11 @@ public class BinaryEncoderX
 
 		for (String key : keys)
 		{
-			Object value = aBundle.get(key);
+			writeUTF(key);
 
+			Object value = aBundle.get(key);
 			if (value != null)
 			{
-				writeUTF(key);
 				writeValue(value);
 			}
 		}
@@ -94,9 +94,7 @@ public class BinaryEncoderX
 
 		for (int i = 0; i < aSequence.size(); i++)
 		{
-			Object value = aSequence.get(i);
-
-			if (value == null)
+			if (aSequence.get(i) == null)
 			{
 				hasNull = true;
 				break;

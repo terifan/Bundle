@@ -7,7 +7,7 @@ import java.io.InputStream;
 /**
  * BitInputStream allow reading bits from the underlying stream.
  */
-class BitInputStream //extends InputStream
+public class BitInputStream //extends InputStream
 {
 	private InputStream mInputStream;
 	private int mBitBuffer;
