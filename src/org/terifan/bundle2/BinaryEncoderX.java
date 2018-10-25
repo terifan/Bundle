@@ -3,6 +3,7 @@ package org.terifan.bundle2;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.HashMap;
+import org.terifan.bundle.BitOutputStream;
 import org.terifan.bundle2.BundleX.BooleanArray;
 import org.terifan.bundle2.BundleX.BundleArray;
 import org.terifan.bundle2.BundleX.BundleArrayType;
@@ -50,9 +51,10 @@ public class BinaryEncoderX
 
 	private void writeBundle(BundleX aBundle) throws IOException
 	{
+		String[] keys = aBundle.keySet().toArray(new String[aBundle.size()]);
 		boolean hasNull = false;
 
-		for (String key : aBundle.keySet())
+		for (String key : keys)
 		{
 			if (aBundle.get(key) == null)
 			{
@@ -65,7 +67,7 @@ public class BinaryEncoderX
 
 		if (hasNull)
 		{
-			for (String key : aBundle.keySet())
+			for (String key : keys)
 			{
 				mOutput.writeBit(aBundle.get(key) == null);
 			}
@@ -73,7 +75,7 @@ public class BinaryEncoderX
 			mOutput.align();
 		}
 
-		for (String key : aBundle.keySet())
+		for (String key : keys)
 		{
 			Object value = aBundle.get(key);
 
