@@ -1,11 +1,11 @@
 package samples;
 
-import java.io.Serializable;
+import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.util.Date;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.terifan.bundle2.BinaryEncoderX;
 import org.terifan.bundle2.BundlableValueX;
 import org.terifan.bundle2.BundlableX;
 import org.terifan.bundle2.BundleX;
@@ -38,34 +38,52 @@ public class Test
 				.putObject("rgb", new Color(196,128,20))
 				.putArray("rgbs", new NumberArray().add(new Color(196,128,20), new Color(96,128,220)))
 				.putObject("values", new PackedArray(96,128,220))
-//				.putSerializable("calendar", new GregorianCalendar())
+				.putSerializable("date", new Date())
 			;
 
-			System.out.println(bundle.getBundle("numbers").getNumberArray("ints").get(1));
+			System.out.println(bundle);
 
-			System.out.println(bundle.getBundle("numbers").getIntArray("ints")[1]);
-
-			System.out.println(bundle.getBundle("numbers").getNumberStream("ints").collect(Collectors.averagingDouble(e->(Integer)e)));
-
-			System.out.println(bundle.getStringStream("strings").collect(Collectors.averagingDouble(e->e==null?0:e.length())));
+//			System.out.println(bundle.getBundle("numbers").getNumberArray("ints").get(1));
+//
+//			System.out.println(bundle.getBundle("numbers").getIntArray("ints")[1]);
+//
+//			System.out.println(bundle.getBundle("numbers").getNumberStream("ints").collect(Collectors.averagingDouble(e->(Integer)e)));
+//
+//			System.out.println(bundle.getStringStream("strings").collect(Collectors.averagingDouble(e->e==null?0:e.length())));
+//
+//			System.out.println(bundle.getSerializable(Date.class, "date"));
 
 			Color color = bundle.getObject(Color.class, "rgb");
 			System.out.println(color);
 
-			PackedArray pa = bundle.getObject(PackedArray.class, "values");
-			System.out.println(pa);
+			for (BundleX v : bundle.getBundleArray("colors"))
+			{
+				System.out.println(v.asObject(Color.class));
+			}
 
-			for (int v : bundle.getBundle("numbers").getIntArray("ints"))
+			for (Color v : bundle.getObjectArray(Color.class, "colors"))
 			{
 				System.out.println(v);
 			}
 
-			for (double v : bundle.getBundle("numbers").getDoubleArray("doubles"))
-			{
-				System.out.println(v);
-			}
+			System.out.println();
 
-			System.out.println(bundle);
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			new BinaryEncoderX().marshal(bundle, baos);
+			System.out.println(new String(baos.toByteArray()).replace('\n', '-').replace('\r', '-').replace('\t', '-').replace('\0', '-'));
+
+//			PackedArray pa = bundle.getObject(PackedArray.class, "values");
+//			System.out.println(pa);
+
+//			for (int v : bundle.getBundle("numbers").getIntArray("ints"))
+//			{
+//				System.out.println(v);
+//			}
+//
+//			for (double v : bundle.getBundle("numbers").getDoubleArray("doubles"))
+//			{
+//				System.out.println(v);
+//			}
 
 //			System.out.println(new BundleX(bundle.toString()));
 		}
@@ -170,39 +188,6 @@ public class Test
 		public String toString()
 		{
 			return "PackedArray{mValues=" + Arrays.toString(mValues) + '}';
-		}
-	}
-
-
-	static class UnknownObject implements BundlableValueX<Serializable>
-	{
-		private Calendar mUnknown;
-
-	
-		public UnknownObject()
-		{
-			mUnknown = new GregorianCalendar();
-		}
-
-
-		@Override
-		public void readExternal(Serializable aValue)
-		{
-			mUnknown = (Calendar)aValue;
-		}
-
-
-		@Override
-		public Serializable writeExternal()
-		{
-			return mUnknown;
-		}
-
-
-		@Override
-		public String toString()
-		{
-			return "UnknownObject{" + "mUnknown=" + mUnknown + '}';
 		}
 	}
 }

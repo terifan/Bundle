@@ -1,11 +1,17 @@
 package org.terifan.bundle2;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
@@ -35,6 +41,14 @@ public class BundleX implements Serializable
 //
 //		decode(aBundle);
 //	}
+
+
+	public Object get(String aKey)
+	{
+		return mValues.get(aKey);
+	}
+
+
 	public BundleX putArray(String aKey, BundleArrayType aValue)
 	{
 		mValues.put(aKey, aValue);
@@ -188,10 +202,9 @@ public class BundleX implements Serializable
 	}
 
 
-	public BundleX putObject(String aKey, BundlableValueX aValue)
+	public BundleX getBundle(String aKey)
 	{
-		mValues.put(aKey, aValue.writeExternal());
-		return this;
+		return (BundleX)mValues.get(aKey);
 	}
 
 
@@ -214,9 +227,93 @@ public class BundleX implements Serializable
 	}
 
 
-	public BundleX getBundle(String aKey)
+	public BundleX putObject(String aKey, BundlableTypeX aValue)
 	{
-		return (BundleX)mValues.get(aKey);
+		if (aValue instanceof BundlableValueX)
+		{
+			mValues.put(aKey, ((BundlableValueX)aValue).writeExternal());
+		}
+		else
+		{
+			BundleX bundle = new BundleX();
+			((BundlableX)aValue).writeExternal(bundle);
+			mValues.put(aKey, bundle);
+		}
+		return this;
+	}
+
+
+	public <T extends BundlableX> ArrayList<T> getObjectArray(Class<T> aValue, String aKey)
+	{
+		try
+		{
+			ArrayList<T> list = new ArrayList<>();
+
+			Constructor<T> declaredConstructor = aValue.getDeclaredConstructor();
+			declaredConstructor.setAccessible(true);
+
+			for (BundleX bundle : getBundleArray(aKey))
+			{
+				T instance = declaredConstructor.newInstance();
+				instance.readExternal(bundle);
+				list.add(instance);
+			}
+
+			return list;
+		}
+		catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | InvocationTargetException e)
+		{
+			throw new IllegalArgumentException(e);
+		}
+	}
+
+
+	public <T extends BundlableX> T asObject(Class<T> aValue)
+	{
+		try
+		{
+			Constructor<T> declaredConstructor = aValue.getDeclaredConstructor();
+			declaredConstructor.setAccessible(true);
+
+			T instance = declaredConstructor.newInstance();
+			instance.readExternal(this);
+
+			return instance;
+		}
+		catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | InvocationTargetException e)
+		{
+			throw new IllegalArgumentException(e);
+		}
+	}
+
+
+	public <T extends Serializable> T getSerializable(Class<T> aValue, String aKey)
+	{
+		try (ObjectInputStream oos = new ObjectInputStream(new ByteArrayInputStream(Base64.getDecoder().decode((String)mValues.get(aKey)))))
+		{
+			return (T)oos.readObject();
+		}
+		catch (IOException | ClassNotFoundException e)
+		{
+			throw new IllegalArgumentException(e);
+		}
+	}
+
+
+	public BundleX putSerializable(String aKey, Serializable aValue)
+	{
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		try (ObjectOutputStream oos = new ObjectOutputStream(baos))
+		{
+			oos.writeObject(aValue);
+		}
+		catch (IOException e)
+		{
+			throw new IllegalArgumentException(e);
+		}
+
+		mValues.put(aKey, Base64.getEncoder().encodeToString(baos.toByteArray()));
+		return this;
 	}
 
 
