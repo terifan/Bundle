@@ -1,7 +1,9 @@
 package samples;
 
+import java.io.Serializable;
 import java.util.Arrays;
-import java.util.Objects;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.terifan.bundle2.BundlableValueX;
@@ -36,6 +38,7 @@ public class Test
 				.putObject("rgb", new Color(196,128,20))
 				.putArray("rgbs", new NumberArray().add(new Color(196,128,20), new Color(96,128,220)))
 				.putObject("values", new PackedArray(96,128,220))
+//				.putSerializable("calendar", new GregorianCalendar())
 			;
 
 			System.out.println(bundle.getBundle("numbers").getNumberArray("ints").get(1));
@@ -167,6 +170,39 @@ public class Test
 		public String toString()
 		{
 			return "PackedArray{mValues=" + Arrays.toString(mValues) + '}';
+		}
+	}
+
+
+	static class UnknownObject implements BundlableValueX<Serializable>
+	{
+		private Calendar mUnknown;
+
+	
+		public UnknownObject()
+		{
+			mUnknown = new GregorianCalendar();
+		}
+
+
+		@Override
+		public void readExternal(Serializable aValue)
+		{
+			mUnknown = (Calendar)aValue;
+		}
+
+
+		@Override
+		public Serializable writeExternal()
+		{
+			return mUnknown;
+		}
+
+
+		@Override
+		public String toString()
+		{
+			return "UnknownObject{" + "mUnknown=" + mUnknown + '}';
 		}
 	}
 }
