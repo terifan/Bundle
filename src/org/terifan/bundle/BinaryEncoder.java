@@ -38,7 +38,7 @@ public class BinaryEncoder
 
 			if (value != null)
 			{
-				byte[] data = writeValue(value);
+				byte[] data = writeValue(value, true);
 				output.writeVar32(data.length);
 				output.write(data);
 			}
@@ -50,9 +50,36 @@ public class BinaryEncoder
 	}
 
 
-	private void writeSequence(BundleArray aSequence, BitOutputStream aOutput, boolean aIncludeType) throws IOException
+	private void writeSequence(BundleArray aSequence, BitOutputStream aOutput) throws IOException
 	{
-		aOutput.writeVar32(aSequence.size());
+		boolean singleType = true;
+		boolean hasNull = false;
+		Class type = null;
+
+		for (int i = 0; singleType && i < aSequence.size(); i++)
+		{
+			if (aSequence.get(i) == null)
+			{
+				hasNull = true;
+			}
+			else
+			{
+				if (type == null)
+				{
+					type = aSequence.get(0).getClass();
+				}
+				singleType = type == aSequence.get(i).getClass();
+			}
+		}
+
+		boolean hasChunckSize = TYPES.get(type) >= STRING;
+
+		aOutput.writeVar32((aSequence.size() << 2) + (hasNull ? 2 : 0) + (singleType ? 1 : 0));
+
+		if (singleType)
+		{
+			aOutput.writeBits(TYPES.get(type), 8);
+		}
 
 		for (int i = 0; i < aSequence.size(); i++)
 		{
@@ -60,8 +87,11 @@ public class BinaryEncoder
 
 			if (value != null)
 			{
-				byte[] data = writeValue(value);
-				aOutput.writeVar32(1 + data.length);
+				byte[] data = writeValue(value, !singleType);
+				if (hasChunckSize)
+				{
+					aOutput.writeVar32(1 + data.length);
+				}
 				aOutput.write(data);
 			}
 			else
@@ -72,14 +102,17 @@ public class BinaryEncoder
 	}
 
 
-	private byte[] writeValue(Object aValue) throws IOException
+	private byte[] writeValue(Object aValue, boolean aIncludeType) throws IOException
 	{
-		int type = TYPES.get(aValue.getClass());
-
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		BitOutputStream output = new BitOutputStream(baos);
 
-		output.writeBits(type, 8);
+		int type = TYPES.get(aValue.getClass());
+
+		if (aIncludeType)
+		{
+			output.writeBits(type, 8);
+		}
 
 		switch (type)
 		{
@@ -113,7 +146,7 @@ public class BinaryEncoder
 				output.write(writeBundle((Bundle)aValue));
 				break;
 			case ARRAY:
-				writeSequence((BundleArray)aValue, output, false);
+				writeSequence((BundleArray)aValue, output);
 				break;
 			default:
 				throw new IllegalArgumentException("Unsupported type: " + aValue.getClass());
