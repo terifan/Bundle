@@ -5,7 +5,6 @@ import java.io.IOException;
 import org.terifan.bundle.BitOutputStream;
 import static org.terifan.bundle2.BundleConstants.*;
 import org.terifan.bundle2.BundleX.BundleArray;
-import org.terifan.bundle2.BundleX.BundleArrayType;
 
 
 public class BinaryEncoderX
@@ -40,7 +39,7 @@ public class BinaryEncoderX
 
 			if (value != null)
 			{
-				byte[] data = writeValue(value, true);
+				byte[] data = writeValue(value);
 				output.writeVar32(data.length);
 				output.write(data);
 			}
@@ -52,45 +51,7 @@ public class BinaryEncoderX
 	}
 
 
-	private void writeSequence(BundleArrayType aSequence, BitOutputStream aOutput, boolean aIncludeType) throws IOException
-	{
-		boolean hasNull = false;
-
-		for (int i = 0; i < aSequence.size(); i++)
-		{
-			if (aSequence.get(i) == null)
-			{
-				hasNull = true;
-				break;
-			}
-		}
-
-		aOutput.writeVar32S(hasNull ? -aSequence.size() : aSequence.size());
-
-		if (hasNull)
-		{
-			for (int i = 0; i < aSequence.size(); i++)
-			{
-				aOutput.writeBit(aSequence.get(i) == null);
-			}
-
-			aOutput.align();
-		}
-
-		for (int i = 0; i < aSequence.size(); i++)
-		{
-			Object value = aSequence.get(i);
-
-			if (value != null)
-			{
-				byte[] data = writeValue(value, aIncludeType);
-				aOutput.write(data);
-			}
-		}
-	}
-
-
-	private void writeBundleArray(BundleArray aSequence, BitOutputStream aOutput) throws IOException
+	private void writeSequence(BundleArray aSequence, BitOutputStream aOutput, boolean aIncludeType) throws IOException
 	{
 		aOutput.writeVar32(aSequence.size());
 
@@ -100,7 +61,7 @@ public class BinaryEncoderX
 
 			if (value != null)
 			{
-				byte[] data = writeValue(value, false);
+				byte[] data = writeValue(value);
 				aOutput.writeVar32(1 + data.length);
 				aOutput.write(data);
 			}
@@ -112,17 +73,14 @@ public class BinaryEncoderX
 	}
 
 
-	private byte[] writeValue(Object aValue, boolean aIncludeType) throws IOException
+	private byte[] writeValue(Object aValue) throws IOException
 	{
 		int type = TYPES.get(aValue.getClass());
 
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		BitOutputStream output = new BitOutputStream(baos);
 
-		if (aIncludeType)
-		{
-			output.writeBits(type, 8);
-		}
+		output.writeBits(type, 8);
 
 		switch (type)
 		{
@@ -155,17 +113,8 @@ public class BinaryEncoderX
 			case BUNDLE:
 				output.write(writeBundle((BundleX)aValue));
 				break;
-			case BOOLEANARRAY:
-				writeSequence((BundleArrayType)aValue, output, false);
-				break;
-			case NUMBERARRAY:
-				writeSequence((BundleArrayType)aValue, output, true);
-				break;
-			case STRINGARRAY:
-				writeSequence((BundleArrayType)aValue, output, false);
-				break;
-			case BUNDLEARRAY:
-				writeBundleArray((BundleArray)aValue, output);
+			case ARRAY:
+				writeSequence((BundleArray)aValue, output, false);
 				break;
 			default:
 				throw new IllegalArgumentException("Unsupported type: " + aValue.getClass());

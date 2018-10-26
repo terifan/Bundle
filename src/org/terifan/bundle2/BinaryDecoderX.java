@@ -4,11 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import org.terifan.bundle.BitInputStream;
 import static org.terifan.bundle2.BundleConstants.*;
-import org.terifan.bundle2.BundleX.BooleanArray;
 import org.terifan.bundle2.BundleX.BundleArray;
-import org.terifan.bundle2.BundleX.BundleArrayType;
-import org.terifan.bundle2.BundleX.NumberArray;
-import org.terifan.bundle2.BundleX.StringArray;
 
 
 public class BinaryDecoderX
@@ -16,7 +12,7 @@ public class BinaryDecoderX
 	private BitInputStream mInput;
 
 
-	public BundleX unmarshal(InputStream aInputStream) throws IOException
+	public BundleX unmarshal(InputStream aInputStream, PathEvaluation aPath) throws IOException
 	{
 		mInput = new BitInputStream(aInputStream);
 
@@ -26,10 +22,7 @@ public class BinaryDecoderX
 			throw new IllegalArgumentException("Unsupported version");
 		}
 
-//		PathEvaluation path = new PathEvaluation("colors", 1);
-		PathEvaluation path = new PathEvaluation();
-
-		return readBundle(path);
+		return readBundle(aPath);
 	}
 
 
@@ -60,7 +53,7 @@ public class BinaryDecoderX
 
 				if (valid)
 				{
-					value = readValue(aPathEvaluation.next(key), null);
+					value = readValue(aPathEvaluation.next(key));
 				}
 				else
 				{
@@ -78,51 +71,13 @@ public class BinaryDecoderX
 	}
 
 
-	private Object readSequence(BundleArrayType aSequence, PathEvaluation aPathEvaluation, Integer aType) throws IOException
-	{
-		int elementCount = mInput.readVar32S();
-		boolean[] notNull = null;
-
-		if (elementCount < 0)
-		{
-			elementCount = -elementCount;
-			notNull = new boolean[elementCount];
-
-			for (int i = 0; i < elementCount; i++)
-			{
-				notNull[i] = mInput.readBit() == 0;
-			}
-
-			mInput.align();
-		}
-
-		for (int i = 0; i < elementCount; i++)
-		{
-			Object value = null;
-			boolean valid = aPathEvaluation.valid(i);
-
-			if (valid)
-			{
-				if (notNull == null || notNull[i])
-				{
-					value = readValue(aPathEvaluation.next(i), aType);
-				}
-
-				aSequence.add(value);
-			}
-		}
-
-		return aSequence;
-	}
-
-
-	private Object readBundleArray(BundleArray aSequence, PathEvaluation aPathEvaluation) throws IOException
+	private Object readArray(BundleArray aSequence, PathEvaluation aPathEvaluation) throws IOException
 	{
 		int elementCount = mInput.readVar32();
 
 		for (int i = 0; i < elementCount; i++)
 		{
-			BundleX value = null;
+			Object value = null;
 			boolean valid = aPathEvaluation.valid(i);
 
 			int size = mInput.readVar32();
@@ -131,7 +86,7 @@ public class BinaryDecoderX
 			{
 				if (valid)
 				{
-					value = (BundleX)readValue(aPathEvaluation.next(i), BUNDLE);
+					value = readValue(aPathEvaluation.next(i));
 				}
 				else
 				{
@@ -149,14 +104,11 @@ public class BinaryDecoderX
 	}
 
 
-	private Object readValue(PathEvaluation aPathEvaluation, Integer aType) throws IOException
+	private Object readValue(PathEvaluation aPathEvaluation) throws IOException
 	{
-		if (aType == null)
-		{
-			aType = mInput.readBits(8);
-		}
+		int type = mInput.readBits(8);
 
-		switch (aType)
+		switch (type)
 		{
 			case BOOLEAN:
 				return mInput.readBits(8) == 1;
@@ -176,16 +128,10 @@ public class BinaryDecoderX
 				return readUTF();
 			case BUNDLE:
 				return readBundle(aPathEvaluation);
-			case BOOLEANARRAY:
-				return readSequence(new BooleanArray(), aPathEvaluation, BOOLEAN);
-			case NUMBERARRAY:
-				return readSequence(new NumberArray(), aPathEvaluation, null);
-			case STRINGARRAY:
-				return readSequence(new StringArray(), aPathEvaluation, STRING);
-			case BUNDLEARRAY:
-				return readBundleArray(new BundleArray(), aPathEvaluation);
+			case ARRAY:
+				return readArray(new BundleArray(), aPathEvaluation);
 			default:
-				throw new IOException("Unsupported field type: " + aType);
+				throw new IOException("Unsupported field type: " + type);
 		}
 	}
 
@@ -203,7 +149,7 @@ public class BinaryDecoderX
 	}
 
 
-	private static class PathEvaluation
+	public static class PathEvaluation
 	{
 		private Object[] mPath;
 		private int mOffset;

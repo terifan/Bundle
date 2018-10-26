@@ -38,7 +38,7 @@ public class BundleX implements Serializable
 	public BundleX(BundlableX aValue)
 	{
 		this();
-		
+
 		aValue.writeExternal(this);
 	}
 
@@ -63,65 +63,28 @@ public class BundleX implements Serializable
 	}
 
 
-	public BundleX putArray(String aKey, BundleArrayType aValue)
+	public BundleX putArray(String aKey, BundleArray aValue)
 	{
 		mValues.put(aKey, aValue);
 		return this;
 	}
 
 
-	public StringArray getStringArray(String aKey)
-	{
-		return (StringArray)mValues.get(aKey);
-	}
-
-
-	public BooleanArray getBooleanArray(String aKey)
-	{
-		return (BooleanArray)mValues.get(aKey);
-	}
-
-
-	public NumberArray getNumberArray(String aKey)
-	{
-		return (NumberArray)mValues.get(aKey);
-	}
-
-
-	public BundleArray getBundleArray(String aKey)
+	public BundleArray getArray(String aKey)
 	{
 		return (BundleArray)mValues.get(aKey);
 	}
 
 
-	public BundleArrayType getArray(String aKey)
+	public Object[] toArray(String aKey)
 	{
-		return (BundleArrayType)mValues.get(aKey);
-	}
-
-
-	public Stream<Number> getNumberStream(String aKey)
-	{
-		return (Stream<Number>)toStream(aKey);
-	}
-
-
-	public Stream<String> getStringStream(String aKey)
-	{
-		return (Stream<String>)toStream(aKey);
-	}
-
-
-	public Stream<Boolean> getBooleanStream(String aKey)
-	{
-		return (Stream<Boolean>)toStream(aKey);
-	}
-
-
-	private Stream toStream(String aKey)
-	{
-		BundleArrayType array = (BundleArrayType)mValues.get(aKey);
-		return StreamSupport.stream(Spliterators.spliterator(new ArrayAccessor<>(array), array.size(), Spliterator.ORDERED), false);
+		BundleArray array = getArray(aKey);
+		Object[] values = new Object[array.size()];
+		for (int i = 0; i < array.size(); i++)
+		{
+			values[i] = array.get(i);
+		}
+		return values;
 	}
 
 
@@ -163,7 +126,7 @@ public class BundleX implements Serializable
 
 	private Object toArray(String aKey, Class aType)
 	{
-		NumberArray array = (NumberArray)mValues.get(aKey);
+		BundleArray array = (BundleArray)mValues.get(aKey);
 		Object elements = Array.newInstance(aType, array.size());
 		for (int i = 0; i < array.size(); i++)
 		{
@@ -176,10 +139,10 @@ public class BundleX implements Serializable
 	private class ArrayAccessor<T> implements Iterator<T>
 	{
 		private int mIndex = 0;
-		private final BundleArrayType mArray;
+		private final BundleArray mArray;
 
 
-		private ArrayAccessor(BundleArrayType aArray)
+		private ArrayAccessor(BundleArray aArray)
 		{
 			mArray = aArray;
 		}
@@ -266,11 +229,14 @@ public class BundleX implements Serializable
 			Constructor<T> declaredConstructor = aValue.getDeclaredConstructor();
 			declaredConstructor.setAccessible(true);
 
-			for (BundleX bundle : getBundleArray(aKey))
+			for (Object value : getArray(aKey))
 			{
-				T instance = declaredConstructor.newInstance();
-				instance.readExternal(bundle);
-				list.add(instance);
+				if (value instanceof BundleX)
+				{
+					T instance = declaredConstructor.newInstance();
+					instance.readExternal((BundleX)value);
+					list.add(instance);
+				}
 			}
 
 			return list;
@@ -483,30 +449,30 @@ public class BundleX implements Serializable
 	}
 
 
-	public static abstract class BundleArrayValueType<T, U> extends BundleArrayType<T>
+//	public static abstract class BundleArrayValueType<T, U> extends BundleArrayType<T>
+//	{
+//		private static final long serialVersionUID = 1L;
+//
+//
+//		public U add(BundlableValueX... aObject)
+//		{
+//			for (BundlableValueX o : aObject)
+//			{
+//				mValues.add((T)o.writeExternal());
+//			}
+//			return (U)this;
+//		}
+//	}
+
+
+	public static class BundleArray implements Serializable, Iterable
 	{
 		private static final long serialVersionUID = 1L;
 
-
-		public U add(BundlableValueX... aObject)
-		{
-			for (BundlableValueX o : aObject)
-			{
-				mValues.add((T)o.writeExternal());
-			}
-			return (U)this;
-		}
-	}
+		protected ArrayList mValues;
 
 
-	public static abstract class BundleArrayType<T> implements Serializable, Iterable<T>
-	{
-		private static final long serialVersionUID = 1L;
-
-		protected ArrayList<T> mValues;
-
-
-		public BundleArrayType()
+		public BundleArray()
 		{
 			mValues = new ArrayList<>();
 		}
@@ -518,20 +484,20 @@ public class BundleX implements Serializable
 		}
 
 
-		public T get(int aIndex)
+		public Object get(int aIndex)
 		{
 			return mValues.get(aIndex);
 		}
 
 
-		public BundleArrayType<T> add(T aValue)
+		public BundleArray add(Object aValue)
 		{
 			mValues.add(aValue);
 			return this;
 		}
 
 
-		public BundleArrayType<T> add(T... aValues)
+		public BundleArray add(Object... aValues)
 		{
 			mValues.addAll(Arrays.asList(aValues));
 			return this;
@@ -539,13 +505,13 @@ public class BundleX implements Serializable
 
 
 		@Override
-		public Iterator<T> iterator()
+		public Iterator iterator()
 		{
 			return mValues.iterator();
 		}
 
 
-		public Stream<T> stream()
+		public Stream stream()
 		{
 			return mValues.stream();
 		}
@@ -579,30 +545,6 @@ public class BundleX implements Serializable
 
 			return builder.toString();
 		}
-	}
-
-
-	public static class NumberArray extends BundleArrayValueType<Number, NumberArray>
-	{
-		private static final long serialVersionUID = 1L;
-	}
-
-
-	public static class BooleanArray extends BundleArrayValueType<Boolean, BooleanArray>
-	{
-		private static final long serialVersionUID = 1L;
-	}
-
-
-	public static class StringArray extends BundleArrayValueType<String, StringArray>
-	{
-		private static final long serialVersionUID = 1L;
-	}
-
-
-	public static class BundleArray extends BundleArrayType<BundleX>
-	{
-		private static final long serialVersionUID = 1L;
 
 
 		public BundleArray add(BundlableX aValue)
@@ -624,11 +566,5 @@ public class BundleX implements Serializable
 			}
 			return this;
 		}
-	}
-
-
-	public static class ArrayArray extends BundleArrayType<BundleArrayType>
-	{
-		private static final long serialVersionUID = 1L;
 	}
 }

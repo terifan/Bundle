@@ -2,10 +2,7 @@ package org.terifan.bundle2;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.terifan.bundle2.BundleX.BooleanArray;
 import org.terifan.bundle2.BundleX.BundleArray;
-import org.terifan.bundle2.BundleX.NumberArray;
-import org.terifan.bundle2.BundleX.StringArray;
 
 
 class BundleConstants
@@ -21,10 +18,7 @@ class BundleConstants
 	final static int DOUBLE = 6;
 	final static int STRING = 7;
 	final static int BUNDLE = 8;
-	final static int BOOLEANARRAY = 9;
-	final static int NUMBERARRAY = 10;
-	final static int STRINGARRAY = 11;
-	final static int BUNDLEARRAY = 12;
+	final static int ARRAY = 9;
 
 	final static Map<Class, Integer> TYPES = new HashMap<>()
 	{
@@ -38,10 +32,7 @@ class BundleConstants
 			put(Double.class, DOUBLE);
 			put(String.class, STRING);
 			put(BundleX.class, BUNDLE);
-			put(BooleanArray.class, BOOLEANARRAY);
-			put(NumberArray.class, NUMBERARRAY);
-			put(StringArray.class, STRINGARRAY);
-			put(BundleArray.class, BUNDLEARRAY);
+			put(BundleArray.class, ARRAY);
 		}
 	};
 }
