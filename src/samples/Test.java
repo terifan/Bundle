@@ -29,6 +29,12 @@ public class Test
 					.putArray("ints", new NumberArray().add(1, 4, 9))
 					.putArray("doubles", new NumberArray().add(1.3).add(2.2).add(3.1))
 				)
+				.putNumber("byte", (byte)7)
+				.putNumber("short", (short)7777)
+				.putNumber("int", 654984)
+				.putNumber("long", 164516191981L)
+				.putNumber("float", 7.2f)
+				.putNumber("double", 3.14)
 				.putArray("strings", new StringArray().add("a", null).add("b").add("c"))
 				.putString("null", null)
 				.putBoolean("boolean", true)
@@ -70,13 +76,12 @@ public class Test
 
 			System.out.println();
 
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			new BinaryEncoderX().marshal(bundle, baos);
+			byte[] data = new BinaryEncoderX().marshal(bundle);
 
-			System.out.println(new String(baos.toByteArray()).replace('\n', '-').replace('\r', '-').replace('\t', '-').replace('\0', '-'));
+			System.out.println(new String(data).replace('\n', '-').replace('\r', '-').replace('\t', '-').replace('\0', '-'));
 			System.out.println();
 
-			BundleX b = new BinaryDecoderX().unmarshal(new ByteArrayInputStream(baos.toByteArray()));
+			BundleX b = new BinaryDecoderX().unmarshal(new ByteArrayInputStream(data));
 			System.out.println(b);
 
 ////			baos.reset();

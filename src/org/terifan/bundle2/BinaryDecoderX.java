@@ -1,9 +1,9 @@
 package org.terifan.bundle2;
 
-import org.terifan.bundle.*;
 import java.io.IOException;
 import java.io.InputStream;
-import static org.terifan.bundle2.BundleConstants.VERSION;
+import org.terifan.bundle.BitInputStream;
+import static org.terifan.bundle2.BundleConstants.*;
 import org.terifan.bundle2.BundleX.BooleanArray;
 import org.terifan.bundle2.BundleX.BundleArray;
 import org.terifan.bundle2.BundleX.BundleArrayType;
@@ -26,8 +26,8 @@ public class BinaryDecoderX
 			throw new IllegalArgumentException("Unsupported version");
 		}
 
-		PathEvaluation path = new PathEvaluation("colors", 1);
-//		PathEvaluation path = new PathEvaluation();
+//		PathEvaluation path = new PathEvaluation("colors", 1);
+		PathEvaluation path = new PathEvaluation();
 
 		return readBundle(path);
 	}
@@ -60,7 +60,7 @@ public class BinaryDecoderX
 
 				if (valid)
 				{
-					value = readValue(aPathEvaluation.next(key));
+					value = readValue(aPathEvaluation.next(key), null);
 				}
 				else
 				{
@@ -78,7 +78,7 @@ public class BinaryDecoderX
 	}
 
 
-	private Object readSequence(BundleArrayType aSequence, PathEvaluation aPathEvaluation) throws IOException
+	private Object readSequence(BundleArrayType aSequence, PathEvaluation aPathEvaluation, Integer aType) throws IOException
 	{
 		int elementCount = mInput.readVar32S();
 		boolean[] notNull = null;
@@ -105,7 +105,7 @@ public class BinaryDecoderX
 			{
 				if (notNull == null || notNull[i])
 				{
-					value = readValue(aPathEvaluation.next(i));
+					value = readValue(aPathEvaluation.next(i), aType);
 				}
 
 				aSequence.add(value);
@@ -131,7 +131,7 @@ public class BinaryDecoderX
 			{
 				if (valid)
 				{
-					value = (BundleX)readValue(aPathEvaluation.next(i));
+					value = (BundleX)readValue(aPathEvaluation.next(i), BUNDLE);
 				}
 				else
 				{
@@ -149,40 +149,43 @@ public class BinaryDecoderX
 	}
 
 
-	private Object readValue(PathEvaluation aPathEvaluation) throws IOException
+	private Object readValue(PathEvaluation aPathEvaluation, Integer aType) throws IOException
 	{
-		int type = mInput.readBits(8);
-
-		switch (type)
+		if (aType == null)
 		{
-			case 0:
+			aType = mInput.readBits(8);
+		}
+
+		switch (aType)
+		{
+			case BOOLEAN:
 				return mInput.readBits(8) == 1;
-			case 1:
+			case BYTE:
 				return (byte)mInput.readBits(8);
-			case 2:
+			case SHORT:
 				return (short)mInput.readVar32S();
-			case 3:
+			case INT:
 				return mInput.readVar32S();
-			case 4:
+			case LONG:
 				return mInput.readVar64S();
-			case 5:
+			case FLOAT:
 				return Float.intBitsToFloat(mInput.readVar32S());
-			case 6:
+			case DOUBLE:
 				return Double.longBitsToDouble(mInput.readVar64S());
-			case 7:
+			case STRING:
 				return readUTF();
-			case 8:
+			case BUNDLE:
 				return readBundle(aPathEvaluation);
-			case 9:
-				return readSequence(new BooleanArray(), aPathEvaluation);
-			case 10:
-				return readSequence(new NumberArray(), aPathEvaluation);
-			case 11:
-				return readSequence(new StringArray(), aPathEvaluation);
-			case 12:
+			case BOOLEANARRAY:
+				return readSequence(new BooleanArray(), aPathEvaluation, BOOLEAN);
+			case NUMBERARRAY:
+				return readSequence(new NumberArray(), aPathEvaluation, null);
+			case STRINGARRAY:
+				return readSequence(new StringArray(), aPathEvaluation, STRING);
+			case BUNDLEARRAY:
 				return readBundleArray(new BundleArray(), aPathEvaluation);
 			default:
-				throw new IOException("Unsupported field type: " + type);
+				throw new IOException("Unsupported field type: " + aType);
 		}
 	}
 

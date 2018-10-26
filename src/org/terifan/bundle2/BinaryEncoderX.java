@@ -2,25 +2,24 @@ package org.terifan.bundle2;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import org.terifan.bundle.BitOutputStream;
-import static org.terifan.bundle2.BundleConstants.TYPES;
-import static org.terifan.bundle2.BundleConstants.VERSION;
+import static org.terifan.bundle2.BundleConstants.*;
 import org.terifan.bundle2.BundleX.BundleArray;
 import org.terifan.bundle2.BundleX.BundleArrayType;
 
 
 public class BinaryEncoderX
 {
-	public void marshal(BundleX aBundle, OutputStream aOutputStream) throws IOException
+	public byte[] marshal(BundleX aBundle) throws IOException
 	{
-		BitOutputStream output = new BitOutputStream(aOutputStream);
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
+		BitOutputStream output = new BitOutputStream(baos);
 		output.writeVar32(VERSION);
-
 		output.write(writeBundle(aBundle));
-
 		output.finish();
+
+		return baos.toByteArray();
 	}
 
 
@@ -41,7 +40,7 @@ public class BinaryEncoderX
 
 			if (value != null)
 			{
-				byte[] data = writeValue(value);
+				byte[] data = writeValue(value, true);
 				output.writeVar32(data.length);
 				output.write(data);
 			}
@@ -53,7 +52,7 @@ public class BinaryEncoderX
 	}
 
 
-	private void writeSequence(BundleArrayType aSequence, BitOutputStream aOutput) throws IOException
+	private void writeSequence(BundleArrayType aSequence, BitOutputStream aOutput, boolean aIncludeType) throws IOException
 	{
 		boolean hasNull = false;
 
@@ -84,7 +83,7 @@ public class BinaryEncoderX
 
 			if (value != null)
 			{
-				byte[] data = writeValue(value);
+				byte[] data = writeValue(value, aIncludeType);
 				aOutput.write(data);
 			}
 		}
@@ -101,7 +100,7 @@ public class BinaryEncoderX
 
 			if (value != null)
 			{
-				byte[] data = writeValue(value);
+				byte[] data = writeValue(value, false);
 				aOutput.writeVar32(1 + data.length);
 				aOutput.write(data);
 			}
@@ -113,52 +112,59 @@ public class BinaryEncoderX
 	}
 
 
-	private byte[] writeValue(Object aValue) throws IOException
+	private byte[] writeValue(Object aValue, boolean aIncludeType) throws IOException
 	{
 		int type = TYPES.get(aValue.getClass());
 
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		BitOutputStream output = new BitOutputStream(baos);
 
-		output.writeBits(type, 8);
+		if (aIncludeType)
+		{
+			output.writeBits(type, 8);
+		}
 
 		switch (type)
 		{
-			case 0:
+			case BOOLEAN:
 				output.writeBits((Boolean)aValue ? 1 : 0, 8);
 				break;
-			case 1:
+			case BYTE:
 				output.writeBits(0xff & (Byte)aValue, 8);
 				break;
-			case 2:
+			case SHORT:
 				output.writeVar32S((Short)aValue);
 				break;
-			case 3:
+			case INT:
 				output.writeVar32S((Integer)aValue);
 				break;
-			case 4:
+			case LONG:
 				output.writeVar64S((Long)aValue);
 				break;
-			case 5:
+			case FLOAT:
 				output.writeVar32S(Float.floatToIntBits((Float)aValue));
 				break;
-			case 6:
+			case DOUBLE:
 				output.writeVar64S(Double.doubleToLongBits((Double)aValue));
 				break;
-			case 7:
+			case STRING:
 				byte[] buf = UTF8.encodeUTF8((String)aValue);
 				output.writeVar32(buf.length);
 				output.write(buf);
 				break;
-			case 8:
+			case BUNDLE:
 				output.write(writeBundle((BundleX)aValue));
 				break;
-			case 9:
-			case 10:
-			case 11:
-				writeSequence((BundleArrayType)aValue, output);
+			case BOOLEANARRAY:
+				writeSequence((BundleArrayType)aValue, output, false);
 				break;
-			case 12:
+			case NUMBERARRAY:
+				writeSequence((BundleArrayType)aValue, output, true);
+				break;
+			case STRINGARRAY:
+				writeSequence((BundleArrayType)aValue, output, false);
+				break;
+			case BUNDLEARRAY:
 				writeBundleArray((BundleArray)aValue, output);
 				break;
 			default:
