@@ -1,4 +1,4 @@
-package org.terifan.bundle;
+package org.terifan.bundle.old;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -11,8 +11,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
-import static org.terifan.bundle.FieldType.COLLECTION_TYPES;
-import static org.terifan.bundle.FieldType.VALUE_TYPES;
+import static org.terifan.bundle.old.FieldType.COLLECTION_TYPES;
+import static org.terifan.bundle.old.FieldType.VALUE_TYPES;
 
 
 class PSONDecoder

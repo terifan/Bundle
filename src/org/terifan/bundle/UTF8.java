@@ -39,14 +39,14 @@ class UTF8
 	}
 
 
-	public static String decodeUTF8(byte [] aInput, int aInputOffset, int aLength)
+	public static String decodeUTF8(byte [] aInput)
 	{
-		char [] array = new char[aLength];
+		char [] array = new char[aInput.length];
 		int bufOffset = 0;
 
-		for (int i = 0, sz = aLength; i < sz;)
+		for (int i = 0, sz = aInput.length; i < sz;)
 		{
-			int c = aInput[aInputOffset + i++] & 255;
+			int c = aInput[i++] & 255;
 
 			if (c < 128) // 0xxxxxxx
 			{

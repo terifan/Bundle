@@ -1,4 +1,4 @@
-package org.terifan.bundle;
+package org.terifan.bundle.old;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -7,8 +7,8 @@ import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.Base64;
 import java.util.List;
-import static org.terifan.bundle.FieldType.COLLECTION_TYPES;
-import static org.terifan.bundle.FieldType.VALUE_TYPES;
+import static org.terifan.bundle.old.FieldType.COLLECTION_TYPES;
+import static org.terifan.bundle.old.FieldType.VALUE_TYPES;
 
 
 class PSONEncoder

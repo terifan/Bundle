@@ -3,8 +3,8 @@ package samples;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.zip.DeflaterOutputStream;
-import org.terifan.bundle.Bundlable;
-import org.terifan.bundle.Bundle;
+import org.terifan.bundle.old.Bundlable;
+import org.terifan.bundle.old.Bundle;
 
 
 public class UsingBundlable

@@ -1,13 +1,13 @@
-package org.terifan.bundle2;
+package org.terifan.bundle;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.terifan.bundle2.BundleX.BundleArray;
+import org.terifan.bundle.Bundle.BundleArray;
 
 
 class BundleConstants
 {
-	final static int VERSION = 0;
+	final static int VERSION = 1;
 
 	final static int BOOLEAN = 0;
 	final static int BYTE = 1;
@@ -31,7 +31,7 @@ class BundleConstants
 			put(Float.class, FLOAT);
 			put(Double.class, DOUBLE);
 			put(String.class, STRING);
-			put(BundleX.class, BUNDLE);
+			put(Bundle.class, BUNDLE);
 			put(BundleArray.class, ARRAY);
 		}
 	};

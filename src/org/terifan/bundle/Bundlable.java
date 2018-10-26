@@ -1,25 +1,9 @@
 package org.terifan.bundle;
 
-import java.io.IOException;
 
-
-public interface Bundlable
+public interface Bundlable extends BundlableType
 {
-	void readExternal(Bundle aBundle) throws IOException;
+	void readExternal(Bundle aBundle);
 
-	void writeExternal(Bundle aBundle) throws IOException;
-
-	public default <T extends Bundlable> T unmarshal(String aData)
-	{
-		try
-		{
-			Bundle bundle = new Bundle().unmarshalPSON("{\"dummy\":" + aData + "}").getBundle("dummy");
-			readExternal(bundle);
-			return (T)this;
-		}
-		catch (Exception e)
-		{
-			throw new IllegalStateException(e);
-		}
-	}
+	void writeExternal(Bundle aBundle);
 }

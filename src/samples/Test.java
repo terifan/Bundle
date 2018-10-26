@@ -1,17 +1,20 @@
 package samples;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import org.terifan.bundle2.BinaryDecoderX;
-import org.terifan.bundle2.BinaryDecoderX.PathEvaluation;
-import org.terifan.bundle2.BinaryEncoderX;
-import org.terifan.bundle2.BundlableValueX;
-import org.terifan.bundle2.BundlableX;
-import org.terifan.bundle2.BundleX;
-import org.terifan.bundle2.BundleX.BundleArray;
+import java.util.zip.DeflaterOutputStream;
+import org.terifan.bundle.BinaryDecoder;
+import org.terifan.bundle.BinaryDecoder.PathEvaluation;
+import org.terifan.bundle.BinaryEncoder;
+import org.terifan.bundle.Bundle;
+import org.terifan.bundle.Bundle.BundleArray;
+import org.terifan.bundle.BundlableValue;
+import org.terifan.bundle.Bundlable;
 
 
 public class Test
@@ -20,8 +23,8 @@ public class Test
 	{
 		try
 		{
-			BundleX bundle = new BundleX()
-				.putBundle("numbers", new BundleX()
+			Bundle bundle = new Bundle()
+				.putBundle("numbers", new Bundle()
 					.putNumber("number", 7)
 					.putArray("ints", new BundleArray().add(1, 4, 9))
 					.putArray("doubles", new BundleArray().add(1.3).add(2.2).add(3.1))
@@ -37,8 +40,8 @@ public class Test
 				.putString("null", null)
 				.putBoolean("boolean", true)
 				.putArray("booleans", new BundleArray().add(true).add(false).add(true))
-				.putArray("bundles", new BundleArray().add(new BundleX().putString("key", "value")))
-				.putBundle("bundle", new BundleX().putString("key", "value"))
+				.putArray("bundles", new BundleArray().add(new Bundle().putString("key", "value")))
+				.putBundle("bundle", new Bundle().putString("key", "value"))
 				.putString("string", "text")
 				.putBundle("color", new Color(196,128,20))
 				.putArray("colors", new BundleArray().add(new Color(196,128,20), new Color(96,128,220)))
@@ -74,7 +77,7 @@ public class Test
 
 			System.out.println();
 
-			byte[] data = new BinaryEncoderX().marshal(bundle);
+			byte[] data = new BinaryEncoder().marshal(bundle);
 
 			System.out.println(new String(data).replace('\n', '-').replace('\r', '-').replace('\t', '-').replace('\0', '-'));
 			System.out.println();
@@ -83,25 +86,25 @@ public class Test
 //			PathEvaluation path = new BinaryDecoderX.PathEvaluation();
 			PathEvaluation path = new PathEvaluation("arrays", 1, 1);
 
-			BundleX b = new BinaryDecoderX().unmarshal(new ByteArrayInputStream(data), path);
+			Bundle b = new Bundle(data, path);
 			System.out.println(b);
 
-////			baos.reset();
-////			DeflaterOutputStream dos = new DeflaterOutputStream(baos);
-////			dos.write(bundle.toString().getBytes("utf-8"));
-////			dos.close();
-//
-//			System.out.println(new String(baos.toByteArray()).replace('\n', '-').replace('\r', '-').replace('\t', '-').replace('\0', '-'));
-//
-//			for (int v : bundle.getBundle("numbers").getIntArray("ints"))
-//			{
-//				System.out.println(v);
-//			}
-//
-//			for (double v : bundle.getBundle("numbers").getDoubleArray("doubles"))
-//			{
-//				System.out.println(v);
-//			}
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			DeflaterOutputStream dos = new DeflaterOutputStream(baos);
+			dos.write(bundle.toString().getBytes("utf-8"));
+			dos.close();
+
+			System.out.println(new String(baos.toByteArray()).replace('\n', '-').replace('\r', '-').replace('\t', '-').replace('\0', '-'));
+
+			for (int v : bundle.getBundle("numbers").getIntArray("ints"))
+			{
+				System.out.println(v);
+			}
+
+			for (double v : bundle.getBundle("numbers").getDoubleArray("doubles"))
+			{
+				System.out.println(v);
+			}
 
 //			System.out.println(new BundleX(bundle.toString()));
 		}
@@ -112,7 +115,7 @@ public class Test
 	}
 
 
-	static class Color implements BundlableX, BundlableValueX<Integer>
+	static class Color implements Bundlable, BundlableValue<Integer>
 	{
 		private int r, g, b;
 
@@ -131,7 +134,7 @@ public class Test
 
 
 		@Override
-		public void readExternal(BundleX aBundle)
+		public void readExternal(Bundle aBundle)
 		{
 			r = aBundle.getInt("r");
 			g = aBundle.getInt("g");
@@ -140,7 +143,7 @@ public class Test
 
 
 		@Override
-		public void writeExternal(BundleX aBundle)
+		public void writeExternal(Bundle aBundle)
 		{
 			aBundle.putNumber("r", r);
 			aBundle.putNumber("g", g);
@@ -172,7 +175,7 @@ public class Test
 	}
 
 
-	static class PackedArray implements BundlableValueX<String>
+	static class PackedArray implements BundlableValue<String>
 	{
 		private int[] mValues;
 

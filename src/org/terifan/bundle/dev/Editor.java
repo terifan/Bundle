@@ -11,8 +11,8 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
-import org.terifan.bundle.Bundle;
-import org.terifan.bundle.BundleVisitor;
+import org.terifan.bundle.old.Bundle;
+import org.terifan.bundle.old.BundleVisitor;
 
 
 public class Editor

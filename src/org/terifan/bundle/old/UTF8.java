@@ -1,6 +1,5 @@
-package org.terifan.bundle2;
+package org.terifan.bundle.old;
 
-import org.terifan.bundle.*;
 import java.util.Arrays;
 
 
@@ -40,14 +39,14 @@ class UTF8
 	}
 
 
-	public static String decodeUTF8(byte [] aInput)
+	public static String decodeUTF8(byte [] aInput, int aInputOffset, int aLength)
 	{
-		char [] array = new char[aInput.length];
+		char [] array = new char[aLength];
 		int bufOffset = 0;
 
-		for (int i = 0, sz = aInput.length; i < sz;)
+		for (int i = 0, sz = aLength; i < sz;)
 		{
-			int c = aInput[i++] & 255;
+			int c = aInput[aInputOffset + i++] & 255;
 
 			if (c < 128) // 0xxxxxxx
 			{

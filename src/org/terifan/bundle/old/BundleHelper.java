@@ -1,4 +1,4 @@
-package org.terifan.bundle;
+package org.terifan.bundle.old;
 
 import java.awt.Color;
 import java.awt.Dimension;

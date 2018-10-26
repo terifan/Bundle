@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Random;
-import org.terifan.bundle.Bundle;
+import org.terifan.bundle.old.Bundle;
 
 
 class BundleGenerator
