@@ -1,71 +1,59 @@
 package org.terifan.bundle2;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import org.terifan.bundle.BitOutputStream;
 import static org.terifan.bundle2.BundleConstants.TYPES;
 import static org.terifan.bundle2.BundleConstants.VERSION;
+import org.terifan.bundle2.BundleX.BundleArray;
 import org.terifan.bundle2.BundleX.BundleArrayType;
 
 
 public class BinaryEncoderX
 {
-	private BitOutputStream mOutput;
-
-
 	public void marshal(BundleX aBundle, OutputStream aOutputStream) throws IOException
 	{
-		mOutput = new BitOutputStream(aOutputStream);
+		BitOutputStream output = new BitOutputStream(aOutputStream);
 
-		mOutput.writeVar32(VERSION);
+		output.writeVar32(VERSION);
 
-		writeBundle(aBundle);
+		output.write(writeBundle(aBundle));
 
-		mOutput.finish();
-		mOutput = null;
+		output.finish();
 	}
 
 
-	private void writeBundle(BundleX aBundle) throws IOException
+	private byte[] writeBundle(BundleX aBundle) throws IOException
 	{
-		String[] keys = aBundle.keySet().toArray(new String[aBundle.size()]);
-		boolean hasNull = false;
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		BitOutputStream output = new BitOutputStream(baos);
 
-		for (String key : keys)
+		output.writeVar32(aBundle.size());
+
+		for (String key : aBundle.keySet())
 		{
-			if (aBundle.get(key) == null)
-			{
-				hasNull = true;
-				break;
-			}
-		}
-
-		mOutput.writeVar32S(hasNull ? -aBundle.size() : aBundle.size());
-
-		if (hasNull)
-		{
-			for (String key : keys)
-			{
-				mOutput.writeBit(aBundle.get(key) == null);
-			}
-
-			mOutput.align();
-		}
-
-		for (String key : keys)
-		{
-			writeUTF(key);
-
 			Object value = aBundle.get(key);
+
+			byte[] buf = UTF8.encodeUTF8(key);
+			output.writeVar32S(value == null ? -buf.length : buf.length);
+			output.write(buf);
+
 			if (value != null)
 			{
-				writeValue(value);
+				byte[] data = writeValue(value);
+				output.writeVar32(data.length);
+				output.write(data);
 			}
 		}
+
+		output.finish();
+
+		return baos.toByteArray();
 	}
 
 
-	private void writeSequence(BundleArrayType aSequence) throws IOException
+	private void writeSequence(BundleArrayType aSequence, BitOutputStream aOutput) throws IOException
 	{
 		boolean hasNull = false;
 
@@ -78,16 +66,16 @@ public class BinaryEncoderX
 			}
 		}
 
-		mOutput.writeVar32S(hasNull ? -aSequence.size() : aSequence.size());
+		aOutput.writeVar32S(hasNull ? -aSequence.size() : aSequence.size());
 
 		if (hasNull)
 		{
 			for (int i = 0; i < aSequence.size(); i++)
 			{
-				mOutput.writeBit(aSequence.get(i) == null);
+				aOutput.writeBit(aSequence.get(i) == null);
 			}
 
-			mOutput.align();
+			aOutput.align();
 		}
 
 		for (int i = 0; i < aSequence.size(); i++)
@@ -96,66 +84,89 @@ public class BinaryEncoderX
 
 			if (value != null)
 			{
-				writeValue(value);
+				byte[] data = writeValue(value);
+				aOutput.write(data);
 			}
 		}
 	}
 
 
-	private void writeValue(Object aValue) throws IOException
+	private void writeBundleArray(BundleArray aSequence, BitOutputStream aOutput) throws IOException
 	{
-		int type = TYPES.get(aValue.getClass());
+		aOutput.writeVar32(aSequence.size());
 
-		mOutput.writeBits(type, 4);
-
-		switch (type)
+		for (int i = 0; i < aSequence.size(); i++)
 		{
-			case 0:
-				mOutput.writeBit((Boolean)aValue);
-				break;
-			case 1:
-				mOutput.writeBits(0xff & (Byte)aValue, 8);
-				break;
-			case 2:
-				mOutput.writeVar32S((Short)aValue);
-				break;
-			case 3:
-				mOutput.writeVar32S((Integer)aValue);
-				break;
-			case 4:
-				mOutput.writeVar64S((Long)aValue);
-				break;
-			case 5:
-				mOutput.writeVar32S(Float.floatToIntBits((Float)aValue));
-				break;
-			case 6:
-				mOutput.writeVar64S(Double.doubleToLongBits((Double)aValue));
-				break;
-			case 7:
-				mOutput.align();
-				writeUTF((String)aValue);
-				break;
-			case 8:
-				mOutput.align();
-				writeBundle((BundleX)aValue);
-				break;
-			case 9:
-			case 10:
-			case 11:
-			case 12:
-				mOutput.align();
-				writeSequence((BundleArrayType)aValue);
-				break;
-			default:
-				throw new IllegalArgumentException("Unsupported type: " + aValue.getClass());
+			Object value = aSequence.get(i);
+
+			if (value != null)
+			{
+				byte[] data = writeValue(value);
+				aOutput.writeVar32(1 + data.length);
+				aOutput.write(data);
+			}
+			else
+			{
+				aOutput.writeVar32(0);
+			}
 		}
 	}
 
 
-	private void writeUTF(String aKey) throws IOException
+	private byte[] writeValue(Object aValue) throws IOException
 	{
-		byte[] buf = UTF8.encodeUTF8(aKey);
-		mOutput.writeVar32(buf.length);
-		mOutput.write(buf);
+		int type = TYPES.get(aValue.getClass());
+
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		BitOutputStream output = new BitOutputStream(baos);
+
+		output.writeBits(type, 8);
+
+		switch (type)
+		{
+			case 0:
+				output.writeBits((Boolean)aValue ? 1 : 0, 8);
+				break;
+			case 1:
+				output.writeBits(0xff & (Byte)aValue, 8);
+				break;
+			case 2:
+				output.writeVar32S((Short)aValue);
+				break;
+			case 3:
+				output.writeVar32S((Integer)aValue);
+				break;
+			case 4:
+				output.writeVar64S((Long)aValue);
+				break;
+			case 5:
+				output.writeVar32S(Float.floatToIntBits((Float)aValue));
+				break;
+			case 6:
+				output.writeVar64S(Double.doubleToLongBits((Double)aValue));
+				break;
+			case 7:
+				byte[] buf = UTF8.encodeUTF8((String)aValue);
+				output.writeVar32(buf.length);
+				output.write(buf);
+				break;
+			case 8:
+				output.write(writeBundle((BundleX)aValue));
+				break;
+			case 9:
+			case 10:
+			case 11:
+				writeSequence((BundleArrayType)aValue, output);
+				break;
+			case 12:
+				writeBundleArray((BundleArray)aValue, output);
+				break;
+			default:
+				throw new IllegalArgumentException("Unsupported type: " + aValue.getClass());
+		}
+
+		output.finish();
+
+		return baos.toByteArray();
 	}
 }
