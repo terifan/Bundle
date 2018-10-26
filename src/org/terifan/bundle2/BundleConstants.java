@@ -6,6 +6,8 @@ import java.util.Map;
 
 class BundleConstants
 {
+	final static int VERSION = 0;
+
 	final static Map<Class, Integer> TYPES = new HashMap<>()
 	{
 		{

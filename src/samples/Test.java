@@ -1,10 +1,14 @@
 package samples;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.zip.Deflater;
+import java.util.zip.DeflaterOutputStream;
+import org.terifan.bundle2.BinaryDecoderX;
 import org.terifan.bundle2.BinaryEncoderX;
 import org.terifan.bundle2.BundlableValueX;
 import org.terifan.bundle2.BundlableX;
@@ -28,6 +32,7 @@ public class Test
 					.putArray("doubles", new NumberArray().add(1.3).add(2.2).add(3.1))
 				)
 				.putArray("strings", new StringArray().add("a", null).add("b").add("c"))
+				.putString("null", null)
 				.putBoolean("boolean", true)
 				.putArray("booleans", new BooleanArray().add(true).add(false).add(true))
 				.putArray("bundles", new BundleArray().add(new BundleX().putString("key", "value")))
@@ -43,18 +48,17 @@ public class Test
 
 			System.out.println(bundle);
 
-//			System.out.println(bundle.getBundle("numbers").getNumberArray("ints").get(1));
-//
-//			System.out.println(bundle.getBundle("numbers").getIntArray("ints")[1]);
-//
-//			System.out.println(bundle.getBundle("numbers").getNumberStream("ints").collect(Collectors.averagingDouble(e->(Integer)e)));
-//
-//			System.out.println(bundle.getStringStream("strings").collect(Collectors.averagingDouble(e->e==null?0:e.length())));
-//
-//			System.out.println(bundle.getSerializable(Date.class, "date"));
+			System.out.println(bundle.getBundle("numbers").getNumberArray("ints").get(1));
+			System.out.println(bundle.getBundle("numbers").getIntArray("ints")[1]);
+			System.out.println(bundle.getBundle("numbers").getNumberStream("ints").collect(Collectors.averagingDouble(e->(Integer)e)));
+			System.out.println(bundle.getStringStream("strings").collect(Collectors.averagingDouble(e->e==null?0:e.length())));
+			System.out.println(bundle.getSerializable(Date.class, "date"));
 
 			Color color = bundle.getObject(Color.class, "rgb");
 			System.out.println(color);
+
+			PackedArray pa = bundle.getObject(PackedArray.class, "values");
+			System.out.println(pa);
 
 			for (BundleX v : bundle.getBundleArray("colors"))
 			{
@@ -70,20 +74,29 @@ public class Test
 
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			new BinaryEncoderX().marshal(bundle, baos);
+
+			BundleX b = new BinaryDecoderX().unmarshal(new ByteArrayInputStream(baos.toByteArray()));
+			System.out.println(b);
+			
+			System.out.println();
 			System.out.println(new String(baos.toByteArray()).replace('\n', '-').replace('\r', '-').replace('\t', '-').replace('\0', '-'));
 
-//			PackedArray pa = bundle.getObject(PackedArray.class, "values");
-//			System.out.println(pa);
+			baos.reset();
+			DeflaterOutputStream dos = new DeflaterOutputStream(baos);
+			dos.write(bundle.toString().getBytes("utf-8"));
+			dos.close();
 
-//			for (int v : bundle.getBundle("numbers").getIntArray("ints"))
-//			{
-//				System.out.println(v);
-//			}
-//
-//			for (double v : bundle.getBundle("numbers").getDoubleArray("doubles"))
-//			{
-//				System.out.println(v);
-//			}
+			System.out.println(new String(baos.toByteArray()).replace('\n', '-').replace('\r', '-').replace('\t', '-').replace('\0', '-'));
+
+			for (int v : bundle.getBundle("numbers").getIntArray("ints"))
+			{
+				System.out.println(v);
+			}
+
+			for (double v : bundle.getBundle("numbers").getDoubleArray("doubles"))
+			{
+				System.out.println(v);
+			}
 
 //			System.out.println(new BundleX(bundle.toString()));
 		}
@@ -173,14 +186,14 @@ public class Test
 		@Override
 		public void readExternal(String aValue)
 		{
-			mValues = Stream.of(aValue.split(",")).mapToInt(Integer::parseInt).toArray();
+			mValues = Stream.of(aValue.split(" ")).mapToInt(Integer::parseInt).toArray();
 		}
 
 
 		@Override
 		public String writeExternal()
 		{
-			return Arrays.stream(mValues).mapToObj(Integer::toString).collect(Collectors.joining(","));
+			return Arrays.stream(mValues).mapToObj(Integer::toString).collect(Collectors.joining(" "));
 		}
 
 
