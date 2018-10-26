@@ -17,11 +17,14 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map.Entry;
-import java.util.Objects;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Stream;
 import org.terifan.bundle.BinaryDecoder.PathEvaluation;
+import static org.terifan.bundle.BundleConstants.TYPES;
 
 
 public class Bundle implements Serializable, Externalizable
@@ -506,6 +509,13 @@ public class Bundle implements Serializable, Externalizable
 		}
 
 
+		public BundleArray(Object... aValues)
+		{
+			this();
+			mValues.addAll(Arrays.asList(aValues));
+		}
+
+
 		public int size()
 		{
 			return mValues.size();
@@ -515,6 +525,12 @@ public class Bundle implements Serializable, Externalizable
 		public Object get(int aIndex)
 		{
 			return mValues.get(aIndex);
+		}
+
+
+		public Number getNumber(int aIndex)
+		{
+			return (Number)mValues.get(aIndex);
 		}
 
 
@@ -594,6 +610,40 @@ public class Bundle implements Serializable, Externalizable
 			}
 			return this;
 		}
+
+
+		public BundleArray addAll(List<BundlableType> aValues)
+		{
+			for (BundlableType v : aValues)
+			{
+				if (v instanceof BundlableValue)
+				{
+					Object value = ((BundlableValue)v).writeExternal();
+
+					checkValue(value);
+
+					mValues.add(value);
+				}
+				else
+				{
+					Bundle bundle = new Bundle();
+					((Bundlable)v).writeExternal(bundle);
+					mValues.add(bundle);
+				}
+			}
+			return this;
+		}
+	}
+
+
+	private static void checkValue(Object aValue)
+	{
+		if (aValue == null || TYPES.containsKey(aValue.getClass()))
+		{
+			return;
+		}
+
+		throw new IllegalArgumentException("Unsupported type: " + aValue.getClass());
 	}
 
 
@@ -635,7 +685,18 @@ public class Bundle implements Serializable, Externalizable
 	{
 		if (aOther instanceof Bundle)
 		{
-			return mValues.equals(((Bundle)aOther).mValues);
+//			return mValues.equals(((Bundle)aOther).mValues);
+
+			// TODO: fix
+
+			try
+			{
+				return Arrays.equals(marshal(), ((Bundle)aOther).marshal());
+			}
+			catch (IOException e)
+			{
+				throw new IllegalArgumentException(e);
+			}
 		}
 
 		return false;
