@@ -2,36 +2,14 @@ package org.terifan.bundle2;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.HashMap;
 import org.terifan.bundle.BitOutputStream;
-import org.terifan.bundle2.BundleX.BooleanArray;
-import org.terifan.bundle2.BundleX.BundleArray;
+import static org.terifan.bundle2.BundleConstants.TYPES;
 import org.terifan.bundle2.BundleX.BundleArrayType;
-import org.terifan.bundle2.BundleX.NumberArray;
-import org.terifan.bundle2.BundleX.StringArray;
 
 
 public class BinaryEncoderX
 {
 	private final static int VERSION = 0;
-	private final static HashMap<Class,Integer> TYPES = new HashMap<>();
-
-	static
-	{
-		TYPES.put(Boolean.class, 0);
-		TYPES.put(Byte.class, 1);
-		TYPES.put(Short.class, 2);
-		TYPES.put(Integer.class, 3);
-		TYPES.put(Long.class, 4);
-		TYPES.put(Float.class, 5);
-		TYPES.put(Double.class, 6);
-		TYPES.put(String.class, 7);
-		TYPES.put(BundleX.class, 8);
-		TYPES.put(BooleanArray.class, 9);
-		TYPES.put(NumberArray.class, 10);
-		TYPES.put(StringArray.class, 11);
-		TYPES.put(BundleArray.class, 12);
-	}
 
 	private BitOutputStream mOutput;
 
