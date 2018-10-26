@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 public class BundleNGTest
 {
 	@Test
-	public void testMarshal() throws IOException
+	public void testMarshalBasicTypes() throws IOException
 	{
 		Bundle in = new Bundle()
 			.putBoolean("booleanNull", false)
@@ -31,9 +31,28 @@ public class BundleNGTest
 			.putString("stringUTF", "åäö");
 
 		byte[] data = in.marshal();
+//		Log.hexDump(data);
 
-		Bundle out = new Bundle(data);
+		assertEquals(in, new Bundle(data));
+	}
 
-		assertEquals(in, out);
+
+	@Test
+	public void testBundableObjectConstructor() throws IOException
+	{
+		Bundle in = new Bundle(new Color(64,128,255));
+
+		assertEquals((int)in.getInt("r"), 64);
+		assertEquals((int)in.getInt("g"), 128);
+		assertEquals((int)in.getInt("b"), 255);
+	}
+
+
+	@Test
+	public void testBundableValue() throws IOException
+	{
+		Bundle in = new Bundle().putObject("rgb", new Color(64,128,255));
+
+		assertEquals(in.getInt("rgb"), new Color(64,128,255).writeExternal());
 	}
 }
