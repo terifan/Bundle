@@ -12,16 +12,20 @@ import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
-import java.util.HashMap;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.TimeZone;
+import java.util.UUID;
 import java.util.stream.Stream;
 import org.terifan.bundle.BinaryDecoder.PathEvaluation;
 import static org.terifan.bundle.BundleConstants.TYPES;
@@ -31,12 +35,12 @@ public class Bundle implements Serializable, Externalizable
 {
 	private static final long serialVersionUID = 1L;
 
-	private HashMap<String, Object> mValues;
+	private LinkedHashMap<String, Object> mValues;
 
 
 	public Bundle()
 	{
-		mValues = new HashMap<>();
+		mValues = new LinkedHashMap<>();
 	}
 
 
@@ -94,16 +98,16 @@ public class Bundle implements Serializable, Externalizable
 	}
 
 
+	public BundleArray getArray(String aKey)
+	{
+		return (BundleArray)mValues.get(aKey);
+	}
+
+
 	public Bundle putArray(String aKey, BundleArray aValue)
 	{
 		mValues.put(aKey, aValue);
 		return this;
-	}
-
-
-	public BundleArray getArray(String aKey)
-	{
-		return (BundleArray)mValues.get(aKey);
 	}
 
 
@@ -167,30 +171,36 @@ public class Bundle implements Serializable, Externalizable
 	}
 
 
-	private class ArrayAccessor<T> implements Iterator<T>
+//	private class ArrayAccessor<T> implements Iterator<T>
+//	{
+//		private int mIndex = 0;
+//		private final BundleArray mArray;
+//
+//
+//		private ArrayAccessor(BundleArray aArray)
+//		{
+//			mArray = aArray;
+//		}
+//
+//
+//		@Override
+//		public boolean hasNext()
+//		{
+//			return mIndex < mArray.size();
+//		}
+//
+//
+//		@Override
+//		public T next()
+//		{
+//			return (T)mArray.get(mIndex++);
+//		}
+//	}
+
+
+	public Bundle getBundle(String aKey)
 	{
-		private int mIndex = 0;
-		private final BundleArray mArray;
-
-
-		private ArrayAccessor(BundleArray aArray)
-		{
-			mArray = aArray;
-		}
-
-
-		@Override
-		public boolean hasNext()
-		{
-			return mIndex < mArray.size();
-		}
-
-
-		@Override
-		public T next()
-		{
-			return (T)mArray.get(mIndex++);
-		}
+		return (Bundle)mValues.get(aKey);
 	}
 
 
@@ -207,12 +217,6 @@ public class Bundle implements Serializable, Externalizable
 		aValue.writeExternal(bundle);
 		mValues.put(aKey, bundle);
 		return this;
-	}
-
-
-	public Bundle getBundle(String aKey)
-	{
-		return (Bundle)mValues.get(aKey);
 	}
 
 
@@ -300,7 +304,14 @@ public class Bundle implements Serializable, Externalizable
 
 	public <T extends Serializable> T getSerializable(Class<T> aValue, String aKey)
 	{
-		try (ObjectInputStream oos = new ObjectInputStream(new ByteArrayInputStream(Base64.getDecoder().decode((String)mValues.get(aKey)))))
+		Object value = getBinary(aKey);
+		
+		if (value == null)
+		{
+			return null;
+		}
+
+		try (ObjectInputStream oos = new ObjectInputStream(new ByteArrayInputStream(getBinary(aKey))))
 		{
 			return (T)oos.readObject();
 		}
@@ -323,8 +334,13 @@ public class Bundle implements Serializable, Externalizable
 			throw new IllegalArgumentException(e);
 		}
 
-		mValues.put(aKey, Base64.getEncoder().encodeToString(baos.toByteArray()));
-		return this;
+		return putBinary(aKey, baos.toByteArray());
+	}
+
+
+	public String getString(String aKey)
+	{
+		return (String)mValues.get(aKey);
 	}
 
 
@@ -335,9 +351,9 @@ public class Bundle implements Serializable, Externalizable
 	}
 
 
-	public String getString(String aKey)
+	public Number getNumber(String aKey)
 	{
-		return (String)mValues.get(aKey);
+		return (Number)mValues.get(aKey);
 	}
 
 
@@ -345,12 +361,6 @@ public class Bundle implements Serializable, Externalizable
 	{
 		mValues.put(aKey, aValue);
 		return this;
-	}
-
-
-	public Number getNumber(String aKey)
-	{
-		return (Number)mValues.get(aKey);
 	}
 
 
@@ -390,9 +400,144 @@ public class Bundle implements Serializable, Externalizable
 	}
 
 
-	public Bundle putBoolean(String aKey, Boolean aValue)
+	public Date getDate(String aKey)
 	{
-		mValues.put(aKey, aValue);
+		Object date = mValues.get(aKey);
+		if (date == null)
+		{
+			return null;
+		}
+		if (date instanceof Date)
+		{
+			return (Date)date;
+		}
+		if (date instanceof Long)
+		{
+			return new Date((Long)date);
+		}
+		if (date instanceof String)
+		{
+			try
+			{
+				String s = (String)date;
+				switch (s.length())
+				{
+					case 8:
+						return new SimpleDateFormat("yyyy-MM-dd").parse(s);
+					case 14:
+						return new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(s);
+					case 19:
+						return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").parse(s);
+					case 23:
+						return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").parse(s);
+					default:
+						throw new IllegalArgumentException("Date format unsupported: " + s);
+				}
+			}
+			catch (ParseException e)
+			{
+				throw new IllegalArgumentException(e);
+			}
+		}
+		return null;
+	}
+
+
+	public Bundle putDate(String aKey, Date aDate)
+	{
+		mValues.put(aKey, aDate);
+		return this;
+	}
+	
+	
+	public byte[] getBinary(String aKey)
+	{
+		Object value = mValues.get(aKey);
+		if (value == null)
+		{
+			return null;
+		}
+		if (value instanceof byte[])
+		{
+			return (byte[])value;
+		}
+		if (value instanceof String)
+		{
+			return Base64.getDecoder().decode((String)value);
+		}
+		throw new IllegalArgumentException("Unsupported format: " + value.getClass());
+	}
+	
+	
+	public Bundle putBinary(String aKey, byte[] aBytes)
+	{
+		mValues.put(aKey, aBytes);
+		return this;
+	}
+	
+	
+	public UUID getUUID(String aKey)
+	{
+		Object value = mValues.get(aKey);
+		if (value == null)
+		{
+			return null;
+		}
+		if (value instanceof UUID)
+		{
+			return (UUID)value;
+		}
+		if (value instanceof String)
+		{
+			return UUID.fromString((String)value);
+		}
+		throw new IllegalArgumentException("Unsupported format: " + value.getClass());
+	}
+	
+
+	public Bundle putUUID(String aKey, UUID aBytes)
+	{
+		mValues.put(aKey, aBytes);
+		return this;
+	}
+	
+	
+	public Calendar getCalendar(String aKey)
+	{
+		Object value = mValues.get(aKey);
+		if (value == null)
+		{
+			return null;
+		}
+		if (value instanceof Calendar)
+		{
+			return (Calendar)value;
+		}
+		if (value instanceof String)
+		{
+			try
+			{
+				String s = (String)value;
+				int offset = Integer.parseInt(s.substring(Math.max(s.lastIndexOf('+'), s.lastIndexOf('-')) + 1));
+				Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").parse((s));
+				TimeZone timeZone = TimeZone.getDefault();
+				timeZone.setRawOffset(offset);
+				Calendar calendar = Calendar.getInstance(timeZone);
+				calendar.setTimeInMillis(date.getTime());
+				return calendar;
+			}
+			catch (ParseException e)
+			{
+				throw new IllegalArgumentException(e);
+			}
+		}
+		throw new IllegalArgumentException("Unsupported format: " + value.getClass());
+	}
+
+
+	public Bundle putCalendar(String aKey, Calendar aCalendar)
+	{
+		mValues.put(aKey, aCalendar);
 		return this;
 	}
 
@@ -400,6 +545,13 @@ public class Bundle implements Serializable, Externalizable
 	public Boolean getBoolean(String aKey)
 	{
 		return (Boolean)mValues.get(aKey);
+	}
+
+
+	public Bundle putBoolean(String aKey, Boolean aValue)
+	{
+		mValues.put(aKey, aValue);
+		return this;
 	}
 
 
@@ -456,9 +608,27 @@ public class Bundle implements Serializable, Externalizable
 
 			Object v = entry.getValue();
 
+			if (v instanceof UUID)
+			{
+				v = v.toString();
+			}
+			if (v instanceof Calendar)
+			{
+				Calendar c = (Calendar)v;
+				int offset = c.getTimeZone().getRawOffset() / 1000;
+				v = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new Date(((Calendar)v).getTimeInMillis())) + (offset<0?"-":"+") + String.format("%02d:%02d", offset/60/60, (offset/60)%60);
+			}
 			if (v instanceof String)
 			{
 				builder.append("\"");
+			}
+			if (v instanceof Date)
+			{
+				v = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format((Date)v);
+			}
+			if (v instanceof byte[])
+			{
+				v = Base64.getEncoder().encodeToString((byte[])v);
 			}
 
 			builder.append(v);
@@ -591,22 +761,31 @@ public class Bundle implements Serializable, Externalizable
 		}
 
 
-		public BundleArray add(Bundlable aValue)
+		public BundleArray add(BundlableType aValue)
 		{
-			Bundle bundle = new Bundle();
-			aValue.writeExternal(bundle);
-			mValues.add(bundle);
+			if (aValue instanceof BundlableValue)
+			{
+				Object value = ((BundlableValue)aValue).writeExternal();
+
+				checkValue(value);
+
+				mValues.add(value);
+			}
+			else
+			{
+				Bundle bundle = new Bundle();
+				((Bundlable)aValue).writeExternal(bundle);
+				mValues.add(bundle);
+			}
 			return this;
 		}
 
 
-		public BundleArray add(Bundlable... aValues)
+		public BundleArray add(BundlableType... aValues)
 		{
-			for (Bundlable o : aValues)
+			for (BundlableType v : aValues)
 			{
-				Bundle bundle = new Bundle();
-				o.writeExternal(bundle);
-				mValues.add(bundle);
+				add(v);
 			}
 			return this;
 		}
@@ -616,20 +795,7 @@ public class Bundle implements Serializable, Externalizable
 		{
 			for (BundlableType v : aValues)
 			{
-				if (v instanceof BundlableValue)
-				{
-					Object value = ((BundlableValue)v).writeExternal();
-
-					checkValue(value);
-
-					mValues.add(value);
-				}
-				else
-				{
-					Bundle bundle = new Bundle();
-					((Bundlable)v).writeExternal(bundle);
-					mValues.add(bundle);
-				}
+				add(v);
 			}
 			return this;
 		}

@@ -2,6 +2,9 @@ package org.terifan.bundle;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.UUID;
 import static org.terifan.bundle.BundleConstants.*;
 import org.terifan.bundle.Bundle.BundleArray;
 
@@ -39,7 +42,6 @@ public class BinaryEncoder
 			if (value != null)
 			{
 				byte[] data = writeValue(value, true);
-				output.writeVar32(data.length);
 				output.write(data);
 			}
 		}
@@ -50,55 +52,69 @@ public class BinaryEncoder
 	}
 
 
-	private void writeSequence(BundleArray aSequence, BitOutputStream aOutput) throws IOException
+	private byte[] writeSequence(BundleArray aSequence) throws IOException
 	{
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		BitOutputStream output = new BitOutputStream(baos);
+
+		int elementCount = aSequence.size();
 		boolean singleType = true;
 		boolean hasNull = false;
 		Class type = null;
 
-		for (int i = 0; singleType && i < aSequence.size(); i++)
+		for (Object value : aSequence)
 		{
-			if (aSequence.get(i) == null)
+			if (value == null)
 			{
 				hasNull = true;
 			}
-			else
+			else if (type == null)
 			{
-				if (type == null)
-				{
-					type = aSequence.get(0).getClass();
-				}
-				singleType = type == aSequence.get(i).getClass();
+				type = aSequence.get(0).getClass();
+			}
+			else if (singleType)
+			{
+				singleType = type == value.getClass();
+			}
+
+			if (!singleType && hasNull)
+			{
+				break;
 			}
 		}
 
-		boolean hasChunckSize = TYPES.get(type) >= STRING;
+		output.writeVar32((elementCount << (singleType ? 2 + 4 : 2)) + (singleType ? TYPES.get(type) << 2 : 0) + (hasNull ? 2 : 0) + (singleType ? 1 : 0));
 
-		aOutput.writeVar32((aSequence.size() << 2) + (hasNull ? 2 : 0) + (singleType ? 1 : 0));
-
-		if (singleType)
+		for (int i = 0; i < elementCount; i+=8)
 		{
-			aOutput.writeBits(TYPES.get(type), 8);
-		}
-
-		for (int i = 0; i < aSequence.size(); i++)
-		{
-			Object value = aSequence.get(i);
-
-			if (value != null)
+			if (hasNull)
 			{
-				byte[] data = writeValue(value, !singleType);
-				if (hasChunckSize)
+				int nullBits = 0;
+				for (int j = 0; j < 8 && i+j < elementCount; j++)
 				{
-					aOutput.writeVar32(1 + data.length);
+					if (aSequence.get(i+j) == null)
+					{
+						nullBits |= 1 << j;
+					}
 				}
-				aOutput.write(data);
+				output.writeBits(nullBits, 8);
 			}
-			else
+
+			for (int j = 0; j < 8 && i+j < elementCount; j++)
 			{
-				aOutput.writeVar32(0);
+				Object value = aSequence.get(i+j);
+
+				if (value != null)
+				{
+					byte[] data = writeValue(value, !singleType);
+					output.write(data);
+				}
 			}
 		}
+		
+		output.finish();
+		
+		return baos.toByteArray();
 	}
 
 
@@ -132,21 +148,50 @@ public class BinaryEncoder
 				output.writeVar64S((Long)aValue);
 				break;
 			case FLOAT:
-				output.writeVar32S(Float.floatToIntBits((Float)aValue));
+				output.write32(Float.floatToIntBits((Float)aValue));
 				break;
 			case DOUBLE:
-				output.writeVar64S(Double.doubleToLongBits((Double)aValue));
+				output.write64(Double.doubleToLongBits((Double)aValue));
+				break;
+			case DATE:
+				output.write64(((Date)aValue).getTime());
+				break;
+			case UUID:
+				UUID uuid = (UUID)aValue;
+				output.write64(uuid.getLeastSignificantBits());
+				output.write64(uuid.getMostSignificantBits());
+				break;
+			case CALENDAR:
+				Calendar c = (Calendar)aValue;
+				output.writeVar32(c.getTimeZone().getRawOffset());
+				output.write64(c.getTimeInMillis());
 				break;
 			case STRING:
-				byte[] buf = UTF8.encodeUTF8((String)aValue);
+			case BUNDLE:
+			case ARRAY:
+			case BINARY:
+				byte[] buf;
+
+				switch (type)
+				{
+					case STRING:
+						buf = UTF8.encodeUTF8((String)aValue);
+						break;
+					case BUNDLE:
+						buf = writeBundle((Bundle)aValue);
+						break;
+					case ARRAY:
+						buf = writeSequence((BundleArray)aValue);
+						break;
+					case BINARY:
+						buf = (byte[])aValue;
+						break;
+					default:
+						throw new IllegalArgumentException("Unsupported type: " + aValue.getClass());
+				}
+
 				output.writeVar32(buf.length);
 				output.write(buf);
-				break;
-			case BUNDLE:
-				output.write(writeBundle((Bundle)aValue));
-				break;
-			case ARRAY:
-				writeSequence((BundleArray)aValue, output);
 				break;
 			default:
 				throw new IllegalArgumentException("Unsupported type: " + aValue.getClass());
@@ -155,5 +200,12 @@ public class BinaryEncoder
 		output.finish();
 
 		return baos.toByteArray();
+	}
+
+
+	private void writeVarString(BitOutputStream aOutput, String aText) throws IOException
+	{
+		aOutput.writeVar32(aText.length());
+		UTF8.encodeUTF8(aText);
 	}
 }

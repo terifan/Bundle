@@ -155,6 +155,19 @@ public class BitOutputStream implements AutoCloseable
 	}
 
 
+	public void write32(int aValue) throws IOException
+	{
+		writeBits(aValue, 32);
+	}
+
+
+	public void write64(long aValue) throws IOException
+	{
+		writeBits((int)(aValue), 32);
+		writeBits((int)(aValue >>> 32), 32);
+	}
+
+
 	public void writeExpGolomb(int aValue, int k) throws IOException
 	{
 		assert aValue >= 0 && aValue < (1<<30)-1;

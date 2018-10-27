@@ -201,4 +201,16 @@ public class BitInputStream //extends InputStream
 
 		throw new IllegalStateException("Variable int64 exceeds maximum length");
 	}
+
+
+	public int read32() throws IOException
+	{
+		return readBits(32);
+	}
+
+
+	public long read64() throws IOException
+	{
+		return (readBits(32) & 0xFFFFFFFFL) | ((readBits(32) & 0xFFFFFFFFL) << 32);
+	}
 }

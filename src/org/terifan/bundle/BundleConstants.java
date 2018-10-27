@@ -1,7 +1,10 @@
 package org.terifan.bundle;
 
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import org.terifan.bundle.Bundle.BundleArray;
 
 
@@ -19,6 +22,12 @@ class BundleConstants
 	final static int STRING = 7;
 	final static int BUNDLE = 8;
 	final static int ARRAY = 9;
+	final static int DATE = 10;
+	final static int BINARY = 11;
+	final static int UUID = 12;
+	final static int CALENDAR = 13;
+//	final static int UNUSED1 = 14;
+//	final static int UNUSED2 = 15;
 
 	final static Map<Class, Integer> TYPES = new HashMap<>()
 	{
@@ -33,6 +42,10 @@ class BundleConstants
 			put(String.class, STRING);
 			put(Bundle.class, BUNDLE);
 			put(BundleArray.class, ARRAY);
+			put(Date.class, DATE);
+			put(byte[].class, BINARY);
+			put(UUID.class, UUID);
+			put(GregorianCalendar.class, CALENDAR);
 		}
 	};
 }

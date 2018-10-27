@@ -1,4 +1,4 @@
-package org.terifan.bundle;
+package samples;
 
 import java.io.PrintStream;
 

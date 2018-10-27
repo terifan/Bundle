@@ -1,14 +1,15 @@
 package samples;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.OutputStream;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.zip.DeflaterOutputStream;
-import org.terifan.bundle.BinaryDecoder;
 import org.terifan.bundle.BinaryDecoder.PathEvaluation;
 import org.terifan.bundle.BinaryEncoder;
 import org.terifan.bundle.Bundle;
@@ -23,90 +24,8 @@ public class Test
 	{
 		try
 		{
-			Bundle bundle = new Bundle()
-				.putBundle("numbers", new Bundle()
-					.putNumber("number", 7)
-					.putArray("ints", new BundleArray().add(1, 4, 9))
-					.putArray("doubles", new BundleArray().add(1.3).add(2.2).add(3.1))
-				)
-				.putNumber("byte", (byte)7)
-				.putNumber("short", (short)7777)
-				.putNumber("int", 654984)
-				.putNumber("long", 164516191981L)
-				.putNumber("float", 7.2f)
-				.putNumber("double", 3.14)
-				.putArray("arrays", new BundleArray().add("horse", new BundleArray().add("monkey", "pig"), 777, new BundleArray().add("girl", "boy")))
-				.putArray("strings", new BundleArray().add("a", null).add("b").add("c"))
-				.putString("null", null)
-				.putBoolean("boolean", true)
-				.putArray("booleans", new BundleArray().add(true).add(false).add(true))
-				.putArray("bundles", new BundleArray().add(new Bundle().putString("key", "value")))
-				.putBundle("bundle", new Bundle().putString("key", "value"))
-				.putString("string", "text")
-				.putBundle("color", new Color(196,128,20))
-				.putArray("colors", new BundleArray().add(new Color(196,128,20), new Color(96,128,220)))
-				.putObject("rgb", new Color(196,128,20))
-				.putArray("rgbs", new BundleArray().add(new Color(196,128,20), new Color(96,128,220)))
-				.putObject("values", new PackedArray(96,128,220))
-				.putSerializable("date", new Date())
-			;
-
-			System.out.println(bundle);
-
-			System.out.println(bundle.getBundle("numbers").getArray("ints").get(1));
-			System.out.println(bundle.getBundle("numbers").toArray("ints")[1]);
-			System.out.println(bundle.getBundle("numbers").getArray("ints").stream().collect(Collectors.averagingDouble(e->(Integer)e)));
-			System.out.println(bundle.getArray("strings").stream().collect(Collectors.averagingDouble(e->e==null?0:e.toString().length())));
-			System.out.println(bundle.getSerializable(Date.class, "date"));
-
-			Color color = bundle.getObject(Color.class, "rgb");
-			System.out.println(color);
-
-			PackedArray pa = bundle.getObject(PackedArray.class, "values");
-			System.out.println(pa);
-
-			for (Object v : bundle.getArray("colors"))
-			{
-				System.out.println(v);
-			}
-
-			for (Color v : bundle.getObjectArray(Color.class, "colors"))
-			{
-				System.out.println(v);
-			}
-
-			System.out.println();
-
-			byte[] data = new BinaryEncoder().marshal(bundle);
-
-			System.out.println(new String(data).replace('\n', '-').replace('\r', '-').replace('\t', '-').replace('\0', '-'));
-			System.out.println();
-
-//			PathEvaluation path = new PathEvaluation("colors", 1);
-//			PathEvaluation path = new BinaryDecoderX.PathEvaluation();
-			PathEvaluation path = new PathEvaluation("arrays", 1, 1);
-
-			Bundle b = new Bundle(data, path);
-			System.out.println(b);
-
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			DeflaterOutputStream dos = new DeflaterOutputStream(baos);
-			dos.write(bundle.toString().getBytes("utf-8"));
-			dos.close();
-
-			System.out.println(new String(baos.toByteArray()).replace('\n', '-').replace('\r', '-').replace('\t', '-').replace('\0', '-'));
-
-			for (int v : bundle.getBundle("numbers").getIntArray("ints"))
-			{
-				System.out.println(v);
-			}
-
-			for (double v : bundle.getBundle("numbers").getDoubleArray("doubles"))
-			{
-				System.out.println(v);
-			}
-
-//			System.out.println(new BundleX(bundle.toString()));
+			big();
+//			small();
 		}
 		catch (Throwable e)
 		{
@@ -114,6 +33,114 @@ public class Test
 		}
 	}
 
+
+	private static void small() throws IOException
+	{
+		Bundle bundle = new Bundle()
+			.putCalendar("key", GregorianCalendar.getInstance());
+
+		System.out.println(bundle);
+
+		byte[] data = bundle.marshal();
+
+		Log.hexDump(data);
+
+		System.out.println(new Bundle(data));
+	}
+
+
+	private static void big() throws Exception
+	{
+		Bundle bundle = new Bundle()
+			.putBundle("numbers", new Bundle()
+				.putNumber("number", 7)
+				.putArray("ints", new BundleArray().add(1, 4, 9))
+				.putArray("doubles", new BundleArray().add(1.3).add(2.2).add(3.1))
+			)
+			.putNumber("byte", (byte)7)
+			.putNumber("short", (short)7777)
+			.putNumber("int", 654984)
+			.putNumber("long", 164516191981L)
+			.putNumber("float", 7.2f)
+			.putNumber("double", 3.14)
+			.putArray("arrays", new BundleArray().add("horse", new BundleArray().add("monkey", "pig"), 777, new BundleArray().add("girl", "boy")))
+			.putArray("strings", new BundleArray().add("a", null).add("b").add("c"))
+			.putString("null", null)
+			.putBoolean("boolean", true)
+			.putArray("booleans", new BundleArray().add(true).add(false).add(true))
+			.putArray("bundles", new BundleArray().add(new Bundle().putString("key", "value")))
+			.putBundle("bundle", new Bundle().putString("key", "value"))
+			.putString("string", "text")
+			.putBundle("color", new Color(196,128,20))
+			.putArray("colors", new BundleArray().add(new Color(196,128,20), new Color(96,128,220)))
+			.putObject("rgb", new Color(196,128,20))
+			.putArray("rgbs", new BundleArray().add(new Color(196,128,20), new Color(96,128,220)))
+			.putObject("values", new PackedArray(96,128,220))
+			.putSerializable("date1", new Date())
+			.putDate("date2", new Date())
+			.putBinary("binary", "test".getBytes())
+			.putUUID("uuid", UUID.randomUUID())
+			.putCalendar("calendar", new GregorianCalendar(TimeZone.getTimeZone("CET")))
+		;
+
+		System.out.println(bundle);
+
+		System.out.println(bundle.getBundle("numbers").getArray("ints").get(1));
+		System.out.println(bundle.getBundle("numbers").toArray("ints")[1]);
+		System.out.println(bundle.getBundle("numbers").getArray("ints").stream().collect(Collectors.averagingDouble(e->(Integer)e)));
+		System.out.println(bundle.getArray("strings").stream().collect(Collectors.averagingDouble(e->e==null?0:e.toString().length())));
+		System.out.println(bundle.getSerializable(Date.class, "date1"));
+		System.out.println(bundle.getDate("date2"));
+		System.out.println(bundle.getUUID("uuid"));
+
+		Color color = bundle.getObject(Color.class, "rgb");
+		System.out.println(color);
+
+		PackedArray pa = bundle.getObject(PackedArray.class, "values");
+		System.out.println(pa);
+
+		for (Object v : bundle.getArray("colors"))
+		{
+			System.out.println(v);
+		}
+
+		for (Color v : bundle.getObjectArray(Color.class, "colors"))
+		{
+			System.out.println(v);
+		}
+
+		System.out.println();
+
+		byte[] data = new BinaryEncoder().marshal(bundle);
+
+		Log.hexDump(data);
+		System.out.println();
+
+//		PathEvaluation path = new PathEvaluation();
+//		PathEvaluation path = new PathEvaluation("colors", 1);
+		PathEvaluation path = new PathEvaluation("arrays", 1, 1);
+
+		Bundle b = new Bundle(data, path);
+		System.out.println(b);
+
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		DeflaterOutputStream dos = new DeflaterOutputStream(baos);
+		dos.write(bundle.toString().getBytes("utf-8"));
+		dos.close();
+
+		Log.hexDump(baos.toByteArray());
+
+		for (int v : bundle.getBundle("numbers").getIntArray("ints"))
+		{
+			System.out.println(v);
+		}
+
+		for (double v : bundle.getBundle("numbers").getDoubleArray("doubles"))
+		{
+			System.out.println(v);
+		}
+	}
+	
 
 	static class Color implements Bundlable, BundlableValue<Integer>
 	{
