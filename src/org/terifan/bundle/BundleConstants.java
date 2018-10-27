@@ -1,5 +1,7 @@
 package org.terifan.bundle;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -26,8 +28,8 @@ class BundleConstants
 	final static int BINARY = 11;
 	final static int UUID = 12;
 	final static int CALENDAR = 13;
-//	final static int UNUSED1 = 14;
-//	final static int UNUSED2 = 15;
+	final static int BIGINTEGER = 14;
+	final static int BIGDECIMAL = 15;
 
 	final static Map<Class, Integer> TYPES = new HashMap<>()
 	{
@@ -46,6 +48,8 @@ class BundleConstants
 			put(byte[].class, BINARY);
 			put(UUID.class, UUID);
 			put(GregorianCalendar.class, CALENDAR);
+			put(BigInteger.class, BIGINTEGER);
+			put(BigDecimal.class, BIGDECIMAL);
 		}
 	};
 }

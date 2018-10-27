@@ -70,7 +70,7 @@ public class BinaryEncoder
 			}
 			else if (type == null)
 			{
-				type = aSequence.get(0).getClass();
+				type = value.getClass();
 			}
 			else if (singleType)
 			{
