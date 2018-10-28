@@ -6,7 +6,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 import static org.terifan.bundle.BundleConstants.*;
-import org.terifan.bundle.Bundle.BundleArray;
 
 
 public class BinaryEncoder
@@ -52,7 +51,7 @@ public class BinaryEncoder
 	}
 
 
-	private byte[] writeSequence(BundleArray aSequence) throws IOException
+	private byte[] writeSequence(Array aSequence) throws IOException
 	{
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		BitOutputStream output = new BitOutputStream(baos);
@@ -181,7 +180,7 @@ public class BinaryEncoder
 						buf = writeBundle((Bundle)aValue);
 						break;
 					case ARRAY:
-						buf = writeSequence((BundleArray)aValue);
+						buf = writeSequence((Array)aValue);
 						break;
 					case BINARY:
 						buf = (byte[])aValue;

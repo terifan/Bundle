@@ -7,7 +7,6 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import org.terifan.bundle.Bundle.BundleArray;
 
 
 class BundleConstants
@@ -43,7 +42,7 @@ class BundleConstants
 			put(Double.class, DOUBLE);
 			put(String.class, STRING);
 			put(Bundle.class, BUNDLE);
-			put(BundleArray.class, ARRAY);
+			put(Array.class, ARRAY);
 			put(Date.class, DATE);
 			put(byte[].class, BINARY);
 			put(UUID.class, UUID);
@@ -52,4 +51,13 @@ class BundleConstants
 			put(BigDecimal.class, BIGDECIMAL);
 		}
 	};
+
+
+	static void assertSupportedType(Object aValue)
+	{
+		if (aValue != null && !TYPES.containsKey(aValue.getClass()))
+		{
+			throw new IllegalArgumentException("Unsupported type: " + aValue.getClass());
+		}
+	}
 }

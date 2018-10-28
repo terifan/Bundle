@@ -4,11 +4,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 import java.util.TimeZone;
 import java.util.UUID;
 import static org.terifan.bundle.BundleConstants.*;
-import org.terifan.bundle.Bundle.BundleArray;
 
 
 public class BinaryDecoder
@@ -60,7 +58,7 @@ public class BinaryDecoder
 	}
 
 
-	private Object readArray(BundleArray aSequence, PathEvaluation aPathEvaluation) throws IOException
+	private Object readArray(Array aSequence, PathEvaluation aPathEvaluation) throws IOException
 	{
 		int header = mInput.readVar32();
 		boolean singleType = (header & 1) != 0;
@@ -149,7 +147,7 @@ public class BinaryDecoder
 					case BUNDLE:
 						return readBundle(aPathEvaluation, new Bundle());
 					case ARRAY:
-						return readArray(new BundleArray(), aPathEvaluation);
+						return readArray(new Array(), aPathEvaluation);
 					case BINARY:
 						return readBytes(len);
 					default:

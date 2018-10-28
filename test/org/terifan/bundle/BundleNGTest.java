@@ -31,9 +31,46 @@ public class BundleNGTest
 			.putString("stringUTF", "åäö");
 
 		byte[] data = in.marshal();
-//		Log.hexDump(data);
+		Bundle out = new Bundle(data);
 
-		assertEquals(in, new Bundle(data));
+		assertEquals(out, in);
+	}
+
+
+	@Test
+	public void testToArray() throws IOException
+	{
+		Bundle in = new Bundle().putArray("array", new Array().add("TWO"));
+		byte[] data = in.marshal();
+		Bundle out = new Bundle(data);
+
+		assertEquals(out, in);
+		assertEquals(out.toArray("array")[0], "TWO");
+	}
+
+
+	@Test
+	public void testArray1() throws IOException
+	{
+		Bundle in = new Bundle().putArray("array", new Array().add("TWO"));
+		byte[] data = in.marshal();
+		Bundle out = new Bundle(data);
+
+		assertEquals(out, in);
+		assertEquals(out.getArray("array").get(0), "TWO");
+	}
+
+
+	@Test
+	public void testString1() throws IOException
+	{
+		Bundle in = new Bundle().putString("one", "ONE").putArray("array", new Array().add("TWO"));
+		byte[] data = in.marshal();
+		Bundle out = new Bundle(data);
+
+		assertEquals(out, in);
+		assertEquals(out.getString("one"), "ONE");
+		assertEquals(out.getArray("array").get(0), "TWO");
 	}
 
 

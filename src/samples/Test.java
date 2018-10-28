@@ -10,10 +10,10 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.zip.DeflaterOutputStream;
+import org.terifan.bundle.Array;
 import org.terifan.bundle.BinaryDecoder.PathEvaluation;
 import org.terifan.bundle.BinaryEncoder;
 import org.terifan.bundle.Bundle;
-import org.terifan.bundle.Bundle.BundleArray;
 import org.terifan.bundle.BundlableValue;
 import org.terifan.bundle.Bundlable;
 
@@ -37,7 +37,7 @@ public class Test
 	private static void small() throws IOException
 	{
 		Bundle bundle = new Bundle()
-			.putCalendar("key", GregorianCalendar.getInstance());
+			.putArray("array", new Array().add("xxx"));
 
 		System.out.println(bundle);
 
@@ -54,8 +54,8 @@ public class Test
 		Bundle bundle = new Bundle()
 			.putBundle("numbers", new Bundle()
 				.putNumber("number", 7)
-				.putArray("ints", new BundleArray().add(1, 4, 9))
-				.putArray("doubles", new BundleArray().add(1.3).add(2.2).add(3.1))
+				.putArray("ints", new Array().add(1, 4, 9))
+				.putArray("doubles", new Array().add(1.3).add(2.2).add(3.1))
 			)
 			.putNumber("byte", (byte)7)
 			.putNumber("short", (short)7777)
@@ -63,18 +63,18 @@ public class Test
 			.putNumber("long", 164516191981L)
 			.putNumber("float", 7.2f)
 			.putNumber("double", 3.14)
-			.putArray("arrays", new BundleArray().add("horse", new BundleArray().add("monkey", "pig"), 777, new BundleArray().add("girl", "boy")))
-			.putArray("strings", new BundleArray().add("a", null).add("b").add("c"))
+			.putArray("arrays", new Array().add("horse", new Array().add("monkey", "pig"), 777, new Array().add("girl", "boy")))
+			.putArray("strings", new Array().add("a", null).add("b").add("c"))
 			.putString("null", null)
 			.putBoolean("boolean", true)
-			.putArray("booleans", new BundleArray().add(true).add(false).add(true))
-			.putArray("bundles", new BundleArray().add(new Bundle().putString("key", "value")))
+			.putArray("booleans", new Array().add(true).add(false).add(true))
+			.putArray("bundles", new Array().add(new Bundle().putString("key", "value")))
 			.putBundle("bundle", new Bundle().putString("key", "value"))
 			.putString("string", "text")
 			.putBundle("color", new Color(196,128,20))
-			.putArray("colors", new BundleArray().add(new Color(196,128,20), new Color(96,128,220)))
+			.putArray("colors", new Array().add(new Color(196,128,20), new Color(96,128,220)))
 			.putObject("rgb", new Color(196,128,20))
-			.putArray("rgbs", new BundleArray().add(new Color(196,128,20), new Color(96,128,220)))
+			.putArray("rgbs", new Array().add(new Color(196,128,20), new Color(96,128,220)))
 			.putObject("values", new PackedArray(96,128,220))
 			.putSerializable("date1", new Date())
 			.putDate("date2", new Date())
