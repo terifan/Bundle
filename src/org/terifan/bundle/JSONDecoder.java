@@ -260,7 +260,10 @@ class JSONDecoder
 	{
 		try
 		{
+			System.out.println(new JSONDecoder(new StringReader("[]")).unmarshal());
+			System.out.println(new JSONDecoder(new StringReader("{}")).unmarshal());
 			System.out.println(new JSONDecoder(new StringReader("[1,2,3]")).unmarshal());
+			System.out.println(new JSONDecoder(new StringReader("[1,\"a\",true,null,1.3,{},[]]")).unmarshal());
 			System.out.println(new JSONDecoder(new StringReader("[\"1\",\"2\",\"3\"]")).unmarshal());
 			System.out.println(new JSONDecoder(new StringReader("{\"a\":1,\"b\":2}")).unmarshal());
 			System.out.println(new JSONDecoder(new StringReader("[{\"a\":1,\"b\":2}]")).unmarshal());
