@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.Serializable;
+import java.io.StringReader;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.text.SimpleDateFormat;
@@ -68,12 +69,12 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 	}
 
 
-//	public BundleX(String aBundle)
-//	{
-//		this();
-//
-//		decode(aBundle);
-//	}
+	public Bundle(String aBundle) throws IOException
+	{
+		this();
+
+		new JSONDecoder(new StringReader(aBundle)).unmarshal(this);
+	}
 
 
 	@Override

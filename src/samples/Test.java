@@ -85,6 +85,8 @@ public class Test
 
 		System.out.println(bundle);
 
+		System.out.println(new Bundle(bundle.toString()));
+
 		System.out.println(bundle.getBundle("numbers").getArray("ints").get(1));
 		System.out.println(bundle.getBundle("numbers").toArray("ints")[1]);
 		System.out.println(bundle.getBundle("numbers").getArray("ints").stream().collect(Collectors.averagingDouble(e->(Integer)e)));
