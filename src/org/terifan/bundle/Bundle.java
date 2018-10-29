@@ -9,19 +9,20 @@ import java.io.Serializable;
 import java.io.StringReader;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Base64;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.UUID;
 import org.terifan.bundle.BinaryDecoder.PathEvaluation;
+import org.terifan.bundle.JSONEncoder.Printer;
 
 
+/**
+ * A Bundle is typed Map that can be serialized to JSON and binary format.
+ *
+ * Note: the hashCode and equals methods are order independent even though the Bundle maintains elements in the inserted order.
+ */
 public class Bundle extends Container<String,Bundle> implements Serializable, Externalizable
 {
 	private static final long serialVersionUID = 1L;
@@ -266,19 +267,47 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 	}
 
 
+	/**
+	 * Return this Bundle as a compacted JSON.
+	 *
+	 * @return
+	 *   return this Bundle as a compacted JSON
+	 */
 	@Override
 	public String toString()
 	{
-		StringBuilder builder = new StringBuilder();
-		new JSONEncoder().marshalBundle(builder, this);
-		return builder.toString();
+		return toJSON(new StringBuilder(), true).toString();
+	}
+
+
+	/**
+	 * Return this Bundle as a JSON.
+	 *
+	 * @param aAppendable
+	 *   bundle JSON is written to this Appendable
+	 * @param aCompact
+	 *   if false the JSON produced will be formatted
+	 * @return
+	 *   return this Bundle as a JSON
+	 */
+	public <T extends Appendable> T toJSON(T aAppendable, boolean aCompact)
+	{
+		new JSONEncoder().marshalBundle(new Printer(aAppendable, aCompact), this);
+
+		return aAppendable;
 	}
 
 
 	@Override
-	public int hashCode()
+	MurmurHash32 hashCode(MurmurHash32 aHash)
 	{
-		return mValues.hashCode();
+		for (Entry<String,Object> entry : mValues.entrySet())
+		{
+			aHash.update(entry.getKey());
+			super.hashCode(aHash, entry.getValue());
+		}
+
+		return aHash;
 	}
 
 

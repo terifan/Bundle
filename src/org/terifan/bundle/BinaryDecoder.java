@@ -64,8 +64,8 @@ public class BinaryDecoder
 		boolean singleType = (header & 1) != 0;
 		boolean hasNull = (header & 2) != 0;
 		Integer type = singleType ? (header >> 2) & 15 : null;
-		int elementCount = header >> (singleType ? 2+4 : 2);
-		
+		int elementCount = header >> (singleType ? 2 + 4 : 2);
+
 		for (int i = 0; i < elementCount; i+=8)
 		{
 			int nullBits = 0;

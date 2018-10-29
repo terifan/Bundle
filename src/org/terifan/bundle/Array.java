@@ -5,8 +5,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Stream;
 import static org.terifan.bundle.BundleConstants.assertSupportedType;
+import org.terifan.bundle.JSONEncoder.Printer;
 
 
 public class Array extends Container<Integer,Array> implements Serializable, Iterable
@@ -131,7 +134,19 @@ public class Array extends Container<Integer,Array> implements Serializable, Ite
 	public String toString()
 	{
 		StringBuilder builder = new StringBuilder();
-		new JSONEncoder().marshalArray(builder, this);
+		new JSONEncoder().marshalArray(new Printer(builder, true), this);
 		return builder.toString();
+	}
+
+
+	@Override
+	MurmurHash32 hashCode(MurmurHash32 aHash)
+	{
+		for (Object value : mValues)
+		{
+			super.hashCode(aHash, value);
+		}
+
+		return aHash;
 	}
 }

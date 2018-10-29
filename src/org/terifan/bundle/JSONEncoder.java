@@ -1,11 +1,14 @@
 package org.terifan.bundle;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map.Entry;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 class JSONEncoder
@@ -15,66 +18,116 @@ class JSONEncoder
 	}
 
 
-	void marshalBundle(StringBuilder aBuilder, Bundle aBundle)
+	void marshalBundle(Printer aPrinter, Bundle aBundle)
 	{
-		aBuilder.append("{");
+		marshalBundle(aPrinter, aBundle, true);
+	}
 
+
+	private void marshalBundle(Printer aPrinter, Bundle aBundle, boolean aNewLineOnClose)
+	{
 		int size = aBundle.size();
+
+		aPrinter.println("{").indent(1);
 
 		for (Entry<String, Object> entry : aBundle.entrySet())
 		{
-			aBuilder.append("\"").append(entry.getKey()).append("\":");
+			aPrinter.print("\"" + entry.getKey() + "\": ");
 
-			marshal(aBuilder, entry.getValue());
-
-			if (--size > 0)
-			{
-				aBuilder.append(",");
-			}
-		}
-
-		aBuilder.append("}");
-	}
-
-
-	void marshalArray(StringBuilder aBuilder, Array aArray)
-	{
-		aBuilder.append("[");
-
-		int size = aArray.size();
-
-		for (Object value : aArray)
-		{
-			marshal(aBuilder, value);
+			marshal(aPrinter, entry.getValue());
 
 			if (--size > 0)
 			{
-				aBuilder.append(",");
+				aPrinter.println(", ", false);
 			}
 		}
 
-		aBuilder.append("]");
-	}
-
-
-	private void marshal(StringBuilder aBuilder, Object aValue)
-	{
-		if (aValue instanceof Bundle)
+		if (aNewLineOnClose)
 		{
-			marshalBundle(aBuilder, (Bundle)aValue);
-		}
-		else if (aValue instanceof Array)
-		{
-			marshalArray(aBuilder, (Array)aValue);
+			aPrinter.println().indent(-1).println("}");
 		}
 		else
 		{
-			marshalValue(aBuilder, aValue);
+			aPrinter.println().indent(-1).print("}");
 		}
 	}
 
 
-	void marshalValue(StringBuilder aBuilder, Object aValue)
+	void marshalArray(Printer aPrinter, Array aArray)
+	{
+		int size = aArray.size();
+
+		if (size == 0)
+		{
+			aPrinter.println("[]");
+			return;
+		}
+
+		boolean special = aArray.get(0) instanceof Bundle;
+		boolean first = special;
+
+		if (special)
+		{
+			aPrinter.print("[").indent(aArray.size() > 1 ? 1 : 0);
+		}
+		else
+		{
+			aPrinter.println("[").indent(1);
+		}
+
+		for (Object value : aArray)
+		{
+			if (first)
+			{
+				marshalBundle(aPrinter, (Bundle)value, false);
+
+				if (--size > 0)
+				{
+					aPrinter.println(", ");
+				}
+			}
+			else
+			{
+				marshal(aPrinter, value);
+
+				if (--size > 0)
+				{
+					aPrinter.print(", ", false);
+				}
+			}
+
+			first = false;
+		}
+
+		if (special)
+		{
+			aPrinter.indent(aArray.size() > 1 ? -1 : 0).println("]");
+		}
+		else
+		{
+			aPrinter.println().indent(-1).println("]");
+		}
+	}
+
+
+	private void marshal(Printer aPrinter, Object aValue)
+	{
+		if (aValue instanceof Bundle)
+		{
+			marshalBundle(aPrinter, (Bundle)aValue);
+		}
+		else if (aValue instanceof Array)
+		{
+			marshalArray(aPrinter, (Array)aValue);
+		}
+		else
+		{
+			marshalValue(aPrinter, aValue);
+		}
+	}
+
+
+	void marshalValue(Printer aPrinter, Object aValue)
 	{
 		if (aValue instanceof Date)
 		{
@@ -97,11 +150,130 @@ class JSONEncoder
 
 		if (aValue instanceof String)
 		{
-			aBuilder.append("\"").append(aValue).append("\"");
+			aPrinter.print("\"" + aValue + "\"");
 		}
 		else
 		{
-			aBuilder.append(aValue);
+			aPrinter.print(aValue);
+		}
+	}
+
+
+	static class Printer
+	{
+		private Appendable mAppendable;
+		private boolean mNewLine;
+		private int mIndent;
+		private boolean mCompact;
+
+
+		public Printer(Appendable aAppendable, boolean aCompact)
+		{
+			mAppendable = aAppendable;
+			mNewLine = true;
+			mCompact = aCompact;
+		}
+
+
+		Printer indent(int aDelta)
+		{
+			mIndent += aDelta;
+			return this;
+		}
+
+
+		Printer print(Object aText)
+		{
+			return print(aText, true);
+		}
+
+
+		Printer print(Object aText, boolean aIndent)
+		{
+			String text = aText == null ? "null" : aText.toString();
+			if (text.endsWith(" "))
+			{
+				text = text.stripTrailing();
+				if (text.isEmpty())
+				{
+					return this;
+				}
+			}
+			if (aIndent)
+			{
+				printIndent();
+			}
+			try
+			{
+				mAppendable.append(text);
+			}
+			catch (IOException e)
+			{
+				throw new IllegalStateException(e);
+			}
+			return this;
+		}
+
+
+		Printer println(Object aText)
+		{
+			return println(aText, true);
+		}
+
+
+		Printer println(Object aText, boolean aIndent)
+		{
+			String text = aText == null ? "null" : aText.toString();
+			if (text.endsWith(" "))
+			{
+				text = text.stripTrailing();
+				if (text.isEmpty())
+				{
+					return this;
+				}
+			}
+			if (aIndent)
+			{
+				printIndent();
+			}
+			try
+			{
+				mAppendable.append(text);
+			}
+			catch (IOException e)
+			{
+				throw new IllegalStateException(e);
+			}
+			mNewLine = true;
+			return this;
+		}
+
+
+		Printer println()
+		{
+			mNewLine = true;
+			return this;
+		}
+
+
+		private void printIndent()
+		{
+			if (mNewLine && !mCompact)
+			{
+				try
+				{
+					mAppendable.append("\n");
+					for (int i = 0; i < mIndent; i++)
+					{
+						mAppendable.append("\t");
+					}
+					mNewLine = false;
+				}
+				catch (IOException e)
+				{
+					throw new IllegalStateException(e);
+				}
+			}
 		}
 	}
 }

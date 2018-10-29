@@ -37,9 +37,10 @@ public class Test
 	private static void small() throws IOException
 	{
 		Bundle bundle = new Bundle()
-			.putArray("array", new Array().add("xxx"));
-
-		System.out.println(bundle);
+			.putArray("a", new Array().add("xxx"))
+			.putArray("b", new Array().add("xxx"))
+			.putArray("c", new Array().add("xxx"))
+			;
 
 		byte[] data = bundle.marshal();
 
@@ -81,6 +82,8 @@ public class Test
 			.putBinary("binary", "test".getBytes())
 			.putUUID("uuid", UUID.randomUUID())
 			.putCalendar("calendar", new GregorianCalendar(TimeZone.getTimeZone("CET")))
+			.putArray("empty", new Array())
+			.putArray("big", new Array().add("test", new Bundle().putString("a","A").putString("b","B").putString("c","C"), new Bundle().putString("a","A").putString("b","B").putString("c","C").putArray("d", new Array().add(1,2,3))))
 		;
 
 		System.out.println(bundle);
@@ -125,12 +128,17 @@ public class Test
 		Bundle b = new Bundle(data, path);
 		System.out.println(b);
 
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		DeflaterOutputStream dos = new DeflaterOutputStream(baos);
+		ByteArrayOutputStream baosJSON = new ByteArrayOutputStream();
+		DeflaterOutputStream dos = new DeflaterOutputStream(baosJSON);
 		dos.write(bundle.toString().getBytes("utf-8"));
 		dos.close();
 
-		Log.hexDump(baos.toByteArray());
+		ByteArrayOutputStream baosBin = new ByteArrayOutputStream();
+		DeflaterOutputStream dos2 = new DeflaterOutputStream(baosBin);
+		dos2.write(data);
+		dos2.close();
+
+		System.out.println("json=" + bundle.toString().length() + ", bin=" + data.length + ", zipJSON=" + baosJSON.size() + ", zipBIN=" + baosBin.size());
 
 		for (int v : bundle.getBundle("numbers").getIntArray("ints"))
 		{
@@ -142,7 +150,7 @@ public class Test
 			System.out.println(v);
 		}
 	}
-	
+
 
 	static class Color implements Bundlable, BundlableValue<Integer>
 	{

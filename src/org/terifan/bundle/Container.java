@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 import java.util.TimeZone;
 import java.util.UUID;
 
@@ -28,8 +29,8 @@ abstract class Container<K,R>
 
 
 	abstract R put(K aKey, Object aValue);
-	
-	
+
+
 	public Byte getByte(K aKey)
 	{
 		return (Byte)get(aKey);
@@ -90,8 +91,8 @@ abstract class Container<K,R>
 		put(aKey, aValue);
 		return (R)this;
 	}
-	
-	
+
+
 	public Calendar getCalendar(K aKey)
 	{
 		Object value = get(aKey);
@@ -218,7 +219,7 @@ abstract class Container<K,R>
 	public <T extends Serializable> T getSerializable(Class<T> aType, K aKey)
 	{
 		Object value = getBinary(aKey);
-		
+
 		if (value == null)
 		{
 			return null;
@@ -299,8 +300,8 @@ abstract class Container<K,R>
 		put(aKey, aDate);
 		return (R)this;
 	}
-	
-	
+
+
 	public byte[] getBinary(K aKey)
 	{
 		Object value = get(aKey);
@@ -318,15 +319,15 @@ abstract class Container<K,R>
 		}
 		throw new IllegalArgumentException("Unsupported format: " + value.getClass());
 	}
-	
-	
+
+
 	public R putBinary(K aKey, byte[] aBytes)
 	{
 		put(aKey, aBytes);
 		return (R)this;
 	}
-	
-	
+
+
 	public UUID getUUID(K aKey)
 	{
 		Object value = get(aKey);
@@ -344,20 +345,55 @@ abstract class Container<K,R>
 		}
 		throw new IllegalArgumentException("Unsupported format: " + value.getClass());
 	}
-	
+
 
 	public R putUUID(K aKey, UUID aBytes)
 	{
 		put(aKey, aBytes);
 		return (R)this;
 	}
-	
-	
+
+
+	@Override
+	public int hashCode()
+	{
+		return (int)hashCode(new MurmurHash32(0)).finish();
+	}
+
+
+	void hashCode(MurmurHash32 aHash, Object aValue)
+	{
+		if (aValue instanceof Container)
+		{
+			((Container)aValue).hashCode(aHash);
+		}
+		else if (aValue instanceof CharSequence)
+		{
+			aHash.update((CharSequence)aValue);
+		}
+		else if (aValue instanceof byte[])
+		{
+			aHash.update((byte[])aValue);
+		}
+		else if (aValue instanceof int[])
+		{
+			aHash.update((int[])aValue);
+		}
+		else
+		{
+			aHash.update(Objects.hashCode(aValue));
+		}
+	}
+
+
 	public abstract R remove(K aKey);
 
-	
+
 	public abstract int size();
 
 
 	public abstract R clear();
+
+
+	abstract MurmurHash32 hashCode(MurmurHash32 aHash);
 }

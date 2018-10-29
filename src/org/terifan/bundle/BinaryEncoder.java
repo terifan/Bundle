@@ -40,8 +40,7 @@ public class BinaryEncoder
 
 			if (value != null)
 			{
-				byte[] data = writeValue(value, true);
-				output.write(data);
+				output.write(writeValue(value, true));
 			}
 		}
 
@@ -69,10 +68,14 @@ public class BinaryEncoder
 			}
 			else if (type == null)
 			{
+				assertSupportedType(value);
+
 				type = value.getClass();
 			}
 			else if (singleType)
 			{
+				assertSupportedType(value);
+
 				singleType = type == value.getClass();
 			}
 
@@ -82,7 +85,7 @@ public class BinaryEncoder
 			}
 		}
 
-		output.writeVar32((elementCount << (singleType ? 2 + 4 : 2)) + (singleType ? TYPES.get(type) << 2 : 0) + (hasNull ? 2 : 0) + (singleType ? 1 : 0));
+		output.writeVar32((elementCount << (singleType ? 2 + 4 : 2)) + (singleType && type != null ? TYPES.get(type) << 2 : 0) + (hasNull ? 2 : 0) + (singleType ? 1 : 0));
 
 		for (int i = 0; i < elementCount; i+=8)
 		{
@@ -110,9 +113,9 @@ public class BinaryEncoder
 				}
 			}
 		}
-		
+
 		output.finish();
-		
+
 		return baos.toByteArray();
 	}
 
