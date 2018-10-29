@@ -24,13 +24,28 @@ public class Test
 	{
 		try
 		{
-			big();
+			xml();
+//			big();
 //			small();
 		}
 		catch (Throwable e)
 		{
 			e.printStackTrace(System.out);
 		}
+	}
+
+
+	private static void xml() throws IOException
+	{
+		Bundle bundle = new Bundle();
+
+		bundle.importXML(Test.class.getResourceAsStream("test.xml"), true);
+
+		byte[] data = bundle.marshal();
+
+		Log.hexDump(data);
+
+		System.out.println(new Bundle(data).toJSON(new StringBuilder(), false));
 	}
 
 

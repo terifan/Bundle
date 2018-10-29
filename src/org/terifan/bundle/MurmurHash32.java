@@ -205,6 +205,11 @@ class MurmurHash32
 			System.out.println(new MurmurHash32(0).update(new byte[1]).finish());
 			System.out.println(new MurmurHash32(0).update(new byte[2]).finish());
 			System.out.println(new MurmurHash32(0).update(new byte[3]).finish());
+			System.out.println(new MurmurHash32(0).update(new byte[4]).finish());
+			System.out.println(new MurmurHash32(0).update(new int[0]).finish());
+			System.out.println(new MurmurHash32(0).update(new int[1]).finish());
+			System.out.println(new MurmurHash32(0).update(new int[2]).finish());
+			System.out.println(new MurmurHash32(0).update(new int[3]).finish());
 		}
 		catch (Throwable e)
 		{

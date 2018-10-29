@@ -191,7 +191,7 @@ class JSONEncoder
 		Printer print(Object aText, boolean aIndent)
 		{
 			String text = aText == null ? "null" : aText.toString();
-			if (text.endsWith(" "))
+			if (mCompact && text.endsWith(" "))
 			{
 				text = text.stripTrailing();
 				if (text.isEmpty())
@@ -224,7 +224,7 @@ class JSONEncoder
 		Printer println(Object aText, boolean aIndent)
 		{
 			String text = aText == null ? "null" : aText.toString();
-			if (text.endsWith(" "))
+			if (mCompact && text.endsWith(" "))
 			{
 				text = text.stripTrailing();
 				if (text.isEmpty())

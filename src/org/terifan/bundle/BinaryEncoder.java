@@ -32,6 +32,11 @@ public class BinaryEncoder
 
 		for (String key : aBundle.keySet())
 		{
+			if (key == null)
+			{
+				throw new IllegalArgumentException("Key is null.");
+			}
+
 			Object value = aBundle.get(key);
 
 			byte[] buf = UTF8.encodeUTF8(key);
