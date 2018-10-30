@@ -25,9 +25,9 @@ public class Test
 		try
 		{
 //			xml();
-//			big();
+			big();
 //			small();
-			array();
+//			array();
 		}
 		catch (Throwable e)
 		{
@@ -66,7 +66,7 @@ public class Test
 
 	private static void array() throws IOException
 	{
-		Array array = new Array().add("awesome", 5.05, 1986, new Array().add("awesome", 5.05, 1986), new Array(),null);
+		Array array = new Array().add("awesome", 5.05, 1986);
 
 		byte[] data = array.marshal();
 		String json = array.marshalJSON(true);
