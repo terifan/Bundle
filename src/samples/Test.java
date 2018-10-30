@@ -115,35 +115,35 @@ public class Test
 			.putArray("big", new Array().add("test", new Bundle().putString("a","A").putString("b","B").putString("c","C"), new Bundle().putString("a","A").putString("b","B").putString("c","C").putArray("d", new Array().add(1,2,3))))
 		;
 
-		System.out.println(bundle);
-
-		System.out.println(new Bundle().unmarshalJSON(bundle.toString()));
-
-		System.out.println(bundle.getBundle("numbers").getArray("ints").get(1));
-		System.out.println(bundle.getBundle("numbers").toArray("ints")[1]);
-		System.out.println(bundle.getBundle("numbers").getArray("ints").stream().collect(Collectors.averagingDouble(e->(Integer)e)));
-		System.out.println(bundle.getArray("strings").stream().collect(Collectors.averagingDouble(e->e==null?0:e.toString().length())));
-		System.out.println(bundle.getSerializable(Date.class, "date1"));
-		System.out.println(bundle.getDate("date2"));
-		System.out.println(bundle.getUUID("uuid"));
-
-		Color color = bundle.getObject(Color.class, "rgb");
-		System.out.println(color);
-
-		PackedArray pa = bundle.getObject(PackedArray.class, "values");
-		System.out.println(pa);
-
-		for (Object v : bundle.getArray("colors"))
-		{
-			System.out.println(v);
-		}
-
-		for (Color v : bundle.getObjectArray(Color.class, "colors"))
-		{
-			System.out.println(v);
-		}
-
-		System.out.println();
+//		System.out.println(bundle);
+//
+//		System.out.println(new Bundle().unmarshalJSON(bundle.toString()));
+//
+//		System.out.println(bundle.getBundle("numbers").getArray("ints").get(1));
+//		System.out.println(bundle.getBundle("numbers").toArray("ints")[1]);
+//		System.out.println(bundle.getBundle("numbers").getArray("ints").stream().collect(Collectors.averagingDouble(e->(Integer)e)));
+//		System.out.println(bundle.getArray("strings").stream().collect(Collectors.averagingDouble(e->e==null?0:e.toString().length())));
+//		System.out.println(bundle.getSerializable(Date.class, "date1"));
+//		System.out.println(bundle.getDate("date2"));
+//		System.out.println(bundle.getUUID("uuid"));
+//
+//		Color color = bundle.getObject(Color.class, "rgb");
+//		System.out.println(color);
+//
+//		PackedArray pa = bundle.getObject(PackedArray.class, "values");
+//		System.out.println(pa);
+//
+//		for (Object v : bundle.getArray("colors"))
+//		{
+//			System.out.println(v);
+//		}
+//
+//		for (Color v : bundle.getObjectArray(Color.class, "colors"))
+//		{
+//			System.out.println(v);
+//		}
+//
+//		System.out.println();
 
 		byte[] data = new BinaryEncoder().marshal(bundle);
 
@@ -154,8 +154,8 @@ public class Test
 //		PathEvaluation path = new PathEvaluation("colors", 1);
 		PathEvaluation path = new PathEvaluation("arrays", 1, 1);
 
-		Bundle b = new Bundle().unmarshal(data, path);
-		System.out.println(b);
+//		Bundle b = new Bundle().unmarshal(data, path);
+//		System.out.println(b);
 
 		ByteArrayOutputStream baosJSON = new ByteArrayOutputStream();
 		DeflaterOutputStream dos = new DeflaterOutputStream(baosJSON);
