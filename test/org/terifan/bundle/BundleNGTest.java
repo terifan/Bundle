@@ -31,7 +31,7 @@ public class BundleNGTest
 			.putString("stringUTF", "åäö");
 
 		byte[] data = in.marshal();
-		Bundle out = new Bundle(data);
+		Bundle out = new Bundle().unmarshal(data);
 
 		assertEquals(out, in);
 	}
@@ -42,7 +42,7 @@ public class BundleNGTest
 	{
 		Bundle in = new Bundle().putArray("array", new Array().add("TWO"));
 		byte[] data = in.marshal();
-		Bundle out = new Bundle(data);
+		Bundle out = new Bundle().unmarshal(data);
 
 		assertEquals(out, in);
 		assertEquals(out.toArray("array")[0], "TWO");
@@ -54,7 +54,7 @@ public class BundleNGTest
 	{
 		Bundle in = new Bundle().putArray("array", new Array().add("TWO"));
 		byte[] data = in.marshal();
-		Bundle out = new Bundle(data);
+		Bundle out = new Bundle().unmarshal(data);
 
 		assertEquals(out, in);
 		assertEquals(out.getArray("array").get(0), "TWO");
@@ -66,7 +66,7 @@ public class BundleNGTest
 	{
 		Bundle in = new Bundle().putString("one", "ONE").putArray("array", new Array().add("TWO"));
 		byte[] data = in.marshal();
-		Bundle out = new Bundle(data);
+		Bundle out = new Bundle().unmarshal(data);
 
 		assertEquals(out, in);
 		assertEquals(out.getString("one"), "ONE");

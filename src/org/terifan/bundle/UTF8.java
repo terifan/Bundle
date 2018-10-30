@@ -1,10 +1,14 @@
 package org.terifan.bundle;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 
 class UTF8
 {
+	/**
+	 * Write fixed length String
+	 */
 	public static byte [] encodeUTF8(String aInput)
 	{
 		byte [] array = new byte[aInput.length()];
@@ -39,6 +43,9 @@ class UTF8
 	}
 
 
+	/**
+	 * Read fixed length String
+	 */
 	public static String decodeUTF8(byte [] aInput)
 	{
 		char [] array = new char[aInput.length];
@@ -67,5 +74,75 @@ class UTF8
 		}
 
 		return new String(array, 0, bufOffset);
+	}
+
+
+	/**
+	 * Write zero terminated String
+	 */
+	public static void encodeUTF8(String aInput, BitOutputStream aOutput) throws IOException
+	{
+		for (int i = 0, len = aInput.length(); i < len; i++)
+		{
+			char c = aInput.charAt(i);
+			if (c == 0)
+			{
+				throw new IOException("ASCII zero charachers not allowed.");
+			}
+		    if ((c >= 0x0000) && (c <= 0x007F))
+		    {
+				aOutput.writeBits(c & 0xff, 8);
+		    }
+		    else if (c > 0x07FF)
+		    {
+				aOutput.writeBits(0xE0 | ((c >> 12) & 0x0F), 8);
+				aOutput.writeBits(0x80 | ((c >>  6) & 0x3F), 8);
+				aOutput.writeBits(0x80 | ((c      ) & 0x3F), 8);
+		    }
+		    else
+		    {
+				aOutput.writeBits(0xC0 | ((c >>  6) & 0x1F), 8);
+				aOutput.writeBits(0x80 | ((c      ) & 0x3F), 8);
+		    }
+		}
+
+		aOutput.writeBits(0, 8); // terminator
+	}
+
+
+	/**
+	 * Read zero terminated String
+	 */
+	public static String decodeUTF8(BitInputStream aInput) throws IOException
+	{
+		StringBuilder output = new StringBuilder();
+
+		for (;;)
+		{
+			int c = aInput.readBits(8);
+
+			if (c == 0)
+			{
+				break;
+			}
+			if (c < 128) // 0xxxxxxx
+			{
+				output.append((char)c);
+			}
+			else if ((c & 0xE0) == 0xC0) // 110xxxxx
+			{
+				output.append((char)(((c & 0x1F) << 6) | (aInput.readBits(8) & 0x3F)));
+			}
+			else if ((c & 0xF0) == 0xE0) // 1110xxxx
+			{
+				output.append((char)(((c & 0x0F) << 12) | ((aInput.readBits(8) & 0x3F) << 6) | (aInput.readBits(8) & 0x3F)));
+			}
+			else
+			{
+				throw new IllegalStateException("This decoder only handles 16-bit characters: c = " + c);
+			}
+		}
+
+		return output.toString();
 	}
 }

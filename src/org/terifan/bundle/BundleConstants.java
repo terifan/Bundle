@@ -11,7 +11,11 @@ import java.util.UUID;
 
 class BundleConstants
 {
-	final static int VERSION = 1;
+	final static int VERSION          = 0b00000000;
+	final static int VERSION_MASK     = 0b00011111;
+	final static int CONTAINER_MASK   = 0b01100000;
+	final static int CONTAINER_BUNDLE = 0b00100000;
+	final static int CONTAINER_ARRAY  = 0b01000000;
 
 	final static int BOOLEAN = 0;
 	final static int BYTE = 1;
@@ -29,6 +33,7 @@ class BundleConstants
 	final static int CALENDAR = 13;
 	final static int BIGINTEGER = 14;
 	final static int BIGDECIMAL = 15;
+	final static int NULL = 16;
 
 	final static Map<Class, Integer> TYPES = new HashMap<>()
 	{
@@ -49,6 +54,7 @@ class BundleConstants
 			put(GregorianCalendar.class, CALENDAR);
 			put(BigInteger.class, BIGINTEGER);
 			put(BigDecimal.class, BIGDECIMAL);
+			put(null, NULL);
 		}
 	};
 

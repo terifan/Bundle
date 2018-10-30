@@ -1,16 +1,11 @@
 package org.terifan.bundle;
 
-import java.io.ByteArrayInputStream;
 import java.io.Externalizable;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
 import java.io.Serializable;
-import java.io.StringReader;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -19,7 +14,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import org.terifan.bundle.BinaryDecoder.PathEvaluation;
 import org.terifan.bundle.JSONEncoder.Printer;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -52,40 +46,6 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 		this();
 
 		aValue.writeExternal(this);
-	}
-
-
-	public Bundle(ByteArrayInputStream aValue) throws IOException
-	{
-		this(aValue, new PathEvaluation());
-	}
-
-
-	public Bundle(ByteArrayInputStream aValue, PathEvaluation aPathEvaluation) throws IOException
-	{
-		this();
-
-		new BinaryDecoder().unmarshal(aValue, aPathEvaluation, this);
-	}
-
-
-	public Bundle(byte[] aValue) throws IOException
-	{
-		this(new ByteArrayInputStream(aValue));
-	}
-
-
-	public Bundle(byte[] aValue, PathEvaluation aPathEvaluation) throws IOException
-	{
-		this(new ByteArrayInputStream(aValue), aPathEvaluation);
-	}
-
-
-	public Bundle(String aBundle) throws IOException
-	{
-		this();
-
-		new JSONDecoder(new StringReader(aBundle)).unmarshal(this);
 	}
 
 
@@ -252,32 +212,6 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 	}
 
 
-	public byte[] marshal() throws IOException
-	{
-		return new BinaryEncoder().marshal(this);
-	}
-
-
-	@Override
-	public void writeExternal(ObjectOutput aOut) throws IOException
-	{
-		byte[] data = marshal();
-		aOut.writeInt(data.length);
-		aOut.write(data);
-	}
-
-
-	@Override
-	public void readExternal(ObjectInput aIn) throws IOException, ClassNotFoundException
-	{
-		int size = aIn.readInt();
-		byte[] buf = new byte[size];
-		aIn.read(buf);
-
-		new BinaryDecoder().unmarshal(new ByteArrayInputStream(buf), new PathEvaluation(), this);
-	}
-
-
 	/**
 	 * Return this Bundle as a compacted JSON.
 	 *
@@ -287,25 +221,7 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 	@Override
 	public String toString()
 	{
-		return toJSON(new StringBuilder(), true).toString();
-	}
-
-
-	/**
-	 * Return this Bundle as a JSON.
-	 *
-	 * @param aAppendable
-	 *   bundle JSON is written to this Appendable
-	 * @param aCompact
-	 *   if false the JSON produced will be formatted
-	 * @return
-	 *   return this Bundle as a JSON
-	 */
-	public <T extends Appendable> T toJSON(T aAppendable, boolean aCompact)
-	{
-		new JSONEncoder().marshalBundle(new Printer(aAppendable, aCompact), this);
-
-		return aAppendable;
+		return marshalJSON(new StringBuilder(), true).toString();
 	}
 
 
@@ -342,85 +258,5 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 		}
 
 		return false;
-	}
-
-
-	/**
-	 * Import XML to a Bundle
-	 *
-	 * @param aInputStream
-	 *   an XML string
-	 * @param aCreateOptionalArrays
-	 *   if true then each element will contain an array otherwise arrays will only be created when an element is repeated
-	 */
-	public void importXML(InputStream aInputStream, boolean aCreateOptionalArrays)
-	{
-		try (aInputStream)
-		{
-			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder documentBuilder = factory.newDocumentBuilder();
-			Document doc = documentBuilder.parse(aInputStream);
-
-			importXML(doc, this, aCreateOptionalArrays);
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace(System.out);
-		}
-	}
-
-
-	private void importXML(Node aNode, Bundle aBundle, boolean aCreateOptionalArrays)
-	{
-		NodeList nodeList = aNode.getChildNodes();
-
-		HashMap<String,Array> elements = new HashMap<>();
-		HashMap<String,Integer> counts = null;
-
-		if (!aCreateOptionalArrays)
-		{
-			counts = new HashMap<>();
-
-			for (int i = 0; i < nodeList.getLength(); i++)
-			{
-				String name = nodeList.item(i).getNodeName();
-				counts.put(name, counts.getOrDefault(name, 0) + 1);
-			}
-		}
-
-		for (int i = 0; i < nodeList.getLength(); i++)
-		{
-			Node node = nodeList.item(i);
-
-			if (node instanceof Element)
-			{
-				Bundle bundle = new Bundle();
-
-				if (aCreateOptionalArrays || counts.get(node.getNodeName()) > 1)
-				{
-					Array array = elements.computeIfAbsent(node.getNodeName(), e->{Array arr = new Array(); aBundle.putArray(e, arr); return arr;});
-					array.add(bundle);
-				}
-				else
-				{
-					aBundle.put(node.getNodeName(), bundle);
-				}
-
-				NamedNodeMap attributes = ((Element)node).getAttributes();
-				for (int j = 0; j < attributes.getLength(); j++)
-				{
-					bundle.put("@" + attributes.item(j).getNodeName(), attributes.item(j).getTextContent());
-				}
-
-				importXML(node, bundle, aCreateOptionalArrays);
-			}
-			else if (node instanceof Text)
-			{
-				if (!node.getNodeValue().trim().isBlank())
-				{
-					aBundle.put("#content", node.getNodeValue().trim());
-				}
-			}
-		}
 	}
 }

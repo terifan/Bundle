@@ -3,7 +3,6 @@ package org.terifan.bundle;
 import java.io.IOException;
 import java.io.PushbackReader;
 import java.io.Reader;
-import java.io.StringReader;
 
 
 class JSONDecoder
@@ -17,34 +16,17 @@ class JSONDecoder
 	}
 
 
-	public Object unmarshal() throws IOException
+	public Container unmarshal(Container aContainer) throws IOException
 	{
 		switch (mReader.read())
 		{
 			case '{':
-				return readBundle();
+				return readBundle((Bundle)aContainer);
 			case '[':
-				return readArray();
+				return readArray((Array)aContainer);
 			default:
 				throw new IllegalArgumentException("First character must be either \"[\" or \"{\".");
 		}
-	}
-
-
-	public void unmarshal(Bundle aBundle) throws IOException
-	{
-		if (mReader.read() != '{')
-		{
-			throw new IllegalArgumentException("First character must be \"{\".");
-		}
-
-		readBundle(aBundle);
-	}
-
-
-	private Bundle readBundle() throws IOException
-	{
-		return readBundle(new Bundle());
 	}
 
 
@@ -88,10 +70,10 @@ class JSONDecoder
 			switch (c)
 			{
 				case '[':
-					value = readArray();
+					value = readArray(new Array());
 					break;
 				case '{':
-					value = readBundle();
+					value = readBundle(new Bundle());
 					break;
 				case '\"':
 					value = readString();
@@ -109,10 +91,8 @@ class JSONDecoder
 	}
 
 
-	private Object readArray() throws IOException
+	private Container readArray(Array aArray) throws IOException
 	{
-		Array array = new Array();
-
 		for (;;)
 		{
 			int c = readChar();
@@ -126,7 +106,7 @@ class JSONDecoder
 				throw new IOException("Found colon after element in array");
 			}
 
-			if (array.size() > 0)
+			if (aArray.size() > 0)
 			{
 				if (c != ',')
 				{
@@ -140,10 +120,10 @@ class JSONDecoder
 			switch (c)
 			{
 				case '[':
-					value = readArray();
+					value = readArray(new Array());
 					break;
 				case '{':
-					value = readBundle();
+					value = readBundle(new Bundle());
 					break;
 				case '\"':
 					value = readString();
@@ -154,10 +134,10 @@ class JSONDecoder
 					break;
 			}
 
-			array.add(value);
+			aArray.add(value);
 		}
 
-		return array;
+		return aArray;
 	}
 
 
@@ -253,31 +233,5 @@ class JSONDecoder
 			throw new IOException("Unexpected end of stream.");
 		}
 		return c;
-	}
-
-
-	public static void main(String... args)
-	{
-		try
-		{
-			System.out.println(new JSONDecoder(new StringReader("[]")).unmarshal());
-			System.out.println(new JSONDecoder(new StringReader("{}")).unmarshal());
-			System.out.println(new JSONDecoder(new StringReader("[1,2,3]")).unmarshal());
-			System.out.println(new JSONDecoder(new StringReader("[1,\"a\",true,null,1.3,{},[]]")).unmarshal());
-			System.out.println(new JSONDecoder(new StringReader("[\"1\",\"2\",\"3\"]")).unmarshal());
-			System.out.println(new JSONDecoder(new StringReader("{\"a\":1,\"b\":2}")).unmarshal());
-			System.out.println(new JSONDecoder(new StringReader("[{\"a\":1,\"b\":2}]")).unmarshal());
-			System.out.println(new JSONDecoder(new StringReader("[1,2,[3]]")).unmarshal());
-			System.out.println(new JSONDecoder(new StringReader("[[1,2,[3]]]")).unmarshal());
-			System.out.println(new JSONDecoder(new StringReader("[[1,2,[{\"a\":\"b\"}]]]")).unmarshal());
-			System.out.println(new JSONDecoder(new StringReader("[[1,2,[{\"a\":true}]]]")).unmarshal());
-			System.out.println(new JSONDecoder(new StringReader("[[1,2,[{\"a\":null}]]]")).unmarshal());
-			System.out.println(new JSONDecoder(new StringReader("[[1,2,[{\"a\":1.1}]]]")).unmarshal());
-			System.out.println(new JSONDecoder(new StringReader("[[1,2,[{\"a\":7}]]]")).unmarshal());
-		}
-		catch (Throwable e)
-		{
-			e.printStackTrace(System.out);
-		}
 	}
 }

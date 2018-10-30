@@ -1,5 +1,6 @@
 package org.terifan.bundle;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Base64;
@@ -7,8 +8,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Map.Entry;
 import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 class JSONEncoder
@@ -18,13 +17,30 @@ class JSONEncoder
 	}
 
 
-	void marshalBundle(Printer aPrinter, Bundle aBundle)
+	public void marshal(Printer aPrinter, Container aContainer) throws IOException
+	{
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+		BitOutputStream output = new BitOutputStream(baos);
+
+		if (aContainer instanceof Bundle)
+		{
+			marshalBundle(aPrinter, (Bundle)aContainer, true);
+		}
+		else
+		{
+			marshalArray(aPrinter, (Array)aContainer);
+		}
+	}
+
+
+	private void marshalBundle(Printer aPrinter, Bundle aBundle) throws IOException
 	{
 		marshalBundle(aPrinter, aBundle, true);
 	}
 
 
-	private void marshalBundle(Printer aPrinter, Bundle aBundle, boolean aNewLineOnClose)
+	private void marshalBundle(Printer aPrinter, Bundle aBundle, boolean aNewLineOnClose) throws IOException
 	{
 		int size = aBundle.size();
 
@@ -53,7 +69,7 @@ class JSONEncoder
 	}
 
 
-	void marshalArray(Printer aPrinter, Array aArray)
+	void marshalArray(Printer aPrinter, Array aArray) throws IOException
 	{
 		int size = aArray.size();
 
@@ -110,7 +126,7 @@ class JSONEncoder
 	}
 
 
-	private void marshal(Printer aPrinter, Object aValue)
+	private void marshal(Printer aPrinter, Object aValue) throws IOException
 	{
 		if (aValue instanceof Bundle)
 		{
@@ -127,7 +143,7 @@ class JSONEncoder
 	}
 
 
-	void marshalValue(Printer aPrinter, Object aValue)
+	void marshalValue(Printer aPrinter, Object aValue) throws IOException
 	{
 		if (aValue instanceof Date)
 		{
@@ -182,13 +198,13 @@ class JSONEncoder
 		}
 
 
-		Printer print(Object aText)
+		Printer print(Object aText) throws IOException
 		{
 			return print(aText, true);
 		}
 
 
-		Printer print(Object aText, boolean aIndent)
+		Printer print(Object aText, boolean aIndent) throws IOException
 		{
 			String text = aText == null ? "null" : aText.toString();
 			if (mCompact && text.endsWith(" "))
@@ -203,14 +219,7 @@ class JSONEncoder
 			{
 				printIndent();
 			}
-			try
-			{
-				mAppendable.append(text);
-			}
-			catch (IOException e)
-			{
-				throw new IllegalStateException(e);
-			}
+			mAppendable.append(text);
 			return this;
 		}
 

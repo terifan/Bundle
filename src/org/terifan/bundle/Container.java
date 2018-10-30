@@ -2,10 +2,16 @@ package org.terifan.bundle;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.Externalizable;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInput;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.io.Reader;
 import java.io.Serializable;
+import java.io.StringReader;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
@@ -16,10 +22,14 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.TimeZone;
 import java.util.UUID;
+import org.terifan.bundle.BinaryDecoder.PathEvaluation;
 
 
-abstract class Container<K,R>
+public abstract class Container<K,R> implements Serializable, Externalizable
 {
+	private final static long serialVersionUID = 1L;
+
+
 	Container()
 	{
 	}
@@ -396,4 +406,120 @@ abstract class Container<K,R>
 
 
 	abstract MurmurHash32 hashCode(MurmurHash32 aHash);
+
+
+	public String marshalJSON(boolean aCompact)
+	{
+		StringBuilder builder = new StringBuilder();
+		marshalJSON(builder, aCompact);
+		return builder.toString();
+	}
+
+
+	/**
+	 * Return this Bundle as a JSON.
+	 *
+	 * @param aJSONOutput
+	 *   bundle JSON is written to this Appendable
+	 * @param aCompact
+	 *   if false the JSON produced will be formatted
+	 * @return
+	 *   return this Bundle as a JSON
+	 */
+	public <T extends Appendable> T marshalJSON(T aJSONOutput, boolean aCompact)
+	{
+		try
+		{
+			new JSONEncoder().marshal(new JSONEncoder.Printer(aJSONOutput, aCompact), this);
+		}
+		catch (IOException e)
+		{
+			throw new IllegalArgumentException(e);
+		}
+
+		return aJSONOutput;
+	}
+
+
+	public R unmarshalJSON(String aJSONData)
+	{
+		return unmarshalJSON(new StringReader(aJSONData));
+	}
+
+
+	public R unmarshalJSON(Reader aJSONData)
+	{
+		try
+		{
+			return (R)new JSONDecoder(aJSONData).unmarshal(this);
+		}
+		catch (IOException e)
+		{
+			throw new IllegalArgumentException(e);
+		}
+	}
+
+
+	public byte[] marshal() throws IOException
+	{
+		return new BinaryEncoder().marshal(this);
+	}
+
+
+	public R unmarshal(byte[] aBinaryData)
+	{
+		return unmarshal(new ByteArrayInputStream(aBinaryData), new BinaryDecoder.PathEvaluation());
+	}
+
+
+	public R unmarshal(byte[] aBinaryData, BinaryDecoder.PathEvaluation aPathEvaluation)
+	{
+		return unmarshal(new ByteArrayInputStream(aBinaryData), aPathEvaluation);
+	}
+
+
+	public R unmarshal(InputStream aBinaryData)
+	{
+		return unmarshal(aBinaryData, new BinaryDecoder.PathEvaluation());
+	}
+
+
+	public R unmarshal(InputStream aBinaryData, PathEvaluation aPathEvaluation)
+	{
+		try
+		{
+			return (R)new BinaryDecoder().unmarshal(aBinaryData, aPathEvaluation, this);
+		}
+		catch (IOException e)
+		{
+			throw new IllegalArgumentException(e);
+		}
+	}
+
+
+	public R unmarshalXML(InputStream aXMLData, boolean aCreateOptionalArrays)
+	{
+		new XMLDecoder().importXML(aXMLData, this, aCreateOptionalArrays);
+		return (R)this;
+	}
+
+
+	@Override
+	public void writeExternal(ObjectOutput aOut) throws IOException
+	{
+		byte[] data = marshal();
+		aOut.writeInt(data.length);
+		aOut.write(data);
+	}
+
+
+	@Override
+	public void readExternal(ObjectInput aIn) throws IOException, ClassNotFoundException
+	{
+		int size = aIn.readInt();
+		byte[] buf = new byte[size];
+		aIn.read(buf);
+
+		new BinaryDecoder().unmarshal(new ByteArrayInputStream(buf), new BinaryDecoder.PathEvaluation(), this);
+	}
 }

@@ -14,17 +14,29 @@ public class BinaryDecoder
 	private BitInputStream mInput;
 
 
-	public Bundle unmarshal(InputStream aInputStream, PathEvaluation aPath, Bundle aBundle) throws IOException
+	public Container unmarshal(InputStream aInputStream, PathEvaluation aPath, Container aContainer) throws IOException
 	{
 		mInput = new BitInputStream(aInputStream);
 
-		int version = mInput.readVar32();
+		int header = mInput.readVar32();
+		int version = header & VERSION_MASK;
+
 		if (version != VERSION)
 		{
 			throw new IllegalArgumentException("Unsupported version");
 		}
 
-		return readBundle(aPath, aBundle);
+		long length = mInput.readVar32();
+
+		switch (header & CONTAINER_MASK)
+		{
+			case CONTAINER_BUNDLE:
+				return readBundle(aPath, (Bundle)aContainer);
+			case  CONTAINER_ARRAY:
+				return readArray(aPath, (Array)aContainer);
+			default:
+				throw new IllegalArgumentException("Unsupported container type.");
+		}
 	}
 
 
@@ -34,19 +46,11 @@ public class BinaryDecoder
 
 		for (int i = 0; i < keyCount; i++)
 		{
-			int keyLen = mInput.readVar32S();
-
-			byte[] buf = readBytes(Math.abs(keyLen));
-			String key = UTF8.decodeUTF8(buf);
-
-			Object value = null;
+			String key = UTF8.decodeUTF8(mInput);
 
 			boolean valid = aPathEvaluation.valid(key);
 
-			if (keyLen >= 0)
-			{
-				value = readValue(aPathEvaluation.next(key), null, valid);
-			}
+			Object value = readValue(aPathEvaluation.next(key), null, valid);
 
 			if (valid)
 			{
@@ -58,13 +62,13 @@ public class BinaryDecoder
 	}
 
 
-	private Object readArray(Array aSequence, PathEvaluation aPathEvaluation) throws IOException
+	private Array readArray(PathEvaluation aPathEvaluation, Array aArray) throws IOException
 	{
 		int header = mInput.readVar32();
-		boolean singleType = (header & 1) != 0;
-		boolean hasNull = (header & 2) != 0;
-		Integer type = singleType ? (header >> 2) & 15 : null;
-		int elementCount = header >> (singleType ? 2 + 4 : 2);
+		boolean singleType = (header & 0x01) != 0;
+		boolean hasNull = (header & 0x02) != 0;
+		Integer type = singleType ? (header >> 2) & 0x1f : null;
+		int elementCount = header >> (singleType ? 2 + 5 : 2);
 
 		for (int i = 0; i < elementCount; i+=8)
 		{
@@ -87,12 +91,12 @@ public class BinaryDecoder
 
 				if (valid)
 				{
-					aSequence.add(value);
+					aArray.add(value);
 				}
 			}
 		}
 
-		return aSequence;
+		return aArray;
 	}
 
 
@@ -105,6 +109,8 @@ public class BinaryDecoder
 
 		switch (aType)
 		{
+			case NULL:
+				return null;
 			case BOOLEAN:
 				return mInput.readBits(8) == 1;
 			case BYTE:
@@ -147,7 +153,7 @@ public class BinaryDecoder
 					case BUNDLE:
 						return readBundle(aPathEvaluation, new Bundle());
 					case ARRAY:
-						return readArray(new Array(), aPathEvaluation);
+						return readArray(aPathEvaluation, new Array());
 					case BINARY:
 						return readBytes(len);
 					default:

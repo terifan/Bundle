@@ -24,9 +24,10 @@ public class Test
 	{
 		try
 		{
-			xml();
+//			xml();
 //			big();
 //			small();
+			array();
 		}
 		catch (Throwable e)
 		{
@@ -39,29 +40,42 @@ public class Test
 	{
 		Bundle bundle = new Bundle();
 
-		bundle.importXML(Test.class.getResourceAsStream("test.xml"), true);
+		bundle.unmarshalXML(Test.class.getResourceAsStream("test.xml"), true);
 
 		byte[] data = bundle.marshal();
 
 		Log.hexDump(data);
 
-		System.out.println(new Bundle(data).toJSON(new StringBuilder(), false));
+		System.out.println(new Bundle().unmarshal(data).marshalJSON(new StringBuilder(), false));
 	}
 
 
 	private static void small() throws IOException
 	{
 		Bundle bundle = new Bundle()
-			.putArray("a", new Array().add("xxx"))
-			.putArray("b", new Array().add("xxx"))
-			.putArray("c", new Array().add("xxx"))
+			.putArray("BSON", new Array().add("awesome", 5.05, 1986))
 			;
 
 		byte[] data = bundle.marshal();
 
 		Log.hexDump(data);
 
-		System.out.println(new Bundle(data));
+		System.out.println(new Bundle().unmarshal(data));
+	}
+
+
+	private static void array() throws IOException
+	{
+		Array array = new Array().add("awesome", 5.05, 1986, new Array().add("awesome", 5.05, 1986), new Array(),null);
+
+		byte[] data = array.marshal();
+		String json = array.marshalJSON(true);
+
+		Log.hexDump(data);
+
+		System.out.println(json);
+		System.out.println(new Array().unmarshalJSON(json));
+		System.out.println(new Array().unmarshal(data));
 	}
 
 
@@ -103,7 +117,7 @@ public class Test
 
 		System.out.println(bundle);
 
-		System.out.println(new Bundle(bundle.toString()));
+		System.out.println(new Bundle().unmarshalJSON(bundle.toString()));
 
 		System.out.println(bundle.getBundle("numbers").getArray("ints").get(1));
 		System.out.println(bundle.getBundle("numbers").toArray("ints")[1]);
@@ -140,7 +154,7 @@ public class Test
 //		PathEvaluation path = new PathEvaluation("colors", 1);
 		PathEvaluation path = new PathEvaluation("arrays", 1, 1);
 
-		Bundle b = new Bundle(data, path);
+		Bundle b = new Bundle().unmarshal(data, path);
 		System.out.println(b);
 
 		ByteArrayOutputStream baosJSON = new ByteArrayOutputStream();

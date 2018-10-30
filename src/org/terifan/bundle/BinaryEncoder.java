@@ -10,13 +10,28 @@ import static org.terifan.bundle.BundleConstants.*;
 
 public class BinaryEncoder
 {
-	public byte[] marshal(Bundle aBundle) throws IOException
+	public byte[] marshal(Container aContainer) throws IOException
 	{
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
 		BitOutputStream output = new BitOutputStream(baos);
-		output.writeVar32(VERSION);
-		output.write(writeBundle(aBundle));
+
+		byte[] data;
+		if (aContainer instanceof Bundle)
+		{
+			output.writeVar32(CONTAINER_BUNDLE | VERSION);
+
+			data = writeBundle((Bundle)aContainer);
+		}
+		else
+		{
+			output.writeVar32(CONTAINER_ARRAY | VERSION);
+	
+			data = writeArray((Array)aContainer);
+		}
+
+		output.writeVar32(data.length);
+		output.write(data);
 		output.finish();
 
 		return baos.toByteArray();
@@ -34,19 +49,14 @@ public class BinaryEncoder
 		{
 			if (key == null)
 			{
-				throw new IllegalArgumentException("Key is null.");
+				throw new IllegalArgumentException("A Bundle key cannot be null.");
 			}
+
+			UTF8.encodeUTF8(key, output);
 
 			Object value = aBundle.get(key);
 
-			byte[] buf = UTF8.encodeUTF8(key);
-			output.writeVar32S(value == null ? -buf.length : buf.length);
-			output.write(buf);
-
-			if (value != null)
-			{
-				output.write(writeValue(value, true));
-			}
+			output.write(writeValue(value, true));
 		}
 
 		output.finish();
@@ -55,7 +65,7 @@ public class BinaryEncoder
 	}
 
 
-	private byte[] writeSequence(Array aSequence) throws IOException
+	private byte[] writeArray(Array aSequence) throws IOException
 	{
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		BitOutputStream output = new BitOutputStream(baos);
@@ -90,7 +100,7 @@ public class BinaryEncoder
 			}
 		}
 
-		output.writeVar32((elementCount << (singleType ? 2 + 4 : 2)) + (singleType && type != null ? TYPES.get(type) << 2 : 0) + (hasNull ? 2 : 0) + (singleType ? 1 : 0));
+		output.writeVar32((elementCount << (singleType ? 2 + 5 : 2)) + (singleType ? TYPES.get(type) << 2 : 0) + (hasNull ? 2 : 0) + (singleType ? 1 : 0));
 
 		for (int i = 0; i < elementCount; i+=8)
 		{
@@ -130,7 +140,7 @@ public class BinaryEncoder
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		BitOutputStream output = new BitOutputStream(baos);
 
-		int type = TYPES.get(aValue.getClass());
+		int type = aValue == null ? NULL : TYPES.get(aValue.getClass());
 
 		if (aIncludeType)
 		{
@@ -139,6 +149,8 @@ public class BinaryEncoder
 
 		switch (type)
 		{
+			case NULL:
+				break;
 			case BOOLEAN:
 				output.writeBits((Boolean)aValue ? 1 : 0, 8);
 				break;
@@ -188,7 +200,7 @@ public class BinaryEncoder
 						buf = writeBundle((Bundle)aValue);
 						break;
 					case ARRAY:
-						buf = writeSequence((Array)aValue);
+						buf = writeArray((Array)aValue);
 						break;
 					case BINARY:
 						buf = (byte[])aValue;
