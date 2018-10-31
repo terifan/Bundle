@@ -40,13 +40,25 @@ public class Test
 	{
 		Bundle bundle = new Bundle();
 
-		bundle.unmarshalXML(Test.class.getResourceAsStream("test.xml"), true);
+		bundle.unmarshalXML(Test.class.getResourceAsStream("test2.xml"), true);
 
 		byte[] data = bundle.marshal();
 
 		Log.hexDump(data);
 
-		System.out.println(new Bundle().unmarshal(data).marshalJSON(new StringBuilder(), false));
+		ByteArrayOutputStream baosJSON = new ByteArrayOutputStream();
+		DeflaterOutputStream dos = new DeflaterOutputStream(baosJSON);
+		dos.write(bundle.toString().getBytes("utf-8"));
+		dos.close();
+
+		ByteArrayOutputStream baosBin = new ByteArrayOutputStream();
+		DeflaterOutputStream dos2 = new DeflaterOutputStream(baosBin);
+		dos2.write(data);
+		dos2.close();
+
+		System.out.println("json=" + bundle.toString().length() + ", bin=" + data.length + ", zipJSON=" + baosJSON.size() + ", zipBIN=" + baosBin.size());
+
+//		System.out.println(new Bundle().unmarshal(data).marshalJSON(new StringBuilder(), false));
 	}
 
 
