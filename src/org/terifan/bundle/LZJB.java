@@ -23,11 +23,12 @@ public class LZJB
 		int dst = 0;
 		int copymapOffset = 0;
 		int copymask = 128;
+		int end = mWindowOffset + aSrcLen;
 
-		mWindow = Arrays.copyOfRange(mWindow, 0, mWindowOffset + aSrcLen);
+		mWindow = Arrays.copyOfRange(mWindow, 0, end);
 		System.arraycopy(aSrcBuffer, 0, mWindow, mWindowOffset, aSrcLen);
 
-		while (src < mWindowOffset + aSrcLen)
+		while (src < end)
 		{
 			copymask <<= 1;
 			if (copymask == 256)
@@ -37,7 +38,7 @@ public class LZJB
 				aDstBuffer[dst++] = 0;
 			}
 
-			if (src >= mWindowOffset + aSrcLen - MATCH_MIN)
+			if (src >= end - MATCH_MIN)
 			{
 				aDstBuffer[dst++] = mWindow[src++];
 				continue;
@@ -58,7 +59,7 @@ public class LZJB
 				aDstBuffer[copymapOffset] |= copymask;
 
 				int mlen = MATCH_MIN;
-				for (; src + mlen < mWindowOffset + aSrcLen && mlen < 256/*MATCH_MAX*/; mlen++)
+				for (; src + mlen < end && mlen < MATCH_MAX + 64+0*256; mlen++)
 				{
 					if (mWindow[src + mlen] != mWindow[cpy + mlen])
 					{
@@ -69,7 +70,7 @@ public class LZJB
 				{
 					aDstBuffer[dst++] = (byte)((((1 << MATCH_BITS) - 1) << (8 - MATCH_BITS)) | (offset >> 8));
 					aDstBuffer[dst++] = (byte)offset;
-					aDstBuffer[dst++] = (byte)mlen;
+					aDstBuffer[dst++] = (byte)(mlen - 0*MATCH_MAX);
 				}
 				else
 				{
@@ -94,11 +95,13 @@ public class LZJB
 	{
 		int src = 0;
 		int dst = 0;
-		int d_end = aDstLen;
+		int end = aDstLen;
 		int copymap = 0;
 		int copymask = 128;
 
-		while (dst < d_end)
+		mWindow = Arrays.copyOfRange(mWindow, 0, mWindowOffset + end);
+
+		while (dst < end)
 		{
 			copymask <<= 1;
 			if (copymask == 256)
@@ -111,18 +114,24 @@ public class LZJB
 				int mlen = ((255 & aSrcBuffer[src]) >> (8 - MATCH_BITS)) + MATCH_MIN;
 				int offset = (((255 & aSrcBuffer[src]) << 8) | (255 & aSrcBuffer[src + 1])) & OFFSET_MASK;
 				src += 2;
-				int cpy = dst - offset;
+				if (mlen == (1 << MATCH_BITS) - 1)
+				{
+					mlen = /*MATCH_MAX +*/ (255 & aSrcBuffer[src++]);
+				}
+				int cpy = mWindowOffset + dst - offset;
 				if (cpy < 0)
 				{
 					throw new RuntimeException();
 				}
-				while (--mlen >= 0 && dst < d_end)
+				while (--mlen >= 0 && dst < end)
 				{
-					aDstBuffer[dst++] = aDstBuffer[cpy++];
+					mWindow[mWindowOffset++] = mWindow[cpy];
+					aDstBuffer[dst++] = mWindow[cpy++];
 				}
 			}
 			else
 			{
+				mWindow[mWindowOffset++] = aSrcBuffer[src];
 				aDstBuffer[dst++] = aSrcBuffer[src++];
 			}
 		}
@@ -133,13 +142,13 @@ public class LZJB
 	{
 		try
 		{
-//			byte[] src1 = "For us, it's a really exciting outcome, because this novel litigation approach worked and would get us a resolution really quickly, and it gave us a way to get our client's data deleted. We were prepared for much more pushback. It's incredibly useful to have this tool in our toolkit for when phones are taken in the future. I can't see any reason why this couldn't be done whenever another traveler is facing this sort of phone seizure.".getBytes();
-//			byte[] src2 = "litigation".getBytes();
-//			byte[] src3 = "approach".getBytes();
+			byte[] src1 = "For us, it's a really exciting outcome, because this novel litigation approach worked and would get us a resolution really quickly, and it gave us a way to get our client's data deleted. We were prepared for much more pushback. It's incredibly useful to have this tool in our toolkit for when phones are taken in the future. I can't see any reason why this couldn't be done whenever another traveler is facing this sort of phone seizure.".getBytes();
+			byte[] src2 = "litigation".getBytes();
+			byte[] src3 = "approach".getBytes();
 
-			byte[] src1 = "test".getBytes();
-			byte[] src2 = "testtest".getBytes();
-			byte[] src3 = "test".getBytes();
+//			byte[] src1 = "test".getBytes();
+//			byte[] src2 = "testtest".getBytes();
+//			byte[] src3 = "test".getBytes();
 			byte[] dst1 = new byte[(src1.length + 7) * 9 / 8];
 			byte[] dst2 = new byte[(src2.length + 7) * 9 / 8];
 			byte[] dst3 = new byte[(src3.length + 7) * 9 / 8];
@@ -161,13 +170,20 @@ public class LZJB
 			System.out.println(src2.length + " / " + len2);
 			System.out.println(src3.length + " / " + len3);
 
-//			lzjb = new LZJB();
-//			lzjb.decompress(dst, unpack, dst.length, unpack.length);
-//
-//			System.out.println(new String(unpack).equals(new String(src)));
-//
-//			System.out.println(new String(src));
-//			System.out.println(new String(unpack));
+			lzjb = new LZJB();
+			lzjb.decompress(dst1, unpack1, dst1.length, unpack1.length);
+			lzjb.decompress(dst2, unpack2, dst2.length, unpack2.length);
+			lzjb.decompress(dst3, unpack3, dst3.length, unpack3.length);
+
+			System.out.println();
+			System.out.println(new String(unpack1).equals(new String(src1)));
+			System.out.println(new String(unpack2).equals(new String(src2)));
+			System.out.println(new String(unpack3).equals(new String(src3)));
+
+			System.out.println();
+			System.out.println(new String(unpack1));
+			System.out.println(new String(unpack2));
+			System.out.println(new String(unpack3));
 		}
 		catch (Exception e)
 		{
