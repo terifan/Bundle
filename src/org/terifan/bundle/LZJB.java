@@ -122,10 +122,13 @@ public class LZJB
 
 		mWindowOffset += aSrcLen;
 
-//		if (dst == 3)
-//		{
-//			aDstBuffer[dst - 2] = ;
-//		}
+		if (dst == 3 && (aDstBuffer[dst - 2] & 0x80) == 0)
+		{
+			aDstBuffer[dst - 3] = (byte)(((0xff & aDstBuffer[dst - 2]) << 1) | 0x01);
+			aDstBuffer[dst - 2] = aDstBuffer[dst - 1];
+			aDstBuffer[dst - 0] = 0;
+			dst = 2;
+		}
 		
 		return dst;
 	}
@@ -143,13 +146,33 @@ public class LZJB
 
 		mWindow = Arrays.copyOfRange(mWindow, 0, mWindowOffset + end);
 
+		if ((aSrcBuffer[0] & 0x01) == 0x01)
+		{
+			int a = (0xff & aSrcBuffer[0]) >> 1;
+			int b = 0xff & aSrcBuffer[1];
+
+			int mlen = (a >> (8 - MATCH_BITS)) + MATCH_MIN;
+			int dist = ((a << 8) | b) & OFFSET_MASK;
+			int cpy = mWindowOffset - dist;
+			if (cpy < 0)
+			{
+				throw new RuntimeException();
+			}
+			while (--mlen >= 0)
+			{
+				mWindow[mWindowOffset++] = mWindow[cpy];
+				aDstBuffer[dst++] = mWindow[cpy++];
+			}
+			return;
+		}
+		
 		while (dst < end)
 		{
 			copymask <<= 1;
 			if (copymask == 256)
 			{
 				copymask = 1;
-				copymap = 255 & aSrcBuffer[src++];
+				copymap = 0xff & aSrcBuffer[src++];
 				
 				if (first)
 				{
@@ -159,12 +182,15 @@ public class LZJB
 			}
 			if ((copymap & copymask) != 0)
 			{
-				int mlen = ((255 & aSrcBuffer[src]) >> (8 - MATCH_BITS)) + MATCH_MIN;
-				int dist = (((255 & aSrcBuffer[src]) << 8) | (255 & aSrcBuffer[src + 1])) & OFFSET_MASK;
+				int a = 0xff & aSrcBuffer[src + 0];
+				int b = 0xff & aSrcBuffer[src + 1];
+
+				int mlen = (a >> (8 - MATCH_BITS)) + MATCH_MIN;
+				int dist = ((a << 8) | b) & OFFSET_MASK;
 				src += 2;
 				if (mlen == MATCH_MAX)
 				{
-					mlen = MATCH_MAX + (255 & aSrcBuffer[src++]);
+					mlen = MATCH_MAX + (0xff & aSrcBuffer[src++]);
 				}
 				int cpy = mWindowOffset - dist;
 				if (cpy < 0)
