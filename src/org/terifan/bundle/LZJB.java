@@ -31,12 +31,11 @@ public class LZJB
 
 	public byte[] compress(byte[] aSrcBuffer, int aSrcLen) throws IOException
 	{
-		int src = mWindowOffset;
+		int srcX = 0;
 		int copymap = 0;
 		int copymask = 128;
-		int end = mWindowOffset + aSrcLen;
 
-		mWindow = Arrays.copyOfRange(mWindow, 0, end);
+		mWindow = Arrays.copyOfRange(mWindow, 0, mWindowOffset + aSrcLen);
 		System.arraycopy(aSrcBuffer, 0, mWindow, mWindowOffset, aSrcLen);
 		
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -44,7 +43,7 @@ public class LZJB
 
 		boolean first = true;
 
-		while (src < end)
+		while (srcX < aSrcLen)
 		{
 			copymask <<= 1;
 			if (copymask == 256)
@@ -66,13 +65,13 @@ public class LZJB
 				}
 			}
 
-			if (src >= end - MATCH_MIN)
+			if (srcX >= aSrcLen - MATCH_MIN)
 			{
-				work.write(0xff & mWindow[src++]);
+				work.write(0xff & aSrcBuffer[srcX++]);
 				continue;
 			}
 
-			int hash = ((0xff & mWindow[src]) << 16) + ((0xff & mWindow[src + 1]) << 8) + (0xff & mWindow[src + 2]);
+			int hash = ((0xff & aSrcBuffer[srcX]) << 16) + ((0xff & aSrcBuffer[srcX + 1]) << 8) + (0xff & aSrcBuffer[srcX + 2]);
 			hash += hash >> 9;
 			hash += hash >> 5;
 			hash &= OFFSET_MASK;
@@ -82,15 +81,15 @@ public class LZJB
 
 			for (int i = 0; i < REFS_COUNT && mRefs[hash][i] > -1; i++)
 			{
-				int dist = src - mRefs[hash][i];
+				int dist = mWindowOffset + srcX - mRefs[hash][i];
 				int cpy = mRefs[hash][i];
 
-				if (dist >= 0 && dist < WINDOW_SIZE && cpy + MATCH_MIN < src)
+				if (dist >= 0 && dist < WINDOW_SIZE && cpy + MATCH_MIN < mWindowOffset + srcX)
 				{
 					int mlen = 0;
-					for (; src + mlen < end && mlen < MATCH_MAX; mlen++)
+					for (; srcX + mlen < aSrcLen && mlen < MATCH_MAX; mlen++)
 					{
-						if (mWindow[src + mlen] != mWindow[cpy + mlen])
+						if (aSrcBuffer[srcX + mlen] != mWindow[cpy + mlen])
 						{
 							break;
 						}
@@ -104,19 +103,19 @@ public class LZJB
 				}
 			}
 
-			System.arraycopy(mRefs[hash], 0, mRefs[hash], 1, mRefs[hash].length - 1);
-			mRefs[hash][0] = src;
+			System.arraycopy(mRefs[hash], 0, mRefs[hash], 1, REFS_COUNT - 1);
+			mRefs[hash][0] = mWindowOffset + srcX;
 
 			if (bestLength >= MATCH_MIN)
 			{
 				copymap |= copymask;
 				work.write(0xff & ((((bestLength - MATCH_MIN) << (8 - MATCH_BITS)) | (bestDist >> 8))));
 				work.write(0xff & bestDist);
-				src += bestLength;
+				srcX += bestLength;
 			}
 			else
 			{
-				work.write(0xff & mWindow[src++]);
+				work.write(0xff & aSrcBuffer[srcX++]);
 			}
 		}
 
@@ -126,22 +125,20 @@ public class LZJB
 		work.writeTo(baos);
 		
 		byte[] tmp = baos.toByteArray();
-		int dst = tmp.length;
 
-		if (dst == 3 && tmp[dst - 3] == 2 && (tmp[dst - 2] & 0x80) == 0)
+		if (tmp.length == 3 && tmp[0] == 2 && (tmp[1] & 0x80) == 0)
 		{
 			tmp = new byte[]
 			{
-				(byte)((0xff & tmp[dst - 2] << 1) | 0x01),
-				tmp[dst - 1]
+				(byte)((0xff & tmp[1] << 1) | 0x01),
+				tmp[2]
 			};
-			dst = 2;
 		}
 		else
 		{
 			tmp = Arrays.copyOfRange(tmp, 0, tmp.length + 1);
 			System.arraycopy(tmp, 0, tmp, 1, tmp.length - 1);
-			tmp[0] = (byte)(dst << 1);
+			tmp[0] = (byte)((tmp.length - 1) << 1);
 		}
 		
 		return tmp;
@@ -205,14 +202,14 @@ public class LZJB
 				}
 				while (--mlen >= 0)
 				{
-		mWindow = Arrays.copyOfRange(mWindow, 0, mWindowOffset + 1);
+					mWindow = Arrays.copyOfRange(mWindow, 0, mWindowOffset + 1);
 					mWindow[mWindowOffset++] = mWindow[cpy];
 					baos.write(0xff & mWindow[cpy++]);
 				}
 			}
 			else
 			{
-		mWindow = Arrays.copyOfRange(mWindow, 0, mWindowOffset + 1);
+				mWindow = Arrays.copyOfRange(mWindow, 0, mWindowOffset + 1);
 				mWindow[mWindowOffset++] = aSrcBuffer[src];
 				baos.write(0xff & aSrcBuffer[src++]);
 			}
