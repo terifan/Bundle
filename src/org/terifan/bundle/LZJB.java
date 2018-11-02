@@ -39,7 +39,7 @@ public class LZJB
 		System.arraycopy(aSrcBuffer, 0, mWindow, mWindowOffset, aSrcLen);
 
 		boolean first = true;
-		
+
 		while (src < end)
 		{
 			copymask <<= 1;
@@ -48,7 +48,7 @@ public class LZJB
 				copymask = 1;
 				copymapOffset = dst;
 				aDstBuffer[dst++] = 0;
-				
+
 				if (first)
 				{
 					copymask <<= 1;
@@ -122,14 +122,14 @@ public class LZJB
 
 		mWindowOffset += aSrcLen;
 
-		if (dst == 3 && (aDstBuffer[dst - 2] & 0x80) == 0)
+		if (dst == 3 && aDstBuffer[dst - 3] == 2 && (aDstBuffer[dst - 2] & 0x80) == 0)
 		{
-			aDstBuffer[dst - 3] = (byte)(((0xff & aDstBuffer[dst - 2]) << 1) | 0x01);
+			aDstBuffer[dst - 3] = (byte)((0xff & aDstBuffer[dst - 2] << 1) | 0x01);
 			aDstBuffer[dst - 2] = aDstBuffer[dst - 1];
-			aDstBuffer[dst - 0] = 0;
+			aDstBuffer[dst - 1] = 0;
 			dst = 2;
 		}
-		
+
 		return dst;
 	}
 
@@ -148,24 +148,14 @@ public class LZJB
 
 		if ((aSrcBuffer[0] & 0x01) == 0x01)
 		{
-			int a = (0xff & aSrcBuffer[0]) >> 1;
-			int b = 0xff & aSrcBuffer[1];
-
-			int mlen = (a >> (8 - MATCH_BITS)) + MATCH_MIN;
-			int dist = ((a << 8) | b) & OFFSET_MASK;
-			int cpy = mWindowOffset - dist;
-			if (cpy < 0)
+			aSrcBuffer = new byte[]
 			{
-				throw new RuntimeException();
-			}
-			while (--mlen >= 0)
-			{
-				mWindow[mWindowOffset++] = mWindow[cpy];
-				aDstBuffer[dst++] = mWindow[cpy++];
-			}
-			return;
+				(byte)0x02,
+				(byte)((0xff & aSrcBuffer[0]) >> 1),
+				(byte)aSrcBuffer[1]
+			};
 		}
-		
+
 		while (dst < end)
 		{
 			copymask <<= 1;
@@ -173,7 +163,7 @@ public class LZJB
 			{
 				copymask = 1;
 				copymap = 0xff & aSrcBuffer[src++];
-				
+
 				if (first)
 				{
 					copymask <<= 1;
@@ -221,7 +211,7 @@ public class LZJB
 
 			int sumPacked = 0;
 			int sumUnpacked = 0;
-			
+
 			for (String s : new String[]{"TransmissionHeader","ApiKey","DevKey","ApiKey","Version","v1","Version","TransmissionType","TransmissionType","TransmissionType","TransmissionCreateDateTime","TransmissionCreateDateTime","TransactionCount","TransactionCount","SenderName","SenderName","SenderName","ReceiverName","ReceiverName","ReceiverName","SenderTransmissionNo","SenderTransmissionNo","SenderTransmissionNo","SuppressTransmissionAck","SuppressTransmissionAck","StopProcessOnError","StopProcessOnError","ProcessGrouping","ProcessGroup","ProcessGroup","ProcessGroup","ProcessGroupOwner","ProcessGroupOwner","ProcessGroupOwner","InSequence","InSequence","StopProcessOnError","StopProcessOnError","ProcessGrouping","TransmissionHeader","TransmissionBody","TransactionElement","TransactionHeader","TransactionType","TransactionType","TransactionType","SenderTransactionId","SenderTransactionId","SenderTransactionId","ProcessInfo","ProcessGroup","ProcessGroup","ProcessGroup","ProcessSequence","ProcessSequence","ProcessSequence","ProcessInfo","SendReason","Remark","RemarkText","RemarkText","RemarkText","Remark","Identifier","IdentifierText","IdentifierText","IdentifierText","Identifier","ObjectType","ObjectType","ObjectType","SendReason","Reference","Reference","Reference","TransactionHeader","RegisterShipmentOrder","ShipmentOrderSubmittedEvent","ShipmentOrder","OrderDateTime","OrderDateTime","TransportInformation","ServiceLevel","Handle","standard","Handle","ServiceLevel","TermsOfTransport","IncoTerm","Handle","fob","Handle","IncoTerm","LocationRefSummary","LocationIdentifiers","LocationIdentifier","DomainIdentifier","Location","DomainIdentifier","Identifier","Identifier","IdentifierAuthority","IdentifierAuthority","LocationIdentifier","LocationIdentifiers","PartyRole","Handle","consignor","Handle","PartyRole","TimeSpan","From","Date","Date","HasTime","HasTime","From","To","Date","Date","HasTime","HasTime","To","TimeSpan","LocationRefSummary","TermsDateTime","TermsDateTime","TermsOfTransport","TransportMode","Handle","sea","Handle","TransportMode","TransportProduct","Handle","bulk","Handle","TransportProduct","TransportInformation","Contacts","ShipmentOrderContact","PartyRole","Handle","consignor","Handle","PartyRole","CommunicationMethod","Handle","email","Handle","CommunicationMethod","PhoneNumber","PhoneNumber","Name","Name","Addresses","PhoneAddress","PhoneNumber","PhoneNumber","PhysicalType","PhoneAddress","Addresses","ShipmentOrderContact","ShipmentOrderContact","PartyRole","Handle","consignee","Handle","PartyRole","CommunicationMethod","Handle","email","Handle","CommunicationMethod","PhoneNumber","Name","Intern Kontakt","Name","Addresses","PhoneAddress","PhoneNumber","PhysicalType","PhoneAddress","Addresses","ShipmentOrderContact","Contacts","Locations","LocationRefSummary","LocationIdentifiers","LocationIdentifier","DomainIdentifier","Location","DomainIdentifier","Identifier","33937","Identifier","IdentifierAuthority","LXIR","IdentifierAuthority","LocationIdentifier","LocationIdentifiers","PartyRole","Handle","consignor","Handle","PartyRole","TimeSpan","From","Date","Date","HasTime","HasTime","From","To","Date","Date","HasTime","HasTime","To","TimeSpan","LocationRefSummary","LocationRefSummary","LocationIdentifiers","LocationIdentifier","DomainIdentifier","Location","DomainIdentifier","Identifier","LYS","Identifier","IdentifierAuthority","LXIR","IdentifierAuthority","LocationIdentifier","LocationIdentifiers","PartyRole","Handle","consignee","Handle","PartyRole","TimeSpan","From","Date","Date","HasTime","HasTime","From","To","Date","Date","HasTime","HasTime","To","TimeSpan","LocationRefSummary","Locations","Remark","Remark","ShipmentOrderIdentifiers","ShipmentOrderIdentifier","DomainIdentifier","OrderNumber","DomainIdentifier","Identifier","Identifier","IdentifierAuthority","LXIR","IdentifierAuthority","ShipmentOrderIdentifier","ShipmentOrderIdentifier","DomainIdentifier","OrderType","DomainIdentifier","Identifier","SubOrder","Identifier","IdentifierAuthority","LXIR","IdentifierAuthority","ShipmentOrderIdentifier","ShipmentOrderIdentifiers","ShipmentOrderOrderLines","ShipmentOrderOrderLine","Article","ContractArticleIdentifiers","ContractArticleIdentifier","DomainIdentifier","Article","DomainIdentifier","Identifier","1111","Identifier","IdentifierAuthority","LXIR","IdentifierAuthority","ContractArticleIdentifier","ContractArticleIdentifiers","Article","Identifiers","ShipmentOrderOrderLineIdentifier","DomainIdentifier","OrderLine","DomainIdentifier","Identifier","Identifier","IdentifierAuthority","LXIR","IdentifierAuthority","ShipmentOrderOrderLineIdentifier","Identifiers","Quantity","40000","Quantity","Description","ShipmentOrderOrderLine","ShipmentOrderOrderLine","Article","ContractArticleIdentifiers","ContractArticleIdentifier","DomainIdentifier","Article","DomainIdentifier","Identifier","1106","Identifier","IdentifierAuthority","LXIR","IdentifierAuthority","ContractArticleIdentifier","ContractArticleIdentifiers","Article","Identifiers","ShipmentOrderOrderLineIdentifier","DomainIdentifier","OrderLine","DomainIdentifier","Identifier","Identifier","IdentifierAuthority","LXIR","IdentifierAuthority","ShipmentOrderOrderLineIdentifier","Identifiers","Quantity","1000000","Quantity","Description","ShipmentOrderOrderLine","ShipmentOrderOrderLine","Article","ContractArticleIdentifiers","ContractArticleIdentifier","DomainIdentifier","Article","DomainIdentifier","Identifier","1103","Identifier","IdentifierAuthority","LXIR","IdentifierAuthority","ContractArticleIdentifier","ContractArticleIdentifiers","Article","Identifiers","ShipmentOrderOrderLineIdentifier","DomainIdentifier","OrderLine","DomainIdentifier","Identifier","Identifier","IdentifierAuthority","LXIR","IdentifierAuthority","ShipmentOrderOrderLineIdentifier","Identifiers","Quantity","Quantity","Description","ShipmentOrderOrderLine","ShipmentOrderOrderLine","Article","ContractArticleIdentifiers","ContractArticleIdentifier","DomainIdentifier","Article","DomainIdentifier","Identifier","1115","Identifier","IdentifierAuthority","LXIR","IdentifierAuthority","ContractArticleIdentifier","ContractArticleIdentifiers","Article","Identifiers","ShipmentOrderOrderLineIdentifier","DomainIdentifier","OrderLine","DomainIdentifier","Identifier","Identifier","IdentifierAuthority","LXIR","IdentifierAuthority","ShipmentOrderOrderLineIdentifier","Identifiers","Quantity","Quantity","Description","ShipmentOrderOrderLine","ShipmentOrderOrderLine","Article","ContractArticleIdentifiers","ContractArticleIdentifier","DomainIdentifier","Article","DomainIdentifier","Identifier","1117","Identifier","IdentifierAuthority","LXIR","IdentifierAuthority","ContractArticleIdentifier","ContractArticleIdentifiers","Article","Identifiers","ShipmentOrderOrderLineIdentifier","DomainIdentifier","OrderLine","DomainIdentifier","Identifier","Identifier","IdentifierAuthority","LXIR","IdentifierAuthority","ShipmentOrderOrderLineIdentifier","Identifiers","Quantity","Quantity","Description","ShipmentOrderOrderLine","ShipmentOrderOrderLine","Article","ContractArticleIdentifiers","ContractArticleIdentifier","DomainIdentifier","Article","DomainIdentifier","Identifier","1118","Identifier","IdentifierAuthority","LXIR","IdentifierAuthority","ContractArticleIdentifier","ContractArticleIdentifiers","Article","Identifiers","ShipmentOrderOrderLineIdentifier","DomainIdentifier","OrderLine","DomainIdentifier","Identifier","Identifier","IdentifierAuthority","LXIR","IdentifierAuthority","ShipmentOrderOrderLineIdentifier","Identifiers","Quantity","Quantity","Description","ShipmentOrderOrderLine","ShipmentOrderOrderLine","Article","ContractArticleIdentifiers","ContractArticleIdentifier","DomainIdentifier","Article","DomainIdentifier","Identifier","1119","Identifier","IdentifierAuthority","LXIR","IdentifierAuthority","ContractArticleIdentifier","ContractArticleIdentifiers","Article","Identifiers","ShipmentOrderOrderLineIdentifier","DomainIdentifier","OrderLine","DomainIdentifier","Identifier","Identifier","IdentifierAuthority","LXIR","IdentifierAuthority","ShipmentOrderOrderLineIdentifier","Identifiers","Quantity","Quantity","Description","ShipmentOrderOrderLine","ShipmentOrderOrderLine","Article","ContractArticleIdentifiers","ContractArticleIdentifier","DomainIdentifier","Article","DomainIdentifier","Identifier","1120","Identifier","IdentifierAuthority","LXIR","IdentifierAuthority","ContractArticleIdentifier","ContractArticleIdentifiers","Article","Identifiers","ShipmentOrderOrderLineIdentifier","DomainIdentifier","OrderLine","DomainIdentifier","Identifier","Identifier","IdentifierAuthority","LXIR","IdentifierAuthority","ShipmentOrderOrderLineIdentifier","Identifiers","Quantity","Quantity","Description","ShipmentOrderOrderLine","ShipmentOrderOrderLines","Measurements","ShipmentMeasurement","MeasurementType","Handle","loading_duration","Handle","MeasurementType","Value","Value","ShipmentMeasurement","ShipmentMeasurement","MeasurementType","Handle","unloading_duration","Handle","MeasurementType","Value","0.25","Value","ShipmentMeasurement","Measurements","OrderNumber","OrderNumber","ShipmentOrder","RegisterShipmentRef","Identifiers","ShipmentIdentifier","DomainIdentifier","OrderNumber","DomainIdentifier","Identifier","Identifier","IdentifierAuthority","LXIR","IdentifierAuthority","ShipmentIdentifier","Identifiers","RegisterShipmentRef","ShipmentOrderSubmittedEvent","RegisterShipmentOrder","TransactionElement","TransmissionBody","Transmission"})
 			{
 				byte[] src = s.getBytes();
@@ -230,7 +220,7 @@ public class LZJB
 				byte[] unpacked = new byte[src.length];
 
 				int len = compressor.compress(src, packed, src.length);
-				
+
 				sumPacked += len;
 				sumUnpacked += src.length;
 
@@ -243,7 +233,7 @@ public class LZJB
 					throw new IllegalStateException();
 				}
 			}
-			
+
 			System.out.println("----------------");
 			System.out.println(sumPacked + " / " + sumUnpacked);
 		}
