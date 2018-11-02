@@ -1,5 +1,7 @@
 package org.terifan.bundle;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Arrays;
 import samples.Log;
 
@@ -27,16 +29,18 @@ public class LZJB
 	}
 
 
-	public int compress(byte[] aSrcBuffer, byte[] aDstBuffer, int aSrcLen)
+	public byte[] compress(byte[] aSrcBuffer, int aSrcLen) throws IOException
 	{
 		int src = mWindowOffset;
-		int dst = 0;
-		int copymapOffset = 0;
+		int copymap = 0;
 		int copymask = 128;
 		int end = mWindowOffset + aSrcLen;
 
 		mWindow = Arrays.copyOfRange(mWindow, 0, end);
 		System.arraycopy(aSrcBuffer, 0, mWindow, mWindowOffset, aSrcLen);
+		
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ByteArrayOutputStream work = new ByteArrayOutputStream();
 
 		boolean first = true;
 
@@ -45,9 +49,15 @@ public class LZJB
 			copymask <<= 1;
 			if (copymask == 256)
 			{
+				if (work.size() > 0)
+				{
+					baos.write(copymap);
+					work.writeTo(baos);
+					work.reset();
+				}
+
 				copymask = 1;
-				copymapOffset = dst;
-				aDstBuffer[dst++] = 0;
+				copymap = 0;
 
 				if (first)
 				{
@@ -58,7 +68,7 @@ public class LZJB
 
 			if (src >= end - MATCH_MIN)
 			{
-				aDstBuffer[dst++] = mWindow[src++];
+				work.write(0xff & mWindow[src++]);
 				continue;
 			}
 
@@ -97,43 +107,50 @@ public class LZJB
 			System.arraycopy(mRefs[hash], 0, mRefs[hash], 1, mRefs[hash].length - 1);
 			mRefs[hash][0] = src;
 
-			if (bestLength > 0)
+			if (bestLength >= MATCH_MIN)
 			{
-				aDstBuffer[copymapOffset] |= copymask;
-				aDstBuffer[dst++] = (byte)(((bestLength - MATCH_MIN) << (8 - MATCH_BITS)) | (bestDist >> 8));
-				aDstBuffer[dst++] = (byte)bestDist;
+				copymap |= copymask;
+				work.write(0xff & ((((bestLength - MATCH_MIN) << (8 - MATCH_BITS)) | (bestDist >> 8))));
+				work.write(0xff & bestDist);
 				src += bestLength;
 			}
 			else
 			{
-				aDstBuffer[dst++] = mWindow[src++];
+				work.write(0xff & mWindow[src++]);
 			}
 		}
 
 		mWindowOffset += aSrcLen;
 
-		if (dst == 3 && aDstBuffer[dst - 3] == 2 && (aDstBuffer[dst - 2] & 0x80) == 0)
+		baos.write(copymap);
+		work.writeTo(baos);
+		
+		byte[] tmp = baos.toByteArray();
+		int dst = tmp.length;
+
+		if (dst == 3 && tmp[dst - 3] == 2 && (tmp[dst - 2] & 0x80) == 0)
 		{
-			aDstBuffer[dst - 3] = (byte)((0xff & aDstBuffer[dst - 2] << 1) | 0x01);
-			aDstBuffer[dst - 2] = aDstBuffer[dst - 1];
-			aDstBuffer[dst - 1] = 0;
+			tmp = new byte[]
+			{
+				(byte)((0xff & tmp[dst - 2] << 1) | 0x01),
+				tmp[dst - 1]
+			};
 			dst = 2;
 		}
 		else
 		{
-			System.arraycopy(aDstBuffer, 0, aDstBuffer, 1, aDstBuffer.length - 1);
-			aDstBuffer[0] = (byte)(dst << 1);
-			System.out.println(dst);
+			tmp = Arrays.copyOfRange(tmp, 0, tmp.length + 1);
+			System.arraycopy(tmp, 0, tmp, 1, tmp.length - 1);
+			tmp[0] = (byte)(dst << 1);
 		}
-
-		return dst;
+		
+		return tmp;
 	}
 
 
-	public void decompress(byte[] aSrcBuffer, byte[] aDstBuffer)
+	public byte[] decompress(byte[] aSrcBuffer)
 	{
 		int src = 0;
-		int dst = 0;
 		int end = 0;
 		int copymap = 0;
 		int copymask = 128;
@@ -149,19 +166,17 @@ public class LZJB
 				(byte)aSrcBuffer[1]
 			};
 
-			end = 3;
+			end = 2;
 		}
 		else
 		{
-			end = ((0xff & aSrcBuffer[0]) >> 1) + 1;
+			end = (0xff & aSrcBuffer[0]) >> 1;
 			src++;
 		}
+		
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-		System.out.println(end);
-
-//		mWindow = Arrays.copyOfRange(mWindow, 0, mWindowOffset + end);
-
-		while (src < end)
+		while (src <= end)
 		{
 			copymask <<= 1;
 			if (copymask == 256)
@@ -177,12 +192,12 @@ public class LZJB
 			}
 			if ((copymap & copymask) != 0)
 			{
-				int a = 0xff & aSrcBuffer[src + 0];
-				int b = 0xff & aSrcBuffer[src + 1];
+				int a = 0xff & aSrcBuffer[src++];
+				int b = 0xff & aSrcBuffer[src++];
 
 				int mlen = (a >> (8 - MATCH_BITS)) + MATCH_MIN;
 				int dist = ((a << 8) | b) & OFFSET_MASK;
-				src += 2;
+				
 				int cpy = mWindowOffset - dist;
 				if (cpy < 0)
 				{
@@ -192,16 +207,18 @@ public class LZJB
 				{
 		mWindow = Arrays.copyOfRange(mWindow, 0, mWindowOffset + 1);
 					mWindow[mWindowOffset++] = mWindow[cpy];
-					aDstBuffer[dst++] = mWindow[cpy++];
+					baos.write(0xff & mWindow[cpy++]);
 				}
 			}
 			else
 			{
 		mWindow = Arrays.copyOfRange(mWindow, 0, mWindowOffset + 1);
 				mWindow[mWindowOffset++] = aSrcBuffer[src];
-				aDstBuffer[dst++] = aSrcBuffer[src++];
+				baos.write(0xff & aSrcBuffer[src++]);
 			}
 		}
+		
+		return baos.toByteArray();
 	}
 
 
@@ -219,17 +236,14 @@ public class LZJB
 			{
 				byte[] src = s.getBytes();
 
-				byte[] packed = new byte[(src.length + 7) * 9 / 8];
-				byte[] unpacked = new byte[src.length];
+				byte[] packed = compressor.compress(src, src.length);
 
-				int len = compressor.compress(src, packed, src.length);
-				System.out.println("#"+len);
-				sumPacked += len;
+				sumPacked += packed.length;
 				sumUnpacked += src.length;
 
-				System.out.println(len + " / " + src.length);
+				System.out.println(packed.length + " / " + src.length);
 
-				decompressor.decompress(packed, unpacked);
+				byte[] unpacked = decompressor.decompress(packed);
 
 				if (!new String(unpacked).equals(new String(src)))
 				{
@@ -262,31 +276,24 @@ public class LZJB
 			byte[] src2 = "apatest".getBytes();
 			byte[] src3 = "testapa".getBytes();
 
-			byte[] packed1 = new byte[(src1.length + 7) * 9 / 8];
-			byte[] packed2 = new byte[(src2.length + 7) * 9 / 8];
-			byte[] packed3 = new byte[(src3.length + 7) * 9 / 8];
-			byte[] unpacked1 = new byte[src1.length];
-			byte[] unpacked2 = new byte[src2.length];
-			byte[] unpacked3 = new byte[src3.length];
-
 			LZJB lzjb = new LZJB();
 
-			int len1 = lzjb.compress(src1, packed1, src1.length);
-			int len2 = lzjb.compress(src2, packed2, src2.length);
-			int len3 = lzjb.compress(src3, packed3, src3.length);
+			byte[] packed1 = lzjb.compress(src1, src1.length);
+			byte[] packed2 = lzjb.compress(src2, src2.length);
+			byte[] packed3 = lzjb.compress(src3, src3.length);
 
-			Log.hexDump(Arrays.copyOfRange(packed1, 0, len1));
-			Log.hexDump(Arrays.copyOfRange(packed2, 0, len2));
-			Log.hexDump(Arrays.copyOfRange(packed3, 0, len3));
+			Log.hexDump(packed1);
+			Log.hexDump(packed2);
+			Log.hexDump(packed3);
 
-			System.out.println(len1 + " / " + src1.length);
-			System.out.println(len2 + " / " + src2.length);
-			System.out.println(len3 + " / " + src3.length);
+			System.out.println(packed1.length + " / " + src1.length);
+			System.out.println(packed1.length + " / " + src2.length);
+			System.out.println(packed1.length + " / " + src3.length);
 
 			lzjb = new LZJB();
-			lzjb.decompress(packed1, unpacked1);
-			lzjb.decompress(packed2, unpacked2);
-			lzjb.decompress(packed3, unpacked3);
+			byte[] unpacked1 = lzjb.decompress(packed1);
+			byte[] unpacked2 = lzjb.decompress(packed2);
+			byte[] unpacked3 = lzjb.decompress(packed3);
 
 			System.out.println();
 			System.out.println(new String(unpacked1).equals(new String(src1)));
