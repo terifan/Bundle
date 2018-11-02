@@ -6,7 +6,7 @@ import samples.Log;
 
 public class LZJB
 {
-	private final static int MATCH_BITS = 5;
+	private final static int MATCH_BITS = 6;
 	private final static int MATCH_MIN = 2;
 	private final static int MATCH_MAX = (1 << MATCH_BITS) + (MATCH_MIN - 1);
 	private final static int WINDOW_SIZE = 1 << (16 - MATCH_BITS);
@@ -78,7 +78,7 @@ public class LZJB
 				if (dist >= 0 && dist < WINDOW_SIZE && cpy + MATCH_MIN < src)
 				{
 					int mlen = 0;
-					for (; src + mlen < end && mlen < MATCH_MAX + 255; mlen++)
+					for (; src + mlen < end && mlen < MATCH_MAX; mlen++)
 					{
 						if (mWindow[src + mlen] != mWindow[cpy + mlen])
 						{
@@ -100,18 +100,8 @@ public class LZJB
 			if (bestLength > 0)
 			{
 				aDstBuffer[copymapOffset] |= copymask;
-
-				if (bestLength >= MATCH_MAX)
-				{
-					aDstBuffer[dst++] = (byte)((((1 << MATCH_BITS) - 1) << (8 - MATCH_BITS)) | (bestDist >> 8));
-					aDstBuffer[dst++] = (byte)bestDist;
-					aDstBuffer[dst++] = (byte)(bestLength - MATCH_MAX);
-				}
-				else
-				{
-					aDstBuffer[dst++] = (byte)(((bestLength - MATCH_MIN) << (8 - MATCH_BITS)) | (bestDist >> 8));
-					aDstBuffer[dst++] = (byte)bestDist;
-				}
+				aDstBuffer[dst++] = (byte)(((bestLength - MATCH_MIN) << (8 - MATCH_BITS)) | (bestDist >> 8));
+				aDstBuffer[dst++] = (byte)bestDist;
 				src += bestLength;
 			}
 			else
@@ -129,22 +119,26 @@ public class LZJB
 			aDstBuffer[dst - 1] = 0;
 			dst = 2;
 		}
+		else
+		{
+			System.arraycopy(aDstBuffer, 0, aDstBuffer, 1, aDstBuffer.length - 1);
+			aDstBuffer[0] = (byte)(dst << 1);
+			System.out.println(dst);
+		}
 
 		return dst;
 	}
 
 
-	public void decompress(byte[] aSrcBuffer, byte[] aDstBuffer, int aDstLen)
+	public void decompress(byte[] aSrcBuffer, byte[] aDstBuffer)
 	{
 		int src = 0;
 		int dst = 0;
-		int end = aDstLen;
+		int end = 0;
 		int copymap = 0;
 		int copymask = 128;
 
 		boolean first = true;
-
-		mWindow = Arrays.copyOfRange(mWindow, 0, mWindowOffset + end);
 
 		if ((aSrcBuffer[0] & 0x01) == 0x01)
 		{
@@ -154,9 +148,20 @@ public class LZJB
 				(byte)((0xff & aSrcBuffer[0]) >> 1),
 				(byte)aSrcBuffer[1]
 			};
+
+			end = 3;
+		}
+		else
+		{
+			end = ((0xff & aSrcBuffer[0]) >> 1) + 1;
+			src++;
 		}
 
-		while (dst < end)
+		System.out.println(end);
+
+//		mWindow = Arrays.copyOfRange(mWindow, 0, mWindowOffset + end);
+
+		while (src < end)
 		{
 			copymask <<= 1;
 			if (copymask == 256)
@@ -178,23 +183,21 @@ public class LZJB
 				int mlen = (a >> (8 - MATCH_BITS)) + MATCH_MIN;
 				int dist = ((a << 8) | b) & OFFSET_MASK;
 				src += 2;
-				if (mlen == MATCH_MAX)
-				{
-					mlen = MATCH_MAX + (0xff & aSrcBuffer[src++]);
-				}
 				int cpy = mWindowOffset - dist;
 				if (cpy < 0)
 				{
 					throw new RuntimeException();
 				}
-				while (--mlen >= 0 && dst < end)
+				while (--mlen >= 0)
 				{
+		mWindow = Arrays.copyOfRange(mWindow, 0, mWindowOffset + 1);
 					mWindow[mWindowOffset++] = mWindow[cpy];
 					aDstBuffer[dst++] = mWindow[cpy++];
 				}
 			}
 			else
 			{
+		mWindow = Arrays.copyOfRange(mWindow, 0, mWindowOffset + 1);
 				mWindow[mWindowOffset++] = aSrcBuffer[src];
 				aDstBuffer[dst++] = aSrcBuffer[src++];
 			}
@@ -220,16 +223,19 @@ public class LZJB
 				byte[] unpacked = new byte[src.length];
 
 				int len = compressor.compress(src, packed, src.length);
-
+				System.out.println("#"+len);
 				sumPacked += len;
 				sumUnpacked += src.length;
 
 				System.out.println(len + " / " + src.length);
 
-				decompressor.decompress(packed, unpacked, unpacked.length);
+				decompressor.decompress(packed, unpacked);
 
 				if (!new String(unpacked).equals(new String(src)))
 				{
+					System.out.println(new String(src));
+					System.out.println(new String(unpacked));
+
 					throw new IllegalStateException();
 				}
 			}
@@ -278,9 +284,9 @@ public class LZJB
 			System.out.println(len3 + " / " + src3.length);
 
 			lzjb = new LZJB();
-			lzjb.decompress(packed1, unpacked1, unpacked1.length);
-			lzjb.decompress(packed2, unpacked2, unpacked2.length);
-			lzjb.decompress(packed3, unpacked3, unpacked3.length);
+			lzjb.decompress(packed1, unpacked1);
+			lzjb.decompress(packed2, unpacked2);
+			lzjb.decompress(packed3, unpacked3);
 
 			System.out.println();
 			System.out.println(new String(unpacked1).equals(new String(src1)));
