@@ -144,4 +144,23 @@ public class Array extends Container<Integer,Array> implements Serializable, Ite
 
 		return aHash;
 	}
+
+
+	/**
+	 * Create an array of Bundles from objects implementing the Bundlable interface.
+	 *
+	 * @param aBundlable
+	 *   an array of objects that implement the Bundlable interface
+	 * @return
+	 *   an array
+	 */
+	public static Array of(Object... aBundlable)
+	{
+		Array array = new Array();
+		for (Object b : aBundlable)
+		{
+			array.add(Bundle.of(b));
+		}
+		return array;
+	}
 }

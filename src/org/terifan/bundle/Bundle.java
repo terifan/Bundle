@@ -2,25 +2,14 @@ package org.terifan.bundle;
 
 import java.io.Externalizable;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 import java.util.Set;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import org.terifan.bundle.JSONEncoder.Printer;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Text;
 
 
 /**
@@ -109,6 +98,12 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 	public Double[] getDoubleArray(String aKey)
 	{
 		return (Double[])castArray(aKey, Double.class);
+	}
+
+
+	public Bundle[] getBundleArray(String aKey)
+	{
+		return (Bundle[])castArray(aKey, Bundle.class);
 	}
 
 
@@ -258,5 +253,21 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 		}
 
 		return false;
+	}
+
+
+	/**
+	 * Create a Bundle from object provided assuming it implements the Bundlable interface.
+	 *
+	 * @param aBundlable
+	 *   a Bundlable object
+	 * @return
+	 *   a Bundle
+	 */
+	public static Bundle of(Object aBundlable)
+	{
+		Bundle bundle = new Bundle();
+		((Bundlable)aBundlable).writeExternal(bundle);
+		return bundle;
 	}
 }
