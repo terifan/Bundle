@@ -110,10 +110,46 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 	private Object castArray(String aKey, Class aType)
 	{
 		Array array = (Array)get(aKey);
+
+		if (array == null)
+		{
+			return null;
+		}
+
 		Object elements = java.lang.reflect.Array.newInstance(aType, array.size());
 		for (int i = 0; i < array.size(); i++)
 		{
-			java.lang.reflect.Array.set(elements, i, array.get(i));
+			Object v = array.get(i);
+
+			if (v instanceof Number && v.getClass() != aType)
+			{
+				if (aType == Integer.class)
+				{
+					v = ((Number)v).intValue();
+				}
+				else if (aType == Long.class)
+				{
+					v = ((Number)v).longValue();
+				}
+				else if (aType == Short.class)
+				{
+					v = ((Number)v).shortValue();
+				}
+				else if (aType == Byte.class)
+				{
+					v = ((Number)v).byteValue();
+				}
+				else if (aType == Float.class)
+				{
+					v = ((Number)v).floatValue();
+				}
+				else if (aType == Double.class)
+				{
+					v = ((Number)v).doubleValue();
+				}
+			}
+
+			java.lang.reflect.Array.set(elements, i, v);
 		}
 		return elements;
 	}

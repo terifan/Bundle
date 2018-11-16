@@ -55,7 +55,12 @@ public abstract class Container<K,R> implements Serializable, Externalizable
 
 	public Integer getInt(K aKey)
 	{
-		return (Integer)get(aKey);
+		Object v = get(aKey);
+		if (v instanceof Long)
+		{
+			return (int)(long)(Long)v;
+		}
+		return (Integer)v;
 	}
 
 
@@ -146,6 +151,12 @@ public abstract class Container<K,R> implements Serializable, Externalizable
 	public Boolean getBoolean(K aKey)
 	{
 		return (Boolean)get(aKey);
+	}
+
+
+	public Boolean getBoolean(K aKey, boolean aDefault)
+	{
+		return get(aKey) == null ? aDefault : (Boolean)get(aKey);
 	}
 
 
