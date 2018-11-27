@@ -46,24 +46,26 @@ class BinaryEncoder
 	public byte[] marshal(Container aContainer) throws IOException
 	{
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		VLCOutputStream output = new VLCOutputStream(baos);
 
-		byte[] data;
-		if (aContainer instanceof Bundle)
+		try (VLCOutputStream output = new VLCOutputStream(baos))
 		{
-			output.writeVar32(CONTAINER_BUNDLE | VERSION);
+			byte[] data;
+			if (aContainer instanceof Bundle)
+			{
+				output.writeVar32(CONTAINER_BUNDLE | VERSION);
 
-			data = writeBundle((Bundle)aContainer);
+				data = writeBundle((Bundle)aContainer);
+			}
+			else
+			{
+				output.writeVar32(CONTAINER_ARRAY | VERSION);
+
+				data = writeArray((Array)aContainer);
+			}
+
+			output.writeVar32(data.length);
+			output.write(data);
 		}
-		else
-		{
-			output.writeVar32(CONTAINER_ARRAY | VERSION);
-
-			data = writeArray((Array)aContainer);
-		}
-
-		output.writeVar32(data.length);
-		output.write(data);
 
 		return baos.toByteArray();
 	}

@@ -16,26 +16,29 @@ class BinaryDecoder
 
 	public Container unmarshal(InputStream aInputStream, PathEvaluation aPath, Container aContainer) throws IOException
 	{
-		mInput = new VLCInputStream(aInputStream);
-
-		int header = mInput.readVar32();
-		int version = header & VERSION_MASK;
-
-		if (version != VERSION)
+		try (VLCInputStream in = new VLCInputStream(aInputStream))
 		{
-			throw new IllegalArgumentException("Unsupported version");
-		}
+			mInput = in;
 
-		long length = mInput.readVar32();
+			int header = mInput.readVar32();
+			int version = header & VERSION_MASK;
 
-		switch (header & CONTAINER_MASK)
-		{
-			case CONTAINER_BUNDLE:
-				return readBundle(aPath, (Bundle)aContainer);
-			case  CONTAINER_ARRAY:
-				return readArray(aPath, (Array)aContainer);
-			default:
-				throw new IllegalArgumentException("Unsupported container type.");
+			if (version != VERSION)
+			{
+				throw new IllegalArgumentException("Unsupported version");
+			}
+
+			long length = mInput.readVar32();
+
+			switch (header & CONTAINER_MASK)
+			{
+				case CONTAINER_BUNDLE:
+					return readBundle(aPath, (Bundle)aContainer);
+				case  CONTAINER_ARRAY:
+					return readArray(aPath, (Array)aContainer);
+				default:
+					throw new IllegalArgumentException("Unsupported container type.");
+			}
 		}
 	}
 

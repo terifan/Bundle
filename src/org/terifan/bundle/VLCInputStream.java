@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 
-class VLCInputStream
+class VLCInputStream implements AutoCloseable
 {
 	private InputStream mInputStream;
 
@@ -24,6 +24,13 @@ class VLCInputStream
 	public byte[] read(byte[] aBuffer) throws IOException
 	{
 		mInputStream.read(aBuffer);
+		return aBuffer;
+	}
+
+
+	public byte[] read(byte[] aBuffer, int aOffset, int aLength) throws IOException
+	{
+		mInputStream.read(aBuffer, aOffset, aLength);
 		return aBuffer;
 	}
 
@@ -91,5 +98,16 @@ class VLCInputStream
 	public long readInt64() throws IOException
 	{
 		return (readInt32() & 0xFFFFFFFFL) | ((readInt32() & 0xFFFFFFFFL) << 32);
+	}
+
+
+	@Override
+	public void close() throws IOException
+	{
+		if (mInputStream != null)
+		{
+			mInputStream.close();
+			mInputStream = null;
+		}
 	}
 }

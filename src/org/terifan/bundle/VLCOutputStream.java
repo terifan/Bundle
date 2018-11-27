@@ -33,17 +33,6 @@ class VLCOutputStream implements AutoCloseable
 	}
 
 
-	@Override
-	public void close() throws IOException
-	{
-		if (mOutputStream != null)
-		{
-			mOutputStream.close();
-			mOutputStream = null;
-		}
-	}
-
-
 	public void writeVar32S(long aValue) throws IOException
 	{
 		writeVar32((aValue << 1) ^ (aValue >> 31));
@@ -105,5 +94,16 @@ class VLCOutputStream implements AutoCloseable
 	{
 		writeInt32((int)(aValue));
 		writeInt32((int)(aValue >>> 32));
+	}
+
+
+	@Override
+	public void close() throws IOException
+	{
+		if (mOutputStream != null)
+		{
+			mOutputStream.close();
+			mOutputStream = null;
+		}
 	}
 }
