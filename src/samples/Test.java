@@ -157,7 +157,7 @@ public class Test
 //
 //		System.out.println();
 
-		byte[] data = new BinaryEncoder().marshal(bundle);
+		byte[] data = bundle.marshal();
 
 		Log.hexDump(data);
 		System.out.println();

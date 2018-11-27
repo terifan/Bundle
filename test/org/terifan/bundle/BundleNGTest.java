@@ -3,7 +3,6 @@ package org.terifan.bundle;
 import java.io.IOException;
 import static org.testng.Assert.*;
 import org.testng.annotations.Test;
-import samples.Log;
 
 
 public class BundleNGTest
@@ -12,10 +11,11 @@ public class BundleNGTest
 	public void testMarshalBasicTypes() throws IOException
 	{
 		Bundle in = new Bundle()
-			.putBoolean("booleanNull", false)
+			.putBoolean("booleanNull", null)
 			.putBoolean("boolean1", false)
 			.putBoolean("boolean2", true)
 			.putNumber("numberNull", null)
+			.putNumber("byte1", Byte.MIN_VALUE)
 			.putNumber("byte2", Byte.MAX_VALUE)
 			.putNumber("short1", Short.MIN_VALUE)
 			.putNumber("short2", Short.MAX_VALUE)
@@ -34,12 +34,7 @@ public class BundleNGTest
 
 		byte[] data = in.marshal();
 
-		Log.hexDump(data);
-
 		Bundle out = new Bundle().unmarshal(data);
-
-		System.out.println(in);
-		System.out.println(out);
 
 		assertEquals(out, in);
 	}
@@ -86,18 +81,24 @@ public class BundleNGTest
 	public void testBundableObjectConstructor() throws IOException
 	{
 		Bundle in = new Bundle(new Color(64,128,255));
+		byte[] data = in.marshal();
+		Bundle out = new Bundle().unmarshal(data);
 
-		assertEquals((int)in.getInt("r"), 64);
-		assertEquals((int)in.getInt("g"), 128);
-		assertEquals((int)in.getInt("b"), 255);
+		assertEquals((int)out.getInt("r"), 64);
+		assertEquals((int)out.getInt("g"), 128);
+		assertEquals((int)out.getInt("b"), 255);
 	}
 
 
 	@Test
 	public void testBundableValue() throws IOException
 	{
-		Bundle in = new Bundle().putObject("rgb", new Color(64,128,255));
+		Color color = new Color(64,128,255);
 
-		assertEquals(in.getInt("rgb"), new Color(64,128,255).writeExternal());
+		Bundle in = new Bundle().putObject("rgb", color);
+		byte[] data = in.marshal();
+		Bundle out = new Bundle().unmarshal(data);
+
+		assertEquals(out.getInt("rgb"), color.writeExternal());
 	}
 }
