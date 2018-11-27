@@ -1,5 +1,6 @@
-package org.terifan.bundle;
+package org.terifan.bundle.old;
 
+import org.terifan.bundle.*;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -7,7 +8,7 @@ import java.io.InputStream;
 /**
  * BitInputStream allow reading bits from the underlying stream.
  */
-public class BitInputStream //extends InputStream
+public class BitInputStream
 {
 	private InputStream mInputStream;
 	private int mBitBuffer;

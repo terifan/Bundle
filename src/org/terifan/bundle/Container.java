@@ -22,7 +22,6 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.TimeZone;
 import java.util.UUID;
-import org.terifan.bundle.BinaryDecoder.PathEvaluation;
 
 
 public abstract class Container<K,R> implements Serializable, Externalizable
@@ -479,11 +478,11 @@ public abstract class Container<K,R> implements Serializable, Externalizable
 
 	public R unmarshal(byte[] aBinaryData)
 	{
-		return unmarshal(new ByteArrayInputStream(aBinaryData), new BinaryDecoder.PathEvaluation());
+		return unmarshal(new ByteArrayInputStream(aBinaryData), new PathEvaluation());
 	}
 
 
-	public R unmarshal(byte[] aBinaryData, BinaryDecoder.PathEvaluation aPathEvaluation)
+	public R unmarshal(byte[] aBinaryData, PathEvaluation aPathEvaluation)
 	{
 		return unmarshal(new ByteArrayInputStream(aBinaryData), aPathEvaluation);
 	}
@@ -491,7 +490,7 @@ public abstract class Container<K,R> implements Serializable, Externalizable
 
 	public R unmarshal(InputStream aBinaryData)
 	{
-		return unmarshal(aBinaryData, new BinaryDecoder.PathEvaluation());
+		return unmarshal(aBinaryData, new PathEvaluation());
 	}
 
 
@@ -531,6 +530,6 @@ public abstract class Container<K,R> implements Serializable, Externalizable
 		byte[] buf = new byte[size];
 		aIn.read(buf);
 
-		new BinaryDecoder().unmarshal(new ByteArrayInputStream(buf), new BinaryDecoder.PathEvaluation(), this);
+		new BinaryDecoder().unmarshal(new ByteArrayInputStream(buf), new PathEvaluation(), this);
 	}
 }

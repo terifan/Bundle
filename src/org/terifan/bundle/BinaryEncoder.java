@@ -8,7 +8,35 @@ import java.util.UUID;
 import static org.terifan.bundle.BundleConstants.*;
 
 
-public class BinaryEncoder
+/**
+ * var32 header (container type, version)
+ * var32 length
+ * bytes a single bundle or array
+ *
+ * [bundle]
+ *    var32 key count
+ *    [keys]
+ *      int8 key (zero terminated utf8)
+ *      var32 type
+ *        [if string,array,bundle,binary]
+ *          var32 length
+ *          bytes value
+ *        [else]
+ *          bytes value
+ * [array]
+ *    var32 header (element count, single type, has null, is single type)
+ *    [elements]
+ *      [if has nulls]
+ *        int8 null bitmap (one byte read every eight elements)
+ *      [if not single type]
+ *        var32 type
+ *      [if string,array,bundle,binary]
+ *        var32 length
+ *        bytes value
+ *      [else]
+ *        bytes value
+ */
+class BinaryEncoder
 {
 	public BinaryEncoder()
 	{
@@ -18,7 +46,7 @@ public class BinaryEncoder
 	public byte[] marshal(Container aContainer) throws IOException
 	{
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		BitOutputStream output = new BitOutputStream(baos);
+		VLCOutputStream output = new VLCOutputStream(baos);
 
 		byte[] data;
 		if (aContainer instanceof Bundle)
@@ -36,7 +64,6 @@ public class BinaryEncoder
 
 		output.writeVar32(data.length);
 		output.write(data);
-		output.finish();
 
 		return baos.toByteArray();
 	}
@@ -45,7 +72,7 @@ public class BinaryEncoder
 	private byte[] writeBundle(Bundle aBundle) throws IOException
 	{
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		BitOutputStream output = new BitOutputStream(baos);
+		VLCOutputStream output = new VLCOutputStream(baos);
 
 		output.writeVar32(aBundle.size());
 
@@ -56,14 +83,12 @@ public class BinaryEncoder
 				throw new IllegalArgumentException("A Bundle key cannot be null.");
 			}
 
-			UTF8.encodeUTF8(key, output);
+			UTF8.encodeUTF8Z(key, output);
 
 			Object value = aBundle.get(key);
 
 			output.write(writeValue(value, true));
 		}
-
-		output.finish();
 
 		return baos.toByteArray();
 	}
@@ -72,7 +97,7 @@ public class BinaryEncoder
 	private byte[] writeArray(Array aSequence) throws IOException
 	{
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		BitOutputStream output = new BitOutputStream(baos);
+		VLCOutputStream output = new VLCOutputStream(baos);
 
 		int elementCount = aSequence.size();
 		boolean singleType = true;
@@ -118,7 +143,7 @@ public class BinaryEncoder
 						nullBits |= 1 << j;
 					}
 				}
-				output.writeBits(nullBits, 8);
+				output.writeInt8(nullBits);
 			}
 
 			for (int j = 0; j < 8 && i+j < elementCount; j++)
@@ -133,8 +158,6 @@ public class BinaryEncoder
 			}
 		}
 
-		output.finish();
-
 		return baos.toByteArray();
 	}
 
@@ -142,7 +165,7 @@ public class BinaryEncoder
 	private byte[] writeValue(Object aValue, boolean aIncludeType) throws IOException
 	{
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		BitOutputStream output = new BitOutputStream(baos);
+		VLCOutputStream output = new VLCOutputStream(baos);
 
 		int type;
 		if (aValue == null)
@@ -157,7 +180,7 @@ public class BinaryEncoder
 
 		if (aIncludeType)
 		{
-			output.writeBits(type, 8);
+			output.writeInt8(type);
 		}
 
 		switch (type)
@@ -165,10 +188,10 @@ public class BinaryEncoder
 			case NULL:
 				break;
 			case BOOLEAN:
-				output.writeBits((Boolean)aValue ? 1 : 0, 8);
+				output.writeInt8((Boolean)aValue ? 1 : 0);
 				break;
 			case BYTE:
-				output.writeBits(0xff & (Byte)aValue, 8);
+				output.writeInt8(0xff & (Byte)aValue);
 				break;
 			case SHORT:
 				output.writeVar32S((Short)aValue);
@@ -180,23 +203,23 @@ public class BinaryEncoder
 				output.writeVar64S((Long)aValue);
 				break;
 			case FLOAT:
-				output.write32(Float.floatToIntBits((Float)aValue));
+				output.writeInt32(Float.floatToIntBits((Float)aValue));
 				break;
 			case DOUBLE:
-				output.write64(Double.doubleToLongBits((Double)aValue));
+				output.writeInt64(Double.doubleToLongBits((Double)aValue));
 				break;
 			case DATE:
-				output.write64(((Date)aValue).getTime());
+				output.writeInt64(((Date)aValue).getTime());
 				break;
 			case UUID:
 				UUID uuid = (UUID)aValue;
-				output.write64(uuid.getLeastSignificantBits());
-				output.write64(uuid.getMostSignificantBits());
+				output.writeInt64(uuid.getLeastSignificantBits());
+				output.writeInt64(uuid.getMostSignificantBits());
 				break;
 			case CALENDAR:
 				Calendar c = (Calendar)aValue;
 				output.writeVar32(c.getTimeZone().getRawOffset());
-				output.write64(c.getTimeInMillis());
+				output.writeInt64(c.getTimeInMillis());
 				break;
 			case STRING:
 			case BUNDLE:
@@ -229,15 +252,6 @@ public class BinaryEncoder
 				throw new IllegalArgumentException("Unsupported type: " + aValue.getClass());
 		}
 
-		output.finish();
-
 		return baos.toByteArray();
-	}
-
-
-	private void writeVarString(BitOutputStream aOutput, String aText) throws IOException
-	{
-		aOutput.writeVar32(aText.length());
-		UTF8.encodeUTF8(aText);
 	}
 }

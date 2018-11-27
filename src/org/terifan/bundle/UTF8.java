@@ -80,7 +80,7 @@ class UTF8
 	/**
 	 * Write zero terminated String
 	 */
-	public static void encodeUTF8(String aInput, BitOutputStream aOutput) throws IOException
+	public static void encodeUTF8Z(String aInput, VLCOutputStream aOutput) throws IOException
 	{
 		for (int i = 0, len = aInput.length(); i < len; i++)
 		{
@@ -91,35 +91,35 @@ class UTF8
 			}
 		    if ((c >= 0x0000) && (c <= 0x007F))
 		    {
-				aOutput.writeBits(c & 0xff, 8);
+				aOutput.writeInt8(c & 0xff);
 		    }
 		    else if (c > 0x07FF)
 		    {
-				aOutput.writeBits(0xE0 | ((c >> 12) & 0x0F), 8);
-				aOutput.writeBits(0x80 | ((c >>  6) & 0x3F), 8);
-				aOutput.writeBits(0x80 | ((c      ) & 0x3F), 8);
+				aOutput.writeInt8(0xE0 | ((c >> 12) & 0x0F));
+				aOutput.writeInt8(0x80 | ((c >>  6) & 0x3F));
+				aOutput.writeInt8(0x80 | ((c      ) & 0x3F));
 		    }
 		    else
 		    {
-				aOutput.writeBits(0xC0 | ((c >>  6) & 0x1F), 8);
-				aOutput.writeBits(0x80 | ((c      ) & 0x3F), 8);
+				aOutput.writeInt8(0xC0 | ((c >>  6) & 0x1F));
+				aOutput.writeInt8(0x80 | ((c      ) & 0x3F));
 		    }
 		}
 
-		aOutput.writeBits(0, 8); // terminator
+		aOutput.writeInt8(0); // terminator
 	}
 
 
 	/**
 	 * Read zero terminated String
 	 */
-	public static String decodeUTF8(BitInputStream aInput) throws IOException
+	public static String decodeUTF8Z(VLCInputStream aInput) throws IOException
 	{
 		StringBuilder output = new StringBuilder();
 
 		for (;;)
 		{
-			int c = aInput.readBits(8);
+			int c = aInput.readInt8();
 
 			if (c == 0)
 			{
@@ -131,11 +131,11 @@ class UTF8
 			}
 			else if ((c & 0xE0) == 0xC0) // 110xxxxx
 			{
-				output.append((char)(((c & 0x1F) << 6) | (aInput.readBits(8) & 0x3F)));
+				output.append((char)(((c & 0x1F) << 6) | (aInput.readInt8() & 0x3F)));
 			}
 			else if ((c & 0xF0) == 0xE0) // 1110xxxx
 			{
-				output.append((char)(((c & 0x0F) << 12) | ((aInput.readBits(8) & 0x3F) << 6) | (aInput.readBits(8) & 0x3F)));
+				output.append((char)(((c & 0x0F) << 12) | ((aInput.readInt8() & 0x3F) << 6) | (aInput.readInt8() & 0x3F)));
 			}
 			else
 			{

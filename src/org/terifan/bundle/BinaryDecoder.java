@@ -9,14 +9,14 @@ import java.util.UUID;
 import static org.terifan.bundle.BundleConstants.*;
 
 
-public class BinaryDecoder
+class BinaryDecoder
 {
-	private BitInputStream mInput;
+	private VLCInputStream mInput;
 
 
 	public Container unmarshal(InputStream aInputStream, PathEvaluation aPath, Container aContainer) throws IOException
 	{
-		mInput = new BitInputStream(aInputStream);
+		mInput = new VLCInputStream(aInputStream);
 
 		int header = mInput.readVar32();
 		int version = header & VERSION_MASK;
@@ -46,7 +46,7 @@ public class BinaryDecoder
 
 		for (int i = 0; i < keyCount; i++)
 		{
-			String key = UTF8.decodeUTF8(mInput);
+			String key = UTF8.decodeUTF8Z(mInput);
 
 			boolean valid = aPathEvaluation.valid(key);
 
@@ -76,7 +76,7 @@ public class BinaryDecoder
 
 			if (hasNull)
 			{
-				nullBits = mInput.readBits(8);
+				nullBits = mInput.readInt8();
 			}
 
 			for (int j = 0; j < 8 && i+j < elementCount; j++)
@@ -104,7 +104,7 @@ public class BinaryDecoder
 	{
 		if (aType == null)
 		{
-			aType = mInput.readBits(8);
+			aType = mInput.readInt8();
 		}
 
 		switch (aType)
@@ -112,9 +112,9 @@ public class BinaryDecoder
 			case NULL:
 				return null;
 			case BOOLEAN:
-				return mInput.readBits(8) == 1;
+				return mInput.readInt8() == 1;
 			case BYTE:
-				return (byte)mInput.readBits(8);
+				return (byte)mInput.readInt8();
 			case SHORT:
 				return (short)mInput.readVar32S();
 			case INT:
@@ -122,18 +122,18 @@ public class BinaryDecoder
 			case LONG:
 				return mInput.readVar64S();
 			case FLOAT:
-				return Float.intBitsToFloat(mInput.read32());
+				return Float.intBitsToFloat(mInput.readInt32());
 			case DOUBLE:
-				return Double.longBitsToDouble(mInput.read64());
+				return Double.longBitsToDouble(mInput.readInt64());
 			case DATE:
-				return new Date(mInput.read64());
+				return new Date(mInput.readInt64());
 			case UUID:
-				return new UUID(mInput.read64(), mInput.read64());
+				return new UUID(mInput.readInt64(), mInput.readInt64());
 			case CALENDAR:
 				TimeZone timeZone = TimeZone.getDefault();
 				timeZone.setRawOffset(mInput.readVar32());
 				Calendar c = Calendar.getInstance(timeZone);
-				c.setTimeInMillis(mInput.read64());
+				c.setTimeInMillis(mInput.readInt64());
 				return c;
 			case STRING:
 			case BUNDLE:
@@ -142,71 +142,25 @@ public class BinaryDecoder
 				int len = mInput.readVar32();
 				if (!aValid)
 				{
-					mInput.skipBits(8 * len);
+					mInput.skip(len);
 					return null;
 				}
 
 				switch (aType)
 				{
 					case STRING:
-						return UTF8.decodeUTF8(readBytes(len));
+						return UTF8.decodeUTF8(mInput.read(new byte[len]));
 					case BUNDLE:
 						return readBundle(aPathEvaluation, new Bundle());
 					case ARRAY:
 						return readArray(aPathEvaluation, new Array());
 					case BINARY:
-						return readBytes(len);
+						return mInput.read(new byte[len]);
 					default:
 						throw new IOException("Unsupported field type: " + aType);
 				}
 			default:
 				throw new IOException("Unsupported field type: " + aType);
-		}
-	}
-
-
-	private String readVarString() throws IOException
-	{
-		return UTF8.decodeUTF8(readBytes(mInput.readVar32()));
-	}
-
-
-	private byte[] readBytes(int aLen) throws IOException
-	{
-		byte[] buf = new byte[aLen];
-		mInput.read(buf);
-		return buf;
-	}
-
-
-	public static class PathEvaluation
-	{
-		private Object[] mPath;
-		private int mOffset;
-
-
-		public PathEvaluation(Object... aPath)
-		{
-			mPath = aPath;
-		}
-
-
-		private PathEvaluation(int aOffset, Object[] aPath)
-		{
-			mOffset = aOffset;
-			mPath = aPath;
-		}
-
-
-		private boolean valid(Object aKey)
-		{
-			return mOffset >= mPath.length || mPath[mOffset].equals(aKey);
-		}
-
-
-		private PathEvaluation next(Object aKey)
-		{
-			return new PathEvaluation(mOffset + 1, mPath);
 		}
 	}
 }

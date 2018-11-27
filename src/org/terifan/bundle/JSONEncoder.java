@@ -21,7 +21,7 @@ class JSONEncoder
 	{
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-		BitOutputStream output = new BitOutputStream(baos);
+		VLCOutputStream output = new VLCOutputStream(baos);
 
 		if (aContainer instanceof Bundle)
 		{

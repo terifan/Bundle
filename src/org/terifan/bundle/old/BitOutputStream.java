@@ -1,5 +1,6 @@
-package org.terifan.bundle;
+package org.terifan.bundle.old;
 
+import org.terifan.bundle.*;
 import java.io.IOException;
 import java.io.OutputStream;
 
