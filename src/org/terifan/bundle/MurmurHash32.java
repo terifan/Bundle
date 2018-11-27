@@ -193,27 +193,27 @@ class MurmurHash32
 	}
 
 
-	public static void main(String ... args)
-	{
-		try
-		{
-			System.out.println(new MurmurHash32(0).update("a").finish());
-			System.out.println(new MurmurHash32(0).update("aa").finish());
-			System.out.println(new MurmurHash32(0).update("aaa").finish());
-			System.out.println(new MurmurHash32(0).update("aaaa").finish());
-			System.out.println(new MurmurHash32(0).update(new byte[0]).finish());
-			System.out.println(new MurmurHash32(0).update(new byte[1]).finish());
-			System.out.println(new MurmurHash32(0).update(new byte[2]).finish());
-			System.out.println(new MurmurHash32(0).update(new byte[3]).finish());
-			System.out.println(new MurmurHash32(0).update(new byte[4]).finish());
-			System.out.println(new MurmurHash32(0).update(new int[0]).finish());
-			System.out.println(new MurmurHash32(0).update(new int[1]).finish());
-			System.out.println(new MurmurHash32(0).update(new int[2]).finish());
-			System.out.println(new MurmurHash32(0).update(new int[3]).finish());
-		}
-		catch (Throwable e)
-		{
-			e.printStackTrace(System.out);
-		}
-	}
+//	public static void main(String ... args)
+//	{
+//		try
+//		{
+//			System.out.println(new MurmurHash32(0).update("a").finish());
+//			System.out.println(new MurmurHash32(0).update("aa").finish());
+//			System.out.println(new MurmurHash32(0).update("aaa").finish());
+//			System.out.println(new MurmurHash32(0).update("aaaa").finish());
+//			System.out.println(new MurmurHash32(0).update(new byte[0]).finish());
+//			System.out.println(new MurmurHash32(0).update(new byte[1]).finish());
+//			System.out.println(new MurmurHash32(0).update(new byte[2]).finish());
+//			System.out.println(new MurmurHash32(0).update(new byte[3]).finish());
+//			System.out.println(new MurmurHash32(0).update(new byte[4]).finish());
+//			System.out.println(new MurmurHash32(0).update(new int[0]).finish());
+//			System.out.println(new MurmurHash32(0).update(new int[1]).finish());
+//			System.out.println(new MurmurHash32(0).update(new int[2]).finish());
+//			System.out.println(new MurmurHash32(0).update(new int[3]).finish());
+//		}
+//		catch (Throwable e)
+//		{
+//			e.printStackTrace(System.out);
+//		}
+//	}
 }

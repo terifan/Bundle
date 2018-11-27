@@ -3,6 +3,7 @@ package org.terifan.bundle;
 import java.io.IOException;
 import static org.testng.Assert.*;
 import org.testng.annotations.Test;
+import samples.Log;
 
 
 public class BundleNGTest
@@ -28,10 +29,17 @@ public class BundleNGTest
 			.putNumber("double2", Double.MAX_VALUE)
 			.putString("StringNull", null)
 			.putString("stringASCII", "text")
-			.putString("stringUTF", "åäö");
+			.putString("stringUTF", "åäö")
+			;
 
 		byte[] data = in.marshal();
+
+		Log.hexDump(data);
+
 		Bundle out = new Bundle().unmarshal(data);
+
+		System.out.println(in);
+		System.out.println(out);
 
 		assertEquals(out, in);
 	}

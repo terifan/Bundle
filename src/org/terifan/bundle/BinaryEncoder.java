@@ -1,6 +1,5 @@
 package org.terifan.bundle;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
@@ -11,10 +10,6 @@ import static org.terifan.bundle.BundleConstants.*;
 
 public class BinaryEncoder
 {
-	private PredictorCodec mCompressor;
-	private PredictorCodec mCompressor2;
-
-
 	public BinaryEncoder()
 	{
 	}
@@ -22,12 +17,6 @@ public class BinaryEncoder
 
 	public byte[] marshal(Container aContainer) throws IOException
 	{
-		String dic = "Sender Transaction Name Article Measure Order Line Location Transmission From Type instance Process Reason Contacts Sequence Color Group Owner Remark Text Receiver Identifier Information Domain Terms Shipment Service Level Standard Element Object";
-		byte[] trainData = ((dic + dic.toLowerCase() + dic.toUpperCase()).replace(" ", "") + (dic + dic.toLowerCase() + dic.toUpperCase())).getBytes();
-
-		mCompressor = new PredictorCodec(20).learn(new ByteArrayInputStream(trainData));
-		mCompressor2 = new PredictorCodec(20).learn(new ByteArrayInputStream(trainData));
-
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		BitOutputStream output = new BitOutputStream(baos);
 
@@ -67,14 +56,7 @@ public class BinaryEncoder
 				throw new IllegalArgumentException("A Bundle key cannot be null.");
 			}
 
-			if (true)
-			{
-				mCompressor.compress(new ByteArrayInputStream((key + "\u0000").getBytes("utf-8")), output);
-			}
-			else
-			{
-				UTF8.encodeUTF8(key, output);
-			}
+			UTF8.encodeUTF8(key, output);
 
 			Object value = aBundle.get(key);
 
@@ -162,7 +144,16 @@ public class BinaryEncoder
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		BitOutputStream output = new BitOutputStream(baos);
 
-		int type = aValue == null ? NULL : TYPES.get(aValue.getClass());
+		int type;
+		if (aValue == null)
+		{
+			type = NULL;
+			aValue = "dummy";
+		}
+		else
+		{
+			type = TYPES.get(aValue.getClass());
+		}
 
 		if (aIncludeType)
 		{
@@ -208,11 +199,6 @@ public class BinaryEncoder
 				output.write64(c.getTimeInMillis());
 				break;
 			case STRING:
-				byte[] s = ((String)aValue).getBytes("utf-8");
-				output.writeVar32(s.length);
-				mCompressor2.compress(new ByteArrayInputStream(s), output);
-				break;
-//			case STRING:
 			case BUNDLE:
 			case ARRAY:
 			case BINARY:

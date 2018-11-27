@@ -205,12 +205,12 @@ public class BitInputStream //extends InputStream
 
 	public int read32() throws IOException
 	{
-		return readBits(32);
+		return (readBits(16) << 16) | readBits(16);
 	}
 
 
 	public long read64() throws IOException
 	{
-		return (readBits(32) & 0xFFFFFFFFL) | ((readBits(32) & 0xFFFFFFFFL) << 32);
+		return (read32() & 0xFFFFFFFFL) | ((read32() & 0xFFFFFFFFL) << 32);
 	}
 }
