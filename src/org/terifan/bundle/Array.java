@@ -200,6 +200,59 @@ public class Array extends Container<Integer,Array> implements Serializable, Ite
 	 * @return
 	 *   an array
 	 */
+	public static Array of(Object aBundlable)
+	{
+		Array array = new Array();
+
+		if (aBundlable != null && aBundlable.getClass().isArray())
+		{
+			for (int i = 0, sz = java.lang.reflect.Array.getLength(aBundlable); i < sz; i++)
+			{
+				Object w = java.lang.reflect.Array.get(aBundlable, i);
+				if (w != null && w.getClass().isArray())
+				{
+					array.add(Array.of(w));
+				}
+				else
+				{
+					array.add(w);
+				}
+			}
+		}
+		else if (aBundlable instanceof Bundlable)
+		{
+			array.add(Bundle.of(aBundlable));
+		}
+		else
+		{
+			array.add(aBundlable);
+		}
+
+		return array;
+	}
+
+
+	/**
+	 * Create an array of item provided including primitives, objects, array and objects implementing the Bundlable interface.
+	 * <p>
+	 * e.g. creating an array using <code>new Array(new int[2], new boolean[2], "hello");</code> will result in this array: [0,0,false,false,"hello"]
+	 * </p>
+	 * <p>
+	 * Creating multi dimensional arrays require a cast to Object:
+	 *
+	 * e.g <code>new Array((Object)new int[][]{{1,2},{3,4}});</code> will result in this array: [[1,2],[3,4]]
+	 * </p>
+	 * <p>
+	 * <strong>Warning</strong>: multi dimensional arrays without cast will be merged:
+	 *
+	 * e.g <code>new Array(new int[][]{{1,2},{3,4}});</code> will result in this array: [1,2,3,4]
+	 * </p>
+	 *
+	 * @param aBundlable
+	 *   an array of objects
+	 * @return
+	 *   an array
+	 */
 	public static Array of(Object... aBundlable)
 	{
 		Array array = new Array();
