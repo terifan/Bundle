@@ -24,8 +24,8 @@ public class Test
 		try
 		{
 //			xml();
-			big();
-//			small();
+//			big();
+			small();
 //			array();
 		}
 		catch (Throwable e)

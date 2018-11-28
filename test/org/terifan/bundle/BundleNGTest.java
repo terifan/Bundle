@@ -3,6 +3,7 @@ package org.terifan.bundle;
 import java.io.IOException;
 import static org.testng.Assert.*;
 import org.testng.annotations.Test;
+import samples.Log;
 
 
 public class BundleNGTest
@@ -37,6 +38,8 @@ public class BundleNGTest
 		Bundle out = new Bundle().unmarshal(data);
 
 		assertEquals(out, in);
+		assertEquals(out.marshal(), in.marshal());
+		assertEquals(out.marshalJSON(true), in.marshalJSON(true));
 	}
 
 
@@ -48,19 +51,93 @@ public class BundleNGTest
 		Bundle out = new Bundle().unmarshal(data);
 
 		assertEquals(out, in);
+		assertEquals(out.marshal(), in.marshal());
+		assertEquals(out.marshalJSON(true), in.marshalJSON(true));
 		assertEquals(out.toArray("array")[0], "TWO");
 	}
 
 
 	@Test
-	public void testArray1() throws IOException
+	public void testSingleArrayMixedTypes() throws IOException
 	{
-		Bundle in = new Bundle().putArray("array", new Array().add("TWO"));
+		Array in = new Array().add("one").add(1).add(3.14).add(true).add(null);
 		byte[] data = in.marshal();
-		Bundle out = new Bundle().unmarshal(data);
+		Array out = new Array().unmarshal(data);
 
 		assertEquals(out, in);
-		assertEquals(out.getArray("array").get(0), "TWO");
+		assertEquals(out.marshal(), in.marshal());
+		assertEquals(out.marshalJSON(true), in.marshalJSON(true));
+		assertEquals(out.marshalJSON(true), "[\"one\",1,3.14,true,null]");
+	}
+
+
+	@Test
+	public void testSingleEmptyArray() throws IOException
+	{
+		Array in = new Array();
+		byte[] data = in.marshal();
+		Array out = new Array().unmarshal(data);
+
+		assertEquals(out, in);
+		assertEquals(out.marshal(), in.marshal());
+		assertEquals(out.marshalJSON(true), in.marshalJSON(true));
+		assertEquals(out.marshalJSON(true), "[]");
+	}
+
+
+	@Test
+	public void testSingleShortArraySingleTypes() throws IOException
+	{
+		Array in = new Array().add(1);
+		byte[] data = in.marshal();
+		Array out = new Array().unmarshal(data);
+
+		assertEquals(out, in);
+		assertEquals(out.marshal(), in.marshal());
+		assertEquals(out.marshalJSON(true), in.marshalJSON(true));
+		assertEquals(out.marshalJSON(true), "[1]");
+	}
+
+
+	@Test
+	public void testSingleLongArraySingleTypes() throws IOException
+	{
+		Array in = new Array().add(1,2,3,4,5,6,7,8);
+		byte[] data = in.marshal();
+		Array out = new Array().unmarshal(data);
+
+		assertEquals(out, in);
+		assertEquals(out.marshal(), in.marshal());
+		assertEquals(out.marshalJSON(true), in.marshalJSON(true));
+		assertEquals(out.marshalJSON(true), "[1,2,3,4,5,6,7,8]");
+	}
+
+
+	@Test
+	public void testMultiArray() throws IOException
+	{
+		Array in = new Array().add(new Array().add(new Array().add(1,2,3)));
+		byte[] data = in.marshal();
+		Array out = new Array().unmarshal(data);
+
+		assertEquals(out, in);
+		assertEquals(out.marshal(), in.marshal());
+		assertEquals(out.marshalJSON(true), in.marshalJSON(true));
+		assertEquals(out.marshalJSON(true), "[[[1,2,3]]]");
+	}
+
+
+	@Test
+	public void testMultiArrayLarge() throws IOException
+	{
+		Array in = new Array().add(new Array().add(new Array().add(1,2,3), new Array().add(4,5,6))).add(new Array().add(new Array().add(7,8,9), new Array().add(10,11,12)));
+		byte[] data = in.marshal();
+		Array out = new Array().unmarshal(data);
+
+		assertEquals(out, in);
+		assertEquals(out.marshal(), in.marshal());
+		assertEquals(out.marshalJSON(true), in.marshalJSON(true));
+		assertEquals(out.marshalJSON(true), "[[[1,2,3],[4,5,6]],[[7,8,9],[10,11,12]]]");
 	}
 
 
@@ -72,6 +149,8 @@ public class BundleNGTest
 		Bundle out = new Bundle().unmarshal(data);
 
 		assertEquals(out, in);
+		assertEquals(out.marshal(), in.marshal());
+		assertEquals(out.marshalJSON(true), in.marshalJSON(true));
 		assertEquals(out.getString("one"), "ONE");
 		assertEquals(out.getArray("array").get(0), "TWO");
 	}
@@ -84,6 +163,9 @@ public class BundleNGTest
 		byte[] data = in.marshal();
 		Bundle out = new Bundle().unmarshal(data);
 
+		assertEquals(out, in);
+		assertEquals(out.marshal(), in.marshal());
+		assertEquals(out.marshalJSON(true), in.marshalJSON(true));
 		assertEquals((int)out.getInt("r"), 64);
 		assertEquals((int)out.getInt("g"), 128);
 		assertEquals((int)out.getInt("b"), 255);
@@ -99,6 +181,9 @@ public class BundleNGTest
 		byte[] data = in.marshal();
 		Bundle out = new Bundle().unmarshal(data);
 
+		assertEquals(out, in);
+		assertEquals(out.marshal(), in.marshal());
+		assertEquals(out.marshalJSON(true), in.marshalJSON(true));
 		assertEquals(out.getInt("rgb"), color.writeExternal());
 	}
 }

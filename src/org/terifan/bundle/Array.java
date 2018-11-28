@@ -1,5 +1,6 @@
 package org.terifan.bundle;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -69,9 +70,16 @@ public class Array extends Container<Integer,Array> implements Serializable, Ite
 
 	public Array add(Object... aValues)
 	{
-		for (Object v : aValues)
+		if (aValues == null)
 		{
-			add(v);
+			add((Object)null);
+		}
+		else
+		{
+			for (Object v : aValues)
+			{
+				add(v);
+			}
 		}
 		return this;
 	}
@@ -143,6 +151,29 @@ public class Array extends Container<Integer,Array> implements Serializable, Ite
 		}
 
 		return aHash;
+	}
+
+
+	@Override
+	public boolean equals(Object aOther)
+	{
+		if (aOther instanceof Array)
+		{
+			return mValues.equals(((Array)aOther).mValues);
+//
+//			// TODO: fix
+//
+//			try
+//			{
+//				return Arrays.equals(marshal(), ((Array)aOther).marshal());
+//			}
+//			catch (IOException e)
+//			{
+//				throw new IllegalArgumentException(e);
+//			}
+		}
+
+		return false;
 	}
 
 
