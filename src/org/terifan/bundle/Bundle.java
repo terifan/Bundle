@@ -306,4 +306,23 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 		((Bundlable)aBundlable).writeExternal(bundle);
 		return bundle;
 	}
+
+
+	/**
+	 * Appends all entries from the provided Bundle to this Bundle.
+	 *
+	 * @param aOther
+	 *   another bundle
+	 * @return
+	 *   this bundle
+	 */
+	public Bundle append(Bundle aOther)
+	{
+		for (Entry<String,Object> entry : mValues.entrySet())
+		{
+			mValues.put(entry.getKey(), entry.getValue());
+		}
+
+		return this;
+	}
 }
