@@ -1,9 +1,9 @@
 package org.terifan.bundle;
 
+import java.awt.Color;
 import java.io.IOException;
 import static org.testng.Assert.*;
 import org.testng.annotations.Test;
-import samples.Log;
 
 
 public class BundleNGTest
@@ -70,7 +70,7 @@ public class BundleNGTest
 	@Test
 	public void testBundableObjectConstructor() throws IOException
 	{
-		Bundle in = new Bundle(new Color(64,128,255));
+		Bundle in = new Bundle(new RGB(64,128,255));
 		byte[] data = in.marshal();
 		Bundle out = new Bundle().unmarshal(data);
 
@@ -86,27 +86,57 @@ public class BundleNGTest
 	@Test
 	public void testBundableValue() throws IOException
 	{
-		Color color = new Color(64,128,255);
+		RGB rgb = new RGB(64,128,255);
 
-		Bundle in = new Bundle().putObject("rgb", color);
+		Bundle in = new Bundle().putObject("rgb", rgb);
 		byte[] data = in.marshal();
 		Bundle out = new Bundle().unmarshal(data);
 
 		assertEquals(out, in);
 		assertEquals(out.marshal(), in.marshal());
 		assertEquals(out.marshalJSON(true), in.marshalJSON(true));
-		assertEquals(out.getInt("rgb"), color.writeExternal());
+		assertEquals(out.getInt("rgb"), rgb.writeExternal());
+	}
+
+
+	@Test
+	public void testPutObjectConvert() throws IOException
+	{
+		Color rgb = new Color(64,128,255);
+
+		Converter<Color> fn = e->new RGB(e.getRed(),e.getGreen(),e.getBlue());
+
+		Bundle in = new Bundle().putObject("rgb", rgb, fn);
+		byte[] data = in.marshal();
+		Bundle out = new Bundle().unmarshal(data);
+
+		assertEquals(out, in);
+	}
+
+
+	@Test
+	public void testPutObjectBundle() throws IOException
+	{
+		Color rgb = new Color(64,128,255);
+
+		Converter1<Color> fn = (b,c)->b.putNumber("r", c.getRed()).putNumber("g",c.getGreen()).putNumber("b",c.getBlue());
+
+		Bundle in = Bundle.of(rgb, fn);
+		byte[] data = in.marshal();
+		Bundle out = new Bundle().unmarshal(data);
+
+		assertEquals(out, in);
 	}
 
 
 	@Test
 	public void testAsObject() throws IOException
 	{
-		Color in = new Color(64,128,255);
+		RGB in = new RGB(64,128,255);
 
 		Bundle bundle = new Bundle().putNumber("r", in.getRed()).putNumber("g", in.getGreen()).putNumber("b", in.getBlue());
 
-		Color out = bundle.asObject(Color.class);
+		RGB out = bundle.asObject(RGB.class);
 
 		assertEquals(out, in);
 		assertEquals(bundle.marshalJSON(true), "{\"r\":64,\"g\":128,\"b\":255}");
@@ -116,11 +146,11 @@ public class BundleNGTest
 	@Test
 	public void testOfAndAsObject() throws IOException
 	{
-		Color in = new Color(64,128,255);
+		RGB in = new RGB(64,128,255);
 
 		Bundle bundle = Bundle.of(in);
 
-		Color out = bundle.asObject(Color.class);
+		RGB out = bundle.asObject(RGB.class);
 
 		assertEquals(out, in);
 		assertEquals(bundle.marshalJSON(true), "{\"r\":64,\"g\":128,\"b\":255}");

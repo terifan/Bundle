@@ -337,6 +337,22 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 
 
 	/**
+	 * Create a Bundle from object provided assuming it implements the Bundlable interface.
+	 *
+	 * @param aBundlable
+	 *   a Bundlable object
+	 * @return
+	 *   a Bundle
+	 */
+	public static Bundle of(Object aObject, Converter1 aConverter)
+	{
+		Bundle bundle = new Bundle();
+		aConverter.convert(bundle, aObject);
+		return bundle;
+	}
+
+
+	/**
 	 * Appends all entries from the provided Bundle to this Bundle.
 	 *
 	 * @param aOther

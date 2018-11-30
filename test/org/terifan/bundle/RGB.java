@@ -1,12 +1,12 @@
 package org.terifan.bundle;
 
 
-class Color implements Bundlable, BundlableValue<Integer>
+class RGB implements Bundlable, BundlableValue<Integer>
 {
 	private int r, g, b;
 
 
-	public Color()
+	public RGB()
 	{
 	}
 
@@ -29,7 +29,7 @@ class Color implements Bundlable, BundlableValue<Integer>
 	}
 
 
-	public Color(int aR, int aG, int aB)
+	public RGB(int aR, int aG, int aB)
 	{
 		this.r = aR;
 		this.g = aG;
@@ -104,7 +104,7 @@ class Color implements Bundlable, BundlableValue<Integer>
 		{
 			return false;
 		}
-		final Color other = (Color)obj;
+		final RGB other = (RGB)obj;
 		if (this.r != other.r)
 		{
 			return false;
