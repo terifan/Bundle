@@ -1,4 +1,4 @@
-package org.terifan.bundle;
+package samples;
 
 import java.io.PrintStream;
 
@@ -104,7 +104,7 @@ public class Log
 			return;
 		}
 
-		int LW = 32;
+		int LW = 56;
 		int MR = 1000;
 
 		StringBuilder binText = new StringBuilder("");

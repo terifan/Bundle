@@ -1,197 +1,169 @@
 package org.terifan.bundle;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
+import java.util.TimeZone;
+import java.util.UUID;
+import static org.terifan.bundle.BundleConstants.*;
 
 
 class BinaryDecoder
 {
-	private BitInputStream mInput;
+	private VLCInputStream mInput;
 
 
-	public Bundle unmarshal(Bundle aBundle, InputStream aInputStream) throws IOException
+	public Container unmarshal(InputStream aInputStream, PathEvaluation aPath, Container aContainer) throws IOException
 	{
-		mInput = new BitInputStream(aInputStream);
-
-		int version = mInput.readVar32();
-		if (version != 0)
+		try (VLCInputStream in = new VLCInputStream(aInputStream))
 		{
-			throw new IllegalArgumentException("Unsupported version");
-		}
+			mInput = in;
 
-		return readBundle(aBundle);
+			int header = mInput.readVar32();
+			int version = header & VERSION_MASK;
+
+			if (version != VERSION)
+			{
+				throw new IllegalArgumentException("Unsupported version");
+			}
+
+			long length = mInput.readVar32();
+
+			switch (header & CONTAINER_MASK)
+			{
+				case CONTAINER_BUNDLE:
+					return readBundle(aPath, (Bundle)aContainer);
+				case  CONTAINER_ARRAY:
+					return readArray(aPath, (Array)aContainer);
+				default:
+					throw new IllegalArgumentException("Unsupported container type.");
+			}
+		}
 	}
 
 
-	private Bundle readBundle(Bundle aBundle) throws IOException
+	private Bundle readBundle(PathEvaluation aPathEvaluation, Bundle bundle) throws IOException
 	{
-		int entryCount = mInput.readVar32();
+		int keyCount = mInput.readVar32();
 
-		for (int i = 0; i < entryCount; i++)
+		for (int i = 0; i < keyCount; i++)
 		{
-			String key = (String)readValue(FieldType.STRING);
-			int fieldType = mInput.readVar32S();
-			Object value;
+			String key = UTF8.decodeUTF8Z(mInput);
 
-			if (fieldType < 0)
+			boolean valid = aPathEvaluation.valid(key);
+
+			Object value = readValue(aPathEvaluation.next(key), null, valid);
+
+			if (valid)
 			{
-				value = null;
-				fieldType = -fieldType;
+				bundle.put(key, value);
 			}
-			else
-			{
-				int collectionType = FieldType.collectionTypeOf(fieldType);
-				int valueType = FieldType.valueTypeOf(fieldType);
-
-				switch (collectionType)
-				{
-					case FieldType.VALUE:
-						value = readValue(valueType);
-						mInput.align();
-						break;
-					case FieldType.ARRAY:
-					case FieldType.ARRAYLIST:
-					case FieldType.MATRIX:
-						value = readSequence(collectionType, valueType);
-						break;
-					default:
-						throw new IOException();
-				}
-			}
-
-			aBundle.put(key, value, fieldType);
 		}
 
-		return aBundle;
+		return bundle;
 	}
 
 
-	private Object readSequence(final int aCollectionType, final int aValueType) throws IOException
+	private Array readArray(PathEvaluation aPathEvaluation, Array aArray) throws IOException
 	{
-		int length = mInput.readVar32S();
-		boolean[] flags = null;
+		int header = mInput.readVar32();
+		boolean singleType = (header & 0x01) != 0;
+		boolean hasNull = (header & 0x02) != 0;
+		Integer type = singleType ? (header >> 2) & 0x1f : null;
+		int elementCount = header >> (singleType ? 2 + 5 : 2);
 
-		if (length < 0)
+		for (int i = 0; i < elementCount; i+=8)
 		{
-			length = -length;
-			flags = new boolean[length];
+			int nullBits = 0;
 
-			for (int i = 0; i < length; i++)
+			if (hasNull)
 			{
-				flags[i] = mInput.readBit() == 0;
+				nullBits = mInput.readInt8();
 			}
 
-			mInput.align();
-		}
-
-		Object sequence;
-
-		switch (aCollectionType)
-		{
-			case FieldType.ARRAYLIST:
-				sequence = new ArrayList(length);
-				break;
-			case FieldType.ARRAY:
-				sequence = Array.newInstance(FieldType.classTypeOf(aValueType), length);
-				break;
-			default:
-				sequence = Array.newInstance(FieldType.classTypeOf(aValueType), length, 0);
-				break;
-		}
-
-		for (int i = 0; i < length; i++)
-		{
-			Object value;
-
-			if (flags == null || flags[i])
+			for (int j = 0; j < 8 && i+j < elementCount; j++)
 			{
-				if (aCollectionType == FieldType.MATRIX)
+				boolean valid = aPathEvaluation.valid(i+j);
+				Object value = null;
+
+				if (!hasNull || (nullBits & (1 << j)) == 0)
 				{
-					value = readSequence(FieldType.ARRAY, aValueType);
+					value = readValue(aPathEvaluation.next(i), type, valid);
 				}
-				else
+
+				if (valid)
 				{
-					value = readValue(aValueType);
+					aArray.add(value);
 				}
 			}
-			else
-			{
-				value = null;
-			}
-
-			if (aCollectionType == FieldType.ARRAYLIST)
-			{
-				((List)sequence).add(value);
-			}
-			else
-			{
-				Array.set(sequence, i, value);
-			}
 		}
 
-		mInput.align();
-
-		return sequence;
+		return aArray;
 	}
 
 
-	private Object readValue(int aValueType) throws IOException
+	private Object readValue(PathEvaluation aPathEvaluation, Integer aType, boolean aValid) throws IOException
 	{
-		switch (aValueType)
+		if (aType == null)
 		{
-			case FieldType.BOOLEAN:
-				return mInput.readBit() == 1;
-			case FieldType.BYTE:
-				return (byte)mInput.readBits(8);
-			case FieldType.SHORT:
+			aType = mInput.readInt8();
+		}
+
+		switch (aType)
+		{
+			case NULL:
+				return null;
+			case BOOLEAN:
+				return mInput.readInt8() == 1;
+			case BYTE:
+				return (byte)mInput.readInt8();
+			case SHORT:
 				return (short)mInput.readVar32S();
-			case FieldType.CHAR:
-				return (char)mInput.readVar32();
-			case FieldType.INT:
+			case INT:
 				return mInput.readVar32S();
-			case FieldType.LONG:
+			case LONG:
 				return mInput.readVar64S();
-			case FieldType.FLOAT:
-				return Float.intBitsToFloat(mInput.readVar32S());
-			case FieldType.DOUBLE:
-				return Double.longBitsToDouble(mInput.readVar64S());
-			case FieldType.DATE:
-				return new Date(mInput.readVar64S());
-			case FieldType.BUNDLE:
-				return readBundle(new Bundle());
-			case FieldType.STRING:
-			{
-				byte[] buf = new byte[mInput.readVar32()];
-				if (mInput.read(buf) != buf.length)
+			case FLOAT:
+				return Float.intBitsToFloat(mInput.readInt32());
+			case DOUBLE:
+				return Double.longBitsToDouble(mInput.readInt64());
+			case DATE:
+				return new Date(mInput.readInt64());
+			case UUID:
+				return new UUID(mInput.readInt64(), mInput.readInt64());
+			case CALENDAR:
+				TimeZone timeZone = TimeZone.getDefault();
+				timeZone.setRawOffset(mInput.readVar32());
+				Calendar c = Calendar.getInstance(timeZone);
+				c.setTimeInMillis(mInput.readInt64());
+				return c;
+			case STRING:
+			case BUNDLE:
+			case ARRAY:
+			case BINARY:
+				int len = mInput.readVar32();
+				if (!aValid)
 				{
-					throw new IOException("Unexpected end of stream");
+					mInput.skip(len);
+					return null;
 				}
-				return UTF8.decodeUTF8(buf, 0, buf.length);
-			}
-			case FieldType.SERIALIZABLE:
-			{
-				byte[] buf = new byte[mInput.readVar32()];
-				if (mInput.read(buf) != buf.length)
+
+				switch (aType)
 				{
-					throw new IOException("Unexpected end of stream");
+					case STRING:
+						return UTF8.decodeUTF8(mInput.read(new byte[len]));
+					case BUNDLE:
+						return readBundle(aPathEvaluation, new Bundle());
+					case ARRAY:
+						return readArray(aPathEvaluation, new Array());
+					case BINARY:
+						return mInput.read(new byte[len]);
+					default:
+						throw new IOException("Unsupported field type: " + aType);
 				}
-				try (ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(buf)))
-				{
-					return ois.readObject();
-				}
-				catch (ClassNotFoundException e)
-				{
-					throw new IOException(e);
-				}
-			}
 			default:
-				throw new IOException("Unsupported field type: " + aValueType);
+				throw new IOException("Unsupported field type: " + aType);
 		}
 	}
 }

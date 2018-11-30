@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<person>
+		<property name="firstName">olle</property>
+	</person>
+	<person>
+		<property name="firstName">sven</property>
+	</person>
+</root>

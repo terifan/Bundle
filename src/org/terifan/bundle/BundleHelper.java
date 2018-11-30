@@ -12,19 +12,37 @@ public class BundleHelper
 {
 	public static Bundle toBundle(Point aPoint)
 	{
-		return aPoint == null ? null : new Bundle().putInt("x", aPoint.x).putInt("y", aPoint.y);
+		return aPoint == null ? null : new Bundle().putNumber("x", aPoint.x).putNumber("y", aPoint.y);
 	}
 
 
 	public static Bundle toBundle(Dimension aDimension)
 	{
-		return aDimension == null ? null : new Bundle().putInt("width", aDimension.width).putInt("height", aDimension.height);
+		return aDimension == null ? null : new Bundle().putNumber("width", aDimension.width).putNumber("height", aDimension.height);
 	}
 
 
 	public static Bundle toBundle(Rectangle aRectangle)
 	{
-		return aRectangle == null ? null : new Bundle().putInt("x", aRectangle.x).putInt("y", aRectangle.y).putInt("width", aRectangle.width).putInt("height", aRectangle.height);
+		return aRectangle == null ? null : new Bundle().putNumber("x", aRectangle.x).putNumber("y", aRectangle.y).putNumber("width", aRectangle.width).putNumber("height", aRectangle.height);
+	}
+
+
+	public static Array toArray(Point aPoint)
+	{
+		return aPoint == null ? null : new Array(aPoint.x, aPoint.y);
+	}
+
+
+	public static Array toArray(Dimension aDimension)
+	{
+		return aDimension == null ? null : new Array(aDimension.width, aDimension.height);
+	}
+
+
+	public static Array toArray(Rectangle aRectangle)
+	{
+		return aRectangle == null ? null : new Array(aRectangle.x, aRectangle.y, aRectangle.width, aRectangle.height);
 	}
 
 
@@ -49,39 +67,57 @@ public class BundleHelper
 	}
 
 
-	public static ArrayList<Bundle> toBundleArrayList(Map<String, String> aMap)
+	public static Array toArray(Map<String, ?> aMap)
 	{
 		if (aMap == null)
 		{
 			return null;
 		}
 
-		ArrayList<Bundle> map = new ArrayList<>();
+		Array array = new Array();
 
-		for (Map.Entry<String,String> entry : aMap.entrySet())
+		for (Map.Entry<String,?> entry : aMap.entrySet())
 		{
-			map.add(new Bundle().putString("key", entry.getKey()).putString("value", entry.getValue()));
+			array.add(new Bundle().putString("key", entry.getKey()).put("value", entry.getValue()));
 		}
 
-		return map;
+		return array;
 	}
 
 
 	public static Point getPoint(Bundle aBundle, Point aPoint)
 	{
-		return aBundle == null ? aPoint : new Point(aBundle.getInt("x", 0), aBundle.getInt("y", 0));
+		return aBundle == null ? aPoint : new Point(aBundle.getInt("x"), aBundle.getInt("y"));
 	}
 
 
 	public static Dimension getDimension(Bundle aBundle, Dimension aDimension)
 	{
-		return aBundle == null ? aDimension : new Dimension(aBundle.getInt("width", 0), aBundle.getInt("height", 0));
+		return aBundle == null ? aDimension : new Dimension(aBundle.getInt("width"), aBundle.getInt("height"));
 	}
 
 
 	public static Rectangle getRectangle(Bundle aBundle, Rectangle aRectangle)
 	{
-		return aBundle == null ? aRectangle : new Rectangle(aBundle.getInt("x", 0), aBundle.getInt("y", 0), aBundle.getInt("width", 0), aBundle.getInt("height", 0));
+		return aBundle == null ? aRectangle : new Rectangle(aBundle.getInt("x"), aBundle.getInt("y"), aBundle.getInt("width"), aBundle.getInt("height"));
+	}
+
+
+	public static Point getPoint(Array aArray, Point aPoint)
+	{
+		return aArray == null ? aPoint : new Point(aArray.getInt(0), aArray.getInt(1));
+	}
+
+
+	public static Dimension getDimension(Array aArray, Dimension aDimension)
+	{
+		return aArray == null ? aDimension : new Dimension(aArray.getInt(0), aArray.getInt(1));
+	}
+
+
+	public static Rectangle getRectangle(Array aArray, Rectangle aRectangle)
+	{
+		return aArray == null ? aRectangle : new Rectangle(aArray.getInt(0), aArray.getInt(1), aArray.getInt(2), aArray.getInt(3));
 	}
 
 

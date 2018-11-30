@@ -3,64 +3,126 @@ package org.terifan.bundle;
 import java.io.IOException;
 import static org.testng.Assert.*;
 import org.testng.annotations.Test;
+import samples.Log;
 
 
 public class BundleNGTest
 {
 	@Test
-	public void testMarshal() throws IOException
+	public void testMarshalBasicTypes() throws IOException
 	{
-//		Bundle in = Util.createComplexBundle();
-		Bundle in = new Bundle().putString("string1", "value1").putString("string2", "value2").putIntArray("ints", 1,2,3);
+		Bundle in = new Bundle()
+			.putBoolean("booleanNull", null)
+			.putBoolean("boolean1", false)
+			.putBoolean("boolean2", true)
+			.putNumber("numberNull", null)
+			.putNumber("byte1", Byte.MIN_VALUE)
+			.putNumber("byte2", Byte.MAX_VALUE)
+			.putNumber("short1", Short.MIN_VALUE)
+			.putNumber("short2", Short.MAX_VALUE)
+			.putNumber("int1", Integer.MIN_VALUE)
+			.putNumber("int2", Integer.MAX_VALUE)
+			.putNumber("long1", Long.MIN_VALUE)
+			.putNumber("long2", Long.MAX_VALUE)
+			.putNumber("float1", Float.MIN_VALUE)
+			.putNumber("float2", Float.MAX_VALUE)
+			.putNumber("double1", Double.MIN_VALUE)
+			.putNumber("double2", Double.MAX_VALUE)
+			.putString("StringNull", null)
+			.putString("stringASCII", "text")
+			.putString("stringUTF", "åäö")
+			.putArray("bytes", Array.of(new byte[10]))
+			;
 
 		byte[] data = in.marshal();
 
-		Log.hexDump(data);
-
 		Bundle out = new Bundle().unmarshal(data);
 
-		assertEquals(in, out);
+		assertEquals(out, in);
+		assertEquals(out.marshal(), in.marshal());
+		assertEquals(out.marshalJSON(true), in.marshalJSON(true));
+
+		assertEquals(out.getBoolean("booleanNull"), null);
+		assertEquals((boolean)out.getBoolean("boolean1"), false);
+		assertEquals((boolean)out.getBoolean("boolean2"), true);
+		assertEquals(out.getByteArray("bytes"), new byte[10]);
 	}
 
 
 	@Test
-	public void testMarshalPSON() throws IOException
+	public void testToArray() throws IOException
 	{
-		Bundle in = Util.createComplexBundle();
-//		Bundle in = Util.createSimpleBundle();
+		Bundle in = new Bundle().putArray("array", new Array().add(1,2,3));
+		byte[] data = in.marshal();
+		Bundle out = new Bundle().unmarshal(data);
 
-//		Bundle in = new Bundle();
-//		in.putBundle("a", new Bundle().putIntArrayList("a", new ArrayList<>(Arrays.asList(1, null, 2))));
+		Object[] array = out.toArray("array");
 
-		String data = in.marshalPSON();
-
-		Log.out.println(data);
-
-		Bundle out = new Bundle().unmarshalPSON(data);
-
-		assertEquals(in, out);
+		assertEquals(out, in);
+		assertEquals(out.marshal(), in.marshal());
+		assertEquals(out.marshalJSON(true), in.marshalJSON(true));
+		assertEquals(array[0], 1);
+		assertEquals(array[1], 2);
+		assertEquals(array[2], 3);
 	}
 
 
 	@Test
-	public void testMarshalPSON2() throws IOException
+	public void testBundableObjectConstructor() throws IOException
 	{
-		String in = "{"
-			+ "\"a\": \"s\", \"aa\": [\"s\", \"t\"], \"aaa\": [[\"s\", \"t\"], [\"u\", \"v\"]]"
-			+ ", \"b\": null, \"bb\": [null, null], \"bbb\": [[null, null], [null]]"
-			+ ", \"c\": true, \"cc\": [true, false], \"ccc\": [[true, false], [true]]"
-			+ ", \"d\": 123, \"dd\": [123, 456], \"ddd\": [[123, 456], [789, 12]]"
-			+ ", \"e\": 3.14, \"ee\": [3.14, 9.72], \"eee\": [[3.14, 9.72], [-3.14, 0.72]]"
-			+ "}";
+		Bundle in = new Bundle(new Color(64,128,255));
+		byte[] data = in.marshal();
+		Bundle out = new Bundle().unmarshal(data);
 
-//		Log.out.println(in);
+		assertEquals(out, in);
+		assertEquals(out.marshal(), in.marshal());
+		assertEquals(out.marshalJSON(true), in.marshalJSON(true));
+		assertEquals((int)out.getInt("r"), 64);
+		assertEquals((int)out.getInt("g"), 128);
+		assertEquals((int)out.getInt("b"), 255);
+	}
 
-		Bundle bundle = new Bundle().unmarshalPSON(in);
 
-		String out = bundle.marshalPSON(true);
+	@Test
+	public void testBundableValue() throws IOException
+	{
+		Color color = new Color(64,128,255);
 
-//		Log.out.println(out);
+		Bundle in = new Bundle().putObject("rgb", color);
+		byte[] data = in.marshal();
+		Bundle out = new Bundle().unmarshal(data);
 
-		assertEquals(in, out);
+		assertEquals(out, in);
+		assertEquals(out.marshal(), in.marshal());
+		assertEquals(out.marshalJSON(true), in.marshalJSON(true));
+		assertEquals(out.getInt("rgb"), color.writeExternal());
+	}
+
+
+	@Test
+	public void testAsObject() throws IOException
+	{
+		Color in = new Color(64,128,255);
+
+		Bundle bundle = new Bundle().putNumber("r", in.getRed()).putNumber("g", in.getGreen()).putNumber("b", in.getBlue());
+
+		Color out = bundle.asObject(Color.class);
+
+		assertEquals(out, in);
+		assertEquals(bundle.marshalJSON(true), "{\"r\":64,\"g\":128,\"b\":255}");
+	}
+
+
+	@Test
+	public void testOfAndAsObject() throws IOException
+	{
+		Color in = new Color(64,128,255);
+
+		Bundle bundle = Bundle.of(in);
+
+		Color out = bundle.asObject(Color.class);
+
+		assertEquals(out, in);
+		assertEquals(bundle.marshalJSON(true), "{\"r\":64,\"g\":128,\"b\":255}");
 	}
 }

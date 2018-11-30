@@ -2,199 +2,258 @@ package org.terifan.bundle;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.lang.reflect.Array;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
+import java.util.UUID;
+import static org.terifan.bundle.BundleConstants.*;
 
 
+/**
+ * var32 header (container type, version)
+ * var32 length
+ * bytes a single bundle or array
+ *
+ * [bundle]
+ *    var32 key count
+ *    [keys]
+ *      int8 key (zero terminated utf8)
+ *      var32 type
+ *        [if string,array,bundle,binary]
+ *          var32 length
+ *          bytes value
+ *        [else]
+ *          bytes value
+ * [array]
+ *    var32 header (element count, single type, has null, is single type)
+ *    [elements]
+ *      [if has nulls]
+ *        int8 null bitmap (one byte read every eight elements)
+ *      [if not single type]
+ *        var32 type
+ *      [if string,array,bundle,binary]
+ *        var32 length
+ *        bytes value
+ *      [else]
+ *        bytes value
+ */
 class BinaryEncoder
 {
-	private BitOutputStream mOutput;
-
-
-	public void marshal(Bundle aBundle, OutputStream aOutputStream) throws IOException
+	public BinaryEncoder()
 	{
-		mOutput = new BitOutputStream(aOutputStream);
-
-		mOutput.writeVar32(0); // version
-
-		writeBundle(aBundle);
-
-		mOutput.finish();
-		mOutput = null;
 	}
 
 
-	private void writeBundle(Bundle aBundle) throws IOException
+	public byte[] marshal(Container aContainer) throws IOException
 	{
-		mOutput.writeVar32(aBundle.size());
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+		try (VLCOutputStream output = new VLCOutputStream(baos))
+		{
+			byte[] data;
+			if (aContainer instanceof Bundle)
+			{
+				output.writeVar32(CONTAINER_BUNDLE | VERSION);
+
+				data = writeBundle((Bundle)aContainer);
+			}
+			else
+			{
+				output.writeVar32(CONTAINER_ARRAY | VERSION);
+
+				data = writeArray((Array)aContainer);
+			}
+
+			output.writeVar32(data.length);
+			output.write(data);
+		}
+
+		return baos.toByteArray();
+	}
+
+
+	private byte[] writeBundle(Bundle aBundle) throws IOException
+	{
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		VLCOutputStream output = new VLCOutputStream(baos);
+
+		output.writeVar32(aBundle.size());
 
 		for (String key : aBundle.keySet())
 		{
-			Object value = aBundle.get(key);
-			int fieldType = aBundle.getType(key);
-
-			writeValue(key, FieldType.STRING);
-			mOutput.writeVar32S(value == null ? -fieldType : fieldType);
-
-			if (value != null)
+			if (key == null)
 			{
-				int collectionType = FieldType.collectionTypeOf(fieldType);
-				int valueType = FieldType.valueTypeOf(fieldType);
-
-				switch (collectionType)
-				{
-					case FieldType.VALUE:
-						writeValue(value, valueType);
-						mOutput.align();
-						break;
-					case FieldType.ARRAY:
-					case FieldType.ARRAYLIST:
-					case FieldType.MATRIX:
-						writeSequence(value, collectionType, valueType);
-						break;
-					default:
-						throw new InternalError();
-				}
+				throw new IllegalArgumentException("A Bundle key cannot be null.");
 			}
+
+			UTF8.encodeUTF8Z(key, output);
+
+			Object value = aBundle.get(key);
+
+			output.write(writeValue(value, true));
 		}
+
+		return baos.toByteArray();
 	}
 
 
-	private void writeSequence(Object aSequence, final int aCollectionType, final int aValueType) throws IOException
+	private byte[] writeArray(Array aSequence) throws IOException
 	{
-		final int length;
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		VLCOutputStream output = new VLCOutputStream(baos);
 
-		if (aCollectionType == FieldType.ARRAYLIST)
-		{
-			length = ((List)aSequence).size();
-		}
-		else
-		{
-			length = Array.getLength(aSequence);
-		}
-
+		int elementCount = aSequence.size();
+		boolean singleType = true;
 		boolean hasNull = false;
+		Class type = null;
 
-		for (int i = 0; i < length; i++)
+		for (Object value : aSequence)
 		{
-			Object value = getElement(aCollectionType, aSequence, i);
-
 			if (value == null)
 			{
 				hasNull = true;
+			}
+			else if (type == null)
+			{
+				assertSupportedType(value);
+
+				type = value.getClass();
+			}
+			else if (singleType)
+			{
+				assertSupportedType(value);
+
+				singleType = type == value.getClass();
+			}
+
+			if (!singleType && hasNull)
+			{
 				break;
 			}
 		}
 
-		mOutput.writeVar32S(hasNull ? -length : length);
+		output.writeVar32((elementCount << (singleType ? 2 + 5 : 2)) + (singleType ? TYPES.get(type) << 2 : 0) + (hasNull ? 2 : 0) + (singleType ? 1 : 0));
 
-		if (hasNull)
+		for (int i = 0; i < elementCount; i+=8)
 		{
-			for (int i = 0; i < length; i++)
+			if (hasNull)
 			{
-				Object value = getElement(aCollectionType, aSequence, i);
-
-				mOutput.writeBit(value == null);
+				int nullBits = 0;
+				for (int j = 0; j < 8 && i+j < elementCount; j++)
+				{
+					if (aSequence.get(i+j) == null)
+					{
+						nullBits |= 1 << j;
+					}
+				}
+				output.writeInt8(nullBits);
 			}
 
-			mOutput.align();
-		}
-
-		for (int i = 0; i < length; i++)
-		{
-			Object value = getElement(aCollectionType, aSequence, i);
-
-			if (value != null)
+			for (int j = 0; j < 8 && i+j < elementCount; j++)
 			{
-				if (aCollectionType == FieldType.MATRIX)
+				Object value = aSequence.get(i+j);
+
+				if (value != null)
 				{
-					writeSequence(value, FieldType.ARRAY, aValueType);
-				}
-				else
-				{
-					writeValue(value, aValueType);
+					byte[] data = writeValue(value, !singleType);
+					output.write(data);
 				}
 			}
 		}
 
-		mOutput.align();
+		return baos.toByteArray();
 	}
 
 
-	private Object getElement(int aCollectionType, Object aValue, int aIndex)
+	private byte[] writeValue(Object aValue, boolean aIncludeType) throws IOException
 	{
-		Object value;
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		VLCOutputStream output = new VLCOutputStream(baos);
 
-		if (aCollectionType == FieldType.ARRAYLIST)
+		int type;
+		if (aValue == null)
 		{
-			value = ((List)aValue).get(aIndex);
+			type = NULL;
+			aValue = "dummy";
 		}
 		else
 		{
-			value = Array.get(aValue, aIndex);
+			type = TYPES.get(aValue.getClass());
 		}
 
-		return value;
-	}
-
-
-	private void writeValue(Object aValue, int aValueType) throws IOException
-	{
-		switch (aValueType)
+		if (aIncludeType)
 		{
-			case FieldType.BOOLEAN:
-				mOutput.writeBit((Boolean)aValue);
-				break;
-			case FieldType.BYTE:
-				mOutput.writeBits(0xff & (Byte)aValue, 8);
-				break;
-			case FieldType.SHORT:
-				mOutput.writeVar32S((Short)aValue);
-				break;
-			case FieldType.CHAR:
-				mOutput.writeVar32((Character)aValue);
-				break;
-			case FieldType.INT:
-				mOutput.writeVar32S((Integer)aValue);
-				break;
-			case FieldType.LONG:
-				mOutput.writeVar64S((Long)aValue);
-				break;
-			case FieldType.FLOAT:
-				mOutput.writeVar32S(Float.floatToIntBits((Float)aValue));
-				break;
-			case FieldType.DOUBLE:
-				mOutput.writeVar64S(Double.doubleToLongBits((Double)aValue));
-				break;
-			case FieldType.DATE:
-				mOutput.writeVar64S(((Date)aValue).getTime());
-				break;
-			case FieldType.BUNDLE:
-				writeBundle((Bundle)aValue);
-				break;
-			case FieldType.STRING:
-			{
-				byte[] buf = UTF8.encodeUTF8((String)aValue);
-				mOutput.writeVar32(buf.length);
-				mOutput.write(buf);
-				break;
-			}
-			case FieldType.SERIALIZABLE:
-			{
-				ByteArrayOutputStream baos = new ByteArrayOutputStream();
-				try (ObjectOutputStream oos = new ObjectOutputStream(baos))
-				{
-					oos.writeObject(aValue);
-				}
-				mOutput.writeVar32(baos.size());
-				mOutput.write(baos.toByteArray());
-				break;
-			}
-			default:
-				throw new IOException("Unsupported field type: " + aValueType);
+			output.writeInt8(type);
 		}
+
+		switch (type)
+		{
+			case NULL:
+				break;
+			case BOOLEAN:
+				output.writeInt8((Boolean)aValue ? 1 : 0);
+				break;
+			case BYTE:
+				output.writeInt8(0xff & (Byte)aValue);
+				break;
+			case SHORT:
+				output.writeVar32S((Short)aValue);
+				break;
+			case INT:
+				output.writeVar32S((Integer)aValue);
+				break;
+			case LONG:
+				output.writeVar64S((Long)aValue);
+				break;
+			case FLOAT:
+				output.writeInt32(Float.floatToIntBits((Float)aValue));
+				break;
+			case DOUBLE:
+				output.writeInt64(Double.doubleToLongBits((Double)aValue));
+				break;
+			case DATE:
+				output.writeInt64(((Date)aValue).getTime());
+				break;
+			case UUID:
+				UUID uuid = (UUID)aValue;
+				output.writeInt64(uuid.getLeastSignificantBits());
+				output.writeInt64(uuid.getMostSignificantBits());
+				break;
+			case CALENDAR:
+				Calendar c = (Calendar)aValue;
+				output.writeVar32(c.getTimeZone().getRawOffset());
+				output.writeInt64(c.getTimeInMillis());
+				break;
+			case STRING:
+			case BUNDLE:
+			case ARRAY:
+			case BINARY:
+				byte[] buf;
+
+				switch (type)
+				{
+					case STRING:
+						buf = UTF8.encodeUTF8((String)aValue);
+						break;
+					case BUNDLE:
+						buf = writeBundle((Bundle)aValue);
+						break;
+					case ARRAY:
+						buf = writeArray((Array)aValue);
+						break;
+					case BINARY:
+						buf = (byte[])aValue;
+						break;
+					default:
+						throw new IllegalArgumentException("Unsupported type: " + aValue.getClass());
+				}
+
+				output.writeVar32(buf.length);
+				output.write(buf);
+				break;
+			default:
+				throw new IllegalArgumentException("Unsupported type: " + aValue.getClass());
+		}
+
+		return baos.toByteArray();
 	}
 }
