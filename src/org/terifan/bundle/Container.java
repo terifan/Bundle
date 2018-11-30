@@ -12,6 +12,7 @@ import java.io.ObjectOutputStream;
 import java.io.Reader;
 import java.io.Serializable;
 import java.io.StringReader;
+import java.io.Writer;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
@@ -37,6 +38,17 @@ public abstract class Container<K,R> implements Serializable, Externalizable
 	public abstract Object get(K aKey);
 
 
+	public Object get(K aKey, Object aDefaultValue)
+	{
+		Object value = (Object)get(aKey);
+		if (value == null)
+		{
+			return aDefaultValue;
+		}
+		return value;
+	}
+
+
 	abstract R put(K aKey, Object aValue);
 
 
@@ -46,15 +58,47 @@ public abstract class Container<K,R> implements Serializable, Externalizable
 	}
 
 
+	public Byte getByte(K aKey, Byte aDefaultValue)
+	{
+		Byte value = (Byte)get(aKey);
+		if (value == null)
+		{
+			return aDefaultValue;
+		}
+		return value;
+	}
+
+
 	public Short getShort(K aKey)
 	{
 		return (Short)get(aKey);
 	}
 
 
+	public Short getShort(K aKey, Short aDefaultValue)
+	{
+		Short value = (Short)get(aKey);
+		if (value == null)
+		{
+			return aDefaultValue;
+		}
+		return value;
+	}
+
+
 	public Integer getInt(K aKey)
 	{
+		return getInt(aKey, null);
+	}
+
+
+	public Integer getInt(K aKey, Integer aDefaultValue)
+	{
 		Object v = get(aKey);
+		if (v == null)
+		{
+			return aDefaultValue;
+		}
 		if (v instanceof Long)
 		{
 			return (int)(long)(Long)v;
@@ -65,7 +109,18 @@ public abstract class Container<K,R> implements Serializable, Externalizable
 
 	public Long getLong(K aKey)
 	{
-		return (Long)get(aKey);
+		return getLong(aKey, null);
+	}
+
+
+	public Long getLong(K aKey, Long aDefaultValue)
+	{
+		Long value = (Long)get(aKey);
+		if (value != null)
+		{
+			return aDefaultValue;
+		}
+		return value;
 	}
 
 
@@ -75,15 +130,48 @@ public abstract class Container<K,R> implements Serializable, Externalizable
 	}
 
 
+	public Float getFloat(K aKey, Float aDefaultValue)
+	{
+		Float value = (Float)get(aKey);
+		if (value == null)
+		{
+			return aDefaultValue;
+		}
+		return value;
+	}
+
+
 	public Double getDouble(K aKey)
 	{
 		return (Double)get(aKey);
 	}
 
 
+	public Double getDouble(K aKey, Double aDefaultValue)
+	{
+		Double value = (Double)get(aKey);
+		if (value == null)
+		{
+			return aDefaultValue;
+		}
+		return value;
+	}
+
+
 	public String getString(K aKey)
 	{
 		return (String)get(aKey);
+	}
+
+
+	public String getString(K aKey, String aDefaultValue)
+	{
+		String value = (String)get(aKey);
+		if (value == null)
+		{
+			return aDefaultValue;
+		}
+		return value;
 	}
 
 

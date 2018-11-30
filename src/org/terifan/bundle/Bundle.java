@@ -107,6 +107,34 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 	}
 
 
+	public Bundle[] getBundleArray(String aKey, Bundle[] aDefaultValue)
+	{
+		Bundle[] value = (Bundle[])castArray(aKey, Bundle.class);
+		if (value == null)
+		{
+			return aDefaultValue;
+		}
+		return value;
+	}
+
+
+	public String[] getStringArray(String aKey)
+	{
+		return (String[])castArray(aKey, String.class);
+	}
+
+
+	public String[] getStringArray(String aKey, String[] aDefaultValue)
+	{
+		String[] value = (String[])castArray(aKey, Bundle.class);
+		if (value == null)
+		{
+			return aDefaultValue;
+		}
+		return value;
+	}
+
+
 	private Object castArray(String aKey, Class aType)
 	{
 		Array array = (Array)get(aKey);

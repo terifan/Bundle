@@ -219,6 +219,20 @@ public class Array extends Container<Integer,Array> implements Serializable, Ite
 				}
 			}
 		}
+		else if (aBundlable instanceof List)
+		{
+			for (Object w : (List)aBundlable)
+			{
+				if (w != null && w.getClass().isArray())
+				{
+					array.add(Array.of(w));
+				}
+				else
+				{
+					array.add(w);
+				}
+			}
+		}
 		else if (aBundlable instanceof Bundlable)
 		{
 			array.add(Bundle.of(aBundlable));
