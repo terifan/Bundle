@@ -12,7 +12,6 @@ import java.io.ObjectOutputStream;
 import java.io.Reader;
 import java.io.Serializable;
 import java.io.StringReader;
-import java.io.Writer;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
@@ -289,6 +288,16 @@ public abstract class Container<K,R> implements Serializable, Externalizable
 	}
 
 
+	/**
+	 * The value referred to by the key is unmarshalled into an object of the type provided.
+	 * 
+	 * @param aType
+	 *   a BundlableValue type
+	 * @param aKey
+	 *   a key
+	 * @return
+	 *   an instance of the BundlableValue type
+	 */
 	public <T extends BundlableValue> T getObject(Class<T> aType, K aKey)
 	{
 		try

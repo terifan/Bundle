@@ -56,7 +56,7 @@ class JSONDecoder
 			}
 
 			String key = readString();
-
+			
 			c = readChar();
 
 			if (c != ':')

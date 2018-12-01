@@ -41,6 +41,10 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 	@Override
 	public Object get(String aKey)
 	{
+		if (!mValues.containsKey(aKey))
+		{
+			throw new IllegalArgumentException("Key not found: " + aKey);
+		}
 		return mValues.get(aKey);
 	}
 
@@ -179,17 +183,50 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 
 			java.lang.reflect.Array.set(elements, i, v);
 		}
+
 		return elements;
 	}
 
 
-	public <T extends Bundlable> ArrayList<T> getObjectArray(Class<T> aValue, String aKey)
+	public <T extends Bundlable> T[] getObjectArray(Class<T> aType, String aKey)
+	{
+		try
+		{
+			Array in = getArray(aKey);
+
+			T[] out = (T[])java.lang.reflect.Array.newInstance(aType, in.size());
+
+			Constructor<T> declaredConstructor = aType.getDeclaredConstructor();
+			declaredConstructor.setAccessible(true);
+
+			for (int i = 0; i < in.size(); i++)
+			{
+				Object value = in.get(i);
+
+				if (value instanceof Bundle)
+				{
+					T instance = declaredConstructor.newInstance();
+					instance.readExternal((Bundle)value);
+					out[i] = instance;
+				}
+			}
+
+			return out;
+		}
+		catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | InvocationTargetException e)
+		{
+			throw new IllegalArgumentException(e);
+		}
+	}
+
+
+	public <T extends Bundlable> ArrayList<T> getObjectArrayList(Class<T> aType, String aKey)
 	{
 		try
 		{
 			ArrayList<T> list = new ArrayList<>();
 
-			Constructor<T> declaredConstructor = aValue.getDeclaredConstructor();
+			Constructor<T> declaredConstructor = aType.getDeclaredConstructor();
 			declaredConstructor.setAccessible(true);
 
 			for (Object value : getArray(aKey))
@@ -211,11 +248,16 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 	}
 
 
-	public <T extends Bundlable> T asObject(Class<T> aValue)
+	/**
+	 * Creates and instance of the type provided and unmarshals it using the readExternal method of Bundlable interface.
+	 * 
+	 * Bundle.unmarshalJSON("{\"value\":7}").asObject(MyValue.class)
+	 */
+	public <T extends Bundlable> T asObject(Class<T> aType)
 	{
 		try
 		{
-			Constructor<T> declaredConstructor = aValue.getDeclaredConstructor();
+			Constructor<T> declaredConstructor = aType.getDeclaredConstructor();
 			declaredConstructor.setAccessible(true);
 
 			T instance = declaredConstructor.newInstance();
