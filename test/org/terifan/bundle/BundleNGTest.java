@@ -136,7 +136,7 @@ public class BundleNGTest
 
 		Bundle bundle = new Bundle().putNumber("r", in.getRed()).putNumber("g", in.getGreen()).putNumber("b", in.getBlue());
 
-		RGB out = bundle.asObject(RGB.class);
+		RGB out = bundle.newInstance(RGB.class);
 
 		assertEquals(out, in);
 		assertEquals(bundle.marshalJSON(true), "{\"r\":64,\"g\":128,\"b\":255}");
@@ -150,7 +150,7 @@ public class BundleNGTest
 
 		Bundle bundle = Bundle.of(in);
 
-		RGB out = bundle.asObject(RGB.class);
+		RGB out = bundle.newInstance(RGB.class);
 
 		assertEquals(out, in);
 		assertEquals(bundle.marshalJSON(true), "{\"r\":64,\"g\":128,\"b\":255}");

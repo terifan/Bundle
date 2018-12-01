@@ -253,7 +253,7 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 	 * 
 	 * Bundle.unmarshalJSON("{\"value\":7}").asObject(MyValue.class)
 	 */
-	public <T extends Bundlable> T asObject(Class<T> aType)
+	public <T extends Bundlable> T newInstance(Class<T> aType)
 	{
 		try
 		{
