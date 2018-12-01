@@ -100,36 +100,6 @@ public class BundleNGTest
 
 
 	@Test
-	public void testPutObjectConvert() throws IOException
-	{
-		Color rgb = new Color(64,128,255);
-
-		Converter<Color> fn = e->new RGB(e.getRed(),e.getGreen(),e.getBlue());
-
-		Bundle in = new Bundle().putObject("rgb", rgb, fn);
-		byte[] data = in.marshal();
-		Bundle out = new Bundle().unmarshal(data);
-
-		assertEquals(out, in);
-	}
-
-
-	@Test
-	public void testPutObjectBundle() throws IOException
-	{
-		Color rgb = new Color(64,128,255);
-
-		Converter1<Color> fn = (b,c)->b.putNumber("r", c.getRed()).putNumber("g",c.getGreen()).putNumber("b",c.getBlue());
-
-		Bundle in = Bundle.of(rgb, fn);
-		byte[] data = in.marshal();
-		Bundle out = new Bundle().unmarshal(data);
-
-		assertEquals(out, in);
-	}
-
-
-	@Test
 	public void testAsObject() throws IOException
 	{
 		RGB in = new RGB(64,128,255);

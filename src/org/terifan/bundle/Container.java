@@ -333,24 +333,6 @@ public abstract class Container<K,R> implements Serializable, Externalizable
 	}
 
 
-	public R putObject(K aKey, Object aValue, Converter aConverter)
-	{
-		aValue = aConverter.convert(aValue);
-
-		if (aValue instanceof BundlableValue)
-		{
-			put(aKey, ((BundlableValue)aValue).writeExternal());
-		}
-		else if (aValue instanceof Bundlable)
-		{
-			Bundle bundle = new Bundle();
-			((Bundlable)aValue).writeExternal(bundle);
-			put(aKey, bundle);
-		}
-		return (R)this;
-	}
-
-
 	public <T extends Serializable> T getSerializable(Class<T> aType, K aKey)
 	{
 		Object value = getBinary(aKey);

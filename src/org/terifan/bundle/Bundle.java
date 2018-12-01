@@ -3,6 +3,7 @@ package org.terifan.bundle;
 import java.io.Externalizable;
 import java.io.IOException;
 import java.io.Serializable;
+import java.io.StringReader;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.function.Function;
 
 
 /**
@@ -35,6 +37,14 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 		this();
 
 		aValue.writeExternal(this);
+	}
+
+
+	public Bundle(String aJSON)
+	{
+		this();
+
+		unmarshalJSON(new StringReader(aJSON));
 	}
 
 
@@ -272,6 +282,12 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 	}
 
 
+	public <T> T newInstance(Class<T> aType, Function<Bundle,T> aImporter)
+	{
+		return aImporter.apply(this);
+	}
+
+
 	@Override
 	public Bundle remove(String aKey)
 	{
@@ -386,7 +402,7 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 	 * @return
 	 *   a Bundle
 	 */
-	public static Bundle of(Object aObject, Converter1 aConverter)
+	public static Bundle of(Object aObject, Exporter aConverter)
 	{
 		Bundle bundle = new Bundle();
 		aConverter.convert(bundle, aObject);

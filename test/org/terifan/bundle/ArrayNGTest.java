@@ -3,23 +3,16 @@ package org.terifan.bundle;
 import java.io.IOException;
 import static org.testng.Assert.*;
 import org.testng.annotations.Test;
-import samples.Log;
 
 
 public class ArrayNGTest
 {
-
-
 	@Test
 	public void testSingleArrayMixedTypes() throws IOException
 	{
 		Array in = new Array().add("one").add(1).add(3.14).add(true).add(null);
 		byte[] data = in.marshal();
 		Array out = new Array().unmarshal(data);
-
-		Log.hexDump(data);
-		System.out.println(in);
-		System.out.println(out);
 
 		assertEquals(out, in);
 		assertEquals(out.marshal(), in.marshal());
