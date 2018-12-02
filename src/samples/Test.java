@@ -23,15 +23,28 @@ public class Test
 	{
 		try
 		{
+			x();
 //			xml();
 //			big();
-			small();
+//			small();
 //			array();
 		}
 		catch (Throwable e)
 		{
 			e.printStackTrace(System.out);
 		}
+	}
+
+
+	private static void x() throws IOException
+	{
+		Bundle bundle = new Bundle();
+
+		bundle.putObject("object", new Vector(1,2,3));
+		bundle.putBundle("bundle", new RGB(1,2,3));
+		bundle.putObject("array", new PackedArray(1,2,3));
+		
+		System.out.println(bundle);
 	}
 
 
@@ -64,7 +77,7 @@ public class Test
 	private static void small() throws IOException
 	{
 		Bundle bundle = new Bundle()
-			.putArray("BSON", new Array().add("awesome", 5.05, 1986))
+			.putArray("BSON", new Array("awesome", 5.05, 1986))
 			;
 
 		byte[] data = bundle.marshal();
@@ -112,10 +125,10 @@ public class Test
 			.putArray("bundles", new Array().add(new Bundle().putString("key", "value")))
 			.putBundle("bundle", new Bundle().putString("key", "value"))
 			.putString("string", "text")
-			.putBundle("color", new Color(196,128,20))
-			.putArray("colors", new Array().add(new Color(196,128,20), new Color(96,128,220)))
-			.putObject("rgb", new Color(196,128,20))
-			.putArray("rgbs", new Array().add(new Color(196,128,20), new Color(96,128,220)))
+			.putBundle("color", new RGB(196,128,20))
+			.putArray("colors", new Array().add(new RGB(196,128,20), new RGB(96,128,220)))
+			.putObject("rgb", new RGB(196,128,20))
+			.putArray("rgbs", new Array().add(new RGB(196,128,20), new RGB(96,128,220)))
 			.putObject("values", new PackedArray(96,128,220))
 			.putSerializable("date1", new Date())
 			.putDate("date2", new Date())
@@ -126,35 +139,35 @@ public class Test
 			.putArray("big", new Array().add("test", new Bundle().putString("a","A").putString("b","B").putString("c","C"), new Bundle().putString("a","A").putString("b","B").putString("c","C").putArray("d", new Array().add(1,2,3))))
 		;
 
-//		System.out.println(bundle);
-//
-//		System.out.println(new Bundle().unmarshalJSON(bundle.toString()));
-//
-//		System.out.println(bundle.getBundle("numbers").getArray("ints").get(1));
-//		System.out.println(bundle.getBundle("numbers").toArray("ints")[1]);
-//		System.out.println(bundle.getBundle("numbers").getArray("ints").stream().collect(Collectors.averagingDouble(e->(Integer)e)));
-//		System.out.println(bundle.getArray("strings").stream().collect(Collectors.averagingDouble(e->e==null?0:e.toString().length())));
-//		System.out.println(bundle.getSerializable(Date.class, "date1"));
-//		System.out.println(bundle.getDate("date2"));
-//		System.out.println(bundle.getUUID("uuid"));
-//
-//		Color color = bundle.getObject(Color.class, "rgb");
-//		System.out.println(color);
-//
-//		PackedArray pa = bundle.getObject(PackedArray.class, "values");
-//		System.out.println(pa);
-//
-//		for (Object v : bundle.getArray("colors"))
-//		{
-//			System.out.println(v);
-//		}
-//
-//		for (Color v : bundle.getObjectArray(Color.class, "colors"))
-//		{
-//			System.out.println(v);
-//		}
-//
-//		System.out.println();
+		System.out.println(bundle);
+
+		System.out.println(new Bundle().unmarshalJSON(bundle.toString()));
+
+		System.out.println(bundle.getBundle("numbers").getArray("ints").get(1));
+		System.out.println(bundle.getBundle("numbers").toArray("ints")[1]);
+		System.out.println(bundle.getBundle("numbers").getArray("ints").stream().collect(Collectors.averagingDouble(e->(Integer)e)));
+		System.out.println(bundle.getArray("strings").stream().collect(Collectors.averagingDouble(e->e==null?0:e.toString().length())));
+		System.out.println(bundle.getSerializable(Date.class, "date1"));
+		System.out.println(bundle.getDate("date2"));
+		System.out.println(bundle.getUUID("uuid"));
+
+		RGB color = bundle.getObject(RGB.class, "rgb");
+		System.out.println(color);
+
+		PackedArray pa = bundle.getObject(PackedArray.class, "values");
+		System.out.println(pa);
+
+		for (Object v : bundle.getArray("colors"))
+		{
+			System.out.println(v);
+		}
+
+		for (RGB v : bundle.getObjectArray(RGB.class, "colors"))
+		{
+			System.out.println(v);
+		}
+
+		System.out.println();
 
 		byte[] data = bundle.marshal();
 
@@ -192,17 +205,17 @@ public class Test
 	}
 
 
-	static class Color implements Bundlable, BundlableValue<Integer>
+	static class RGB implements Bundlable, BundlableValue<Integer>
 	{
 		private int r, g, b;
 
 
-		public Color()
+		public RGB()
 		{
 		}
 
 
-		public Color(int aR, int aG, int aB)
+		public RGB(int aR, int aG, int aB)
 		{
 			this.r = aR;
 			this.g = aG;
@@ -248,6 +261,50 @@ public class Test
 		public String toString()
 		{
 			return "Color{r=" + r + ", g=" + g + ", b=" + b + '}';
+		}
+	}
+
+
+	static class Vector implements Bundlable
+	{
+		private double x, y, z;
+
+
+		public Vector()
+		{
+		}
+
+
+		public Vector(double aX, double aY, double aZ)
+		{
+			this.x = aX;
+			this.y = aY;
+			this.z = aZ;
+		}
+
+
+		@Override
+		public void readExternal(Bundle aBundle)
+		{
+			x = aBundle.getInt("x");
+			y = aBundle.getInt("y");
+			z = aBundle.getInt("z");
+		}
+
+
+		@Override
+		public void writeExternal(Bundle aBundle)
+		{
+			aBundle.putNumber("x", x);
+			aBundle.putNumber("y", y);
+			aBundle.putNumber("z", z);
+		}
+
+
+		@Override
+		public String toString()
+		{
+			return "Vector{" + "x=" + x + ", y=" + y + ", z=" + z + '}';
 		}
 	}
 
