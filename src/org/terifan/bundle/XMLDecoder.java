@@ -24,11 +24,11 @@ public class XMLDecoder
 	 */
 	public void importXML(InputStream aInputStream, Container aContainer, boolean aCreateOptionalArrays)
 	{
-		try (aInputStream)
+		try (InputStream in = aInputStream)
 		{
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder documentBuilder = factory.newDocumentBuilder();
-			Document doc = documentBuilder.parse(aInputStream);
+			Document doc = documentBuilder.parse(in);
 
 			importXML(doc, (Bundle)aContainer, aCreateOptionalArrays);
 		}

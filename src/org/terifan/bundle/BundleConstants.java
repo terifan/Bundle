@@ -35,7 +35,7 @@ class BundleConstants
 	final static int BIGDECIMAL = 15;
 	final static int NULL = 16;
 
-	final static Map<Class, Integer> TYPES = new HashMap<>()
+	final static Map<Class, Integer> TYPES = new HashMap<Class, Integer>()
 	{
 		{
 			put(Boolean.class, BOOLEAN);
