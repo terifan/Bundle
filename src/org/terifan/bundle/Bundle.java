@@ -51,10 +51,6 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 	@Override
 	public Object get(String aKey)
 	{
-		if (!mValues.containsKey(aKey))
-		{
-			throw new IllegalArgumentException("Key not found: " + aKey);
-		}
 		return mValues.get(aKey);
 	}
 
@@ -260,7 +256,7 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 
 	/**
 	 * Creates and instance of the type provided and unmarshals it using the readExternal method of Bundlable interface.
-	 * 
+	 *
 	 * Bundle.unmarshalJSON("{\"value\":7}").asObject(MyValue.class)
 	 */
 	public <T extends Bundlable> T newInstance(Class<T> aType)
