@@ -85,7 +85,7 @@ public class XMLDecoder
 			}
 			else if (node instanceof Text)
 			{
-				if (!node.getNodeValue().trim().isBlank())
+				if (!node.getNodeValue().trim().isEmpty())
 				{
 					aBundle.put("#content", node.getNodeValue().trim());
 				}

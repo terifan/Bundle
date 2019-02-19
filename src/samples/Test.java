@@ -23,11 +23,11 @@ public class Test
 	{
 		try
 		{
-			x();
+//			x();
 //			xml();
 //			big();
 //			small();
-//			array();
+			array();
 		}
 		catch (Throwable e)
 		{
@@ -43,7 +43,7 @@ public class Test
 		bundle.putObject("object", new Vector(1,2,3));
 		bundle.putBundle("bundle", new RGB(1,2,3));
 		bundle.putObject("array", new PackedArray(1,2,3));
-		
+
 		System.out.println(bundle);
 	}
 

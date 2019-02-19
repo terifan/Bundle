@@ -209,7 +209,7 @@ class JSONEncoder
 			String text = aText == null ? "null" : aText.toString();
 			if (mCompact && text.endsWith(" "))
 			{
-				text = text.stripTrailing();
+				text = stripTrailing(text);
 				if (text.isEmpty())
 				{
 					return this;
@@ -235,7 +235,7 @@ class JSONEncoder
 			String text = aText == null ? "null" : aText.toString();
 			if (mCompact && text.endsWith(" "))
 			{
-				text = text.stripTrailing();
+				text = stripTrailing(text);
 				if (text.isEmpty())
 				{
 					return this;
@@ -284,5 +284,15 @@ class JSONEncoder
 				}
 			}
 		}
+	}
+
+
+	private static String stripTrailing(String aText)
+	{
+		while (Character.isWhitespace(aText.charAt(aText.length() - 1)))
+		{
+			aText = aText.substring(0, aText.length() - 1);
+		}
+		return aText;
 	}
 }
