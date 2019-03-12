@@ -48,7 +48,7 @@ class JSONEncoder
 
 		for (Entry<String, Object> entry : aBundle.entrySet())
 		{
-			aPrinter.print("\"" + entry.getKey() + "\": ");
+			aPrinter.print("\"" + escapeString(entry.getKey()) + "\": ");
 
 			marshal(aPrinter, entry.getValue());
 
@@ -166,12 +166,18 @@ class JSONEncoder
 
 		if (aValue instanceof String)
 		{
-			aPrinter.print("\"" + aValue + "\"");
+			aPrinter.print("\"" + escapeString(aValue.toString()) + "\"");
 		}
 		else
 		{
 			aPrinter.print(aValue);
 		}
+	}
+
+
+	private String escapeString(String aString)
+	{
+		return aString.replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", "\\\n").replace("\r", "\\\r").replace("\t", "\\\t");
 	}
 
 
