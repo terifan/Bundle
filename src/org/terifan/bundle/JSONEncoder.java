@@ -1,6 +1,5 @@
 package org.terifan.bundle;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Base64;
@@ -19,10 +18,6 @@ class JSONEncoder
 
 	public void marshal(Printer aPrinter, Container aContainer) throws IOException
 	{
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-		VLCOutputStream output = new VLCOutputStream(baos);
-
 		if (aContainer instanceof Bundle)
 		{
 			marshalBundle(aPrinter, (Bundle)aContainer, true);
@@ -54,7 +49,7 @@ class JSONEncoder
 
 			if (--size > 0)
 			{
-				aPrinter.println(", ", false);
+				aPrinter.println(aNewLineOnClose ? "," : ", ", false);
 			}
 		}
 
@@ -81,10 +76,20 @@ class JSONEncoder
 
 		boolean special = aArray.get(0) instanceof Bundle;
 		boolean first = special;
+		boolean shortArray = !special && aArray.size() < 10;
+
+		for (int i = 0; shortArray && i < aArray.size(); i++)
+		{
+			shortArray = !(aArray.get(i) instanceof Array) && !(aArray.get(i) instanceof Bundle) && !(aArray.get(i) instanceof String);
+		}
 
 		if (special)
 		{
 			aPrinter.print("[").indent(aArray.size() > 1 ? 1 : 0);
+		}
+		else if (shortArray)
+		{
+			aPrinter.print("[");
 		}
 		else
 		{
@@ -118,6 +123,10 @@ class JSONEncoder
 		if (special)
 		{
 			aPrinter.indent(aArray.size() > 1 ? -1 : 0).println("]");
+		}
+		else if (shortArray)
+		{
+			aPrinter.println("]");
 		}
 		else
 		{
@@ -192,7 +201,7 @@ class JSONEncoder
 		public Printer(Appendable aAppendable, boolean aCompact)
 		{
 			mAppendable = aAppendable;
-			mNewLine = true;
+			mNewLine = false;
 			mCompact = aCompact;
 		}
 
