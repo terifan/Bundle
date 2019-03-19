@@ -25,9 +25,9 @@ public class Test
 		{
 //			x();
 //			xml();
-//			big();
+			big();
 //			small();
-			array();
+//			array();
 		}
 		catch (Throwable e)
 		{
@@ -40,9 +40,9 @@ public class Test
 	{
 		Bundle bundle = new Bundle();
 
-		bundle.putObject("object", new Vector(1,2,3));
-		bundle.putBundle("bundle", new RGB(1,2,3));
-		bundle.putObject("array", new PackedArray(1,2,3));
+		bundle.putObject("object", new Vector(1, 2, 3));
+		bundle.putBundle("bundle", new RGB(1, 2, 3));
+		bundle.putObject("array", new PackedArray(1, 2, 3));
 
 		System.out.println(bundle);
 	}
@@ -77,8 +77,7 @@ public class Test
 	private static void small() throws IOException
 	{
 		Bundle bundle = new Bundle()
-			.putArray("BSON", new Array("awesome", 5.05, 1986))
-			;
+			.putArray("BSON", new Array("awesome", 5.05, 1986));
 
 		byte[] data = bundle.marshal();
 
@@ -125,19 +124,18 @@ public class Test
 			.putArray("bundles", new Array().add(new Bundle().putString("key", "value")))
 			.putBundle("bundle", new Bundle().putString("key", "value"))
 			.putString("string", "text")
-			.putBundle("color", new RGB(196,128,20))
-			.putArray("colors", new Array().add(new RGB(196,128,20), new RGB(96,128,220)))
-			.putObject("rgb", new RGB(196,128,20))
-			.putArray("rgbs", new Array().add(new RGB(196,128,20), new RGB(96,128,220)))
-			.putObject("values", new PackedArray(96,128,220))
+			.putBundle("color", new RGB(196, 128, 20))
+			.putArray("colors", new Array().add(new RGB(196, 128, 20), new RGB(96, 128, 220)))
+			.putObject("rgb", new RGB(196, 128, 20))
+			.putArray("rgbs", new Array().add(new RGB(196, 128, 20), new RGB(96, 128, 220)))
+			.putObject("values", new PackedArray(96, 128, 220))
 			.putSerializable("date1", new Date())
 			.putDate("date2", new Date())
 			.putBinary("binary", "test".getBytes())
 			.putUUID("uuid", UUID.randomUUID())
 			.putCalendar("calendar", new GregorianCalendar(TimeZone.getTimeZone("CET")))
 			.putArray("empty", new Array())
-			.putArray("big", new Array().add("test", new Bundle().putString("a","A").putString("b","B").putString("c","C"), new Bundle().putString("a","A").putString("b","B").putString("c","C").putArray("d", new Array().add(1,2,3))))
-		;
+			.putArray("big", new Array().add("test", new Bundle().putString("a", "A").putString("b", "B").putString("c", "C"), new Bundle().putString("a", "A").putString("b", "B").putString("c", "C").putArray("d", new Array().add(1, 2, 3))));
 
 		System.out.println(bundle);
 
@@ -145,8 +143,8 @@ public class Test
 
 		System.out.println(bundle.getBundle("numbers").getArray("ints").get(1));
 		System.out.println(bundle.getBundle("numbers").toArray("ints")[1]);
-		System.out.println(bundle.getBundle("numbers").getArray("ints").stream().collect(Collectors.averagingDouble(e->(Integer)e)));
-		System.out.println(bundle.getArray("strings").stream().collect(Collectors.averagingDouble(e->e==null?0:e.toString().length())));
+		System.out.println(bundle.getBundle("numbers").getArray("ints").stream().collect(Collectors.averagingDouble(e -> (Integer)e)));
+		System.out.println(bundle.getArray("strings").stream().collect(Collectors.averagingDouble(e -> e == null ? 0 : e.toString().length())));
 		System.out.println(bundle.getSerializable(Date.class, "date1"));
 		System.out.println(bundle.getDate("date2"));
 		System.out.println(bundle.getUUID("uuid"));
@@ -180,7 +178,6 @@ public class Test
 
 //		Bundle b = new Bundle().unmarshal(data, path);
 //		System.out.println(b);
-
 		ByteArrayOutputStream baosJSON = new ByteArrayOutputStream();
 		DeflaterOutputStream dos = new DeflaterOutputStream(baosJSON);
 		dos.write(bundle.toString().getBytes("utf-8"));
