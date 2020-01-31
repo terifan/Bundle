@@ -56,7 +56,7 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 
 
 	@Override
-	Bundle put(String aKey, Object aValue)
+	public Bundle put(String aKey, Object aValue)
 	{
 		mValues.put(aKey, aValue);
 		return this;
@@ -111,15 +111,15 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 	}
 
 
-	public Bundle[] getBundleArray(String aKey)
+	public ArrayList<Bundle> getBundleArrayList(String aKey)
 	{
-		return (Bundle[])castArray(aKey, Bundle.class);
+		return (ArrayList<Bundle>)((Array)get(aKey)).mValues;
 	}
 
 
-	public Bundle[] getBundleArray(String aKey, Bundle[] aDefaultValue)
+	public ArrayList<Bundle> getBundleArrayList(String aKey, ArrayList<Bundle> aDefaultValue)
 	{
-		Bundle[] value = (Bundle[])castArray(aKey, Bundle.class);
+		ArrayList<Bundle> value = (ArrayList<Bundle>)((Array)get(aKey)).mValues;
 		if (value == null)
 		{
 			return aDefaultValue;
