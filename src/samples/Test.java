@@ -23,9 +23,10 @@ public class Test
 	{
 		try
 		{
+			y();
 //			x();
 //			xml();
-			big();
+//			big();
 //			small();
 //			array();
 		}
@@ -33,6 +34,18 @@ public class Test
 		{
 			e.printStackTrace(System.out);
 		}
+	}
+
+
+	private static void y() throws IOException
+	{
+		Bundle bundle = new Bundle();
+
+		bundle.putArray("array", new Array("1",2,3f,4.0,5));
+
+		System.out.println(bundle);
+
+		System.out.println(bundle.getDoubleArray("array"));
 	}
 
 

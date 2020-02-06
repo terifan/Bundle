@@ -36,7 +36,7 @@ public class Array extends Container<Integer,Array> implements Serializable, Ite
 
 
 	@Override
-	Array put(Integer aIndex, Object aValue)
+	Array set(Integer aIndex, Object aValue)
 	{
 		mValues.add(aIndex, aValue);
 		return this;

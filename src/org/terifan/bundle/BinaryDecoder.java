@@ -57,7 +57,7 @@ class BinaryDecoder
 
 			if (valid)
 			{
-				bundle.put(key, value);
+				bundle.set(key, value);
 			}
 		}
 

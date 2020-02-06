@@ -84,7 +84,7 @@ class JSONDecoder
 					break;
 			}
 
-			aBundle.put(key, value);
+			aBundle.set(key, value);
 		}
 
 		return aBundle;

@@ -48,7 +48,26 @@ public abstract class Container<K,R> implements Serializable, Externalizable
 	}
 
 
-	abstract R put(K aKey, Object aValue);
+	abstract R set(K aKey, Object aValue);
+
+
+	public Boolean getBoolean(K aKey)
+	{
+		return (Boolean)get(aKey);
+	}
+
+
+	public Boolean getBoolean(K aKey, boolean aDefault)
+	{
+		return get(aKey) == null ? aDefault : (Boolean)get(aKey);
+	}
+
+
+	public R putBoolean(K aKey, Boolean aValue)
+	{
+		set(aKey, aValue);
+		return (R)this;
+	}
 
 
 	public Byte getByte(K aKey)
@@ -176,7 +195,7 @@ public abstract class Container<K,R> implements Serializable, Externalizable
 
 	public R putString(K aKey, String aValue)
 	{
-		put(aKey, aValue);
+		set(aKey, aValue);
 		return (R)this;
 	}
 
@@ -189,7 +208,7 @@ public abstract class Container<K,R> implements Serializable, Externalizable
 
 	public R putNumber(K aKey, Number aValue)
 	{
-		put(aKey, aValue);
+		set(aKey, aValue);
 		return (R)this;
 	}
 
@@ -229,26 +248,7 @@ public abstract class Container<K,R> implements Serializable, Externalizable
 
 	public R putCalendar(K aKey, Calendar aCalendar)
 	{
-		put(aKey, aCalendar);
-		return (R)this;
-	}
-
-
-	public Boolean getBoolean(K aKey)
-	{
-		return (Boolean)get(aKey);
-	}
-
-
-	public Boolean getBoolean(K aKey, boolean aDefault)
-	{
-		return get(aKey) == null ? aDefault : (Boolean)get(aKey);
-	}
-
-
-	public R putBoolean(K aKey, Boolean aValue)
-	{
-		put(aKey, aValue);
+		set(aKey, aCalendar);
 		return (R)this;
 	}
 
@@ -261,7 +261,7 @@ public abstract class Container<K,R> implements Serializable, Externalizable
 
 	public R putArray(K aKey, Array aValue)
 	{
-		put(aKey, aValue);
+		set(aKey, aValue);
 		return (R)this;
 	}
 
@@ -274,7 +274,7 @@ public abstract class Container<K,R> implements Serializable, Externalizable
 
 	public R putBundle(K aKey, Bundle aValue)
 	{
-		put(aKey, aValue);
+		set(aKey, aValue);
 		return (R)this;
 	}
 
@@ -283,14 +283,14 @@ public abstract class Container<K,R> implements Serializable, Externalizable
 	{
 		Bundle bundle = new Bundle();
 		aValue.writeExternal(bundle);
-		put(aKey, bundle);
+		set(aKey, bundle);
 		return (R)this;
 	}
 
 
 	/**
 	 * The value referred to by the key is unmarshalled into an object of the type provided.
-	 * 
+	 *
 	 * @param aType
 	 *   a BundlableValue type
 	 * @param aKey
@@ -321,13 +321,13 @@ public abstract class Container<K,R> implements Serializable, Externalizable
 	{
 		if (aValue instanceof BundlableValue)
 		{
-			put(aKey, ((BundlableValue)aValue).writeExternal());
+			set(aKey, ((BundlableValue)aValue).writeExternal());
 		}
 		else if (aValue instanceof Bundlable)
 		{
 			Bundle bundle = new Bundle();
 			((Bundlable)aValue).writeExternal(bundle);
-			put(aKey, bundle);
+			set(aKey, bundle);
 		}
 		return (R)this;
 	}
@@ -335,14 +335,14 @@ public abstract class Container<K,R> implements Serializable, Externalizable
 
 	public <T extends Serializable> T getSerializable(Class<T> aType, K aKey)
 	{
-		Object value = getBinary(aKey);
+		byte[] value = getBinary(aKey);
 
-		if (value == null)
+		if (value == null || value.length == 0)
 		{
 			return null;
 		}
 
-		try (ObjectInputStream oos = new ObjectInputStream(new ByteArrayInputStream(getBinary(aKey))))
+		try (ObjectInputStream oos = new ObjectInputStream(new ByteArrayInputStream(value)))
 		{
 			return (T)oos.readObject();
 		}
@@ -414,7 +414,7 @@ public abstract class Container<K,R> implements Serializable, Externalizable
 
 	public R putDate(K aKey, Date aDate)
 	{
-		put(aKey, aDate);
+		set(aKey, aDate);
 		return (R)this;
 	}
 
@@ -440,7 +440,7 @@ public abstract class Container<K,R> implements Serializable, Externalizable
 
 	public R putBinary(K aKey, byte[] aBytes)
 	{
-		put(aKey, aBytes);
+		set(aKey, aBytes);
 		return (R)this;
 	}
 
@@ -466,7 +466,7 @@ public abstract class Container<K,R> implements Serializable, Externalizable
 
 	public R putUUID(K aKey, UUID aBytes)
 	{
-		put(aKey, aBytes);
+		set(aKey, aBytes);
 		return (R)this;
 	}
 

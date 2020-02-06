@@ -78,7 +78,7 @@ public class BundleHelper
 
 		for (Map.Entry<String,?> entry : aMap.entrySet())
 		{
-			array.add(new Bundle().putString("key", entry.getKey()).put("value", entry.getValue()));
+			array.add(new Bundle().putString("key", entry.getKey()).set("value", entry.getValue()));
 		}
 
 		return array;

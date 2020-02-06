@@ -72,13 +72,13 @@ public class XMLDecoder
 				}
 				else
 				{
-					aBundle.put(node.getNodeName(), bundle);
+					aBundle.set(node.getNodeName(), bundle);
 				}
 
 				NamedNodeMap attributes = ((Element)node).getAttributes();
 				for (int j = 0; j < attributes.getLength(); j++)
 				{
-					bundle.put("@" + attributes.item(j).getNodeName(), attributes.item(j).getTextContent());
+					bundle.set("@" + attributes.item(j).getNodeName(), attributes.item(j).getTextContent());
 				}
 
 				importXML(node, bundle, aCreateOptionalArrays);
@@ -87,7 +87,7 @@ public class XMLDecoder
 			{
 				if (!node.getNodeValue().trim().isEmpty())
 				{
-					aBundle.put("#content", node.getNodeValue().trim());
+					aBundle.set("#content", node.getNodeValue().trim());
 				}
 			}
 		}

@@ -23,21 +23,43 @@ class VLCInputStream implements AutoCloseable
 
 	public byte[] read(byte[] aBuffer) throws IOException
 	{
-		mInputStream.read(aBuffer);
+		read(aBuffer, 0, aBuffer.length);
 		return aBuffer;
 	}
 
 
 	public byte[] read(byte[] aBuffer, int aOffset, int aLength) throws IOException
 	{
-		mInputStream.read(aBuffer, aOffset, aLength);
+		for (int pos = aOffset, len = aLength; len > 0;)
+		{
+			int n = mInputStream.read(aBuffer, pos, len);
+
+			if (n < 0)
+			{
+				throw new IOException();
+			}
+
+			pos += n;
+			len -= n;
+		}
+
 		return aBuffer;
 	}
 
 
 	public void skip(int aCount) throws IOException
 	{
-		mInputStream.skip(aCount);
+		while (aCount > 0)
+		{
+			long n = mInputStream.skip(aCount);
+
+			if (n < 0)
+			{
+				throw new IOException();
+			}
+
+			aCount -= n;
+		}
 	}
 
 

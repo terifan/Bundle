@@ -56,7 +56,7 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 
 
 	@Override
-	Bundle put(String aKey, Object aValue)
+	Bundle set(String aKey, Object aValue)
 	{
 		mValues.put(aKey, aValue);
 		return this;
@@ -75,77 +75,61 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 	}
 
 
-	public Byte[] getByteArray(String aKey)
+	public ArrayList<Boolean> getBooleanArray(String aKey)
 	{
-		return (Byte[])castArray(aKey, Byte.class);
+		return castArray(aKey, Boolean.class);
 	}
 
 
-	public Short[] getShortArray(String aKey)
+	public ArrayList<Byte> getByteArray(String aKey)
 	{
-		return (Short[])castArray(aKey, Short.class);
+		return castArray(aKey, Byte.class);
 	}
 
 
-	public Integer[] getIntArray(String aKey)
+	public ArrayList<Short> getShortArray(String aKey)
 	{
-		return (Integer[])castArray(aKey, Integer.class);
+		return castArray(aKey, Short.class);
 	}
 
 
-	public Long[] getLongArray(String aKey)
+	public ArrayList<Integer> getIntArray(String aKey)
 	{
-		return (Long[])castArray(aKey, Long.class);
+		return castArray(aKey, Integer.class);
 	}
 
 
-	public Float[] getFloatArray(String aKey)
+	public ArrayList<Long> getLongArray(String aKey)
 	{
-		return (Float[])castArray(aKey, Float.class);
+		return castArray(aKey, Long.class);
 	}
 
 
-	public Double[] getDoubleArray(String aKey)
+	public ArrayList<Float> getFloatArray(String aKey)
 	{
-		return (Double[])castArray(aKey, Double.class);
+		return castArray(aKey, Float.class);
 	}
 
 
-	public Bundle[] getBundleArray(String aKey)
+	public ArrayList<Double> getDoubleArray(String aKey)
 	{
-		return (Bundle[])castArray(aKey, Bundle.class);
+		return castArray(aKey, Double.class);
 	}
 
 
-	public Bundle[] getBundleArray(String aKey, Bundle[] aDefaultValue)
+	public ArrayList<Bundle> getBundleArray(String aKey)
 	{
-		Bundle[] value = (Bundle[])castArray(aKey, Bundle.class);
-		if (value == null)
-		{
-			return aDefaultValue;
-		}
-		return value;
+		return castArray(aKey, Bundle.class);
 	}
 
 
-	public String[] getStringArray(String aKey)
+	public ArrayList<String> getStringArray(String aKey)
 	{
-		return (String[])castArray(aKey, String.class);
+		return castArray(aKey, String.class);
 	}
 
 
-	public String[] getStringArray(String aKey, String[] aDefaultValue)
-	{
-		String[] value = (String[])castArray(aKey, Bundle.class);
-		if (value == null)
-		{
-			return aDefaultValue;
-		}
-		return value;
-	}
-
-
-	private Object castArray(String aKey, Class aType)
+	private <T> ArrayList<T> castArray(String aKey, Class<T> aType)
 	{
 		Array array = (Array)get(aKey);
 
@@ -154,7 +138,8 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 			return null;
 		}
 
-		Object elements = java.lang.reflect.Array.newInstance(aType, array.size());
+		ArrayList<T> out = new ArrayList<>();
+
 		for (int i = 0; i < array.size(); i++)
 		{
 			Object v = array.get(i);
@@ -185,12 +170,45 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 				{
 					v = ((Number)v).doubleValue();
 				}
+				else if (aType == String.class)
+				{
+					v = v.toString();
+				}
+			}
+			else if (v instanceof String & v.getClass() != aType)
+			{
+				String s = (String)v;
+
+				if (aType == Integer.class)
+				{
+					v = Integer.parseInt(s);
+				}
+				else if (aType == Long.class)
+				{
+					v = Long.parseLong(s);
+				}
+				else if (aType == Short.class)
+				{
+					v = Short.parseShort(s);
+				}
+				else if (aType == Byte.class)
+				{
+					v = Byte.parseByte(s);
+				}
+				else if (aType == Float.class)
+				{
+					v = Float.parseFloat(s);
+				}
+				else if (aType == Double.class)
+				{
+					v = Double.parseDouble(s);
+				}
 			}
 
-			java.lang.reflect.Array.set(elements, i, v);
+			out.add((T)v);
 		}
 
-		return elements;
+		return out;
 	}
 
 

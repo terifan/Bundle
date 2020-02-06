@@ -1,7 +1,10 @@
 package org.terifan.bundle;
 
-import java.awt.Color;
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Random;
+import java.util.TimeZone;
 import static org.testng.Assert.*;
 import org.testng.annotations.Test;
 
@@ -124,5 +127,80 @@ public class BundleNGTest
 
 		assertEquals(out, in);
 		assertEquals(bundle.marshalJSON(true), "{\"r\":64,\"g\":128,\"b\":255}");
+	}
+
+
+	@Test
+	public void testMarshalSerializable() throws IOException
+	{
+		TimeZone tz = TimeZone.getDefault();
+
+		Bundle out = new Bundle().putSerializable("tz", tz);
+
+		byte[] data = out.marshal();
+		
+		Bundle in = new Bundle().unmarshal(data);
+
+		assertEquals(out, in);
+		assertEquals(out.getSerializable(TimeZone.class, "tz"), in.getSerializable(TimeZone.class, "tz"));
+	}
+
+
+	@Test
+	public void testMarshalSerializable2() throws IOException
+	{
+		TestObject tz = new TestObject();
+		tz.data = new byte[1000000];
+		new Random().nextBytes(tz.data);
+
+		Bundle out = new Bundle().putSerializable("tz", tz);
+
+		byte[] data = out.marshal();
+		
+		Bundle in = new Bundle().unmarshal(data);
+
+		assertEquals(out, in);
+		assertEquals(out.getSerializable(TestObject.class, "tz"), in.getSerializable(TestObject.class, "tz"));
+	}
+	
+	
+	private static class TestObject implements Serializable
+	{
+		private final static long serialVersionUID = 1L;
+		
+		byte[] data;
+
+
+		@Override
+		public int hashCode()
+		{
+			int hash = 7;
+			hash = 79 * hash + Arrays.hashCode(this.data);
+			return hash;
+		}
+
+
+		@Override
+		public boolean equals(Object obj)
+		{
+			if (this == obj)
+			{
+				return true;
+			}
+			if (obj == null)
+			{
+				return false;
+			}
+			if (getClass() != obj.getClass())
+			{
+				return false;
+			}
+			final TestObject other = (TestObject)obj;
+			if (!Arrays.equals(this.data, other.data))
+			{
+				return false;
+			}
+			return true;
+		}
 	}
 }
