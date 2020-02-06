@@ -23,10 +23,10 @@ public class Test
 	{
 		try
 		{
-			y();
+//			y();
 //			x();
 //			xml();
-//			big();
+			big();
 //			small();
 //			array();
 		}
