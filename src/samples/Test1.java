@@ -13,8 +13,8 @@ public class Test1
 		try
 		{
 			Bundle bundle = new Bundle()
-				.putArray("coordinates", new Array().addAll(new Vector(0,0,0), new Vector(0,0,1), new Vector(0,1,0), new Vector(0,1,1), new Vector(1,0,0), new Vector(1,0,1), new Vector(1,1,0), new Vector(1,1,1)))
-				.putArray("indicies", new Array().addAll(Array.of(0,1,2), Array.of(0,2,3), Array.of(4,5,6), Array.of(4,6,7)))
+				.putArray("coordinates", Array.of(new Vector(0,0,0), new Vector(0,0,1), new Vector(0,1,0), new Vector(0,1,1), new Vector(1,0,0), new Vector(1,0,1), new Vector(1,1,0), new Vector(1,1,1)))
+				.putArray("indices", Array.of(Array.of(0,1,2), Array.of(0,2,3), Array.of(4,5,6), Array.of(4,6,7)))
 				.putNumber("double", 3.14);
 
 			System.out.println(bundle.marshalJSON(false));
