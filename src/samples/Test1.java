@@ -14,6 +14,7 @@ public class Test1
 		{
 			Bundle bundle = new Bundle()
 				.putArray("coordinates", Array.of(new Vector(0,0,0), new Vector(0,0,1), new Vector(0,1,0), new Vector(0,1,1), new Vector(1,0,0), new Vector(1,0,1), new Vector(1,1,0), new Vector(1,1,1)))
+				.putArray("colors", Array.of(new RGB(0,0,0), new RGB(0,0,1), new RGB(0,1,0), new RGB(0,1,1), new RGB(1,0,0), new RGB(1,0,1), new RGB(1,1,0), new RGB(1,1,1)))
 				.putArray("indices", Array.of(Array.of(0,1,2), Array.of(0,2,3), Array.of(4,5,6), Array.of(4,6,7)))
 				.putNumber("double", 3.14);
 
@@ -26,7 +27,7 @@ public class Test1
 	}
 
 
-	static class RGB implements Bundlable, BundlableValue<Integer>
+	static class RGB implements BundlableValue<Integer>
 	{
 		private int r, g, b;
 
@@ -44,22 +45,22 @@ public class Test1
 		}
 
 
-		@Override
-		public void readExternal(Bundle aBundle)
-		{
-			r = aBundle.getInt("r");
-			g = aBundle.getInt("g");
-			b = aBundle.getInt("b");
-		}
-
-
-		@Override
-		public void writeExternal(Bundle aBundle)
-		{
-			aBundle.putNumber("r", r);
-			aBundle.putNumber("g", g);
-			aBundle.putNumber("b", b);
-		}
+//		@Override
+//		public void readExternal(Bundle aBundle)
+//		{
+//			r = aBundle.getInt("r");
+//			g = aBundle.getInt("g");
+//			b = aBundle.getInt("b");
+//		}
+//
+//
+//		@Override
+//		public void writeExternal(Bundle aBundle)
+//		{
+//			aBundle.putNumber("r", r);
+//			aBundle.putNumber("g", g);
+//			aBundle.putNumber("b", b);
+//		}
 
 
 		@Override
