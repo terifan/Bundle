@@ -102,7 +102,7 @@ public class Test
 
 	private static void array() throws IOException
 	{
-		Array array = new Array().add("awesome", 5.05, 1986);
+		Array array = new Array().addAll("awesome", 5.05, 1986);
 
 		byte[] data = array.marshal();
 		String json = array.marshalJSON(true);
@@ -120,7 +120,7 @@ public class Test
 		Bundle bundle = new Bundle()
 			.putBundle("numbers", new Bundle()
 				.putNumber("number", 7)
-				.putArray("ints", new Array().add(1, 4, 9))
+				.putArray("ints", new Array().addAll(1, 4, 9))
 				.putArray("doubles", new Array().add(1.3).add(2.2).add(3.1))
 			)
 			.putNumber("byte", (byte)7)
@@ -129,8 +129,8 @@ public class Test
 			.putNumber("long", 164516191981L)
 			.putNumber("float", 7.2f)
 			.putNumber("double", 3.14)
-			.putArray("arrays", new Array().add("horse", new Array().add("monkey", "pig"), 777, new Array().add("girl", "boy")))
-			.putArray("strings", new Array().add("a", null).add("b").add("c"))
+			.putArray("arrays", new Array().addAll("horse", new Array().addAll("monkey", "pig"), 777, new Array().addAll("girl", "boy")))
+			.putArray("strings", new Array().addAll("a", null).add("b").add("c"))
 			.putString("null", null)
 			.putBoolean("boolean", true)
 			.putArray("booleans", new Array().add(true).add(false).add(true))
@@ -138,9 +138,9 @@ public class Test
 			.putBundle("bundle", new Bundle().putString("key", "value"))
 			.putString("string", "text")
 			.putBundle("color", new RGB(196, 128, 20))
-			.putArray("colors", new Array().add(new RGB(196, 128, 20), new RGB(96, 128, 220)))
+			.putArray("colors", new Array().addAll(new RGB(196, 128, 20), new RGB(96, 128, 220)))
 			.putObject("rgb", new RGB(196, 128, 20))
-			.putArray("rgbs", new Array().add(new RGB(196, 128, 20), new RGB(96, 128, 220)))
+			.putArray("rgbs", new Array().addAll(new RGB(196, 128, 20), new RGB(96, 128, 220)))
 			.putObject("values", new PackedArray(96, 128, 220))
 			.putSerializable("date1", new Date())
 			.putDate("date2", new Date())
@@ -148,7 +148,7 @@ public class Test
 			.putUUID("uuid", UUID.randomUUID())
 			.putCalendar("calendar", new GregorianCalendar(TimeZone.getTimeZone("CET")))
 			.putArray("empty", new Array())
-			.putArray("big", new Array().add("test", new Bundle().putString("a", "A").putString("b", "B").putString("c", "C"), new Bundle().putString("a", "A").putString("b", "B").putString("c", "C").putArray("d", new Array().add(1, 2, 3))));
+			.putArray("big", new Array().addAll("test", new Bundle().putString("a", "A").putString("b", "B").putString("c", "C"), new Bundle().putString("a", "A").putString("b", "B").putString("c", "C").putArray("d", new Array().addAll(1, 2, 3))));
 
 		System.out.println(bundle);
 

@@ -8,11 +8,11 @@ import java.util.stream.Stream;
 import static org.terifan.bundle.BundleConstants.assertSupportedType;
 
 
-public class Array extends Container<Integer,Array> implements Serializable, Iterable
+public class Array extends Container<Integer, Array> implements Serializable, Iterable
 {
 	private static final long serialVersionUID = 1L;
 
-	protected ArrayList mValues;
+	protected ArrayList<Object> mValues;
 
 
 	public Array()
@@ -70,7 +70,7 @@ public class Array extends Container<Integer,Array> implements Serializable, Ite
 	}
 
 
-	public Array add(Object... aValues)
+	public Array addAll(Object... aValues)
 	{
 		if (aValues == null)
 		{
@@ -182,7 +182,8 @@ public class Array extends Container<Integer,Array> implements Serializable, Ite
 	/**
 	 * Create an array of item provided including primitives, objects, array and objects implementing the Bundlable interface.
 	 * <p>
-	 * e.g. creating an array using <code>new Array(new int[2], new boolean[2], "hello");</code> will result in this array: [0,0,false,false,"hello"]
+	 * e.g. creating an array using <code>new Array(new int[2], new boolean[2], "hello");</code> will result in this array:
+	 * [0,0,false,false,"hello"]
 	 * </p>
 	 * <p>
 	 * Creating multi dimensional arrays require a cast to Object:
@@ -195,10 +196,8 @@ public class Array extends Container<Integer,Array> implements Serializable, Ite
 	 * e.g <code>new Array(new int[][]{{1,2},{3,4}});</code> will result in this array: [1,2,3,4]
 	 * </p>
 	 *
-	 * @param aBundlable
-	 *   an array of objects
-	 * @return
-	 *   an array
+	 * @param aBundlable an array of objects
+	 * @return an array
 	 */
 	public static Array of(Object aBundlable)
 	{
@@ -249,7 +248,8 @@ public class Array extends Container<Integer,Array> implements Serializable, Ite
 	/**
 	 * Create an array of item provided including primitives, objects, array and objects implementing the Bundlable interface.
 	 * <p>
-	 * e.g. creating an array using <code>new Array(new int[2], new boolean[2], "hello");</code> will result in this array: [0,0,false,false,"hello"]
+	 * e.g. creating an array using <code>new Array(new int[2], new boolean[2], "hello");</code> will result in this array:
+	 * [0,0,false,false,"hello"]
 	 * </p>
 	 * <p>
 	 * Creating multi dimensional arrays require a cast to Object:
@@ -262,10 +262,8 @@ public class Array extends Container<Integer,Array> implements Serializable, Ite
 	 * e.g <code>new Array(new int[][]{{1,2},{3,4}});</code> will result in this array: [1,2,3,4]
 	 * </p>
 	 *
-	 * @param aBundlable
-	 *   an array of objects
-	 * @return
-	 *   an array
+	 * @param aBundlable an array of objects
+	 * @return an array
 	 */
 	public static Array of(Object... aBundlable)
 	{

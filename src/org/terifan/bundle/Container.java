@@ -24,7 +24,7 @@ import java.util.TimeZone;
 import java.util.UUID;
 
 
-public abstract class Container<K,R> implements Serializable, Externalizable
+public abstract class Container<K, R> implements Serializable, Externalizable
 {
 	private final static long serialVersionUID = 1L;
 
@@ -134,7 +134,7 @@ public abstract class Container<K,R> implements Serializable, Externalizable
 	public Long getLong(K aKey, Long aDefaultValue)
 	{
 		Long value = (Long)get(aKey);
-		if (value != null)
+		if (value == null)
 		{
 			return aDefaultValue;
 		}
@@ -291,12 +291,9 @@ public abstract class Container<K,R> implements Serializable, Externalizable
 	/**
 	 * The value referred to by the key is unmarshalled into an object of the type provided.
 	 *
-	 * @param aType
-	 *   a BundlableValue type
-	 * @param aKey
-	 *   a key
-	 * @return
-	 *   an instance of the BundlableValue type
+	 * @param aType a BundlableValue type
+	 * @param aKey a key
+	 * @return an instance of the BundlableValue type
 	 */
 	public <T extends BundlableValue> T getObject(Class<T> aType, K aKey)
 	{
@@ -526,12 +523,9 @@ public abstract class Container<K,R> implements Serializable, Externalizable
 	/**
 	 * Return this Bundle as a JSON.
 	 *
-	 * @param aJSONOutput
-	 *   bundle JSON is written to this Appendable
-	 * @param aCompact
-	 *   if false the JSON produced will be formatted
-	 * @return
-	 *   return this Bundle as a JSON
+	 * @param aJSONOutput bundle JSON is written to this Appendable
+	 * @param aCompact if false the JSON produced will be formatted
+	 * @return return this Bundle as a JSON
 	 */
 	public <T extends Appendable> T marshalJSON(T aJSONOutput, boolean aCompact)
 	{
