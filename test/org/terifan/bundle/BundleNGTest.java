@@ -1,7 +1,9 @@
 package org.terifan.bundle;
 
+import java.awt.Point;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Random;
 import static org.testng.Assert.*;
 import org.testng.annotations.Test;
@@ -22,10 +24,10 @@ public class BundleNGTest
 			assertEquals(in.getNumber("value"), value);
 			assertEquals(in.getByte("value"), value);
 
-//			in = new Bundle().unmarshalJSON(out.marshalJSON(true));
-//
-//			assertEquals(in.getNumber("value"), value);
-//			assertEquals(in.getByte("value"), value);
+			in = new Bundle().unmarshalJSON(out.marshalJSON(true));
+
+			assertEquals(in.getNumber("value"), value);
+			assertEquals(in.getByte("value"), value);
 		}
 	}
 
@@ -45,10 +47,10 @@ public class BundleNGTest
 			assertEquals(in.getNumber("value"), value);
 			assertEquals(in.getShort("value"), value);
 
-//			in = new Bundle().unmarshalJSON(out.marshalJSON(true));
-//
-//			assertEquals(in.getNumber("value"), value);
-//			assertEquals(in.getShort("value"), value);
+			in = new Bundle().unmarshalJSON(out.marshalJSON(true));
+
+			assertEquals(in.getNumber("value"), value);
+			assertEquals(in.getShort("value"), value);
 		}
 	}
 
@@ -68,10 +70,10 @@ public class BundleNGTest
 			assertEquals(in.getNumber("value"), value);
 			assertEquals(in.getInt("value"), value);
 
-//			in = new Bundle().unmarshalJSON(out.marshalJSON(true));
-//
-//			assertEquals(in.getNumber("value"), value);
-//			assertEquals(in.getInt("value"), value);
+			in = new Bundle().unmarshalJSON(out.marshalJSON(true));
+
+			assertEquals(in.getNumber("value"), value);
+			assertEquals(in.getInt("value"), value);
 		}
 	}
 
@@ -116,8 +118,15 @@ public class BundleNGTest
 
 			in = new Bundle().unmarshalJSON(out.marshalJSON(true));
 
-			assertEquals(""+in.getNumber("value"), ""+value);
-			assertEquals(""+in.getFloat("value"), ""+value);
+			if (value != null)
+			{
+				assertEquals(in.getNumber("value").floatValue(), value); // JSON decoder only parse Doubles
+				assertEquals(in.getFloat("value"), value);
+			}
+			else
+			{
+				assertNull(in.getFloat("value"));
+			}
 		}
 	}
 
@@ -315,5 +324,33 @@ public class BundleNGTest
 
 		assertEquals(out, in);
 		assertEquals(out.getSerializable(Block.class, "block"), in.getSerializable(Block.class, "block"));
+	}
+
+
+	@Test
+	public void testSerializable() throws IOException
+	{
+		Point point = new Point(0,0);
+
+		Bundle out = new Bundle().putSerializable("point", point);
+
+		Point in = out.getSerializable(Point.class, "point");
+
+		assertEquals(point, in);
+		assertEquals(out.marshalJSON(true), "{\"point\":\"rO0ABXNyAA5qYXZhLmF3dC5Qb2ludLbEinI0fsgmAgACSQABeEkAAXl4cAAAAAAAAAAA\"}");
+	}
+
+
+	@Test
+	public void testBinary() throws IOException
+	{
+		byte[] data = "binarydata".getBytes();
+
+		Bundle out = new Bundle().putBinary("data", data);
+
+		byte[] in = out.getBinary("data");
+
+		assertEquals(data, in);
+		assertEquals(out.marshalJSON(true), "{\"data\":\"YmluYXJ5ZGF0YQ==\"}");
 	}
 }

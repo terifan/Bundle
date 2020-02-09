@@ -213,7 +213,23 @@ class JSONDecoder
 		}
 		else
 		{
-			out = Long.parseLong(in);
+			long v = Long.parseLong(in);
+			if (v >= Byte.MIN_VALUE && v <= Byte.MAX_VALUE)
+			{
+				out = (byte)v;
+			}
+			else if (v >= Short.MIN_VALUE && v <= Short.MAX_VALUE)
+			{
+				out = (short)v;
+			}
+			else if (v >= Integer.MIN_VALUE && v <= Integer.MAX_VALUE)
+			{
+				out = (int)v;
+			}
+			else
+			{
+				out = v;
+			}
 		}
 
 		return out;

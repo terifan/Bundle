@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Stream;
-import static org.terifan.bundle.BundleConstants.assertSupportedType;
 
 
 public class Array extends Container<Integer, Array> implements Serializable, Iterable
@@ -31,7 +30,14 @@ public class Array extends Container<Integer, Array> implements Serializable, It
 	@Override
 	public Array set(Integer aIndex, Object aValue)
 	{
-		mValues.add(aIndex, aValue);
+		if (aIndex == size())
+		{
+			mValues.add(aValue);
+		}
+		else
+		{
+			mValues.set(aIndex, aValue);
+		}
 		return this;
 	}
 
@@ -50,7 +56,7 @@ public class Array extends Container<Integer, Array> implements Serializable, It
 				}
 				else
 				{
-					mValues.add(v);
+					addImpl(v);
 				}
 			}
 		}
@@ -60,6 +66,12 @@ public class Array extends Container<Integer, Array> implements Serializable, It
 			{
 				addRecursive(w);
 			}
+		}
+		else if (aValue instanceof Bundlable)
+		{
+			Bundle bundle = new Bundle();
+			((Bundlable)aValue).writeExternal(bundle);
+			addImpl(bundle);
 		}
 		else
 		{
@@ -74,7 +86,7 @@ public class Array extends Container<Integer, Array> implements Serializable, It
 	{
 		if (aValues == null)
 		{
-			mValues.add(null);
+			addImpl(null);
 		}
 		else
 		{
@@ -210,9 +222,13 @@ public class Array extends Container<Integer, Array> implements Serializable, It
 				array.addRecursive(w);
 			}
 		}
-		else
+		else if (aValue == null || isSupportedType(aValue) || Serializable.class.isAssignableFrom(aValue.getClass()))
 		{
 			array.addRecursive(aValue);
+		}
+		else
+		{
+			throw new IllegalArgumentException("Unsupported type: " + aValue.getClass());
 		}
 
 		return array;
@@ -261,7 +277,7 @@ public class Array extends Container<Integer, Array> implements Serializable, It
 				arr.addRecursive(java.lang.reflect.Array.get(aValue, i));
 			}
 
-			mValues.add(arr);
+			addImpl(arr);
 		}
 		else if (aValue instanceof List)
 		{
@@ -272,11 +288,31 @@ public class Array extends Container<Integer, Array> implements Serializable, It
 				arr.addRecursive(w);
 			}
 
-			mValues.add(arr);
+			addImpl(arr);
+		}
+		else if (aValue instanceof Bundlable)
+		{
+			Bundle bundle = new Bundle();
+			((Bundlable)aValue).writeExternal(bundle);
+			addImpl(bundle);
+		}
+		else if (aValue == null || isSupportedType(aValue))
+		{
+			addImpl(aValue);
+		}
+		else if (Serializable.class.isAssignableFrom(aValue.getClass()))
+		{
+			putSerializable(size(), (Serializable)aValue);
 		}
 		else
 		{
-			mValues.add(aValue);
+			throw new IllegalArgumentException("Unsupported type: " + aValue.getClass());
 		}
+	}
+
+
+	private void addImpl(Object aValue)
+	{
+		mValues.add(aValue);
 	}
 }

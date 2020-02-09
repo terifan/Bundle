@@ -1,5 +1,6 @@
 package org.terifan.bundle;
 
+import java.awt.Point;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -271,5 +272,33 @@ public class ArrayNGTest
 		assertEquals(out.marshal(), in.marshal());
 		assertEquals(out.marshalJSON(true), in.marshalJSON(true));
 		assertEquals(out.marshalJSON(true), "[[1.0,2.0,3.0],[4.0,5.0,6.0]]");
+	}
+
+
+	@Test
+	public void testSerializable() throws IOException
+	{
+		Point point = new Point(0,0);
+
+		Array out = Array.of(point);
+
+		Point in = out.getSerializable(Point.class, 0);
+
+		assertEquals(point, in);
+		assertEquals(out.marshalJSON(true), "[\"rO0ABXNyAA5qYXZhLmF3dC5Qb2ludLbEinI0fsgmAgACSQABeEkAAXl4cAAAAAAAAAAA\"]");
+	}
+
+
+	@Test
+	public void testBinary() throws IOException
+	{
+		byte[] data = "binarydata".getBytes();
+
+		Array out = new Array().putBinary(0, data);
+
+		byte[] in = out.getBinary(0);
+
+		assertEquals(data, in);
+		assertEquals(out.marshalJSON(true), "[\"YmluYXJ5ZGF0YQ==\"]");
 	}
 }

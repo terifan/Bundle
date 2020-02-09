@@ -2,7 +2,6 @@ package org.terifan.bundle;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;

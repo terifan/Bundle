@@ -673,4 +673,27 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 
 		new BinaryDecoder().unmarshal(new ByteArrayInputStream(buf), new PathEvaluation(), this);
 	}
+
+
+	public static boolean isSupportedType(Object aValue)
+	{
+		Class type = aValue == null ? null : aValue.getClass();
+
+		return
+			   type == Boolean.class
+			|| type == String.class
+			|| type == Byte.class
+			|| type == Short.class
+			|| type == Integer.class
+			|| type == Long.class
+			|| type == Float.class
+			|| type == Double.class
+			|| type == Date.class
+			|| type == Calendar.class
+			|| type == TimeZone.class
+			|| type == UUID.class
+			|| type == Array.class
+			|| type == Bundle.class
+			|| type == null;
+	}
 }
