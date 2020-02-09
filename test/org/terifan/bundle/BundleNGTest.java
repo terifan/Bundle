@@ -2,6 +2,7 @@ package org.terifan.bundle;
 
 import java.awt.Point;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Random;
@@ -352,5 +353,67 @@ public class BundleNGTest
 
 		assertEquals(data, in);
 		assertEquals(out.marshalJSON(true), "{\"data\":\"YmluYXJ5ZGF0YQ==\"}");
+	}
+
+
+	@Test
+	public void testGetByteArray() throws IOException
+	{
+		Array data = Array.of((byte)0,(byte)100,(byte)-100);
+
+		Bundle out = new Bundle().putArray("values", data);
+
+		ArrayList<Byte> in = out.getByteArray("values");
+
+		assertEquals(data, in);
+	}
+
+
+	@Test
+	public void testGetShortArray() throws IOException
+	{
+		Array data = Array.of((short)0,(short)100,(short)10000);
+
+		Bundle out = new Bundle().putArray("values", data);
+
+		ArrayList<Short> in = out.getShortArray("values");
+
+		assertEquals(data, in);
+	}
+
+
+	@Test
+	public void testGetIntArray() throws IOException
+	{
+		Array ints = Array.of(0,100,10000);
+
+		Array data = Array.of((short)0,(short)100,(short)10000);
+
+		Bundle out = new Bundle().putArray("values", data);
+
+		ArrayList<Integer> in = out.getIntArray("values");
+
+		assertEquals(ints, in);
+	}
+
+
+	@Test
+	public void testGetNumberArray() throws IOException
+	{
+		Array data = Array.of((byte)0,(short)1000,100000,Math.PI);
+
+		Bundle out = new Bundle().putArray("values", data);
+
+		out = new Bundle().unmarshal(out.marshal()); // BinaryDecoder decodes all types
+
+		ArrayList<Number> in = out.getNumberArray("values");
+
+		assertEquals(data, in);
+
+		out = new Bundle().unmarshalJSON(out.marshalJSON(true)); // JSONDecoder decodes numbers to their most narrow boxing instance
+
+		in = out.getNumberArray("values");
+
+		assertEquals(data, in);
 	}
 }

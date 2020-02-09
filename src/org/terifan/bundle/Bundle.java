@@ -116,6 +116,12 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 	}
 
 
+	public ArrayList<Number> getNumberArray(String aKey)
+	{
+		return castArray(aKey, Number.class);
+	}
+
+
 	public ArrayList<Bundle> getBundleArray(String aKey)
 	{
 		return castArray(aKey, Bundle.class);
@@ -153,9 +159,13 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 				{
 					v = ((Number)v).longValue();
 				}
-				else if (aType == Short.class)
+				else if (aType == Double.class)
 				{
-					v = ((Number)v).shortValue();
+					v = ((Number)v).doubleValue();
+				}
+				else if (aType == String.class)
+				{
+					v = v.toString();
 				}
 				else if (aType == Byte.class)
 				{
@@ -165,13 +175,9 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 				{
 					v = ((Number)v).floatValue();
 				}
-				else if (aType == Double.class)
+				else if (aType == Short.class)
 				{
-					v = ((Number)v).doubleValue();
-				}
-				else if (aType == String.class)
-				{
-					v = v.toString();
+					v = ((Number)v).shortValue();
 				}
 			}
 			else if (v instanceof String & v.getClass() != aType)
@@ -186,9 +192,9 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 				{
 					v = Long.parseLong(s);
 				}
-				else if (aType == Short.class)
+				else if (aType == Double.class)
 				{
-					v = Short.parseShort(s);
+					v = Double.parseDouble(s);
 				}
 				else if (aType == Byte.class)
 				{
@@ -198,9 +204,9 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 				{
 					v = Float.parseFloat(s);
 				}
-				else if (aType == Double.class)
+				else if (aType == Short.class)
 				{
-					v = Double.parseDouble(s);
+					v = Short.parseShort(s);
 				}
 			}
 
