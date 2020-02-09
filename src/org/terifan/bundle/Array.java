@@ -21,22 +21,15 @@ public class Array extends Container<Integer, Array> implements Serializable, It
 	}
 
 
-	public Array(Object... aValues)
+	@Override
+	public <T> T get(Integer aIndex)
 	{
-		this();
-		add(aValues);
+		return (T)mValues.get(aIndex);
 	}
 
 
 	@Override
-	public Object get(Integer aIndex)
-	{
-		return mValues.get(aIndex);
-	}
-
-
-	@Override
-	Array set(Integer aIndex, Object aValue)
+	public Array set(Integer aIndex, Object aValue)
 	{
 		mValues.add(aIndex, aValue);
 		return this;
@@ -45,51 +38,52 @@ public class Array extends Container<Integer, Array> implements Serializable, It
 
 	public Array add(Object aValue)
 	{
-		if (aValue instanceof BundlableValue)
+		if (aValue != null && aValue.getClass().isArray())
 		{
-			aValue = ((BundlableValue)aValue).writeExternal();
-		}
+			for (int i = 0, sz = java.lang.reflect.Array.getLength(aValue); i < sz; i++)
+			{
+				Object v = java.lang.reflect.Array.get(aValue, i);
 
-		if (aValue instanceof Bundlable)
-		{
-			Bundle bundle = new Bundle();
-			((Bundlable)aValue).writeExternal(bundle);
-			mValues.add(bundle);
+				if (v != null && v.getClass().isArray())
+				{
+					addRecursive(v);
+				}
+				else
+				{
+					mValues.add(v);
+				}
+			}
 		}
-		else if (aValue != null && aValue.getClass().isArray())
+		else if (aValue instanceof List)
 		{
-			throw new IllegalArgumentException("Us the of(...) method to create Array instances of arrays.");
+			for (Object w : (List)aValue)
+			{
+				addRecursive(w);
+			}
 		}
 		else
 		{
-			assertSupportedType(aValue);
-			mValues.add(aValue);
+			addRecursive(aValue);
 		}
 
 		return this;
 	}
 
 
-	public Array addAll(Object... aValues)
+	public Array add(Object... aValues)
 	{
 		if (aValues == null)
 		{
-			add((Object)null);
+			mValues.add(null);
 		}
 		else
 		{
 			for (Object v : aValues)
 			{
-				add(v);
+				addRecursive(v);
 			}
 		}
-		return this;
-	}
 
-
-	public Array addAll(List<Object> aValues)
-	{
-		aValues.forEach(this::add);
 		return this;
 	}
 
@@ -121,6 +115,13 @@ public class Array extends Container<Integer, Array> implements Serializable, It
 	{
 		mValues.remove((int)aIndex);
 		return this;
+	}
+
+
+	@Override
+	public boolean containsKey(Integer aKey)
+	{
+		return aKey != null && mValues.size() > aKey;
 	}
 
 
@@ -162,17 +163,6 @@ public class Array extends Container<Integer, Array> implements Serializable, It
 		if (aOther instanceof Array)
 		{
 			return mValues.equals(((Array)aOther).mValues);
-//
-//			// TODO: fix
-//
-//			try
-//			{
-//				return Arrays.equals(marshal(), ((Array)aOther).marshal());
-//			}
-//			catch (IOException e)
-//			{
-//				throw new IllegalArgumentException(e);
-//			}
 		}
 
 		return false;
@@ -180,65 +170,49 @@ public class Array extends Container<Integer, Array> implements Serializable, It
 
 
 	/**
-	 * Create an array of item provided including primitives, objects, array and objects implementing the Bundlable interface.
-	 * <p>
-	 * e.g. creating an array using <code>new Array(new int[2], new boolean[2], "hello");</code> will result in this array:
-	 * [0,0,false,false,"hello"]
-	 * </p>
-	 * <p>
-	 * Creating multi dimensional arrays require a cast to Object:
+	 * Create an array of item provided including primitives, arrays and objects implementing the Bundlable and BundlableValue interfaces.
 	 *
-	 * e.g <code>new Array((Object)new int[][]{{1,2},{3,4}});</code> will result in this array: [[1,2],[3,4]]
-	 * </p>
-	 * <p>
-	 * <strong>Warning</strong>: multi dimensional arrays without cast will be merged:
+	 * Note: if the object provided is an array it will be consumed, e.g. these two samples will result in the same structure (json: "[1,2,3,4]"):
+	 * <code>
+	 *    Array.of(1,2,3,4);
 	 *
-	 * e.g <code>new Array(new int[][]{{1,2},{3,4}});</code> will result in this array: [1,2,3,4]
-	 * </p>
+	 *    int[] values = {1,2,3,4};
+	 *    Array.of(values);
+	 * </code>
 	 *
-	 * @param aBundlable an array of objects
+	 * @param aValues an array of objects
 	 * @return an array
 	 */
-	public static Array of(Object aBundlable)
+	public static Array of(Object aValue)
 	{
 		Array array = new Array();
 
-		if (aBundlable != null && aBundlable.getClass().isArray())
+		if (aValue != null && aValue.getClass().isArray())
 		{
-			for (int i = 0, sz = java.lang.reflect.Array.getLength(aBundlable); i < sz; i++)
+			for (int i = 0, sz = java.lang.reflect.Array.getLength(aValue); i < sz; i++)
 			{
-				Object w = java.lang.reflect.Array.get(aBundlable, i);
-				if (w != null && w.getClass().isArray())
+				Object v = java.lang.reflect.Array.get(aValue, i);
+
+				if (v != null && v.getClass().isArray())
 				{
-					array.add(Array.of(w));
+					array.addRecursive(v);
 				}
 				else
 				{
-					array.add(w);
+					array.add(v);
 				}
 			}
 		}
-		else if (aBundlable instanceof List)
+		else if (aValue instanceof List)
 		{
-			for (Object w : (List)aBundlable)
+			for (Object w : (List)aValue)
 			{
-				if (w != null && w.getClass().isArray())
-				{
-					array.add(Array.of(w));
-				}
-				else
-				{
-					array.add(w);
-				}
+				array.addRecursive(w);
 			}
-		}
-		else if (aBundlable instanceof Bundlable)
-		{
-			array.add(Bundle.of(aBundlable));
 		}
 		else
 		{
-			array.add(aBundlable);
+			array.addRecursive(aValue);
 		}
 
 		return array;
@@ -246,56 +220,63 @@ public class Array extends Container<Integer, Array> implements Serializable, It
 
 
 	/**
-	 * Create an array of item provided including primitives, objects, array and objects implementing the Bundlable interface.
-	 * <p>
-	 * e.g. creating an array using <code>new Array(new int[2], new boolean[2], "hello");</code> will result in this array:
-	 * [0,0,false,false,"hello"]
-	 * </p>
-	 * <p>
-	 * Creating multi dimensional arrays require a cast to Object:
+	 * Create an array of item provided including primitives, arrays and objects implementing the Bundlable and BundlableValue interfaces.
 	 *
-	 * e.g <code>new Array((Object)new int[][]{{1,2},{3,4}});</code> will result in this array: [[1,2],[3,4]]
-	 * </p>
-	 * <p>
-	 * <strong>Warning</strong>: multi dimensional arrays without cast will be merged:
-	 *
-	 * e.g <code>new Array(new int[][]{{1,2},{3,4}});</code> will result in this array: [1,2,3,4]
-	 * </p>
-	 *
-	 * @param aBundlable an array of objects
+	 * @param aValues an array of objects
 	 * @return an array
 	 */
-	public static Array of(Object... aBundlable)
+	public static Array of(Object... aValues)
 	{
 		Array array = new Array();
 
-		for (Object v : aBundlable)
+		if (aValues == null)
 		{
-			if (v != null && v.getClass().isArray())
+			array.add(null);
+		}
+		else
+		{
+			for (Object v : aValues)
 			{
-				for (int i = 0, sz = java.lang.reflect.Array.getLength(v); i < sz; i++)
-				{
-					Object w = java.lang.reflect.Array.get(v, i);
-					if (w != null && w.getClass().isArray())
-					{
-						array.add(Array.of(w));
-					}
-					else
-					{
-						array.add(w);
-					}
-				}
-			}
-			else if (v instanceof Bundlable)
-			{
-				array.add(Bundle.of(v));
-			}
-			else
-			{
-				array.add(v);
+				array.addRecursive(v);
 			}
 		}
 
 		return array;
+	}
+
+
+	private void addRecursive(Object aValue)
+	{
+		if (aValue instanceof BundlableValue)
+		{
+			aValue = ((BundlableValue)aValue).writeExternal();
+		}
+
+		if (aValue != null && aValue.getClass().isArray())
+		{
+			Array arr = new Array();
+
+			for (int i = 0, sz = java.lang.reflect.Array.getLength(aValue); i < sz; i++)
+			{
+				arr.addRecursive(java.lang.reflect.Array.get(aValue, i));
+			}
+
+			mValues.add(arr);
+		}
+		else if (aValue instanceof List)
+		{
+			Array arr = new Array();
+
+			for (Object w : (List)aValue)
+			{
+				arr.addRecursive(w);
+			}
+
+			mValues.add(arr);
+		}
+		else
+		{
+			mValues.add(aValue);
+		}
 	}
 }

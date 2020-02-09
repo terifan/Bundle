@@ -2,6 +2,7 @@ package org.terifan.bundle;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
@@ -39,6 +40,22 @@ class JSONEncoder
 	{
 		int size = aBundle.size();
 
+		boolean hasBundle = aBundle.size() > 5;
+
+		for (Object entry : aBundle.values())
+		{
+			if (entry instanceof Bundle)
+			{
+				hasBundle = true;
+				break;
+			}
+		}
+
+		if (!hasBundle && !aPrinter.isFirst())
+		{
+			aPrinter.println();
+		}
+
 		aPrinter.println("{").indent(1);
 
 		for (Entry<String, Object> entry : aBundle.entrySet())
@@ -47,9 +64,13 @@ class JSONEncoder
 
 			marshal(aPrinter, entry.getValue());
 
-			if (--size > 0)
+			if (hasBundle && --size > 0)
 			{
 				aPrinter.println(aNewLineOnClose ? "," : ", ", false);
+			}
+			else if (!hasBundle && --size > 0)
+			{
+				aPrinter.print(", ", false);
 			}
 		}
 
@@ -196,6 +217,7 @@ class JSONEncoder
 		private boolean mNewLine;
 		private int mIndent;
 		private boolean mCompact;
+		private boolean mFirst;
 
 
 		public Printer(Appendable aAppendable, boolean aCompact)
@@ -203,6 +225,7 @@ class JSONEncoder
 			mAppendable = aAppendable;
 			mNewLine = false;
 			mCompact = aCompact;
+			mFirst = true;
 		}
 
 
@@ -235,6 +258,7 @@ class JSONEncoder
 				printIndent();
 			}
 			mAppendable.append(text);
+			mFirst = false;
 			return this;
 		}
 
@@ -277,6 +301,12 @@ class JSONEncoder
 		{
 			mNewLine = true;
 			return this;
+		}
+
+
+		boolean isFirst()
+		{
+			return mFirst;
 		}
 
 

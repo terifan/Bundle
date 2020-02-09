@@ -1,13 +1,12 @@
 package org.terifan.bundle;
 
 import java.io.Externalizable;
-import java.io.IOException;
 import java.io.Serializable;
 import java.io.StringReader;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -337,6 +336,13 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 	}
 
 
+	public Collection<Object> values()
+	{
+		return mValues.values();
+	}
+
+
+	@Override
 	public boolean containsKey(String aKey)
 	{
 		return mValues.containsKey(aKey);
@@ -374,18 +380,7 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 	{
 		if (aOther instanceof Bundle)
 		{
-//			return mValues.equals(((Bundle)aOther).mValues);
-
-			// TODO: fix
-
-			try
-			{
-				return Arrays.equals(marshal(), ((Bundle)aOther).marshal());
-			}
-			catch (IOException e)
-			{
-				throw new IllegalArgumentException(e);
-			}
+			return marshalJSON(true).equals(((Bundle)aOther).marshalJSON(true));
 		}
 
 		return false;

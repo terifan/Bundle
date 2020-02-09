@@ -29,19 +29,19 @@ public class BundleHelper
 
 	public static Array toArray(Point aPoint)
 	{
-		return aPoint == null ? null : new Array(aPoint.x, aPoint.y);
+		return aPoint == null ? null : Array.of(aPoint.x, aPoint.y);
 	}
 
 
 	public static Array toArray(Dimension aDimension)
 	{
-		return aDimension == null ? null : new Array(aDimension.width, aDimension.height);
+		return aDimension == null ? null : Array.of(aDimension.width, aDimension.height);
 	}
 
 
 	public static Array toArray(Rectangle aRectangle)
 	{
-		return aRectangle == null ? null : new Array(aRectangle.x, aRectangle.y, aRectangle.width, aRectangle.height);
+		return aRectangle == null ? null : Array.of(aRectangle.x, aRectangle.y, aRectangle.width, aRectangle.height);
 	}
 
 

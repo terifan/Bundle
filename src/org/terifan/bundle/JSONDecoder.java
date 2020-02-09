@@ -50,13 +50,15 @@ class JSONDecoder
 				c = readChar();
 			}
 
-			if (c != '\"')
+			if (c != '\"' && c != '\'')
 			{
 				throw new IOException("Expected starting quote character of key.");
 			}
 
-			String key = readString();
-			
+			int terminator = c;
+
+			String key = readString(terminator);
+
 			c = readChar();
 
 			if (c != ':')
@@ -76,7 +78,10 @@ class JSONDecoder
 					value = readBundle(new Bundle());
 					break;
 				case '\"':
-					value = readString();
+					value = readString('\"');
+					break;
+				case '\'':
+					value = readString('\'');
 					break;
 				default:
 					mReader.unread(c);
@@ -126,7 +131,10 @@ class JSONDecoder
 					value = readBundle(new Bundle());
 					break;
 				case '\"':
-					value = readString();
+					value = readString('\"');
+					break;
+				case '\'':
+					value = readString('\'');
 					break;
 				default:
 					mReader.unread(c);
@@ -141,7 +149,7 @@ class JSONDecoder
 	}
 
 
-	private String readString() throws IOException
+	private String readString(int aTerminator) throws IOException
 	{
 		StringBuilder sb = new StringBuilder();
 
@@ -149,7 +157,7 @@ class JSONDecoder
 		{
 			int c = readByte();
 
-			if (c == '\"')
+			if (c == aTerminator)
 			{
 				return sb.toString();
 			}

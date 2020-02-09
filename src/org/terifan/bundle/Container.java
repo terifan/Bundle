@@ -34,17 +34,23 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 	}
 
 
-	public abstract Object get(K aKey);
+	public abstract <T> T get(K aKey);
 
 
-	public Object get(K aKey, Object aDefaultValue)
+	public <T> T get(K aKey, T aDefaultValue)
 	{
 		Object value = (Object)get(aKey);
 		if (value == null)
 		{
 			return aDefaultValue;
 		}
-		return value;
+		return (T)value;
+	}
+
+
+	public Object getObject(K aKey)
+	{
+		return get(aKey);
 	}
 
 
@@ -72,35 +78,43 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 
 	public Byte getByte(K aKey)
 	{
-		return (Byte)get(aKey);
+		return getByte(aKey, null);
 	}
 
 
 	public Byte getByte(K aKey, Byte aDefaultValue)
 	{
-		Byte value = (Byte)get(aKey);
-		if (value == null)
+		Object v = get(aKey);
+		if (v == null)
 		{
 			return aDefaultValue;
 		}
-		return value;
+		if (v instanceof Number)
+		{
+			return ((Number)v).byteValue();
+		}
+		throw new IllegalArgumentException("Value of key " + aKey + " cannot be cast on a Byte");
 	}
 
 
 	public Short getShort(K aKey)
 	{
-		return (Short)get(aKey);
+		return getShort(aKey, null);
 	}
 
 
 	public Short getShort(K aKey, Short aDefaultValue)
 	{
-		Short value = (Short)get(aKey);
-		if (value == null)
+		Object v = get(aKey);
+		if (v == null)
 		{
 			return aDefaultValue;
 		}
-		return value;
+		if (v instanceof Number)
+		{
+			return ((Number)v).shortValue();
+		}
+		throw new IllegalArgumentException("Value of key " + aKey + " cannot be cast on a Short");
 	}
 
 
@@ -117,11 +131,11 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 		{
 			return aDefaultValue;
 		}
-		if (v instanceof Long)
+		if (v instanceof Number)
 		{
-			return (int)(long)(Long)v;
+			return ((Number)v).intValue();
 		}
-		return (Integer)v;
+		throw new IllegalArgumentException("Value of key " + aKey + " cannot be cast on an Integer");
 	}
 
 
@@ -133,46 +147,58 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 
 	public Long getLong(K aKey, Long aDefaultValue)
 	{
-		Long value = (Long)get(aKey);
-		if (value == null)
+		Object v = get(aKey);
+		if (v == null)
 		{
 			return aDefaultValue;
 		}
-		return value;
+		if (v instanceof Number)
+		{
+			return ((Number)v).longValue();
+		}
+		throw new IllegalArgumentException("Value of key " + aKey + " cannot be cast on a Long");
 	}
 
 
 	public Float getFloat(K aKey)
 	{
-		return (Float)get(aKey);
+		return getFloat(aKey, null);
 	}
 
 
 	public Float getFloat(K aKey, Float aDefaultValue)
 	{
-		Float value = (Float)get(aKey);
-		if (value == null)
+		Object v = get(aKey);
+		if (v == null)
 		{
 			return aDefaultValue;
 		}
-		return value;
+		if (v instanceof Number)
+		{
+			return ((Number)v).floatValue();
+		}
+		throw new IllegalArgumentException("Value of key " + aKey + " cannot be cast on a Float");
 	}
 
 
 	public Double getDouble(K aKey)
 	{
-		return (Double)get(aKey);
+		return getDouble(aKey, null);
 	}
 
 
 	public Double getDouble(K aKey, Double aDefaultValue)
 	{
-		Double value = (Double)get(aKey);
-		if (value == null)
+		Object v = get(aKey);
+		if (v == null)
 		{
 			return aDefaultValue;
 		}
-		return value;
+		if (v instanceof Number)
+		{
+			return ((Number)v).doubleValue();
+		}
+		throw new IllegalArgumentException("Value of key " + aKey + " cannot be cast on a Double");
 	}
 
 
@@ -203,6 +229,21 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 	public Number getNumber(K aKey)
 	{
 		return (Number)get(aKey);
+	}
+
+
+	public Number getNumber(K aKey, Number aDefautValue)
+	{
+		Object value = get(aKey);
+		if (value == null)
+		{
+			return aDefautValue;
+		}
+		if (value instanceof Number)
+		{
+			return (Number)value;
+		}
+		throw new IllegalArgumentException("Value of key " + aKey + " cannot be cast on a Number");
 	}
 
 
@@ -295,7 +336,7 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 	 * @param aKey a key
 	 * @return an instance of the BundlableValue type
 	 */
-	public <T extends BundlableValue> T getObject(Class<T> aType, K aKey)
+	public <T extends BundlableValue> T getBundlable(Class<T> aType, K aKey)
 	{
 		try
 		{
@@ -314,7 +355,7 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 	}
 
 
-	public R putObject(K aKey, BundlableType aValue)
+	public R putBundlable(K aKey, BundlableType aValue)
 	{
 		if (aValue instanceof BundlableValue)
 		{
@@ -466,6 +507,15 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 		set(aKey, aBytes);
 		return (R)this;
 	}
+
+
+	public boolean isNull(K aKey)
+	{
+		return get(aKey) == null;
+	}
+
+
+	public abstract boolean containsKey(K aKey);
 
 
 	@Override

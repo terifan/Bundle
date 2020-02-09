@@ -19,6 +19,10 @@ public class Test1
 				.putNumber("double", 3.14);
 
 			System.out.println(bundle.marshalJSON(false));
+
+			RGB rgb = bundle.getArray("colors").getBundlable(RGB.class, 4);
+
+			System.out.println(rgb);
 		}
 		catch (Throwable e)
 		{
@@ -43,24 +47,6 @@ public class Test1
 			this.g = aG;
 			this.b = aB;
 		}
-
-
-//		@Override
-//		public void readExternal(Bundle aBundle)
-//		{
-//			r = aBundle.getInt("r");
-//			g = aBundle.getInt("g");
-//			b = aBundle.getInt("b");
-//		}
-//
-//
-//		@Override
-//		public void writeExternal(Bundle aBundle)
-//		{
-//			aBundle.putNumber("r", r);
-//			aBundle.putNumber("g", g);
-//			aBundle.putNumber("b", b);
-//		}
 
 
 		@Override

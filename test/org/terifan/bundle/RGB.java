@@ -1,8 +1,12 @@
 package org.terifan.bundle;
 
+import java.io.Serializable;
 
-class RGB implements Bundlable, BundlableValue<Integer>
+
+class RGB implements Bundlable, BundlableValue<Integer>, Serializable
 {
+	private static final long serialVersionUID = 1L;
+
 	private int r, g, b;
 
 
@@ -41,6 +45,40 @@ class RGB implements Bundlable, BundlableValue<Integer>
 	public String toString()
 	{
 		return "Color{r=" + r + ", g=" + g + ", b=" + b + '}';
+	}
+
+
+	@Override
+	public void readExternal(Bundle aBundle)
+	{
+		r = aBundle.getInt("r");
+		g = aBundle.getInt("g");
+		b = aBundle.getInt("b");
+	}
+
+
+	@Override
+	public void writeExternal(Bundle aBundle)
+	{
+		aBundle.putNumber("r", r);
+		aBundle.putNumber("g", g);
+		aBundle.putNumber("b", b);
+	}
+
+
+	@Override
+	public void readExternal(Integer aValue)
+	{
+		r = 0xff & (aValue >> 16);
+		g = 0xff & (aValue >> 8);
+		b = 0xff & (aValue);
+	}
+
+
+	@Override
+	public Integer writeExternal()
+	{
+		return (r << 16) + (g << 8) + b;
 	}
 
 
@@ -84,39 +122,5 @@ class RGB implements Bundlable, BundlableValue<Integer>
 			return false;
 		}
 		return true;
-	}
-
-
-	@Override
-	public void readExternal(Bundle aBundle)
-	{
-		r = aBundle.getInt("r");
-		g = aBundle.getInt("g");
-		b = aBundle.getInt("b");
-	}
-
-
-	@Override
-	public void writeExternal(Bundle aBundle)
-	{
-		aBundle.putNumber("r", r);
-		aBundle.putNumber("g", g);
-		aBundle.putNumber("b", b);
-	}
-
-
-	@Override
-	public void readExternal(Integer aValue)
-	{
-		r = 0xff & (aValue >> 16);
-		g = 0xff & (aValue >> 8);
-		b = 0xff & (aValue);
-	}
-
-
-	@Override
-	public Integer writeExternal()
-	{
-		return (r << 16) + (g << 8) + b;
 	}
 }
