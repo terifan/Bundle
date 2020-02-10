@@ -80,11 +80,6 @@ class BinaryEncoder
 
 		for (String key : aBundle.keySet())
 		{
-			if (key == null)
-			{
-				throw new IllegalArgumentException("A Bundle key cannot be null.");
-			}
-
 			UTF8.encodeUTF8Z(key, output);
 
 			Object value = aBundle.get(key);
@@ -215,8 +210,8 @@ class BinaryEncoder
 				break;
 			case UUID:
 				UUID uuid = (UUID)aValue;
-				output.writeInt64(uuid.getLeastSignificantBits());
 				output.writeInt64(uuid.getMostSignificantBits());
+				output.writeInt64(uuid.getLeastSignificantBits());
 				break;
 			case CALENDAR:
 				Calendar c = (Calendar)aValue;

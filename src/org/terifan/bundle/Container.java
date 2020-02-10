@@ -48,24 +48,35 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 	}
 
 
-	public Object getObject(K aKey)
-	{
-		return get(aKey);
-	}
-
-
 	abstract R set(K aKey, Object aValue);
 
 
 	public Boolean getBoolean(K aKey)
 	{
-		return (Boolean)get(aKey);
+		return getBoolean(aKey, null);
 	}
 
 
-	public Boolean getBoolean(K aKey, boolean aDefault)
+	public Boolean getBoolean(K aKey, Boolean aDefaultValue)
 	{
-		return get(aKey) == null ? aDefault : (Boolean)get(aKey);
+		Object v = get(aKey);
+		if (v == null)
+		{
+			return aDefaultValue;
+		}
+		if (v instanceof Boolean)
+		{
+			return (Boolean)v;
+		}
+		if (v instanceof String)
+		{
+			return Boolean.parseBoolean((String)v);
+		}
+		if (v instanceof Number)
+		{
+			return ((Number)v).doubleValue() != 0;
+		}
+		throw new IllegalArgumentException("Value of key " + aKey + " cannot be cast on a Boolean");
 	}
 
 

@@ -28,7 +28,7 @@ public class Array extends Container<Integer, Array> implements Serializable, It
 
 
 	@Override
-	public Array set(Integer aIndex, Object aValue)
+	Array set(Integer aIndex, Object aValue)
 	{
 		if (aIndex == size())
 		{
@@ -67,6 +67,10 @@ public class Array extends Container<Integer, Array> implements Serializable, It
 				addRecursive(w);
 			}
 		}
+		else if (aValue instanceof Stream)
+		{
+			((Stream)aValue).forEach(this::addRecursive);
+		}
 		else if (aValue instanceof Bundlable)
 		{
 			Bundle bundle = new Bundle();
@@ -96,13 +100,6 @@ public class Array extends Container<Integer, Array> implements Serializable, It
 			}
 		}
 
-		return this;
-	}
-
-
-	public Array addAll(Stream aValues)
-	{
-		aValues.forEach(this::add);
 		return this;
 	}
 
@@ -222,6 +219,10 @@ public class Array extends Container<Integer, Array> implements Serializable, It
 				array.addRecursive(w);
 			}
 		}
+		else if (aValue instanceof Stream)
+		{
+			((Stream)aValue).forEach(array::addRecursive);
+		}
 		else if (aValue == null || isSupportedType(aValue) || Serializable.class.isAssignableFrom(aValue.getClass()))
 		{
 			array.addRecursive(aValue);
@@ -287,6 +288,14 @@ public class Array extends Container<Integer, Array> implements Serializable, It
 			{
 				arr.addRecursive(w);
 			}
+
+			addImpl(arr);
+		}
+		else if (aValue instanceof Stream)
+		{
+			Array arr = new Array();
+
+			((Stream)aValue).forEach(arr::addRecursive);
 
 			addImpl(arr);
 		}

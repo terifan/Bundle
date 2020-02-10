@@ -57,6 +57,10 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 	@Override
 	Bundle set(String aKey, Object aValue)
 	{
+		if (aKey == null)
+		{
+			throw new IllegalArgumentException("Keys cannot be null.");
+		}
 		mValues.put(aKey, aValue);
 		return this;
 	}

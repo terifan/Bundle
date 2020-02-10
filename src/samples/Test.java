@@ -154,7 +154,7 @@ public class Test
 
 		System.out.println(new Bundle().unmarshalJSON(bundle.toString()));
 
-		System.out.println(bundle.getBundle("numbers").getArray("ints").getObject(1));
+		System.out.println((Object)bundle.getBundle("numbers").getArray("ints").get(1));
 		System.out.println(bundle.getBundle("numbers").toArray("ints")[1]);
 		System.out.println(bundle.getBundle("numbers").getArray("ints").stream().collect(Collectors.averagingDouble(e -> (Integer)e)));
 		System.out.println(bundle.getArray("strings").stream().collect(Collectors.averagingDouble(e -> e == null ? 0 : e.toString().length())));

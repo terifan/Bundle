@@ -13,6 +13,25 @@ import org.testng.annotations.Test;
 public class BundleNGTest
 {
 	@Test
+	public void testBoolean() throws IOException
+	{
+		for (Boolean value : new Boolean[]{null, true, false})
+		{
+			Bundle out = new Bundle()
+				.putBoolean("value", value);
+
+			Bundle in = new Bundle().unmarshal(out.marshal());
+
+			assertEquals(in.getBoolean("value"), value);
+
+			in = new Bundle().unmarshalJSON(out.marshalJSON(true));
+
+			assertEquals(in.getBoolean("value"), value);
+		}
+	}
+
+
+	@Test
 	public void testByte() throws IOException
 	{
 		for (Byte value : new Byte[]{null, Byte.MIN_VALUE, Byte.MAX_VALUE})

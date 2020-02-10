@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 import static org.testng.Assert.*;
 import org.testng.annotations.Test;
 
@@ -300,5 +301,59 @@ public class ArrayNGTest
 
 		assertEquals(data, in);
 		assertEquals(out.marshalJSON(true), "[\"YmluYXJ5ZGF0YQ==\"]");
+	}
+
+
+	@Test
+	public void testAddArray() throws IOException
+	{
+		Array out = new Array().add(new int[]{1,2,3});
+
+		assertEquals(out.marshalJSON(true), "[1,2,3]");
+	}
+
+
+	@Test
+	public void testAddList() throws IOException
+	{
+		Array out = new Array().add(Arrays.asList(1,2,3));
+
+		assertEquals(out.marshalJSON(true), "[1,2,3]");
+	}
+
+
+	@Test
+	public void testAddBundlable() throws IOException
+	{
+		Array out = new Array().add(new Vector(1,2,3));
+
+		assertEquals(out.marshalJSON(true), "[{\"x\":1.0,\"y\":2.0,\"z\":3.0}]");
+	}
+
+
+	@Test
+	public void testAddStream() throws IOException
+	{
+		Array out = new Array().add(Stream.of(1,2,3));
+
+		assertEquals(out.marshalJSON(true), "[1,2,3]");
+	}
+
+
+	@Test
+	public void testArrayOfStream() throws IOException
+	{
+		Array out = Array.of(Stream.of(1,2,3));
+
+		assertEquals(out.marshalJSON(true), "[1,2,3]");
+	}
+
+
+	@Test
+	public void testArrayOfStream3() throws IOException
+	{
+		Array out = Array.of(Stream.of(Stream.of(1,2),Stream.of(3,4),Stream.of(5,6)));
+
+		assertEquals(out.marshalJSON(true), "[[1,2],[3,4],[5,6]]");
 	}
 }
