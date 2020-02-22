@@ -9,12 +9,6 @@ import org.testng.annotations.Test;
 public class ExporterNGTest
 {
 	@Test
-	public void placeholder() throws IOException
-	{
-	}
-
-
-	@Test
 	public void testExporter() throws IOException
 	{
 		Color color = new Color(64, 128, 255);
@@ -23,6 +17,7 @@ public class ExporterNGTest
 
 		Bundle in = Bundle.of(color, fn);
 
+		assertEquals(in.marshalJSON(true), "{\"r\":64,\"g\":128,\"b\":255}");
 		assertEquals(color.getRed(), (int)in.getInt("r"));
 		assertEquals(color.getGreen(), (int)in.getInt("g"));
 		assertEquals(color.getBlue(), (int)in.getInt("b"));

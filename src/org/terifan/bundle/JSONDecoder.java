@@ -22,6 +22,7 @@ class JSONDecoder
 		{
 			case '{':
 				return readBundle((Bundle)aContainer);
+			case '<': // TODO: temporary support for PSON
 			case '[':
 				return readArray((Array)aContainer);
 			default:
@@ -71,6 +72,7 @@ class JSONDecoder
 			Object value;
 			switch (c)
 			{
+				case '<': // TODO: temporary support for PSON
 				case '[':
 					value = readArray(new Array());
 					break;
@@ -106,6 +108,10 @@ class JSONDecoder
 			{
 				break;
 			}
+			if (c == '>') // TODO: temporary support for PSON
+			{
+				break;
+			}
 			if (c == ':')
 			{
 				throw new IOException("Found colon after element in array");
@@ -124,6 +130,7 @@ class JSONDecoder
 			Object value;
 			switch (c)
 			{
+				case '<': // TODO: temporary support for PSON
 				case '[':
 					value = readArray(new Array());
 					break;
@@ -180,6 +187,11 @@ class JSONDecoder
 			int c = readByte();
 
 			if (c == '}' || c == ']' || c == ',' || Character.isWhitespace(c))
+			{
+				mReader.unread(c);
+				break;
+			}
+			if (c == '>') // TODO: temporary support for PSON
 			{
 				mReader.unread(c);
 				break;
