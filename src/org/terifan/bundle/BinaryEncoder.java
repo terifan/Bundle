@@ -11,7 +11,7 @@ import static org.terifan.bundle.BundleConstants.*;
 /**
  * var32 header (container type, version)
  * var32 length
- * bytes a single bundle or array
+ * nb    a single bundle or array
  *
  * [bundle]
  *    var32 key count
@@ -20,9 +20,9 @@ import static org.terifan.bundle.BundleConstants.*;
  *      var32 type
  *        [if string,array,bundle,binary]
  *          var32 length
- *          bytes value
+ *          nb    value
  *        [else]
- *          bytes value
+ *          nb    value
  * [array]
  *    var32 header (element count, single type, has null, is single type)
  *    [elements]
@@ -32,9 +32,9 @@ import static org.terifan.bundle.BundleConstants.*;
  *        var32 type
  *      [if string,array,bundle,binary]
  *        var32 length
- *        bytes value
+ *        nb    value
  *      [else]
- *        bytes value
+ *        nb    value
  */
 class BinaryEncoder
 {
