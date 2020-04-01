@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
 import java.util.Objects;
 import java.util.TimeZone;
 import java.util.UUID;
@@ -558,6 +559,57 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 	}
 
 
+	public R put(K aKey, Object aValue)
+	{
+		if (aValue instanceof Number)
+		{
+			putNumber(aKey, (Number)aValue);
+		}
+		else if (aValue instanceof String)
+		{
+			putString(aKey, (String)aValue);
+		}
+		else if (aValue instanceof BundlableType)
+		{
+			putBundlable(aKey, (BundlableType)aValue);
+		}
+		else if (aValue instanceof UUID)
+		{
+			putUUID(aKey, (UUID)aValue);
+		}
+		else if (aValue instanceof Date)
+		{
+			putDate(aKey, (Date)aValue);
+		}
+		else if (aValue instanceof Calendar)
+		{
+			putCalendar(aKey, (Calendar)aValue);
+		}
+		else if (aValue instanceof Boolean)
+		{
+			putBoolean(aKey, (Boolean)aValue);
+		}
+		else if (aValue instanceof byte[])
+		{
+			putBinary(aKey, (byte[])aValue);
+		}
+		else if (aValue instanceof Bundle)
+		{
+			putBundle(aKey, (Bundle)aValue);
+		}
+		else if (aValue instanceof Array)
+		{
+			putArray(aKey, (Array)aValue);
+		}
+		else if (aValue instanceof Serializable)
+		{
+			putSerializable(aKey, (Serializable)aValue);
+		}
+
+		return (R)this;
+	}
+
+
 	public boolean isNull(K aKey)
 	{
 		return get(aKey) == null;
@@ -745,4 +797,7 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 			|| type == Bundle.class
 			|| type == null;
 	}
+
+
+	public abstract Map<K, Object> toMap();
 }
