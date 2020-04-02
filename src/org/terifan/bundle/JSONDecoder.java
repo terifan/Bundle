@@ -223,6 +223,10 @@ class JSONDecoder
 		{
 			out = Double.parseDouble(in);
 		}
+		else if (in.startsWith("0x"))
+		{
+			out = Long.parseLong(in.substring(2), 16);
+		}
 		else
 		{
 			long v = Long.parseLong(in);
