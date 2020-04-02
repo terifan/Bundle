@@ -1,9 +1,11 @@
 package samples;
 
-import org.terifan.bundle.BundlableValue;
+import java.util.Arrays;
+import org.terifan.bundle.Array;
+import org.terifan.bundle.Bundlable;
 
 
-class Triangle implements BundlableValue<Vector[]>
+class Triangle implements Bundlable<Array>
 {
 	private Vector[] mVerticies;
 
@@ -20,15 +22,60 @@ class Triangle implements BundlableValue<Vector[]>
 
 
 	@Override
-	public void readExternal(Vector[] aVectors)
+	public void readExternal(Array aBundle)
 	{
-		mVerticies = aVectors;
+		mVerticies = new Vector[3];
+		for (int i = 0; i < 3; i++)
+		{
+			Array arr = new Array();
+			mVerticies[i] = new Vector();
+			mVerticies[i].readExternal(arr);
+			aBundle.add(arr);
+		}
 	}
 
 
 	@Override
-	public Vector[] writeExternal()
+	public void writeExternal(Array aBundle)
 	{
-		return mVerticies;
+		for (Vector v : mVerticies)
+		{
+			Array arr = new Array();
+			v.writeExternal(arr);
+			aBundle.add(arr);
+		}
+	}
+
+
+	@Override
+	public int hashCode()
+	{
+		int hash = 3;
+		hash = 29 * hash + Arrays.deepHashCode(this.mVerticies);
+		return hash;
+	}
+
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+		{
+			return true;
+		}
+		if (obj == null)
+		{
+			return false;
+		}
+		if (getClass() != obj.getClass())
+		{
+			return false;
+		}
+		final Triangle other = (Triangle)obj;
+		if (!Arrays.deepEquals(this.mVerticies, other.mVerticies))
+		{
+			return false;
+		}
+		return true;
 	}
 }

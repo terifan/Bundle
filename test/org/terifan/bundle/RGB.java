@@ -3,7 +3,7 @@ package org.terifan.bundle;
 import java.io.Serializable;
 
 
-class RGB implements Bundlable, BundlableValue<Integer>, Serializable
+class RGB implements Serializable, Bundlable<Bundle>
 {
 	private static final long serialVersionUID = 1L;
 
@@ -63,22 +63,6 @@ class RGB implements Bundlable, BundlableValue<Integer>, Serializable
 		aBundle.putNumber("r", r);
 		aBundle.putNumber("g", g);
 		aBundle.putNumber("b", b);
-	}
-
-
-	@Override
-	public void readExternal(Integer aValue)
-	{
-		r = 0xff & (aValue >> 16);
-		g = 0xff & (aValue >> 8);
-		b = 0xff & (aValue);
-	}
-
-
-	@Override
-	public Integer writeExternal()
-	{
-		return (r << 16) + (g << 8) + b;
 	}
 
 

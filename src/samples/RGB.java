@@ -4,14 +4,14 @@ import org.terifan.bundle.*;
 import java.io.Serializable;
 
 
-class Color implements Bundlable, BundlableValue<Integer>, Serializable
+class RGB implements Serializable, Bundlable<Bundle>
 {
 	private static final long serialVersionUID = 1L;
 
 	private int r, g, b;
 
 
-	public Color()
+	public RGB()
 	{
 	}
 
@@ -34,7 +34,7 @@ class Color implements Bundlable, BundlableValue<Integer>, Serializable
 	}
 
 
-	public Color(int aR, int aG, int aB)
+	public RGB(int aR, int aG, int aB)
 	{
 		this.r = aR;
 		this.g = aG;
@@ -68,22 +68,6 @@ class Color implements Bundlable, BundlableValue<Integer>, Serializable
 
 
 	@Override
-	public void readExternal(Integer aValue)
-	{
-		r = 0xff & (aValue >> 16);
-		g = 0xff & (aValue >> 8);
-		b = 0xff & (aValue);
-	}
-
-
-	@Override
-	public Integer writeExternal()
-	{
-		return (r << 16) + (g << 8) + b;
-	}
-
-
-	@Override
 	public int hashCode()
 	{
 		int hash = 7;
@@ -109,7 +93,7 @@ class Color implements Bundlable, BundlableValue<Integer>, Serializable
 		{
 			return false;
 		}
-		final Color other = (Color)obj;
+		final RGB other = (RGB)obj;
 		if (this.r != other.r)
 		{
 			return false;

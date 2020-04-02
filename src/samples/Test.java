@@ -13,7 +13,6 @@ import java.util.zip.DeflaterOutputStream;
 import org.terifan.bundle.Array;
 import org.terifan.bundle.PathEvaluation;
 import org.terifan.bundle.Bundle;
-import org.terifan.bundle.BundlableValue;
 import org.terifan.bundle.Bundlable;
 
 
@@ -55,7 +54,6 @@ public class Test
 
 		bundle.putBundlable("object", new Vector(1, 2, 3));
 		bundle.putBundle("bundle", new RGB(1, 2, 3));
-		bundle.putBundlableValue("array", new PackedArray(1, 2, 3));
 
 		System.out.println(bundle);
 	}
@@ -141,7 +139,6 @@ public class Test
 			.putArray("colors", new Array().add(new RGB(196, 128, 20), new RGB(96, 128, 220)))
 			.putBundlable("rgb", new RGB(196, 128, 20))
 			.putArray("rgbs", new Array().add(new RGB(196, 128, 20), new RGB(96, 128, 220)))
-			.putBundlableValue("values", new PackedArray(96, 128, 220))
 			.putSerializable("date1", new Date())
 			.putDate("date2", new Date())
 			.putBinary("binary", "test".getBytes())
@@ -164,9 +161,6 @@ public class Test
 
 		RGB color = bundle.getBundlable(RGB.class, "rgb");
 		System.out.println(color);
-
-		PackedArray pa = bundle.getBundlableValue(PackedArray.class, "values");
-		System.out.println(pa);
 
 		for (Object v : bundle.getArray("colors"))
 		{
@@ -211,148 +205,6 @@ public class Test
 		for (double v : bundle.getBundle("numbers").getDoubleArray("doubles"))
 		{
 			System.out.println(v);
-		}
-	}
-
-
-	static class RGB implements Bundlable, BundlableValue<Integer>
-	{
-		private int r, g, b;
-
-
-		public RGB()
-		{
-		}
-
-
-		public RGB(int aR, int aG, int aB)
-		{
-			this.r = aR;
-			this.g = aG;
-			this.b = aB;
-		}
-
-
-		@Override
-		public void readExternal(Bundle aBundle)
-		{
-			r = aBundle.getInt("r");
-			g = aBundle.getInt("g");
-			b = aBundle.getInt("b");
-		}
-
-
-		@Override
-		public void writeExternal(Bundle aBundle)
-		{
-			aBundle.putNumber("r", r);
-			aBundle.putNumber("g", g);
-			aBundle.putNumber("b", b);
-		}
-
-
-		@Override
-		public void readExternal(Integer aValue)
-		{
-			r = 0xff & (aValue >> 16);
-			g = 0xff & (aValue >> 8);
-			b = 0xff & (aValue);
-		}
-
-
-		@Override
-		public Integer writeExternal()
-		{
-			return (r << 16) + (g << 8) + b;
-		}
-
-
-		@Override
-		public String toString()
-		{
-			return "Color{r=" + r + ", g=" + g + ", b=" + b + '}';
-		}
-	}
-
-
-	static class Vector implements Bundlable
-	{
-		private double x, y, z;
-
-
-		public Vector()
-		{
-		}
-
-
-		public Vector(double aX, double aY, double aZ)
-		{
-			this.x = aX;
-			this.y = aY;
-			this.z = aZ;
-		}
-
-
-		@Override
-		public void readExternal(Bundle aBundle)
-		{
-			x = aBundle.getInt("x");
-			y = aBundle.getInt("y");
-			z = aBundle.getInt("z");
-		}
-
-
-		@Override
-		public void writeExternal(Bundle aBundle)
-		{
-			aBundle.putNumber("x", x);
-			aBundle.putNumber("y", y);
-			aBundle.putNumber("z", z);
-		}
-
-
-		@Override
-		public String toString()
-		{
-			return "Vector{" + "x=" + x + ", y=" + y + ", z=" + z + '}';
-		}
-	}
-
-
-	static class PackedArray implements BundlableValue<String>
-	{
-		private int[] mValues;
-
-
-		public PackedArray()
-		{
-		}
-
-
-		public PackedArray(int... aValues)
-		{
-			mValues = aValues;
-		}
-
-
-		@Override
-		public void readExternal(String aValue)
-		{
-			mValues = Stream.of(aValue.split(" ")).mapToInt(Integer::parseInt).toArray();
-		}
-
-
-		@Override
-		public String writeExternal()
-		{
-			return Arrays.stream(mValues).mapToObj(Integer::toString).collect(Collectors.joining(" "));
-		}
-
-
-		@Override
-		public String toString()
-		{
-			return "PackedArray{mValues=" + Arrays.toString(mValues) + '}';
 		}
 	}
 }

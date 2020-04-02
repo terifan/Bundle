@@ -4,7 +4,7 @@ import org.terifan.bundle.*;
 import java.io.Serializable;
 
 
-class Vector implements Bundlable, Serializable
+class Vector implements Serializable, Bundlable<Array>
 {
 	private static final long serialVersionUID = 1L;
 
@@ -25,20 +25,20 @@ class Vector implements Bundlable, Serializable
 
 
 	@Override
-	public void readExternal(Bundle aBundle)
+	public void readExternal(Array aBundle)
 	{
-		x = aBundle.getDouble("x");
-		y = aBundle.getDouble("y");
-		z = aBundle.getDouble("z");
+		x = aBundle.getDouble(0);
+		y = aBundle.getDouble(1);
+		z = aBundle.getDouble(2);
 	}
 
 
 	@Override
-	public void writeExternal(Bundle aBundle)
+	public void writeExternal(Array aBundle)
 	{
-		aBundle.putNumber("x", x);
-		aBundle.putNumber("y", y);
-		aBundle.putNumber("z", z);
+		aBundle.putNumber(0, x);
+		aBundle.putNumber(1, y);
+		aBundle.putNumber(2, z);
 	}
 
 

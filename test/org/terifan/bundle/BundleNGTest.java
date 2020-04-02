@@ -270,22 +270,6 @@ public class BundleNGTest
 
 
 	@Test
-	public void testBundableValue() throws IOException
-	{
-		RGB rgb = new RGB(64,128,255);
-
-		Bundle in = new Bundle().putBundlable("rgb", rgb);
-		byte[] data = in.marshal();
-		Bundle out = new Bundle().unmarshal(data);
-
-		assertEquals(out, in);
-		assertEquals(out.marshal(), in.marshal());
-		assertEquals(out.marshalJSON(true), in.marshalJSON(true));
-		assertEquals(out.getInt("rgb"), rgb.writeExternal());
-	}
-
-
-	@Test
 	public void testAsObject() throws IOException
 	{
 		RGB in = new RGB(64,128,255);
@@ -357,7 +341,6 @@ public class BundleNGTest
 		Point in = out.getSerializable(Point.class, "point");
 
 		assertEquals(point, in);
-		assertEquals(out.marshalJSON(true), "{\"point\":\"rO0ABXNyAA5qYXZhLmF3dC5Qb2ludLbEinI0fsgmAgACSQABeEkAAXl4cAAAAAAAAAAA\"}");
 	}
 
 

@@ -273,11 +273,6 @@ public class Array extends Container<Integer, Array> implements Serializable, It
 
 	private void addRecursive(Object aValue)
 	{
-		if (aValue instanceof BundlableValue)
-		{
-			aValue = ((BundlableValue)aValue).writeExternal();
-		}
-
 		if (aValue != null && aValue.getClass().isArray())
 		{
 			Array arr = new Array();
@@ -347,7 +342,7 @@ public class Array extends Container<Integer, Array> implements Serializable, It
 		return (T[])arr;
 	}
 
-	
+
 	@Override
 	public Map<Integer, Object> toMap()
 	{

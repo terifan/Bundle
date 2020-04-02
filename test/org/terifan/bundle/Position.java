@@ -3,7 +3,7 @@ package org.terifan.bundle;
 import java.io.Serializable;
 
 
-class Position implements BundlableValue<double[]>, Serializable
+class Position implements Bundlable<Array>, Serializable
 {
 	private static final long serialVersionUID = 1L;
 	private double[] values;
@@ -21,16 +21,20 @@ class Position implements BundlableValue<double[]>, Serializable
 
 
 	@Override
-	public void readExternal(double[] aValues)
+	public void readExternal(Array aArray)
 	{
-		values = aValues;
+		values = new double[]
+		{
+			aArray.getDouble(0),
+			aArray.getDouble(1),
+			aArray.getDouble(2)
+		};
 	}
 
 
 	@Override
-	public double[] writeExternal()
+	public void writeExternal(Array aBundle)
 	{
-		return values;
 	}
 
 

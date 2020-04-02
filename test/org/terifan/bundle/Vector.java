@@ -3,7 +3,7 @@ package org.terifan.bundle;
 import java.io.Serializable;
 
 
-class Vector implements Bundlable, Serializable
+class Vector implements Serializable, Bundlable<Bundle>
 {
 	private static final long serialVersionUID = 1L;
 
