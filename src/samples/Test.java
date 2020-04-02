@@ -63,7 +63,7 @@ public class Test
 	{
 		Bundle bundle = new Bundle();
 
-		bundle.unmarshalXML(Test.class.getResourceAsStream("test2.xml"), true);
+		bundle.unmarshalXML(Test.class.getResourceAsStream("test2.xml"));
 
 		byte[] data = bundle.marshal();
 

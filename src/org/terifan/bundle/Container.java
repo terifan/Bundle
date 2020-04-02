@@ -764,9 +764,24 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 	}
 
 
-	public R unmarshalXML(InputStream aXMLData, boolean aCreateOptionalArrays)
+	/**
+	 * Decode an XML document into a Bundle, ignoring attributes on leaf nodes.
+	 */
+	public R unmarshalXML(InputStream aXMLData)
 	{
-		new XMLDecoder().importXML(aXMLData, this, aCreateOptionalArrays);
+		return (R)unmarshalXML(aXMLData, false);
+	}
+
+
+	/**
+	 * Decode an XML document into a Bundle.
+	 *
+	 * @param aAllowAttributesOnLeafs
+	 *   if true will ignore attributes on leaf nodes
+	 */
+	public R unmarshalXML(InputStream aXMLData, boolean aAllowAttributesOnLeafs)
+	{
+		new XMLDecoder().importXML(aXMLData, this, aAllowAttributesOnLeafs);
 		return (R)this;
 	}
 
