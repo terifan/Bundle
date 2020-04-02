@@ -55,7 +55,7 @@ public class Test
 
 		bundle.putBundlable("object", new Vector(1, 2, 3));
 		bundle.putBundle("bundle", new RGB(1, 2, 3));
-		bundle.putBundlable("array", new PackedArray(1, 2, 3));
+		bundle.putBundlableValue("array", new PackedArray(1, 2, 3));
 
 		System.out.println(bundle);
 	}
@@ -141,7 +141,7 @@ public class Test
 			.putArray("colors", new Array().add(new RGB(196, 128, 20), new RGB(96, 128, 220)))
 			.putBundlable("rgb", new RGB(196, 128, 20))
 			.putArray("rgbs", new Array().add(new RGB(196, 128, 20), new RGB(96, 128, 220)))
-			.putBundlable("values", new PackedArray(96, 128, 220))
+			.putBundlableValue("values", new PackedArray(96, 128, 220))
 			.putSerializable("date1", new Date())
 			.putDate("date2", new Date())
 			.putBinary("binary", "test".getBytes())
@@ -165,7 +165,7 @@ public class Test
 		RGB color = bundle.getBundlable(RGB.class, "rgb");
 		System.out.println(color);
 
-		PackedArray pa = bundle.getBundlable(PackedArray.class, "values");
+		PackedArray pa = bundle.getBundlableValue(PackedArray.class, "values");
 		System.out.println(pa);
 
 		for (Object v : bundle.getArray("colors"))

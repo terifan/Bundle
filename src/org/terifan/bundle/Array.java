@@ -324,4 +324,17 @@ public class Array extends Container<Integer, Array> implements Serializable, It
 	{
 		mValues.add(aValue);
 	}
+
+
+	public <T extends Bundlable> T[] to(Class<T> aType)
+	{
+		Object arr = java.lang.reflect.Array.newInstance(aType, size());
+
+		for (int i = 0; i < size(); i++)
+		{
+			java.lang.reflect.Array.set(arr, i, getBundlable(aType, i));
+		}
+
+		return (T[])arr;
+	}
 }
