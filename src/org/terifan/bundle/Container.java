@@ -2,6 +2,8 @@ package org.terifan.bundle;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.Externalizable;
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,9 +23,13 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
 import java.util.Objects;
 import java.util.TimeZone;
 import java.util.UUID;
+import java.util.zip.Deflater;
+import java.util.zip.DeflaterOutputStream;
+import java.util.zip.InflaterInputStream;
 
 
 public abstract class Container<K, R> implements Serializable, Externalizable
@@ -461,9 +467,27 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 			return null;
 		}
 
-		try (ObjectInputStream oos = new ObjectInputStream(new ByteArrayInputStream(value)))
+
+		try (DataInputStream dis = new DataInputStream(new ByteArrayInputStream(value)))
 		{
-			return (T)oos.readObject();
+			String typeName = dis.readUTF();
+			if (!typeName.equals(aType.getCanonicalName()))
+			{
+				throw new IllegalArgumentException("Attempt to deserialize wrong object type: expected: " + aType + ", found: "  + typeName);
+			}
+
+			byte[] buf = new byte[dis.readInt()];
+			dis.readFully(buf);
+
+			if (dis.readInt() != new MurmurHash32(buf.length).update(buf).finish())
+			{
+				throw new IllegalArgumentException("Serialize data checksum error");
+			}
+
+			try (ObjectInputStream oos = new ObjectInputStream(new InflaterInputStream(new ByteArrayInputStream(buf))))
+			{
+				return (T)oos.readObject();
+			}
 		}
 		catch (IOException | ClassNotFoundException e)
 		{
@@ -475,9 +499,24 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 	public R putSerializable(K aKey, Serializable aValue)
 	{
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		try (ObjectOutputStream oos = new ObjectOutputStream(baos))
+		try (ObjectOutputStream oos = new ObjectOutputStream(new DeflaterOutputStream(baos, new Deflater(Deflater.BEST_SPEED))))
 		{
 			oos.writeObject(aValue);
+		}
+		catch (IOException e)
+		{
+			throw new IllegalArgumentException(e);
+		}
+
+		byte[] buf = baos.toByteArray();
+		baos.reset();
+
+		try (DataOutputStream dos = new DataOutputStream(baos))
+		{
+			dos.writeUTF(aValue.getClass().getCanonicalName());
+			dos.writeInt(buf.length);
+			dos.write(buf);
+			dos.writeInt(new MurmurHash32(buf.length).update(buf).finish());
 		}
 		catch (IOException e)
 		{
@@ -590,6 +629,57 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 	}
 
 
+	public R put(K aKey, Object aValue)
+	{
+		if (aValue instanceof Number)
+		{
+			putNumber(aKey, (Number)aValue);
+		}
+		else if (aValue instanceof String)
+		{
+			putString(aKey, (String)aValue);
+		}
+		else if (aValue instanceof Bundlable)
+		{
+			putBundlable(aKey, (Bundlable)aValue);
+		}
+		else if (aValue instanceof UUID)
+		{
+			putUUID(aKey, (UUID)aValue);
+		}
+		else if (aValue instanceof Date)
+		{
+			putDate(aKey, (Date)aValue);
+		}
+		else if (aValue instanceof Calendar)
+		{
+			putCalendar(aKey, (Calendar)aValue);
+		}
+		else if (aValue instanceof Boolean)
+		{
+			putBoolean(aKey, (Boolean)aValue);
+		}
+		else if (aValue instanceof byte[])
+		{
+			putBinary(aKey, (byte[])aValue);
+		}
+		else if (aValue instanceof Bundle)
+		{
+			putBundle(aKey, (Bundle)aValue);
+		}
+		else if (aValue instanceof Array)
+		{
+			putArray(aKey, (Array)aValue);
+		}
+		else if (aValue instanceof Serializable)
+		{
+			putSerializable(aKey, (Serializable)aValue);
+		}
+
+		return (R)this;
+	}
+
+
 	public boolean isNull(K aKey)
 	{
 		return get(aKey) == null;
@@ -602,7 +692,7 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 	@Override
 	public int hashCode()
 	{
-		return (int)hashCode(new MurmurHash32(0)).finish();
+		return hashCode(new MurmurHash32(0)).finish();
 	}
 
 
@@ -750,7 +840,7 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 	{
 		int size = aIn.readInt();
 		byte[] buf = new byte[size];
-		aIn.read(buf);
+		aIn.readFully(buf);
 
 		new BinaryDecoder().unmarshal(new ByteArrayInputStream(buf), new PathEvaluation(), this);
 	}
@@ -777,4 +867,7 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 			|| type == Bundle.class
 			|| type == null;
 	}
+
+
+	public abstract Map<K, Object> toMap();
 }

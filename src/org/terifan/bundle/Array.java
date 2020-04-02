@@ -3,7 +3,9 @@ package org.terifan.bundle;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 
@@ -40,6 +42,13 @@ public class Array extends Container<Integer, Array> implements Serializable, It
 		}
 		return this;
 	}
+
+
+//	public Array addLiteral(Object aValue)
+//	{
+//		addImpl(aValue);
+//		return this;
+//	}
 
 
 	public Array add(Object aValue)
@@ -336,5 +345,18 @@ public class Array extends Container<Integer, Array> implements Serializable, It
 		}
 
 		return (T[])arr;
+	}
+
+	
+	@Override
+	public Map<Integer, Object> toMap()
+	{
+		LinkedHashMap<Integer, Object> map = new LinkedHashMap<>();
+		int i = 0;
+		for (Object v : mValues)
+		{
+			map.put(i++, v);
+		}
+		return map;
 	}
 }

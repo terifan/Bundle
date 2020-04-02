@@ -51,7 +51,7 @@ class MurmurHash32
 	}
 
 
-	public long finish()
+	public int finish()
 	{
 		h1 ^= ln;
 

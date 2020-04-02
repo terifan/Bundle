@@ -8,6 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.function.Function;
@@ -445,5 +446,11 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 		}
 
 		return this;
+	}
+
+
+	public Map<String, Object> toMap()
+	{
+		return new LinkedHashMap<>(mValues);
 	}
 }
