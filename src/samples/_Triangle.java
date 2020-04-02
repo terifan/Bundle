@@ -5,17 +5,17 @@ import org.terifan.bundle.Array;
 import org.terifan.bundle.Bundlable;
 
 
-class Triangle implements Bundlable<Array>
+class _Triangle implements Bundlable<Array>
 {
-	private Vector[] mVerticies;
+	private _Vector[] mVerticies;
 
 
-	public Triangle()
+	public _Triangle()
 	{
 	}
 
 
-	public Triangle(Vector... aVerticies)
+	public _Triangle(_Vector... aVerticies)
 	{
 		mVerticies = aVerticies;
 	}
@@ -24,11 +24,11 @@ class Triangle implements Bundlable<Array>
 	@Override
 	public void readExternal(Array aBundle)
 	{
-		mVerticies = new Vector[3];
+		mVerticies = new _Vector[3];
 		for (int i = 0; i < 3; i++)
 		{
 			Array arr = new Array();
-			mVerticies[i] = new Vector();
+			mVerticies[i] = new _Vector();
 			mVerticies[i].readExternal(arr);
 			aBundle.add(arr);
 		}
@@ -38,7 +38,7 @@ class Triangle implements Bundlable<Array>
 	@Override
 	public void writeExternal(Array aBundle)
 	{
-		for (Vector v : mVerticies)
+		for (_Vector v : mVerticies)
 		{
 			Array arr = new Array();
 			v.writeExternal(arr);
@@ -71,7 +71,7 @@ class Triangle implements Bundlable<Array>
 		{
 			return false;
 		}
-		final Triangle other = (Triangle)obj;
+		final _Triangle other = (_Triangle)obj;
 		if (!Arrays.deepEquals(this.mVerticies, other.mVerticies))
 		{
 			return false;

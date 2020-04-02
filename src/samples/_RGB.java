@@ -1,16 +1,17 @@
-package org.terifan.bundle;
+package samples;
 
+import org.terifan.bundle.*;
 import java.io.Serializable;
 
 
-class RGB implements Serializable, Bundlable<Bundle>
+public class _RGB implements Serializable, Bundlable<Bundle>
 {
 	private static final long serialVersionUID = 1L;
 
 	private int r, g, b;
 
 
-	public RGB()
+	public _RGB()
 	{
 	}
 
@@ -33,7 +34,7 @@ class RGB implements Serializable, Bundlable<Bundle>
 	}
 
 
-	public RGB(int aR, int aG, int aB)
+	public _RGB(int aR, int aG, int aB)
 	{
 		this.r = aR;
 		this.g = aG;
@@ -92,7 +93,7 @@ class RGB implements Serializable, Bundlable<Bundle>
 		{
 			return false;
 		}
-		final RGB other = (RGB)obj;
+		final _RGB other = (_RGB)obj;
 		if (this.r != other.r)
 		{
 			return false;

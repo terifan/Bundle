@@ -7,8 +7,13 @@ import java.awt.Rectangle;
 import java.util.Map;
 
 
-public class BundleHelper
+public final class BundleHelper
 {
+	private BundleHelper()
+	{
+	}
+
+
 	public static Bundle toBundle(Point aPoint)
 	{
 		return aPoint == null ? null : new Bundle().putNumber("x", aPoint.x).putNumber("y", aPoint.y);

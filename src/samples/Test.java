@@ -24,8 +24,8 @@ public class Test
 		{
 //			y();
 //			x();
-//			xml();
-			big();
+			xml();
+//			big();
 //			small();
 //			array();
 		}
@@ -52,8 +52,8 @@ public class Test
 	{
 		Bundle bundle = new Bundle();
 
-		bundle.putBundlable("object", new Vector(1, 2, 3));
-		bundle.putBundle("bundle", new RGB(1, 2, 3));
+		bundle.putBundlable("object", new _Vector(1, 2, 3));
+		bundle.putBundle("bundle", new _RGB(1, 2, 3));
 
 		System.out.println(bundle);
 	}
@@ -67,7 +67,7 @@ public class Test
 
 		byte[] data = bundle.marshal();
 
-		Log.hexDump(data);
+//		Log.hexDump(data);
 
 		ByteArrayOutputStream baosJSON = new ByteArrayOutputStream();
 		DeflaterOutputStream dos = new DeflaterOutputStream(baosJSON);
@@ -79,7 +79,7 @@ public class Test
 		dos2.write(data);
 		dos2.close();
 
-		System.out.println("json=" + bundle.toString().length() + ", bin=" + data.length + ", zipJSON=" + baosJSON.size() + ", zipBIN=" + baosBin.size());
+		System.out.println("json=" + bundle.toString().length() + ", binaryBundle=" + data.length + ", json+zip=" + baosJSON.size() + ", binaryBundle+zip=" + baosBin.size());
 
 //		System.out.println(new Bundle().unmarshal(data).marshalJSON(new StringBuilder(), false));
 	}
@@ -135,10 +135,10 @@ public class Test
 			.putArray("bundles", new Array().add(new Bundle().putString("key", "value")))
 			.putBundle("bundle", new Bundle().putString("key", "value"))
 			.putString("string", "text")
-			.putBundle("color", new RGB(196, 128, 20))
-			.putArray("colors", new Array().add(new RGB(196, 128, 20), new RGB(96, 128, 220)))
-			.putBundlable("rgb", new RGB(196, 128, 20))
-			.putArray("rgbs", new Array().add(new RGB(196, 128, 20), new RGB(96, 128, 220)))
+			.putBundle("color", new _RGB(196, 128, 20))
+			.putArray("colors", new Array().add(new _RGB(196, 128, 20), new _RGB(96, 128, 220)))
+			.putBundlable("rgb", new _RGB(196, 128, 20))
+			.putArray("rgbs", new Array().add(new _RGB(196, 128, 20), new _RGB(96, 128, 220)))
 			.putSerializable("date1", new Date())
 			.putDate("date2", new Date())
 			.putBinary("binary", "test".getBytes())
@@ -159,7 +159,7 @@ public class Test
 		System.out.println(bundle.getDate("date2"));
 		System.out.println(bundle.getUUID("uuid"));
 
-		RGB color = bundle.getBundlable(RGB.class, "rgb");
+		_RGB color = bundle.getBundlable(_RGB.class, "rgb");
 		System.out.println(color);
 
 		for (Object v : bundle.getArray("colors"))
@@ -167,7 +167,7 @@ public class Test
 			System.out.println(v);
 		}
 
-		for (RGB v : bundle.getObjectArray(RGB.class, "colors"))
+		for (_RGB v : bundle.getObjectArray(_RGB.class, "colors"))
 		{
 			System.out.println(v);
 		}

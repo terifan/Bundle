@@ -1,13 +1,20 @@
 package org.terifan.bundle;
 
 import java.awt.Point;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Random;
 import static org.testng.Assert.*;
 import org.testng.annotations.Test;
+import samples._PersonEntity;
+import samples._RGB;
+import samples._Vector;
 
 
 public class BundleNGTest
@@ -256,7 +263,7 @@ public class BundleNGTest
 	@Test
 	public void testBundableObjectConstructor() throws IOException
 	{
-		Bundle in = new Bundle(new RGB(64,128,255));
+		Bundle in = new Bundle(new _RGB(64,128,255));
 		byte[] data = in.marshal();
 		Bundle out = new Bundle().unmarshal(data);
 
@@ -272,11 +279,11 @@ public class BundleNGTest
 	@Test
 	public void testAsObject() throws IOException
 	{
-		RGB in = new RGB(64,128,255);
+		_RGB in = new _RGB(64,128,255);
 
 		Bundle bundle = new Bundle().putNumber("r", in.getRed()).putNumber("g", in.getGreen()).putNumber("b", in.getBlue());
 
-		RGB out = bundle.newInstance(RGB.class);
+		_RGB out = bundle.newInstance(_RGB.class);
 
 		assertEquals(out, in);
 		assertEquals(bundle.marshalJSON(true), "{\"r\":64,\"g\":128,\"b\":255}");
@@ -286,11 +293,11 @@ public class BundleNGTest
 	@Test
 	public void testOfAndAsObject() throws IOException
 	{
-		Vector in = new Vector(64,128,255);
+		_Vector in = new _Vector(64,128,255);
 
 		Bundle bundle = Bundle.of(in);
 
-		Vector out = bundle.newInstance(Vector.class);
+		_Vector out = bundle.newInstance(_Vector.class);
 
 		assertEquals(out, in);
 		assertEquals(bundle.marshalJSON(true), "{\"x\":64.0,\"y\":128.0,\"z\":255.0}");
@@ -300,7 +307,7 @@ public class BundleNGTest
 	@Test
 	public void testMarshalSerializable() throws IOException
 	{
-		RGB tz = new RGB(1,2,3);
+		_RGB tz = new _RGB(1,2,3);
 
 		Bundle out = new Bundle().putSerializable("color", tz);
 
@@ -309,7 +316,7 @@ public class BundleNGTest
 		Bundle in = new Bundle().unmarshal(data);
 
 		assertEquals(out, in);
-		assertEquals(out.getSerializable(RGB.class, "color"), in.getSerializable(RGB.class, "color"));
+		assertEquals(out.getSerializable(_RGB.class, "color"), in.getSerializable(_RGB.class, "color"));
 	}
 
 
@@ -417,5 +424,35 @@ public class BundleNGTest
 		in = out.getNumberArray("values");
 
 		assertEquals(data, in);
+	}
+
+
+
+	@Test
+	public void testJavaObjectSerializationOutput() throws IOException, ClassNotFoundException
+	{
+		_PersonEntity outEntity = new _PersonEntity("Adam", new Date(1965,10,7), 180, 90);
+
+		Bundle out = new Bundle();
+		out.putSerializable("object", outEntity);
+
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		try (ObjectOutputStream oos = new ObjectOutputStream(baos))
+		{
+			oos.writeObject(out);
+		}
+
+		byte[] data = baos.toByteArray();
+
+		try (ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(data)))
+		{
+			Bundle in = (Bundle)ois.readObject();
+
+			assertEquals(in, out);
+
+			_PersonEntity inEntity = in.getSerializable(_PersonEntity.class, "object");
+
+			assertEquals(inEntity, outEntity);
+		}
 	}
 }

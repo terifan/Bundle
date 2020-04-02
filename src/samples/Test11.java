@@ -9,10 +9,14 @@ public class Test11
 	{
 		try
 		{
-			System.out.println(new Bundle().putBundlable("test", new Vector(1,2,3)).marshalJSON(true));
-			System.out.println(new Bundle().putBundlable("test", new RGB(1,2,3)).marshalJSON(true));
-			System.out.println(new Bundle().putBundlable("test", new Position(1,2,3)).marshalJSON(true));
-			System.out.println(new Bundle().putBundlable("test", new Triangle(new Vector(1,2,3),new Vector(4,5,6),new Vector(7,8,9))).marshalJSON(!true));
+			System.out.println(new Bundle().putBundlable("test", new _Vector(1,2,3)).marshalJSON(true));
+			System.out.println(new Bundle().putBundlable("test", new _RGB(1,2,3)).marshalJSON(true));
+			System.out.println(new Bundle().putBundlable("test", new _Position(1,2,3)).marshalJSON(true));
+			System.out.println(new Bundle().putBundlable("test", new _Triangle(new _Vector(1,2,3),new _Vector(4,5,6),new _Vector(7,8,9))).marshalJSON(true));
+
+			byte[] data = new Bundle().putBundlable("test", new _Triangle(new _Vector(1,2,3),new _Vector(4,5,6),new _Vector(7,8,9))).marshal();
+			Log.hexDump(data);
+
 
 //			Triangle out = new Triangle(new Vector(0,-1,0), new Vector(1,0,0), new Vector(-1,0,0));
 //

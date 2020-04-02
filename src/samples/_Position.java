@@ -5,18 +5,18 @@ import java.io.Serializable;
 import java.util.Arrays;
 
 
-class Position implements Serializable, Bundlable<Bundle>
+public class _Position implements Serializable, Bundlable<Bundle>
 {
 	private static final long serialVersionUID = 1L;
 	private double[] values;
 
 
-	public Position()
+	public _Position()
 	{
 	}
 
 
-	public Position(double aX, double aY, double aZ)
+	public _Position(double aX, double aY, double aZ)
 	{
 		values = new double[]{aX, aY, aZ};
 	}
@@ -75,7 +75,7 @@ class Position implements Serializable, Bundlable<Bundle>
 		{
 			return false;
 		}
-		final Position other = (Position)obj;
+		final _Position other = (_Position)obj;
 		if (!Arrays.equals(this.values, other.values))
 		{
 			return false;
