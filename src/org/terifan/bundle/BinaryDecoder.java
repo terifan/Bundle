@@ -6,7 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 import java.util.UUID;
-import static org.terifan.bundle.BundleConstants.*;
+import static org.terifan.bundle.BinaryConstants.*;
 
 
 class BinaryDecoder

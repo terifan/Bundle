@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.UUID;
 
 
-class BundleConstants
+class BinaryConstants
 {
 	final static int VERSION          = 0b00000000;
 	final static int VERSION_MASK     = 0b00011111;
