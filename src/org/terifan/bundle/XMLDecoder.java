@@ -146,16 +146,19 @@ public class XMLDecoder
 	{
 		try
 		{
-			if (aValue == null) return null;
+			if (aValue == null)
+			{
+				return null;
+			}
 			if (aValue.equalsIgnoreCase("true") || aValue.equalsIgnoreCase("false"))
 			{
 				return Boolean.parseBoolean(aValue);
 			}
-			else if (aValue.matches("[0-9]*\\.[0-9]+"))
+			if (aValue.matches("[0-9]*\\.[0-9]+"))
 			{
 				return Double.parseDouble(aValue);
 			}
-			else if (aValue.matches("[0-9]+"))
+			if (aValue.matches("[0-9]+"))
 			{
 				return Long.parseLong(aValue);
 			}
@@ -165,6 +168,6 @@ public class XMLDecoder
 //			e.printStackTrace(System.out);
 		}
 
-		return aValue;
+		return aValue.trim();
 	}
 }

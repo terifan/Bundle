@@ -24,8 +24,8 @@ public class Test
 		{
 //			y();
 //			x();
-			xml();
-//			big();
+//			xml();
+			big();
 //			small();
 //			array();
 		}
@@ -79,9 +79,9 @@ public class Test
 		dos2.write(data);
 		dos2.close();
 
-		System.out.println("json=" + bundle.toString().length() + ", binaryBundle=" + data.length + ", json+zip=" + baosJSON.size() + ", binaryBundle+zip=" + baosBin.size());
+//		System.out.println("json=" + bundle.toString().length() + ", binaryBundle=" + data.length + ", json+zip=" + baosJSON.size() + ", binaryBundle+zip=" + baosBin.size());
 
-//		System.out.println(new Bundle().unmarshal(data).marshalJSON(new StringBuilder(), false));
+		System.out.println(new Bundle().unmarshal(data).marshalJSON(new StringBuilder(), false));
 	}
 
 

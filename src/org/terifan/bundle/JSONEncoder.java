@@ -206,7 +206,7 @@ class JSONEncoder
 
 	private String escapeString(String aString)
 	{
-		return aString.replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", "\\\n").replace("\r", "\\\r").replace("\t", "\\\t");
+		return aString.replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", "\\n").replace("\r", "\\r").replace("\t", "\\t");
 	}
 
 
