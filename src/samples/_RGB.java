@@ -4,7 +4,7 @@ import org.terifan.bundle.*;
 import java.io.Serializable;
 
 
-public class _RGB implements Serializable, Bundlable<Bundle>
+public class _RGB implements Serializable, Bundlable<Array>
 {
 	private static final long serialVersionUID = 1L;
 
@@ -50,20 +50,20 @@ public class _RGB implements Serializable, Bundlable<Bundle>
 
 
 	@Override
-	public void readExternal(Bundle aBundle)
+	public void readExternal(Array aArray)
 	{
-		r = aBundle.getInt("r");
-		g = aBundle.getInt("g");
-		b = aBundle.getInt("b");
+		r = aArray.getInt(0);
+		g = aArray.getInt(1);
+		b = aArray.getInt(2);
 	}
 
 
 	@Override
-	public void writeExternal(Bundle aBundle)
+	public void writeExternal(Array aArray)
 	{
-		aBundle.putNumber("r", r);
-		aBundle.putNumber("g", g);
-		aBundle.putNumber("b", b);
+		aArray.add(r);
+		aArray.add(g);
+		aArray.add(b);
 	}
 
 

@@ -3,11 +3,13 @@ package samples;
 import java.util.Arrays;
 import org.terifan.bundle.Array;
 import org.terifan.bundle.Bundlable;
+import org.terifan.bundle.Bundle;
 
 
-class _Triangle implements Bundlable<Array>
+class _Triangle implements Bundlable<Bundle>
 {
 	private _Vector[] mVerticies;
+	private _RGB[] mColors;
 
 
 	public _Triangle()
@@ -15,35 +17,46 @@ class _Triangle implements Bundlable<Array>
 	}
 
 
-	public _Triangle(_Vector... aVerticies)
+	public _Triangle(_Vector[] aVerticies, _RGB[] aColors)
 	{
 		mVerticies = aVerticies;
+		mColors = aColors;
 	}
 
 
 	@Override
-	public void readExternal(Array aBundle)
+	public void readExternal(Bundle aBundle)
 	{
-		mVerticies = new _Vector[3];
-		for (int i = 0; i < 3; i++)
-		{
-			Array arr = new Array();
-			mVerticies[i] = new _Vector();
-			mVerticies[i].readExternal(arr);
-			aBundle.add(arr);
-		}
+//		mVerticies = new _Vector[3];
+//		for (int i = 0; i < 3; i++)
+//		{
+//			Array arr = new Array();
+//			mVerticies[i] = new _Vector();
+//			mVerticies[i].readExternal(arr);
+//			aBundle.add(arr);
+//		}
 	}
 
 
 	@Override
-	public void writeExternal(Array aBundle)
+	public void writeExternal(Bundle aBundle)
 	{
+		Array coords = new Array();
+		Array colors = new Array();
 		for (_Vector v : mVerticies)
 		{
 			Array arr = new Array();
 			v.writeExternal(arr);
-			aBundle.add(arr);
+			coords.add(arr);
 		}
+		for (_RGB v: mColors)
+		{
+			Array col = new Array();
+			v.writeExternal(col);
+			colors.add(col);
+		}
+		aBundle.putArray("coords", coords);
+		aBundle.putArray("colors", colors);
 	}
 
 
