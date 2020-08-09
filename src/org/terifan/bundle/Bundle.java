@@ -1,6 +1,7 @@
 package org.terifan.bundle;
 
 import java.io.Externalizable;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.io.StringReader;
 import java.lang.reflect.Constructor;

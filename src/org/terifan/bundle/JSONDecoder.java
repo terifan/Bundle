@@ -3,6 +3,7 @@ package org.terifan.bundle;
 import java.io.IOException;
 import java.io.PushbackReader;
 import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 
 
 class JSONDecoder
@@ -24,6 +25,7 @@ class JSONDecoder
 				return readBundle((Bundle)aContainer);
 			case '<': // TODO: temporary support for PSON
 			case '[':
+			case '(':
 				return readArray((Array)aContainer);
 			default:
 				throw new IllegalArgumentException("First character must be either \"[\" or \"{\".");
@@ -51,9 +53,13 @@ class JSONDecoder
 				c = readChar();
 			}
 
+			if (c == '}') // allow badly formatted json with unneccessary commas before ending brace
+			{
+				break;
+			}
 			if (c != '\"' && c != '\'')
 			{
-				throw new IOException("Expected starting quote character of key.");
+				throw new IOException("Expected starting quote character of key: " + (char)c);
 			}
 
 			int terminator = c;
@@ -74,6 +80,7 @@ class JSONDecoder
 			{
 				case '<': // TODO: temporary support for PSON
 				case '[':
+				case '(':
 					value = readArray(new Array());
 					break;
 				case '{':
@@ -104,7 +111,7 @@ class JSONDecoder
 		{
 			int c = readChar();
 
-			if (c == ']')
+			if (c == ']' || c == ')')
 			{
 				break;
 			}
@@ -127,29 +134,37 @@ class JSONDecoder
 				c = readChar();
 			}
 
-			Object value;
-			switch (c)
+			try
 			{
-				case '<': // TODO: temporary support for PSON
-				case '[':
-					value = readArray(new Array());
-					break;
-				case '{':
-					value = readBundle(new Bundle());
-					break;
-				case '\"':
-					value = readString('\"');
-					break;
-				case '\'':
-					value = readString('\'');
-					break;
-				default:
-					mReader.unread(c);
-					value = readValue();
-					break;
-			}
+				Object value;
+				switch (c)
+				{
+					case '<': // TODO: temporary support for PSON
+					case '[':
+					case '(':
+						value = readArray(new Array());
+						break;
+					case '{':
+						value = readBundle(new Bundle());
+						break;
+					case '\"':
+						value = readString('\"');
+						break;
+					case '\'':
+						value = readString('\'');
+						break;
+					default:
+						mReader.unread(c);
+						value = readValue();
+						break;
+				}
 
-			aArray.add(value);
+				aArray.add(value);
+			}
+			catch (UnsupportedEncodingException e)
+			{
+				// ignore, array was not terminated properly
+			}
 		}
 
 		return aArray;
@@ -181,13 +196,15 @@ class JSONDecoder
 	private Object readValue() throws IOException
 	{
 		StringBuilder sb = new StringBuilder();
+		boolean terminator = false;
 
 		for (;;)
 		{
 			int c = readByte();
 
-			if (c == '}' || c == ']' || c == ',' || Character.isWhitespace(c))
+			if (c == '}' || c == ']' || c == ')' || c == ',' || Character.isWhitespace(c))
 			{
+				terminator = c == '}' || c == ']' || c == ')';
 				mReader.unread(c);
 				break;
 			}
@@ -207,7 +224,11 @@ class JSONDecoder
 		String in = sb.toString().trim();
 		Object out;
 
-		if ("null".equalsIgnoreCase(in))
+		if (terminator && "".equalsIgnoreCase(in))
+		{
+			throw new UnsupportedEncodingException();
+		}
+		else if ("null".equalsIgnoreCase(in))
 		{
 			out = null;
 		}
