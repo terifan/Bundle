@@ -1,7 +1,6 @@
 package org.terifan.bundle;
 
 import java.io.Externalizable;
-import java.io.InputStream;
 import java.io.Serializable;
 import java.io.StringReader;
 import java.lang.reflect.Constructor;
@@ -12,6 +11,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 
@@ -438,5 +438,11 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 	public Map<String, Object> toMap()
 	{
 		return new LinkedHashMap<>(mValues);
+	}
+
+
+	public void forEach(BiConsumer<? super String, ? super Object> action)
+	{
+		mValues.forEach(action);
 	}
 }
