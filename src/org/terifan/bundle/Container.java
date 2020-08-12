@@ -716,9 +716,9 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 
 	public R unmarshalJSON(Reader aJSONData)
 	{
-		try
+		try (Reader r = aJSONData)
 		{
-			return (R)new JSONDecoder(aJSONData).unmarshal(this);
+			return (R)new JSONDecoder(r).unmarshal(this);
 		}
 		catch (IOException e)
 		{
