@@ -11,6 +11,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 
@@ -29,14 +30,6 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 	public Bundle()
 	{
 		mValues = new LinkedHashMap<>();
-	}
-
-
-	public Bundle(Bundlable aValue)
-	{
-		this();
-
-		aValue.writeExternal(this);
 	}
 
 
@@ -67,79 +60,67 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 	}
 
 
-	public Object[] toArray(String aKey)
+	public ArrayList<Boolean> getBooleanArrayList(String aKey)
 	{
-		Array array = getArray(aKey);
-		Object[] values = new Object[array.size()];
-		for (int i = 0; i < array.size(); i++)
-		{
-			values[i] = array.get(i);
-		}
-		return values;
+		return castArrayList(aKey, Boolean.class);
 	}
 
 
-	public ArrayList<Boolean> getBooleanArray(String aKey)
+	public ArrayList<Byte> getByteArrayList(String aKey)
 	{
-		return castArray(aKey, Boolean.class);
+		return castArrayList(aKey, Byte.class);
 	}
 
 
-	public ArrayList<Byte> getByteArray(String aKey)
+	public ArrayList<Short> getShortArrayList(String aKey)
 	{
-		return castArray(aKey, Byte.class);
+		return castArrayList(aKey, Short.class);
 	}
 
 
-	public ArrayList<Short> getShortArray(String aKey)
+	public ArrayList<Integer> getIntArrayList(String aKey)
 	{
-		return castArray(aKey, Short.class);
+		return castArrayList(aKey, Integer.class);
 	}
 
 
-	public ArrayList<Integer> getIntArray(String aKey)
+	public ArrayList<Long> getLongArrayList(String aKey)
 	{
-		return castArray(aKey, Integer.class);
+		return castArrayList(aKey, Long.class);
 	}
 
 
-	public ArrayList<Long> getLongArray(String aKey)
+	public ArrayList<Float> getFloatArrayList(String aKey)
 	{
-		return castArray(aKey, Long.class);
+		return castArrayList(aKey, Float.class);
 	}
 
 
-	public ArrayList<Float> getFloatArray(String aKey)
+	public ArrayList<Double> getDoubleArrayList(String aKey)
 	{
-		return castArray(aKey, Float.class);
+		return castArrayList(aKey, Double.class);
 	}
 
 
-	public ArrayList<Double> getDoubleArray(String aKey)
+	public ArrayList<Number> getNumberArrayList(String aKey)
 	{
-		return castArray(aKey, Double.class);
+		return castArrayList(aKey, Number.class);
 	}
 
 
-	public ArrayList<Number> getNumberArray(String aKey)
+	public ArrayList<Bundle> getBundleArrayList(String aKey)
 	{
-		return castArray(aKey, Number.class);
+		return castArrayList(aKey, Bundle.class);
 	}
 
 
-	public ArrayList<Bundle> getBundleArray(String aKey)
+	public ArrayList<String> getStringArrayList(String aKey)
 	{
-		return castArray(aKey, Bundle.class);
+		return castArrayList(aKey, String.class);
 	}
 
 
-	public ArrayList<String> getStringArray(String aKey)
-	{
-		return castArray(aKey, String.class);
-	}
-
-
-	private <T> ArrayList<T> castArray(String aKey, Class<T> aType)
+	private <T> ArrayList<T> castArrayList(String aKey, Class<T> aType)
 	{
 		Array array = (Array)get(aKey);
 
@@ -222,66 +203,6 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 	}
 
 
-	public <T extends Bundlable> T[] getObjectArray(Class<T> aType, String aKey)
-	{
-		try
-		{
-			Array in = getArray(aKey);
-
-			T[] out = (T[])java.lang.reflect.Array.newInstance(aType, in.size());
-
-			Constructor<T> declaredConstructor = aType.getDeclaredConstructor();
-			declaredConstructor.setAccessible(true);
-
-			for (int i = 0; i < in.size(); i++)
-			{
-				Object value = in.get(i);
-
-				if (value instanceof Bundle)
-				{
-					T instance = declaredConstructor.newInstance();
-					instance.readExternal((Bundle)value);
-					out[i] = instance;
-				}
-			}
-
-			return out;
-		}
-		catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | InvocationTargetException e)
-		{
-			throw new IllegalArgumentException(e);
-		}
-	}
-
-
-	public <T extends Bundlable> ArrayList<T> getObjectArrayList(Class<T> aType, String aKey)
-	{
-		try
-		{
-			ArrayList<T> list = new ArrayList<>();
-
-			Constructor<T> declaredConstructor = aType.getDeclaredConstructor();
-			declaredConstructor.setAccessible(true);
-
-			for (Object value : getArray(aKey))
-			{
-				if (value instanceof Bundle)
-				{
-					T instance = declaredConstructor.newInstance();
-					instance.readExternal((Bundle)value);
-					list.add(instance);
-				}
-			}
-
-			return list;
-		}
-		catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | InvocationTargetException e)
-		{
-			throw new IllegalArgumentException(e);
-		}
-	}
-
-
 	/**
 	 * Creates and instance of the type provided and unmarshals it using the readExternal method of Bundlable interface.
 	 *
@@ -294,8 +215,10 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 			Constructor<T> declaredConstructor = aType.getDeclaredConstructor();
 			declaredConstructor.setAccessible(true);
 
+			BundleInput in = new BundleInput(this);
+
 			T instance = declaredConstructor.newInstance();
-			instance.readExternal(this);
+			instance.readExternal(in);
 
 			return instance;
 		}
@@ -399,7 +322,7 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 
 
 	/**
-	 * Create a Bundle from object provided.
+	 * Create a Bundle from the Bundlable object provided.
 	 *
 	 * @param aBundlable
 	 *   a Bundlable object
@@ -408,21 +331,21 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 	 */
 	public static Bundle of(Bundlable aBundlable)
 	{
-		Bundle bundle = new Bundle();
+		BundleOutput bundle = new BundleOutput();
 		aBundlable.writeExternal(bundle);
-		return bundle;
+		return (Bundle)bundle.getContainer();
 	}
 
 
 	/**
-	 * Appends all entries from the provided Bundle to this Bundle.
+	 * Puts all entries from the provided Bundle to this Bundle.
 	 *
 	 * @param aOther
 	 *   another bundle
 	 * @return
 	 *   this bundle
 	 */
-	public Bundle append(Bundle aOther)
+	public Bundle putAll(Bundle aOther)
 	{
 		for (Entry<String,Object> entry : mValues.entrySet())
 		{
@@ -437,5 +360,11 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 	public Map<String, Object> toMap()
 	{
 		return new LinkedHashMap<>(mValues);
+	}
+
+
+	public void forEach(BiConsumer<? super String, ? super Object> action)
+	{
+		mValues.forEach(action);
 	}
 }

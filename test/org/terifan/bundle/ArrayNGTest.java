@@ -241,7 +241,7 @@ public class ArrayNGTest
 
 		Array out = Array.of(point);
 
-		Point in = out.getSerializable(Point.class, 0);
+		Point in = out.getSerializable(0, Point.class);
 
 		assertEquals(point, in);
 //		assertEquals(out.marshalJSON(true), "[\"rO0ABXNyAA5qYXZhLmF3dC5Qb2ludLbEinI0fsgmAgACSQABeEkAAXl4cAAAAAAAAAAA\"]");

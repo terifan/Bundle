@@ -3,11 +3,14 @@ package samples;
 import java.util.Arrays;
 import org.terifan.bundle.Array;
 import org.terifan.bundle.Bundlable;
+import org.terifan.bundle.BundleInput;
+import org.terifan.bundle.BundleOutput;
 
 
-class _Triangle implements Bundlable<Array>
+class _Triangle implements Bundlable
 {
 	private _Vector[] mVerticies;
+	private _RGB[] mColors;
 
 
 	public _Triangle()
@@ -15,35 +18,25 @@ class _Triangle implements Bundlable<Array>
 	}
 
 
-	public _Triangle(_Vector... aVerticies)
+	public _Triangle(_Vector[] aVerticies, _RGB[] aColors)
 	{
 		mVerticies = aVerticies;
+		mColors = aColors;
 	}
 
 
 	@Override
-	public void readExternal(Array aBundle)
+	public void readExternal(BundleInput aIn)
 	{
-		mVerticies = new _Vector[3];
-		for (int i = 0; i < 3; i++)
-		{
-			Array arr = new Array();
-			mVerticies[i] = new _Vector();
-			mVerticies[i].readExternal(arr);
-			aBundle.add(arr);
-		}
+		mVerticies = aIn.array().getBundlableArray(0, _Vector.class);
+		mColors = aIn.array().getBundlableArray(1, _RGB.class);
 	}
 
 
 	@Override
-	public void writeExternal(Array aBundle)
+	public void writeExternal(BundleOutput aOut)
 	{
-		for (_Vector v : mVerticies)
-		{
-			Array arr = new Array();
-			v.writeExternal(arr);
-			aBundle.add(arr);
-		}
+		aOut.array(mVerticies, mColors);
 	}
 
 
@@ -77,5 +70,12 @@ class _Triangle implements Bundlable<Array>
 			return false;
 		}
 		return true;
+	}
+
+
+	@Override
+	public String toString()
+	{
+		return "_Triangle{" + "mVerticies=" + Arrays.deepToString(mVerticies) + ", mColors=" + Arrays.deepToString(mColors) + '}';
 	}
 }

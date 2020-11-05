@@ -25,7 +25,7 @@ import static org.terifan.bundle.BinaryConstants.*;
  *          nb    value
  * [array]
  *    var32 header (element count, single type, has null, is single type)
- *    [elements]
+ *    [for-each-element]
  *      [if has nulls]
  *        int8 null bitmap (one byte read every eight elements)
  *      [if not single type]

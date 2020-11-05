@@ -1,10 +1,14 @@
 package samples;
 
-import org.terifan.bundle.*;
-import java.io.Serializable;
+import java.io.IOException;
+import org.terifan.bundle.Array;
+import org.terifan.bundle.Bundlable;
+import org.terifan.bundle.Bundle;
+import org.terifan.bundle.BundleInput;
+import org.terifan.bundle.BundleOutput;
 
 
-public class _Vector implements Serializable, Bundlable<Array>
+public class _Vector implements Bundlable
 {
 	private static final long serialVersionUID = 1L;
 
@@ -25,27 +29,26 @@ public class _Vector implements Serializable, Bundlable<Array>
 
 
 	@Override
-	public void readExternal(Array aBundle)
+	public void readExternal(BundleInput aIn)
 	{
-		x = aBundle.getDouble(0);
-		y = aBundle.getDouble(1);
-		z = aBundle.getDouble(2);
+		Array in = aIn.array();
+		x = in.getDouble(0);
+		y = in.getDouble(1);
+		z = in.getDouble(2);
 	}
 
 
 	@Override
-	public void writeExternal(Array aBundle)
+	public void writeExternal(BundleOutput aOut)
 	{
-		aBundle.putNumber(0, x);
-		aBundle.putNumber(1, y);
-		aBundle.putNumber(2, z);
+		aOut.array(x, y, z);
 	}
 
 
 	@Override
 	public String toString()
 	{
-		return "Vector{" + "x=" + x + ", y=" + y + ", z=" + z + '}';
+		return "_Vector{" + "x=" + x + ", y=" + y + ", z=" + z + '}';
 	}
 
 

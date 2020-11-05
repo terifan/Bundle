@@ -1,9 +1,9 @@
 package org.terifan.bundle;
 
 
-public interface Bundlable<T extends Container>
+public interface Bundlable
 {
-	void readExternal(T aBundle);
+	void readExternal(BundleInput aBundle);
 
-	void writeExternal(T aBundle);
+	void writeExternal(BundleOutput aBundle);
 }

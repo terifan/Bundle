@@ -238,32 +238,32 @@ public class BundleNGTest
 		assertEquals(out.getBoolean("booleanNull"), null);
 		assertEquals((boolean)out.getBoolean("boolean1"), false);
 		assertEquals((boolean)out.getBoolean("boolean2"), true);
-		assertEquals(out.getByteArray("bytes"), Arrays.asList((byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0));
+		assertEquals(out.getByteArrayList("bytes"), Arrays.asList((byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0));
 	}
 
 
-	@Test
-	public void testToArray() throws IOException
-	{
-		Bundle in = new Bundle().putArray("array", Array.of(1,2,3));
-		byte[] data = in.marshal();
-		Bundle out = new Bundle().unmarshal(data);
-
-		Object[] array = out.toArray("array");
-
-		assertEquals(out, in);
-		assertEquals(out.marshal(), in.marshal());
-		assertEquals(out.marshalJSON(true), in.marshalJSON(true));
-		assertEquals(array[0], 1);
-		assertEquals(array[1], 2);
-		assertEquals(array[2], 3);
-	}
+//	@Test
+//	public void testToArray() throws IOException
+//	{
+//		Bundle in = new Bundle().putArray("array", Array.of(1,2,3));
+//		byte[] data = in.marshal();
+//		Bundle out = new Bundle().unmarshal(data);
+//
+//		Object[] array = out.toArray("array");
+//
+//		assertEquals(out, in);
+//		assertEquals(out.marshal(), in.marshal());
+//		assertEquals(out.marshalJSON(true), in.marshalJSON(true));
+//		assertEquals(array[0], 1);
+//		assertEquals(array[1], 2);
+//		assertEquals(array[2], 3);
+//	}
 
 
 	@Test
 	public void testBundableObjectConstructor() throws IOException
 	{
-		Bundle in = new Bundle(new _RGB(64,128,255));
+		Bundle in = Bundle.of(new _RGB(64,128,255));
 		byte[] data = in.marshal();
 		Bundle out = new Bundle().unmarshal(data);
 
@@ -277,30 +277,16 @@ public class BundleNGTest
 
 
 	@Test
-	public void testAsObject() throws IOException
+	public void testNewInstance() throws IOException
 	{
 		_RGB in = new _RGB(64,128,255);
 
-		Bundle bundle = new Bundle().putNumber("r", in.getRed()).putNumber("g", in.getGreen()).putNumber("b", in.getBlue());
+		Bundle bundle = Bundle.of(in);
 
 		_RGB out = bundle.newInstance(_RGB.class);
 
 		assertEquals(out, in);
 		assertEquals(bundle.marshalJSON(true), "{\"r\":64,\"g\":128,\"b\":255}");
-	}
-
-
-	@Test
-	public void testOfAndAsObject() throws IOException
-	{
-		_Vector in = new _Vector(64,128,255);
-
-		Bundle bundle = Bundle.of(in);
-
-		_Vector out = bundle.newInstance(_Vector.class);
-
-		assertEquals(out, in);
-		assertEquals(bundle.marshalJSON(true), "{\"x\":64.0,\"y\":128.0,\"z\":255.0}");
 	}
 
 
@@ -316,14 +302,14 @@ public class BundleNGTest
 		Bundle in = new Bundle().unmarshal(data);
 
 		assertEquals(out, in);
-		assertEquals(out.getSerializable(_RGB.class, "color"), in.getSerializable(_RGB.class, "color"));
+		assertEquals(out.getSerializable("color", _RGB.class), in.getSerializable("color", _RGB.class));
 	}
 
 
 	@Test
 	public void testMarshalSerializable2() throws IOException
 	{
-		Block block = new Block();
+		_Block block = new _Block();
 		block.data = new byte[1000000];
 		new Random().nextBytes(block.data);
 
@@ -334,7 +320,7 @@ public class BundleNGTest
 		Bundle in = new Bundle().unmarshal(data);
 
 		assertEquals(out, in);
-		assertEquals(out.getSerializable(Block.class, "block"), in.getSerializable(Block.class, "block"));
+		assertEquals(out.getSerializable("block", _Block.class), in.getSerializable("block", _Block.class));
 	}
 
 
@@ -345,13 +331,13 @@ public class BundleNGTest
 
 		Bundle out = new Bundle().putSerializable("point", point);
 
-		Point in = out.getSerializable(Point.class, "point");
+		Point in = out.getSerializable("point", Point.class);
 
 		assertEquals(point, in);
 	}
 
 
-	@Test
+	@Test 
 	public void testBinary() throws IOException
 	{
 		byte[] data = "binarydata".getBytes();
@@ -372,7 +358,7 @@ public class BundleNGTest
 
 		Bundle out = new Bundle().putArray("values", data);
 
-		ArrayList<Byte> in = out.getByteArray("values");
+		ArrayList<Byte> in = out.getByteArrayList("values");
 
 		assertEquals(data, in);
 	}
@@ -385,7 +371,7 @@ public class BundleNGTest
 
 		Bundle out = new Bundle().putArray("values", data);
 
-		ArrayList<Short> in = out.getShortArray("values");
+		ArrayList<Short> in = out.getShortArrayList("values");
 
 		assertEquals(data, in);
 	}
@@ -400,7 +386,7 @@ public class BundleNGTest
 
 		Bundle out = new Bundle().putArray("values", data);
 
-		ArrayList<Integer> in = out.getIntArray("values");
+		ArrayList<Integer> in = out.getIntArrayList("values");
 
 		assertEquals(ints, in);
 	}
@@ -415,13 +401,13 @@ public class BundleNGTest
 
 		out = new Bundle().unmarshal(out.marshal()); // BinaryDecoder decodes all types
 
-		ArrayList<Number> in = out.getNumberArray("values");
+		ArrayList<Number> in = out.getNumberArrayList("values");
 
 		assertEquals(data, in);
 
 		out = new Bundle().unmarshalJSON(out.marshalJSON(true)); // JSONDecoder decodes numbers to their most narrow boxing instance
 
-		in = out.getNumberArray("values");
+		in = out.getNumberArrayList("values");
 
 		assertEquals(data, in);
 	}
@@ -450,7 +436,7 @@ public class BundleNGTest
 
 			assertEquals(in, out);
 
-			_PersonEntity inEntity = in.getSerializable(_PersonEntity.class, "object");
+			_PersonEntity inEntity = in.getSerializable("object", _PersonEntity.class);
 
 			assertEquals(inEntity, outEntity);
 		}

@@ -1,11 +1,10 @@
 package samples;
 
-import org.terifan.bundle.*;
 import java.io.Serializable;
 import java.util.Arrays;
 
 
-public class _Position implements Serializable, Bundlable<Bundle>
+public class _Position //implements Bundlable<Bundle>
 {
 	private static final long serialVersionUID = 1L;
 	private double[] values;
@@ -22,26 +21,26 @@ public class _Position implements Serializable, Bundlable<Bundle>
 	}
 
 
-	@Override
-	public void readExternal(Bundle aValues)
-	{
-		Array coords = aValues.getArray("coords");
-		values = new double[]
-		{
-			coords.getDouble(0),
-			coords.getDouble(1),
-			coords.getDouble(2)
-		};
-	}
-
-
-	@Override
-	public void writeExternal(Bundle aValues)
-	{
-		aValues.putNumber("x", values[0]);
-		aValues.putNumber("y", values[1]);
-		aValues.putNumber("z", values[2]);
-	}
+//	@Override
+//	public void readExternal(Bundle aValues)
+//	{
+//		Array coords = aValues.getArray("coords");
+//		values = new double[]
+//		{
+//			coords.getDouble(0),
+//			coords.getDouble(1),
+//			coords.getDouble(2)
+//		};
+//	}
+//
+//
+//	@Override
+//	public void writeExternal(Bundle aValues)
+//	{
+//		aValues.putNumber("x", values[0]);
+//		aValues.putNumber("y", values[1]);
+//		aValues.putNumber("z", values[2]);
+//	}
 
 
 	@Override

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 
 
-public class Block implements Serializable
+public class _Block implements Serializable
 {
 	private final static long serialVersionUID = 1L;
 
@@ -35,7 +35,7 @@ public class Block implements Serializable
 		{
 			return false;
 		}
-		final Block other = (Block)obj;
+		final _Block other = (_Block)obj;
 		if (!Arrays.equals(this.data, other.data))
 		{
 			return false;

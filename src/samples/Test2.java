@@ -1,5 +1,6 @@
 package samples;
 
+import org.terifan.bundle.Array;
 import org.terifan.bundle.Bundle;
 
 
@@ -9,9 +10,17 @@ public class Test2
 	{
 		try
 		{
-			Bundle b = new Bundle().unmarshalJSON("{\"default\":\"DWB\",\"options\":[[[\"CMR\",\"CMR\"],[\"DWB\",\"Domestic Waybill\"]],[[\"OTHER\",\"Other\"],[\"POD\",\"Proof-of-delivery\"],[\"CLM\",\"Claim\"],[\"DLN\",\"Delivery Note\"]]]}");
+			Bundle bundle = new Bundle().unmarshalJSON("{'a':100, 'b':'string', 'c':.14, 'd':0xffffff, 'e':true}");
+			Array array = new Array().unmarshalJSON("[100, 'string', .14, 0xffffff, true]");
 
-			System.out.println(b.getArray("options").getArray(0).getArray(0).getString(0));
+			System.out.println(bundle);
+			System.out.println(array);
+
+			System.out.println(bundle.get("a") + " " + bundle.getInt("a") + " " + array.getInt(0));
+			System.out.println(bundle.get("b") + " " + bundle.getString("b") + " " + array.getString(1));
+			System.out.println(bundle.get("c") + " " + bundle.getDouble("c") + " " + array.getDouble(2));
+			System.out.println(bundle.get("c") + " " + bundle.getFloat("c") + " " + array.getFloat(2));
+			System.out.println(bundle.get("c") + " " + bundle.getInt("c") + " " + array.getInt(2));
 		}
 		catch (Throwable e)
 		{
