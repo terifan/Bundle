@@ -261,52 +261,6 @@ public class BundleNGTest
 
 
 	@Test
-	public void testBundableObjectConstructor() throws IOException
-	{
-		Bundle in = Bundle.of(new _RGB(64,128,255));
-		byte[] data = in.marshal();
-		Bundle out = new Bundle().unmarshal(data);
-
-		assertEquals(out, in);
-		assertEquals(out.marshal(), in.marshal());
-		assertEquals(out.marshalJSON(true), in.marshalJSON(true));
-		assertEquals((int)out.getInt("r"), 64);
-		assertEquals((int)out.getInt("g"), 128);
-		assertEquals((int)out.getInt("b"), 255);
-	}
-
-
-	@Test
-	public void testNewInstance() throws IOException
-	{
-		_RGB in = new _RGB(64,128,255);
-
-		Bundle bundle = Bundle.of(in);
-
-		_RGB out = bundle.newInstance(_RGB.class);
-
-		assertEquals(out, in);
-		assertEquals(bundle.marshalJSON(true), "{\"r\":64,\"g\":128,\"b\":255}");
-	}
-
-
-	@Test
-	public void testMarshalSerializable() throws IOException
-	{
-		_RGB tz = new _RGB(1,2,3);
-
-		Bundle out = new Bundle().putSerializable("color", tz);
-
-		byte[] data = out.marshal();
-
-		Bundle in = new Bundle().unmarshal(data);
-
-		assertEquals(out, in);
-		assertEquals(out.getSerializable("color", _RGB.class), in.getSerializable("color", _RGB.class));
-	}
-
-
-	@Test
 	public void testMarshalSerializable2() throws IOException
 	{
 		_Block block = new _Block();
@@ -337,7 +291,7 @@ public class BundleNGTest
 	}
 
 
-	@Test 
+	@Test
 	public void testBinary() throws IOException
 	{
 		byte[] data = "binarydata".getBytes();

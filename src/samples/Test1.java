@@ -11,17 +11,20 @@ public class Test1
 	{
 		try
 		{
-			Bundle bundle = new Bundle()
-				.putString("string", "value")
-				.putNumber("number", 7)
-				.putArray("array", new Array().add(9).add("text").add(new Array().add(1,"3",5.0,7,9)).add(new Bundle()));
-
-			Array array = new Array().add(bundle);
-
-			System.out.println(bundle);
-			System.out.println(array);
-			System.out.println(array.getBundle(0).getArray("array").getArray(2).toIntArrayList());
-			System.out.println(array.getBundle(0).getArray("array").getIntArrayList(2));
+//			Bundle bundle = new Bundle()
+//				.putArray("positions", Array.of(new _Position(0,0,0), new _Position(0,0,1), new _Position(0,1,0), new _Position(0,1,1), new _Position(1,0,0), new _Position(1,0,1), new _Position(1,1,0), new _Position(1,1,1)))
+//				.putArray("coordinates", Array.of(new _Vector(0,0,0), new _Vector(0,0,1), new _Vector(0,1,0), new _Vector(0,1,1), new _Vector(1,0,0), new _Vector(1,0,1), new _Vector(1,1,0), new _Vector(1,1,1)))
+//				.putArray("colors", Array.of(new _RGB(0,0,0), new _RGB(0,0,1), new _RGB(0,1,0), new _RGB(0,1,1), new _RGB(1,0,0), new _RGB(1,0,1), new _RGB(1,1,0), new _RGB(1,1,1)))
+//				.putBundle("indices", new Bundle().putArray("a",Array.of(0,1,2)).putArray("b",Array.of(0,2,3)).putArray("c",Array.of(4,5,6)).putArray("d",Array.of(4,6,7)))
+//				.putNumber("PI", Math.PI)
+//				.putBundlable("tri", new _Triangle(new _Vector[]{new _Vector(0,-1,0), new _Vector(1,0,0), new _Vector(-1,0,0)}, new _RGB[]{new _RGB(1, 0, 0), new _RGB(0, 1, 0), new _RGB(0, 0, 1)}));
+//
+//			Array array = new Array().add(bundle);
+//
+//			System.out.println(bundle);
+//			System.out.println(array);
+//			System.out.println(array.getBundle(0).getArray("array").getArray(2).toIntArrayList());
+//			System.out.println(array.getBundle(0).getArray("array").getIntArrayList(2));
 
 			_RGB c = new _RGB(1,2,3);
 			_Vector v = new _Vector(1,2,3);
