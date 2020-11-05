@@ -42,10 +42,7 @@ public class Test1
 			System.out.println(t);
 			System.out.println(u);
 
-			Array arr = new Array();
-			arr.putBundlable(0, c);
-			arr.putBundlable(1, v);
-			arr.putBundlable(2, t);
+			Array arr = Array.of(c, v, t);
 
 			System.out.println(arr);
 
