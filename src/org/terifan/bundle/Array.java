@@ -44,13 +44,6 @@ public class Array extends Container<Integer, Array> implements Serializable, It
 	}
 
 
-//	public Array addLiteral(Object aValue)
-//	{
-//		addImpl(aValue);
-//		return this;
-//	}
-
-
 	public Array add(Object aValue)
 	{
 		if (aValue != null && aValue.getClass().isArray())
@@ -82,9 +75,9 @@ public class Array extends Container<Integer, Array> implements Serializable, It
 		}
 		else if (aValue instanceof Bundlable)
 		{
-			Bundle bundle = new Bundle();
-			((Bundlable)aValue).writeExternal(bundle);
-			addImpl(bundle);
+			BundlableOutput out = new BundlableOutput();
+			((Bundlable)aValue).writeExternal(out);
+			addImpl(out.getContainer());
 		}
 		else
 		{
@@ -187,8 +180,9 @@ public class Array extends Container<Integer, Array> implements Serializable, It
 	}
 
 
+//	 * Create an array of item provided including primitives, arrays and objects implementing the Bundlable and BundlableValue interfaces.
 	/**
-	 * Create an array of item provided including primitives, arrays and objects implementing the Bundlable and BundlableValue interfaces.
+	 * Create an array of item provided including primitives and arrays.
 	 *
 	 * Note: if the object provided is an array it will be consumed, e.g. these two samples will result in the same structure (json: "[1,2,3,4]"):
 	 * <code>
@@ -198,7 +192,7 @@ public class Array extends Container<Integer, Array> implements Serializable, It
 	 *    Array.of(values);
 	 * </code>
 	 *
-	 * @param aValues an array of objects
+	 * @param aValue an array of objects
 	 * @return an array
 	 */
 	public static Array of(Object aValue)
@@ -245,8 +239,9 @@ public class Array extends Container<Integer, Array> implements Serializable, It
 	}
 
 
+//	 * Create an array of item provided including primitives, arrays and objects implementing the Bundlable and BundlableValue interfaces.
 	/**
-	 * Create an array of item provided including primitives, arrays and objects implementing the Bundlable and BundlableValue interfaces.
+	 * Create an array of item provided including primitives and arrays.
 	 *
 	 * @param aValues an array of objects
 	 * @return an array
@@ -257,7 +252,27 @@ public class Array extends Container<Integer, Array> implements Serializable, It
 
 		if (aValues == null)
 		{
-			array.add(null);
+			array.addImpl(null);
+		}
+		else
+		{
+			for (Object v : aValues)
+			{
+				array.addRecursive(v);
+			}
+		}
+
+		return array;
+	}
+
+
+	public static Array from(Object[] aValues)
+	{
+		Array array = new Array();
+
+		if (aValues == null)
+		{
+			array.addImpl(null);
 		}
 		else
 		{
@@ -273,11 +288,6 @@ public class Array extends Container<Integer, Array> implements Serializable, It
 
 	private void addRecursive(Object aValue)
 	{
-		if (aValue instanceof BundlableValue)
-		{
-			aValue = ((BundlableValue)aValue).writeExternal();
-		}
-
 		if (aValue != null && aValue.getClass().isArray())
 		{
 			Array arr = new Array();
@@ -310,9 +320,9 @@ public class Array extends Container<Integer, Array> implements Serializable, It
 		}
 		else if (aValue instanceof Bundlable)
 		{
-			Bundle bundle = new Bundle();
-			((Bundlable)aValue).writeExternal(bundle);
-			addImpl(bundle);
+			BundlableOutput out = new BundlableOutput();
+ 			((Bundlable)aValue).writeExternal(out);
+			addImpl(out.getContainer());
 		}
 		else if (aValue == null || isSupportedType(aValue))
 		{
@@ -329,25 +339,25 @@ public class Array extends Container<Integer, Array> implements Serializable, It
 	}
 
 
-	private void addImpl(Object aValue)
+	void addImpl(Object aValue)
 	{
 		mValues.add(aValue);
 	}
 
 
-	public <T extends Bundlable> T[] to(Class<T> aType)
-	{
-		Object arr = java.lang.reflect.Array.newInstance(aType, size());
+//	public <T extends Bundlable> T[] to(Class<T> aType)
+//	{
+//		Object arr = java.lang.reflect.Array.newInstance(aType, size());
+//
+//		for (int i = 0; i < size(); i++)
+//		{
+//			java.lang.reflect.Array.set(arr, i, getBundlable(aType, i));
+//		}
+//
+//		return (T[])arr;
+//	}
 
-		for (int i = 0; i < size(); i++)
-		{
-			java.lang.reflect.Array.set(arr, i, getBundlable(aType, i));
-		}
 
-		return (T[])arr;
-	}
-
-	
 	@Override
 	public Map<Integer, Object> toMap()
 	{
@@ -358,5 +368,201 @@ public class Array extends Container<Integer, Array> implements Serializable, It
 			map.put(i++, v);
 		}
 		return map;
+	}
+
+
+	public ArrayList<Boolean> getBooleanArrayList(int aIndex)
+	{
+		return castArrayList(getArray(aIndex), Boolean.class);
+	}
+
+
+	public ArrayList<Byte> getByteArrayList(int aIndex)
+	{
+		return castArrayList(getArray(aIndex), Byte.class);
+	}
+
+
+	public ArrayList<Short> getShortArrayList(int aIndex)
+	{
+		return castArrayList(getArray(aIndex), Short.class);
+	}
+
+
+	public ArrayList<Integer> getIntArrayList(int aIndex)
+	{
+		return castArrayList(getArray(aIndex), Integer.class);
+	}
+
+
+	public ArrayList<Long> getLongArrayList(int aIndex)
+	{
+		return castArrayList(getArray(aIndex), Long.class);
+	}
+
+
+	public ArrayList<Float> getFloatArrayList(int aIndex)
+	{
+		return castArrayList(getArray(aIndex), Float.class);
+	}
+
+
+	public ArrayList<Double> getDoubleArrayList(int aIndex)
+	{
+		return castArrayList(getArray(aIndex), Double.class);
+	}
+
+
+	public ArrayList<Number> getNumberArrayList(int aIndex)
+	{
+		return castArrayList(getArray(aIndex), Number.class);
+	}
+
+
+	public ArrayList<Bundle> getBundleArrayList(int aIndex)
+	{
+		return castArrayList(getArray(aIndex), Bundle.class);
+	}
+
+
+	public ArrayList<String> getStringArrayList(int aIndex)
+	{
+		return castArrayList(getArray(aIndex), String.class);
+	}
+
+
+	public ArrayList<Boolean> toBooleanArrayList()
+	{
+		return castArrayList(this, Boolean.class);
+	}
+
+
+	public ArrayList<Byte> toByteArrayList()
+	{
+		return castArrayList(this, Byte.class);
+	}
+
+
+	public ArrayList<Short> toShortArrayList()
+	{
+		return castArrayList(this, Short.class);
+	}
+
+
+	public ArrayList<Integer> toIntArrayList()
+	{
+		return castArrayList(this, Integer.class);
+	}
+
+
+	public ArrayList<Long> toLongArrayList()
+	{
+		return castArrayList(this, Long.class);
+	}
+
+
+	public ArrayList<Float> toFloatArrayList()
+	{
+		return castArrayList(this, Float.class);
+	}
+
+
+	public ArrayList<Double> toDoubleArrayList()
+	{
+		return castArrayList(this, Double.class);
+	}
+
+
+	public ArrayList<Number> toNumberArrayList()
+	{
+		return castArrayList(this, Number.class);
+	}
+
+
+	public ArrayList<Bundle> toBundleArrayList()
+	{
+		return castArrayList(this, Bundle.class);
+	}
+
+
+	public ArrayList<String> toStringArrayList()
+	{
+		return castArrayList(this, String.class);
+	}
+
+
+	private <T> ArrayList<T> castArrayList(Array a, Class<T> aType)
+	{
+		ArrayList<T> out = new ArrayList<>();
+
+		for (int i = 0; i < a.size(); i++)
+		{
+			Object v = a.get(i);
+
+			if (v instanceof Number && v.getClass() != aType)
+			{
+				if (aType == Integer.class)
+				{
+					v = ((Number)v).intValue();
+				}
+				else if (aType == Long.class)
+				{
+					v = ((Number)v).longValue();
+				}
+				else if (aType == Double.class)
+				{
+					v = ((Number)v).doubleValue();
+				}
+				else if (aType == String.class)
+				{
+					v = v.toString();
+				}
+				else if (aType == Byte.class)
+				{
+					v = ((Number)v).byteValue();
+				}
+				else if (aType == Float.class)
+				{
+					v = ((Number)v).floatValue();
+				}
+				else if (aType == Short.class)
+				{
+					v = ((Number)v).shortValue();
+				}
+			}
+			else if (v instanceof String & v.getClass() != aType)
+			{
+				String s = (String)v;
+
+				if (aType == Integer.class)
+				{
+					v = Integer.parseInt(s);
+				}
+				else if (aType == Long.class)
+				{
+					v = Long.parseLong(s);
+				}
+				else if (aType == Double.class)
+				{
+					v = Double.parseDouble(s);
+				}
+				else if (aType == Byte.class)
+				{
+					v = Byte.parseByte(s);
+				}
+				else if (aType == Float.class)
+				{
+					v = Float.parseFloat(s);
+				}
+				else if (aType == Short.class)
+				{
+					v = Short.parseShort(s);
+				}
+			}
+
+			out.add((T)v);
+		}
+
+		return out;
 	}
 }

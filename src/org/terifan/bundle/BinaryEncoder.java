@@ -2,10 +2,7 @@ package org.terifan.bundle;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.UUID;
-import static org.terifan.bundle.BundleConstants.*;
+import static org.terifan.bundle.BinaryConstants.*;
 
 
 /**
@@ -25,10 +22,10 @@ import static org.terifan.bundle.BundleConstants.*;
  *          nb    value
  * [array]
  *    var32 header (element count, single type, has null, is single type)
- *    [elements]
- *      [if has nulls]
+ *    [for-each-element]
+ *      [if array has nulls]
  *        int8 null bitmap (one byte read every eight elements)
- *      [if not single type]
+ *      [if array not single type]
  *        var32 type
  *      [if string,array,bundle,binary]
  *        var32 length
@@ -38,11 +35,6 @@ import static org.terifan.bundle.BundleConstants.*;
  */
 class BinaryEncoder
 {
-	public BinaryEncoder()
-	{
-	}
-
-
 	public byte[] marshal(Container aContainer) throws IOException
 	{
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -204,19 +196,6 @@ class BinaryEncoder
 				break;
 			case DOUBLE:
 				output.writeInt64(Double.doubleToLongBits((Double)aValue));
-				break;
-			case DATE:
-				output.writeInt64(((Date)aValue).getTime());
-				break;
-			case UUID:
-				UUID uuid = (UUID)aValue;
-				output.writeInt64(uuid.getMostSignificantBits());
-				output.writeInt64(uuid.getLeastSignificantBits());
-				break;
-			case CALENDAR:
-				Calendar c = (Calendar)aValue;
-				output.writeVar32(c.getTimeZone().getRawOffset());
-				output.writeInt64(c.getTimeInMillis());
 				break;
 			case STRING:
 			case BUNDLE:

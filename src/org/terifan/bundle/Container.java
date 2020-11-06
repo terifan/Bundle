@@ -16,17 +16,10 @@ import java.io.Serializable;
 import java.io.StringReader;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Base64;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
-import java.util.TimeZone;
-import java.util.UUID;
 import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterInputStream;
@@ -273,46 +266,6 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 	}
 
 
-	public Calendar getCalendar(K aKey)
-	{
-		Object value = get(aKey);
-		if (value == null)
-		{
-			return null;
-		}
-		if (value instanceof Calendar)
-		{
-			return (Calendar)value;
-		}
-		if (value instanceof String)
-		{
-			try
-			{
-				String s = (String)value;
-				int offset = Integer.parseInt(s.substring(Math.max(s.lastIndexOf('+'), s.lastIndexOf('-')) + 1));
-				Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").parse((s));
-				TimeZone timeZone = TimeZone.getDefault();
-				timeZone.setRawOffset(offset);
-				Calendar calendar = Calendar.getInstance(timeZone);
-				calendar.setTimeInMillis(date.getTime());
-				return calendar;
-			}
-			catch (ParseException e)
-			{
-				throw new IllegalArgumentException(e);
-			}
-		}
-		throw new IllegalArgumentException("Unsupported format: " + value.getClass());
-	}
-
-
-	public R putCalendar(K aKey, Calendar aCalendar)
-	{
-		set(aKey, aCalendar);
-		return (R)this;
-	}
-
-
 	public Array getArray(K aKey)
 	{
 		return (Array)get(aKey);
@@ -339,76 +292,22 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 	}
 
 
-	public R putBundle(K aKey, Bundlable aValue)
-	{
-		Bundle bundle = new Bundle();
-		aValue.writeExternal(bundle);
-		set(aKey, bundle);
-		return (R)this;
-	}
-
-
 	/**
 	 * The value referred to by the key is unmarshalled into an object of the type provided.
 	 *
-	 * @param aType a BundlableValue type
 	 * @param aKey a key
+	 * @param aType a BundlableValue type
 	 * @return an instance of the BundlableValue type
 	 */
-	public <T extends BundlableValue> T getBundlableValue(Class<T> aType, K aKey)
+	public <T extends Bundlable> T getBundlable(K aKey, Class<T> aType)
 	{
 		try
-		{
-			Constructor<T> declaredConstructor = aType.getDeclaredConstructor();
-			declaredConstructor.setAccessible(true);
-
-			Object value = get(aKey);
-
-			T instance = declaredConstructor.newInstance();
-
-			if (value instanceof Array)
-			{
-				for (Method m : instance.getClass().getMethods())
-				{
-					Class<?> type = m.getParameters()[0].getType();
-					if (m.getName().endsWith("readExternal") && type.isArray())
-					{
-						m.setAccessible(true);
-						Object[] a = (Object[])java.lang.reflect.Array.newInstance(type, 0);
-						m.invoke(instance, ((Array)value).mValues.toArray(a));
-					}
-				}
-			}
-			else
-			{
-				instance.readExternal(value);
-			}
-
-			return instance;
-		}
-		catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | InvocationTargetException e)
-		{
-			throw new IllegalArgumentException(e);
-		}
-	}
-
-
-	/**
-	 * The value referred to by the key is unmarshalled into an object of the type provided.
-	 *
-	 * @param aType a BundlableValue type
-	 * @param aKey a key
-	 * @return an instance of the BundlableValue type
-	 */
-	public <T extends Bundlable> T getBundlable(Class<T> aType, K aKey)
-	{
-		try
-		{
+ 		{
 			Constructor<T> declaredConstructor = aType.getDeclaredConstructor();
 			declaredConstructor.setAccessible(true);
 
 			Bundlable instance = declaredConstructor.newInstance();
-			instance.readExternal(get(aKey));
+			instance.readExternal(new BundlableInput((Container)get(aKey)));
 
 			return (T)instance;
 		}
@@ -419,46 +318,45 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 	}
 
 
+	public <T extends Bundlable> T[] getBundlableArray(K aKey, Class<T> aType)
+	{
+		Array tmp = getArray(aKey);
+
+		Object array = java.lang.reflect.Array.newInstance(aType, tmp.size());
+		for (int i = 0; i < tmp.size(); i++)
+		{
+			java.lang.reflect.Array.set(array, i, tmp.getBundlable(i, aType));
+		}
+
+		return (T[])array;
+	}
+
+
+	public <T extends Bundlable> ArrayList<T> getBundlableArrayList(K aKey, Class<T> aType)
+	{
+		Array tmp = getArray(aKey);
+
+		ArrayList<T> list = new ArrayList<>();
+		for (int i = 0; i < tmp.size(); i++)
+		{
+			list.add(tmp.getBundlable(i, aType));
+		}
+
+		return list;
+	}
+
+
 	public R putBundlable(K aKey, Bundlable aValue)
 	{
-//		if (aValue instanceof BundlableValue)
-//		{
-//			set(aKey, ((BundlableValue)aValue).writeExternal());
-//		}
-//		else if (aValue instanceof Bundlable)
-//		{
-			Bundle bundle = new Bundle();
-			((Bundlable)aValue).writeExternal(bundle);
-			set(aKey, bundle);
-//		}
+		BundlableOutput out = new BundlableOutput();
+		aValue.writeExternal(out);
+		set(aKey, out.getContainer());
+
 		return (R)this;
 	}
 
 
-	public R putBundlableValue(K aKey, BundlableValue aValue)
-	{
-//		if (aValue instanceof BundlableValue)
-//		{
-			Object value = ((BundlableValue)aValue).writeExternal();
-
-			if (value != null && value.getClass().isArray())
-			{
-				value = Array.of(value);
-			}
-
-			set(aKey, value);
-//		}
-//		else if (aValue instanceof Bundlable)
-//		{
-//			Bundle bundle = new Bundle();
-//			((Bundlable)aValue).writeExternal(bundle);
-//			set(aKey, bundle);
-//		}
-		return (R)this;
-	}
-
-
-	public <T extends Serializable> T getSerializable(Class<T> aType, K aKey)
+	public <T extends Serializable> T getSerializable(K aKey, Class<T> aType)
 	{
 		byte[] value = getBinary(aKey);
 
@@ -467,13 +365,12 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 			return null;
 		}
 
-
 		try (DataInputStream dis = new DataInputStream(new ByteArrayInputStream(value)))
 		{
 			String typeName = dis.readUTF();
 			if (!typeName.equals(aType.getCanonicalName()))
 			{
-				throw new IllegalArgumentException("Attempt to deserialize wrong object type: expected: " + aType + ", found: "  + typeName);
+				throw new IllegalArgumentException("Attempt to deserialize wrong object type: expected: " + aType + ", found: " + typeName);
 			}
 
 			byte[] buf = new byte[dis.readInt()];
@@ -527,56 +424,6 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 	}
 
 
-	public Date getDate(K aKey)
-	{
-		Object date = get(aKey);
-		if (date == null)
-		{
-			return null;
-		}
-		if (date instanceof Date)
-		{
-			return (Date)date;
-		}
-		if (date instanceof Long)
-		{
-			return new Date((Long)date);
-		}
-		if (date instanceof String)
-		{
-			try
-			{
-				String s = (String)date;
-				switch (s.length())
-				{
-					case 8:
-						return new SimpleDateFormat("yyyy-MM-dd").parse(s);
-					case 14:
-						return new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(s);
-					case 19:
-						return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").parse(s);
-					case 23:
-						return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").parse(s);
-					default:
-						throw new IllegalArgumentException("Date format unsupported: " + s);
-				}
-			}
-			catch (ParseException e)
-			{
-				throw new IllegalArgumentException(e);
-			}
-		}
-		return null;
-	}
-
-
-	public R putDate(K aKey, Date aDate)
-	{
-		set(aKey, aDate);
-		return (R)this;
-	}
-
-
 	public byte[] getBinary(K aKey)
 	{
 		Object value = get(aKey);
@@ -603,32 +450,6 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 	}
 
 
-	public UUID getUUID(K aKey)
-	{
-		Object value = get(aKey);
-		if (value == null)
-		{
-			return null;
-		}
-		if (value instanceof UUID)
-		{
-			return (UUID)value;
-		}
-		if (value instanceof String)
-		{
-			return UUID.fromString((String)value);
-		}
-		throw new IllegalArgumentException("Unsupported format: " + value.getClass());
-	}
-
-
-	public R putUUID(K aKey, UUID aBytes)
-	{
-		set(aKey, aBytes);
-		return (R)this;
-	}
-
-
 	public R put(K aKey, Object aValue)
 	{
 		if (aValue instanceof Number)
@@ -642,18 +463,6 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 		else if (aValue instanceof Bundlable)
 		{
 			putBundlable(aKey, (Bundlable)aValue);
-		}
-		else if (aValue instanceof UUID)
-		{
-			putUUID(aKey, (UUID)aValue);
-		}
-		else if (aValue instanceof Date)
-		{
-			putDate(aKey, (Date)aValue);
-		}
-		else if (aValue instanceof Calendar)
-		{
-			putCalendar(aKey, (Calendar)aValue);
 		}
 		else if (aValue instanceof Boolean)
 		{
@@ -752,7 +561,7 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 	{
 		try
 		{
-			new JSONEncoder().marshal(new JSONEncoder.Printer(aJSONOutput, aCompact), this);
+			new JSONEncoder().marshal(new JSONTextWriter(aJSONOutput, aCompact), this);
 		}
 		catch (IOException e)
 		{
@@ -771,9 +580,9 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 
 	public R unmarshalJSON(Reader aJSONData)
 	{
-		try
+		try (Reader r = aJSONData)
 		{
-			return (R)new JSONDecoder(aJSONData).unmarshal(this);
+			return (R)new JSONDecoder().unmarshal(r, this);
 		}
 		catch (IOException e)
 		{
@@ -819,9 +628,24 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 	}
 
 
-	public R unmarshalXML(InputStream aXMLData, boolean aCreateOptionalArrays)
+	/**
+	 * Decode an XML document into a Bundle, ignoring attributes on leaf nodes.
+	 */
+	public R unmarshalXML(InputStream aXMLData)
 	{
-		new XMLDecoder().importXML(aXMLData, this, aCreateOptionalArrays);
+		return (R)unmarshalXML(aXMLData, false);
+	}
+
+
+	/**
+	 * Decode an XML document into a Bundle.
+	 *
+	 * @param aAllowAttributesOnLeafs
+	 *   if true will ignore attributes on leaf nodes
+	 */
+	public R unmarshalXML(InputStream aXMLData, boolean aAllowAttributesOnLeafs)
+	{
+		new XMLDecoder().importXML(aXMLData, this, aAllowAttributesOnLeafs);
 		return (R)this;
 	}
 
@@ -850,8 +674,7 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 	{
 		Class type = aValue == null ? null : aValue.getClass();
 
-		return
-			   type == Boolean.class
+		return type == Boolean.class
 			|| type == String.class
 			|| type == Byte.class
 			|| type == Short.class
@@ -859,10 +682,6 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 			|| type == Long.class
 			|| type == Float.class
 			|| type == Double.class
-			|| type == Date.class
-			|| type == Calendar.class
-			|| type == TimeZone.class
-			|| type == UUID.class
 			|| type == Array.class
 			|| type == Bundle.class
 			|| type == null;

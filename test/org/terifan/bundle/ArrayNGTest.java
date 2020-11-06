@@ -203,20 +203,6 @@ public class ArrayNGTest
 
 
 	@Test
-	public void testArrayOfBundlableValues() throws IOException
-	{
-		Array in = Array.of(new RGB(1, 0, 0), new RGB(0, 1, 0), new RGB(0, 0, 1));
-
-		Array out = new Array().unmarshal(in.marshal());
-
-		assertEquals(out, in);
-		assertEquals(out.marshal(), in.marshal());
-		assertEquals(out.marshalJSON(true), in.marshalJSON(true));
-		assertEquals(out.marshalJSON(true), "[65536,256,1]");
-	}
-
-
-	@Test
 	public void testArrayOfList() throws IOException
 	{
 		List<Integer> list = Arrays.asList(1,2,3,4);
@@ -249,44 +235,16 @@ public class ArrayNGTest
 
 
 	@Test
-	public void testArrayOfBundableValuesSingle() throws IOException
-	{
-		Array in = Array.of(new Position(1,2,3));
-
-		Array out = new Array().unmarshal(in.marshal());
-
-		assertEquals(out, in);
-		assertEquals(out.marshal(), in.marshal());
-		assertEquals(out.marshalJSON(true), in.marshalJSON(true));
-		assertEquals(out.marshalJSON(true), "[[1.0,2.0,3.0]]");
-	}
-
-
-	@Test
-	public void testArrayOfBundableValuesArray() throws IOException
-	{
-		Array in = Array.of(new Position(1,2,3), new Position(4,5,6));
-
-		Array out = new Array().unmarshal(in.marshal());
-
-		assertEquals(out, in);
-		assertEquals(out.marshal(), in.marshal());
-		assertEquals(out.marshalJSON(true), in.marshalJSON(true));
-		assertEquals(out.marshalJSON(true), "[[1.0,2.0,3.0],[4.0,5.0,6.0]]");
-	}
-
-
-	@Test
 	public void testSerializable() throws IOException
 	{
 		Point point = new Point(0,0);
 
 		Array out = Array.of(point);
 
-		Point in = out.getSerializable(Point.class, 0);
+		Point in = out.getSerializable(0, Point.class);
 
 		assertEquals(point, in);
-		assertEquals(out.marshalJSON(true), "[\"rO0ABXNyAA5qYXZhLmF3dC5Qb2ludLbEinI0fsgmAgACSQABeEkAAXl4cAAAAAAAAAAA\"]");
+//		assertEquals(out.marshalJSON(true), "[\"rO0ABXNyAA5qYXZhLmF3dC5Qb2ludLbEinI0fsgmAgACSQABeEkAAXl4cAAAAAAAAAAA\"]");
 	}
 
 
@@ -319,15 +277,6 @@ public class ArrayNGTest
 		Array out = new Array().add(Arrays.asList(1,2,3));
 
 		assertEquals(out.marshalJSON(true), "[1,2,3]");
-	}
-
-
-	@Test
-	public void testAddBundlable() throws IOException
-	{
-		Array out = new Array().add(new Vector(1,2,3));
-
-		assertEquals(out.marshalJSON(true), "[{\"x\":1.0,\"y\":2.0,\"z\":3.0}]");
 	}
 
 

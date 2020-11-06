@@ -2,11 +2,7 @@ package org.terifan.bundle;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
-import java.util.UUID;
-import static org.terifan.bundle.BundleConstants.*;
+import static org.terifan.bundle.BinaryConstants.*;
 
 
 class BinaryDecoder
@@ -68,10 +64,10 @@ class BinaryDecoder
 	private Array readArray(PathEvaluation aPathEvaluation, Array aArray) throws IOException
 	{
 		int header = mInput.readVar32();
-		boolean singleType = (header & 0x01) != 0;
+		boolean hasSingleType = (header & 0x01) != 0;
 		boolean hasNull = (header & 0x02) != 0;
-		Integer type = singleType ? (header >> 2) & 0x1f : null;
-		int elementCount = header >> (singleType ? 2 + 5 : 2);
+		Integer singleType = hasSingleType ? (header >> 2) & 0x1f : null;
+		int elementCount = header >> (hasSingleType ? 2 + 5 : 2);
 
 		for (int i = 0; i < elementCount; i+=8)
 		{
@@ -89,12 +85,14 @@ class BinaryDecoder
 
 				if (!hasNull || (nullBits & (1 << j)) == 0)
 				{
-					value = readValue(aPathEvaluation.next(i), type, valid);
+					value = readValue(aPathEvaluation.next(i), singleType, valid);
 				}
 
 				if (valid)
 				{
-					aArray.add(value);
+					// Add the value without any processing. (The varargs parameter of the normal 'add' method will turn binary chunks
+					// into an array of bytes.)
+					aArray.addImpl(value);
 				}
 			}
 		}
@@ -128,16 +126,6 @@ class BinaryDecoder
 				return Float.intBitsToFloat(mInput.readInt32());
 			case DOUBLE:
 				return Double.longBitsToDouble(mInput.readInt64());
-			case DATE:
-				return new Date(mInput.readInt64());
-			case UUID:
-				return new UUID(mInput.readInt64(), mInput.readInt64());
-			case CALENDAR:
-				TimeZone timeZone = TimeZone.getDefault();
-				timeZone.setRawOffset(mInput.readVar32());
-				Calendar c = Calendar.getInstance(timeZone);
-				c.setTimeInMillis(mInput.readInt64());
-				return c;
 			case STRING:
 			case BUNDLE:
 			case ARRAY:

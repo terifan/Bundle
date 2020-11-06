@@ -1,21 +1,17 @@
 package org.terifan.bundle;
 
-import java.io.Serializable;
 
-
-class Vector implements Bundlable, Serializable
+public class _Vector implements Bundlable
 {
-	private static final long serialVersionUID = 1L;
-
 	private double x, y, z;
 
 
-	public Vector()
+	public _Vector()
 	{
 	}
 
 
-	public Vector(double aX, double aY, double aZ)
+	public _Vector(double aX, double aY, double aZ)
 	{
 		this.x = aX;
 		this.y = aY;
@@ -24,27 +20,26 @@ class Vector implements Bundlable, Serializable
 
 
 	@Override
-	public void readExternal(Bundle aBundle)
+	public void readExternal(BundlableInput aIn)
 	{
-		x = aBundle.getNumber("x").doubleValue();
-		y = aBundle.getNumber("y").doubleValue();
-		z = aBundle.getNumber("z").doubleValue();
+		Array in = aIn.array();
+		x = in.getDouble(0);
+		y = in.getDouble(1);
+		z = in.getDouble(2);
 	}
 
 
 	@Override
-	public void writeExternal(Bundle aBundle)
+	public void writeExternal(BundlableOutput aOut)
 	{
-		aBundle.putNumber("x", x);
-		aBundle.putNumber("y", y);
-		aBundle.putNumber("z", z);
+		aOut.array(x, y, z);
 	}
 
 
 	@Override
 	public String toString()
 	{
-		return "Vector{" + "x=" + x + ", y=" + y + ", z=" + z + '}';
+		return "_Vector{" + "x=" + x + ", y=" + y + ", z=" + z + '}';
 	}
 
 
@@ -74,7 +69,7 @@ class Vector implements Bundlable, Serializable
 		{
 			return false;
 		}
-		final Vector other = (Vector)obj;
+		final _Vector other = (_Vector)obj;
 		if (Double.doubleToLongBits(this.x) != Double.doubleToLongBits(other.x))
 		{
 			return false;

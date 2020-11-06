@@ -1,7 +1,11 @@
 package org.terifan.bundle;
 
 import java.awt.Point;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -231,108 +235,32 @@ public class BundleNGTest
 		assertEquals(out.getBoolean("booleanNull"), null);
 		assertEquals((boolean)out.getBoolean("boolean1"), false);
 		assertEquals((boolean)out.getBoolean("boolean2"), true);
-		assertEquals(out.getByteArray("bytes"), Arrays.asList((byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0));
+		assertEquals(out.getByteArrayList("bytes"), Arrays.asList((byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0));
 	}
 
 
-	@Test
-	public void testToArray() throws IOException
-	{
-		Bundle in = new Bundle().putArray("array", Array.of(1,2,3));
-		byte[] data = in.marshal();
-		Bundle out = new Bundle().unmarshal(data);
-
-		Object[] array = out.toArray("array");
-
-		assertEquals(out, in);
-		assertEquals(out.marshal(), in.marshal());
-		assertEquals(out.marshalJSON(true), in.marshalJSON(true));
-		assertEquals(array[0], 1);
-		assertEquals(array[1], 2);
-		assertEquals(array[2], 3);
-	}
-
-
-	@Test
-	public void testBundableObjectConstructor() throws IOException
-	{
-		Bundle in = new Bundle(new RGB(64,128,255));
-		byte[] data = in.marshal();
-		Bundle out = new Bundle().unmarshal(data);
-
-		assertEquals(out, in);
-		assertEquals(out.marshal(), in.marshal());
-		assertEquals(out.marshalJSON(true), in.marshalJSON(true));
-		assertEquals((int)out.getInt("r"), 64);
-		assertEquals((int)out.getInt("g"), 128);
-		assertEquals((int)out.getInt("b"), 255);
-	}
-
-
-	@Test
-	public void testBundableValue() throws IOException
-	{
-		RGB rgb = new RGB(64,128,255);
-
-		Bundle in = new Bundle().putBundlable("rgb", rgb);
-		byte[] data = in.marshal();
-		Bundle out = new Bundle().unmarshal(data);
-
-		assertEquals(out, in);
-		assertEquals(out.marshal(), in.marshal());
-		assertEquals(out.marshalJSON(true), in.marshalJSON(true));
-		assertEquals(out.getInt("rgb"), rgb.writeExternal());
-	}
-
-
-	@Test
-	public void testAsObject() throws IOException
-	{
-		RGB in = new RGB(64,128,255);
-
-		Bundle bundle = new Bundle().putNumber("r", in.getRed()).putNumber("g", in.getGreen()).putNumber("b", in.getBlue());
-
-		RGB out = bundle.newInstance(RGB.class);
-
-		assertEquals(out, in);
-		assertEquals(bundle.marshalJSON(true), "{\"r\":64,\"g\":128,\"b\":255}");
-	}
-
-
-	@Test
-	public void testOfAndAsObject() throws IOException
-	{
-		Vector in = new Vector(64,128,255);
-
-		Bundle bundle = Bundle.of(in);
-
-		Vector out = bundle.newInstance(Vector.class);
-
-		assertEquals(out, in);
-		assertEquals(bundle.marshalJSON(true), "{\"x\":64.0,\"y\":128.0,\"z\":255.0}");
-	}
-
-
-	@Test
-	public void testMarshalSerializable() throws IOException
-	{
-		RGB tz = new RGB(1,2,3);
-
-		Bundle out = new Bundle().putSerializable("color", tz);
-
-		byte[] data = out.marshal();
-
-		Bundle in = new Bundle().unmarshal(data);
-
-		assertEquals(out, in);
-		assertEquals(out.getSerializable(RGB.class, "color"), in.getSerializable(RGB.class, "color"));
-	}
+//	@Test
+//	public void testToArray() throws IOException
+//	{
+//		Bundle in = new Bundle().putArray("array", Array.of(1,2,3));
+//		byte[] data = in.marshal();
+//		Bundle out = new Bundle().unmarshal(data);
+//
+//		Object[] array = out.toArray("array");
+//
+//		assertEquals(out, in);
+//		assertEquals(out.marshal(), in.marshal());
+//		assertEquals(out.marshalJSON(true), in.marshalJSON(true));
+//		assertEquals(array[0], 1);
+//		assertEquals(array[1], 2);
+//		assertEquals(array[2], 3);
+//	}
 
 
 	@Test
 	public void testMarshalSerializable2() throws IOException
 	{
-		Block block = new Block();
+		_Block block = new _Block();
 		block.data = new byte[1000000];
 		new Random().nextBytes(block.data);
 
@@ -343,7 +271,7 @@ public class BundleNGTest
 		Bundle in = new Bundle().unmarshal(data);
 
 		assertEquals(out, in);
-		assertEquals(out.getSerializable(Block.class, "block"), in.getSerializable(Block.class, "block"));
+		assertEquals(out.getSerializable("block", _Block.class), in.getSerializable("block", _Block.class));
 	}
 
 
@@ -354,10 +282,9 @@ public class BundleNGTest
 
 		Bundle out = new Bundle().putSerializable("point", point);
 
-		Point in = out.getSerializable(Point.class, "point");
+		Point in = out.getSerializable("point", Point.class);
 
 		assertEquals(point, in);
-		assertEquals(out.marshalJSON(true), "{\"point\":\"rO0ABXNyAA5qYXZhLmF3dC5Qb2ludLbEinI0fsgmAgACSQABeEkAAXl4cAAAAAAAAAAA\"}");
 	}
 
 
@@ -382,7 +309,7 @@ public class BundleNGTest
 
 		Bundle out = new Bundle().putArray("values", data);
 
-		ArrayList<Byte> in = out.getByteArray("values");
+		ArrayList<Byte> in = out.getByteArrayList("values");
 
 		assertEquals(data, in);
 	}
@@ -395,7 +322,7 @@ public class BundleNGTest
 
 		Bundle out = new Bundle().putArray("values", data);
 
-		ArrayList<Short> in = out.getShortArray("values");
+		ArrayList<Short> in = out.getShortArrayList("values");
 
 		assertEquals(data, in);
 	}
@@ -410,7 +337,7 @@ public class BundleNGTest
 
 		Bundle out = new Bundle().putArray("values", data);
 
-		ArrayList<Integer> in = out.getIntArray("values");
+		ArrayList<Integer> in = out.getIntArrayList("values");
 
 		assertEquals(ints, in);
 	}
@@ -425,14 +352,95 @@ public class BundleNGTest
 
 		out = new Bundle().unmarshal(out.marshal()); // BinaryDecoder decodes all types
 
-		ArrayList<Number> in = out.getNumberArray("values");
+		ArrayList<Number> in = out.getNumberArrayList("values");
 
 		assertEquals(data, in);
 
 		out = new Bundle().unmarshalJSON(out.marshalJSON(true)); // JSONDecoder decodes numbers to their most narrow boxing instance
 
-		in = out.getNumberArray("values");
+		in = out.getNumberArrayList("values");
 
 		assertEquals(data, in);
+	}
+
+
+
+	@Test
+	public void testJavaObjectSerializationOutput() throws IOException, ClassNotFoundException
+	{
+		Date outEntity = new Date();
+
+		Bundle out = new Bundle();
+		out.putSerializable("object", outEntity);
+
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		try (ObjectOutputStream oos = new ObjectOutputStream(baos))
+		{
+			oos.writeObject(out);
+		}
+
+		byte[] data = baos.toByteArray();
+
+		try (ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(data)))
+		{
+			Bundle in = (Bundle)ois.readObject();
+
+			assertEquals(in, out);
+
+			Date inEntity = in.getSerializable("object", Date.class);
+
+			assertEquals(inEntity, outEntity);
+		}
+	}
+
+
+	@Test
+	public void testBundlable()
+	{
+		_Color colIn = new _Color(1,2,3);
+		_Vector vecIn = new _Vector(1,2,3);
+		_Triangle triIn = new _Triangle(new _Vector[]{new _Vector(1,2,3), new _Vector(4,5,6), new _Vector(7,8,9)}, new _Color[]{new _Color(11, 12, 13), new _Color(14, 15, 16), new _Color(17, 18, 19)});
+
+		Bundle bundle = new Bundle();
+		bundle.putBundlable("#col", colIn);
+		bundle.putBundlable("#vec", vecIn);
+		bundle.putBundlable("#tri", triIn);
+
+		Array array = Array.of(colIn, vecIn, triIn);
+
+		_Color colOut = bundle.getBundlable("#col", _Color.class);
+		_Vector vecOut = bundle.getBundlable("#vec", _Vector.class);
+		_Triangle triOut = bundle.getBundlable("#tri", _Triangle.class);
+
+		assertEquals(colOut.toString(), colIn.toString());
+		assertEquals(vecOut.toString(), vecIn.toString());
+		assertEquals(triOut.toString(), triIn.toString());
+
+		assertEquals(bundle.toString(), "{\"#col\":{\"r\":1,\"g\":2,\"b\":3},\"#vec\":[1,2,3],\"#tri\":[[[1,2,3],[4,5,6],[7,8,9]],[{\"r\":11,\"g\":12,\"b\":13},{\"r\":14,\"g\":15,\"b\":16},{\"r\":17,\"g\":18,\"b\":19}]]}");
+		assertEquals(array.toString(), "[{\"r\":1,\"g\":2,\"b\":3},[1,2,3],[[[1,2,3],[4,5,6],[7,8,9]],[{\"r\":11,\"g\":12,\"b\":13},{\"r\":14,\"g\":15,\"b\":16},{\"r\":17,\"g\":18,\"b\":19}]]]");
+
+		colOut = array.getBundlable(0, _Color.class);
+		vecOut = array.getBundlable(1, _Vector.class);
+		triOut = array.getBundlable(2, _Triangle.class);
+
+		assertEquals(colOut.toString(), colIn.toString());
+		assertEquals(vecOut.toString(), vecIn.toString());
+		assertEquals(triOut.toString(), triIn.toString());
+	}
+
+
+	@Test
+	public void testBundlableArrayList()
+	{
+		_Triangle triIn1 = new _Triangle(new _Vector[]{new _Vector(0.1,0.2,0.3), new _Vector(0.4,0.5,0.6), new _Vector(0.7,0.8,0.9)}, new _Color[]{new _Color(11, 12, 13), new _Color(14, 15, 16), new _Color(17, 18, 19)});
+		_Triangle triIn2 = new _Triangle(new _Vector[]{new _Vector(1.1,1.2,1.3), new _Vector(1.4,1.5,1.6), new _Vector(1.7,1.8,1.9)}, new _Color[]{new _Color(21, 22, 23), new _Color(24, 25, 26), new _Color(27, 28, 29)});
+		_Model modIn = new _Model(triIn1, triIn2);
+
+		Bundle bundle = new Bundle();
+		bundle.putBundlable("model", modIn);
+
+		_Model modOut = bundle.getBundlable("model", _Model.class);
+
+		assertEquals(modOut.toString(), modIn.toString());
 	}
 }
