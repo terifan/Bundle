@@ -2,9 +2,6 @@ package org.terifan.bundle;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.UUID;
 import static org.terifan.bundle.BinaryConstants.*;
 
 
@@ -204,19 +201,6 @@ class BinaryEncoder
 				break;
 			case DOUBLE:
 				output.writeInt64(Double.doubleToLongBits((Double)aValue));
-				break;
-			case DATE:
-				output.writeInt64(((Date)aValue).getTime());
-				break;
-			case UUID:
-				UUID uuid = (UUID)aValue;
-				output.writeInt64(uuid.getMostSignificantBits());
-				output.writeInt64(uuid.getLeastSignificantBits());
-				break;
-			case CALENDAR:
-				Calendar c = (Calendar)aValue;
-				output.writeVar32(c.getTimeZone().getRawOffset());
-				output.writeInt64(c.getTimeInMillis());
 				break;
 			case STRING:
 			case BUNDLE:

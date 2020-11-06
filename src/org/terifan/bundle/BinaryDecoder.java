@@ -2,10 +2,6 @@ package org.terifan.bundle;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
-import java.util.UUID;
 import static org.terifan.bundle.BinaryConstants.*;
 
 
@@ -128,16 +124,6 @@ class BinaryDecoder
 				return Float.intBitsToFloat(mInput.readInt32());
 			case DOUBLE:
 				return Double.longBitsToDouble(mInput.readInt64());
-			case DATE:
-				return new Date(mInput.readInt64());
-			case UUID:
-				return new UUID(mInput.readInt64(), mInput.readInt64());
-			case CALENDAR:
-				TimeZone timeZone = TimeZone.getDefault();
-				timeZone.setRawOffset(mInput.readVar32());
-				Calendar c = Calendar.getInstance(timeZone);
-				c.setTimeInMillis(mInput.readInt64());
-				return c;
 			case STRING:
 			case BUNDLE:
 			case ARRAY:

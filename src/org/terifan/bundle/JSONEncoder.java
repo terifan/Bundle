@@ -1,12 +1,8 @@
 package org.terifan.bundle;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Base64;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Map.Entry;
-import java.util.UUID;
 
 
 class JSONEncoder
@@ -174,23 +170,9 @@ class JSONEncoder
 
 	void marshalValue(Printer aPrinter, Object aValue) throws IOException
 	{
-		if (aValue instanceof Date)
-		{
-			aValue = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format((Date)aValue);
-		}
-		else if (aValue instanceof byte[])
+		if (aValue instanceof byte[])
 		{
 			aValue = Base64.getEncoder().encodeToString((byte[])aValue);
-		}
-		else if (aValue instanceof UUID)
-		{
-			aValue = aValue.toString();
-		}
-		else if (aValue instanceof Calendar)
-		{
-			Calendar calendar = (Calendar)aValue;
-			int offset = calendar.getTimeZone().getRawOffset() / 60_000;
-			aValue = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new Date(calendar.getTimeInMillis())) + (offset < 0 ? "-" : "+") + String.format("%02d:%02d", offset / 60, offset % 60);
 		}
 
 		if (aValue instanceof String)
