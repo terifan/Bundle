@@ -294,8 +294,8 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 	/**
 	 * The value referred to by the key is unmarshalled into an object of the type provided.
 	 *
-	 * @param aType a BundlableValue type
 	 * @param aKey a key
+	 * @param aType a BundlableValue type
 	 * @return an instance of the BundlableValue type
 	 */
 	public <T extends Bundlable> T getBundlable(K aKey, Class<T> aType)

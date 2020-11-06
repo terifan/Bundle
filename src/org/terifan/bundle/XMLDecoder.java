@@ -12,7 +12,7 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
 
-public class XMLDecoder
+class XMLDecoder
 {
 	/**
 	 * Import XML to a Bundle

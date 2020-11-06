@@ -17,8 +17,9 @@ import java.util.function.Function;
 
 /**
  * A Bundle is typed Map that can be serialized to JSON and binary format.
- *
+ * <p>
  * Note: the hashCode and equals methods are order independent even though the Bundle maintains elements in the inserted order.
+ * </p>
  */
 public class Bundle extends Container<String,Bundle> implements Serializable, Externalizable
 {
@@ -329,11 +330,11 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 	 * @return
 	 *   a Bundle
 	 */
-	public static Bundle of(Bundlable aBundlable)
+	public static Container of(Bundlable aBundlable)
 	{
 		BundlableOutput bundle = new BundlableOutput();
 		aBundlable.writeExternal(bundle);
-		return (Bundle)bundle.getContainer();
+		return bundle.getContainer();
 	}
 
 

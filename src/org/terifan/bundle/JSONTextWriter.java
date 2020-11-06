@@ -1,6 +1,9 @@
 package org.terifan.bundle;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 
 
 class JSONTextWriter
@@ -111,12 +114,45 @@ class JSONTextWriter
 
 	private String formatString(Object aText)
 	{
-		String text = aText == null ? "null" : aText.toString();
-		if ((aText instanceof Double || aText instanceof Float) && text.endsWith(".0"))
+		if (aText == null)
 		{
-			text = text.substring(0, text.length() - 2);
+			return "null";
 		}
-		return text;
+
+		if (aText instanceof Double || aText instanceof Float)
+		{
+			String text = aText.toString().replace(" ", "");
+
+			int i0 = text.indexOf(',');
+			if (i0 != -1)
+			{
+				int i1 = text.indexOf('.');
+				if (i1 != -1)
+				{
+					if (i0 < i1)
+					{
+						text = text.replace(",", ""); // handles: 10,000.7
+					}
+					else
+					{
+						text = text.replace(".", "").replace(',', '.'); // handles: 10.000,7
+					}
+				}
+				else
+				{
+					text = text.replace(',', '.'); // handles: 10000.7
+				}
+			}
+
+			if (text.endsWith(".0"))
+			{
+				text = text.substring(0, text.length() - 2);
+			}
+
+			return text;
+		}
+
+		return aText.toString();
 	}
 
 

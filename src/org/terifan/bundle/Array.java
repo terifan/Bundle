@@ -192,7 +192,7 @@ public class Array extends Container<Integer, Array> implements Serializable, It
 	 *    Array.of(values);
 	 * </code>
 	 *
-	 * @param aValues an array of objects
+	 * @param aValue an array of objects
 	 * @return an array
 	 */
 	public static Array of(Object aValue)
