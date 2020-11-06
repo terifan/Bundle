@@ -24,8 +24,9 @@ class _Triangle implements Bundlable
 	@Override
 	public void readExternal(BundlableInput aIn)
 	{
-		mVerticies = aIn.array().getBundlableArray(0, _Vector.class);
-		mColors = aIn.array().getBundlableArray(1, _Color.class);
+		Array in = aIn.array();
+		mVerticies = in.getBundlableArray(0, _Vector.class);
+		mColors = in.getBundlableArray(1, _Color.class);
 	}
 
 
