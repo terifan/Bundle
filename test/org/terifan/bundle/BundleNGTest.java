@@ -427,4 +427,20 @@ public class BundleNGTest
 		assertEquals(vecOut.toString(), vecIn.toString());
 		assertEquals(triOut.toString(), triIn.toString());
 	}
+
+
+	@Test
+	public void testBundlableArrayList()
+	{
+		_Triangle triIn1 = new _Triangle(new _Vector[]{new _Vector(0.1,0.2,0.3), new _Vector(0.4,0.5,0.6), new _Vector(0.7,0.8,0.9)}, new _Color[]{new _Color(11, 12, 13), new _Color(14, 15, 16), new _Color(17, 18, 19)});
+		_Triangle triIn2 = new _Triangle(new _Vector[]{new _Vector(1.1,1.2,1.3), new _Vector(1.4,1.5,1.6), new _Vector(1.7,1.8,1.9)}, new _Color[]{new _Color(21, 22, 23), new _Color(24, 25, 26), new _Color(27, 28, 29)});
+		_Model modIn = new _Model(triIn1, triIn2);
+
+		Bundle bundle = new Bundle();
+		bundle.putBundlable("model", modIn);
+
+		_Model modOut = bundle.getBundlable("model", _Model.class);
+
+		assertEquals(modOut.toString(), modIn.toString());
+	}
 }

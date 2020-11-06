@@ -16,6 +16,7 @@ import java.io.Serializable;
 import java.io.StringReader;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Map;
 import java.util.Objects;
@@ -328,6 +329,20 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 		}
 
 		return (T[])array;
+	}
+
+
+	public <T extends Bundlable> ArrayList<T> getBundlableArrayList(K aKey, Class<T> aType)
+	{
+		Array tmp = getArray(aKey);
+
+		ArrayList<T> list = new ArrayList<>();
+		for (int i = 0; i < tmp.size(); i++)
+		{
+			list.add(tmp.getBundlable(i, aType));
+		}
+
+		return list;
 	}
 
 
