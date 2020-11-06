@@ -2,7 +2,6 @@ package org.terifan.bundle;
 
 import java.util.Date;
 import java.util.Random;
-import java.util.UUID;
 
 
 public class Helper
@@ -48,8 +47,7 @@ public class Helper
 			1000000 * rnd.nextDouble(),
 			null,
 			createString(rnd),
-			new Date(rnd.nextLong()),
-			new UUID(rnd.nextLong(), rnd.nextLong())
+			new Date(rnd.nextLong())
 			);
 	}
 

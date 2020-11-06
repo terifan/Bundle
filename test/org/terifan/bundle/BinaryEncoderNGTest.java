@@ -14,7 +14,7 @@ public class BinaryEncoderNGTest
 
  		byte[] data = bundle.marshal();
 
-		Log.hexDump(data);
+		Helper.hexDump(data);
 
 		System.out.println(bundle.marshalJSON(false));
 	}
