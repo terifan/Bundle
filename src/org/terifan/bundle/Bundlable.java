@@ -3,7 +3,7 @@ package org.terifan.bundle;
 
 public interface Bundlable
 {
-	void readExternal(BundleInput aBundle);
+	void readExternal(BundlableInput aBundle);
 
-	void writeExternal(BundleOutput aBundle);
+	void writeExternal(BundlableOutput aBundle);
 }

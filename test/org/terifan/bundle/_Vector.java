@@ -1,11 +1,11 @@
-package samples;
+package org.terifan.bundle;
 
 import java.io.IOException;
 import org.terifan.bundle.Array;
 import org.terifan.bundle.Bundlable;
 import org.terifan.bundle.Bundle;
-import org.terifan.bundle.BundleInput;
-import org.terifan.bundle.BundleOutput;
+import org.terifan.bundle.BundlableInput;
+import org.terifan.bundle.BundlableOutput;
 
 
 public class _Vector implements Bundlable
@@ -29,7 +29,7 @@ public class _Vector implements Bundlable
 
 
 	@Override
-	public void readExternal(BundleInput aIn)
+	public void readExternal(BundlableInput aIn)
 	{
 		Array in = aIn.array();
 		x = in.getDouble(0);
@@ -39,7 +39,7 @@ public class _Vector implements Bundlable
 
 
 	@Override
-	public void writeExternal(BundleOutput aOut)
+	public void writeExternal(BundlableOutput aOut)
 	{
 		aOut.array(x, y, z);
 	}

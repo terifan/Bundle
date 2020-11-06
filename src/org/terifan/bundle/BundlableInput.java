@@ -1,12 +1,12 @@
 package org.terifan.bundle;
 
 
-public class BundleInput
+public class BundlableInput
 {
 	private Container mContainer;
 
 
-	BundleInput(Container aContainer)
+	BundlableInput(Container aContainer)
 	{
 		mContainer = aContainer;
 	}

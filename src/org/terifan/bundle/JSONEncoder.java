@@ -214,9 +214,9 @@ class JSONEncoder
 	{
 		private Appendable mAppendable;
 		private boolean mNewLine;
-		private int mIndent;
 		private boolean mCompact;
 		private boolean mFirst;
+		private int mIndent;
 
 
 		public Printer(Appendable aAppendable, boolean aCompact)
@@ -244,6 +244,12 @@ class JSONEncoder
 		Printer print(Object aText, boolean aIndent) throws IOException
 		{
 			String text = aText == null ? "null" : aText.toString();
+
+			if ((aText instanceof Double || aText instanceof Float) && text.endsWith(".0"))
+			{
+				text = text.substring(0, text.length() - 2);
+			}
+
 			if (mCompact && text.endsWith(" "))
 			{
 				text = stripTrailing(text);
@@ -252,10 +258,12 @@ class JSONEncoder
 					return this;
 				}
 			}
+
 			if (aIndent)
 			{
 				printIndent();
 			}
+
 			mAppendable.append(text);
 			mFirst = false;
 			return this;

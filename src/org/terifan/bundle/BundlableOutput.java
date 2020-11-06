@@ -1,12 +1,12 @@
 package org.terifan.bundle;
 
 
-public class BundleOutput
+public class BundlableOutput
 {
 	private Container mContainer;
 
 
-	BundleOutput()
+	BundlableOutput()
 	{
 	}
 

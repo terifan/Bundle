@@ -1,17 +1,17 @@
-package samples;
+package org.terifan.bundle;
 
 import java.io.Serializable;
 import org.terifan.bundle.*;
 
 
-public class _RGB implements Bundlable, Serializable
+public class _Color implements Bundlable, Serializable
 {
 	private static final long serialVersionUID = 1L;
 
 	private int r, g, b;
 
 
-	public _RGB()
+	public _Color()
 	{
 	}
 
@@ -34,7 +34,7 @@ public class _RGB implements Bundlable, Serializable
 	}
 
 
-	public _RGB(int aR, int aG, int aB)
+	public _Color(int aR, int aG, int aB)
 	{
 		this.r = aR;
 		this.g = aG;
@@ -45,12 +45,12 @@ public class _RGB implements Bundlable, Serializable
 	@Override
 	public String toString()
 	{
-		return "_RGB{r=" + r + ", g=" + g + ", b=" + b + '}';
+		return "_Color{r=" + r + ", g=" + g + ", b=" + b + '}';
 	}
 
 
 	@Override
-	public void readExternal(BundleInput aIn)
+	public void readExternal(BundlableInput aIn)
 	{
 		Bundle in = aIn.bundle();
 		r = in.getInt("r");
@@ -60,7 +60,7 @@ public class _RGB implements Bundlable, Serializable
 
 
 	@Override
-	public void writeExternal(BundleOutput aOut)
+	public void writeExternal(BundlableOutput aOut)
 	{
 		aOut.bundle()
 			.putNumber("r", r)
@@ -95,7 +95,7 @@ public class _RGB implements Bundlable, Serializable
 		{
 			return false;
 		}
-		final _RGB other = (_RGB)obj;
+		final _Color other = (_Color)obj;
 		if (this.r != other.r)
 		{
 			return false;

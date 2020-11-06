@@ -5,7 +5,7 @@ import java.util.Random;
 import java.util.UUID;
 
 
-public class _Helper
+public class Helper
 {
 	static Bundle createBigBundle(Random rnd)
 	{
@@ -71,5 +71,47 @@ public class _Helper
 		byte[] bytes = new byte[5 + rnd.nextInt(40)];
 		rnd.nextBytes(bytes);
 		return bytes;
+	}
+
+
+	public static void hexDump(byte[] aBuffer)
+	{
+		int LW = 56;
+		int MR = 1000;
+
+		StringBuilder binText = new StringBuilder("");
+		StringBuilder hexText = new StringBuilder("");
+
+		for (int row = 0, offset = 0; offset < aBuffer.length && row < MR; row++)
+		{
+			hexText.append(String.format("%04d: ", row * LW));
+
+			int padding = 3 * LW + LW / 8;
+
+			for (int i = 0; offset < aBuffer.length && i < LW; i++)
+			{
+				int c = 0xff & aBuffer[offset++];
+
+				hexText.append(String.format("%02x ", c));
+				binText.append(Character.isISOControl(c) ? '.' : (char)c);
+				padding -= 3;
+
+				if ((i & 7) == 7)
+				{
+					hexText.append(" ");
+					padding--;
+				}
+			}
+
+			for (int i = 0; i < padding; i++)
+			{
+				hexText.append(" ");
+			}
+
+			System.out.println(hexText.append(binText).toString());
+
+			binText.setLength(0);
+			hexText.setLength(0);
+		}
 	}
 }

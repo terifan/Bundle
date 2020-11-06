@@ -75,7 +75,7 @@ public class Array extends Container<Integer, Array> implements Serializable, It
 		}
 		else if (aValue instanceof Bundlable)
 		{
-			BundleOutput out = new BundleOutput();
+			BundlableOutput out = new BundlableOutput();
 			((Bundlable)aValue).writeExternal(out);
 			addImpl(out.getContainer());
 		}
@@ -320,7 +320,7 @@ public class Array extends Container<Integer, Array> implements Serializable, It
 		}
 		else if (aValue instanceof Bundlable)
 		{
-			BundleOutput out = new BundleOutput();
+			BundlableOutput out = new BundlableOutput();
  			((Bundlable)aValue).writeExternal(out);
 			addImpl(out.getContainer());
 		}

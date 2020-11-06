@@ -12,9 +12,6 @@ import java.util.Date;
 import java.util.Random;
 import static org.testng.Assert.*;
 import org.testng.annotations.Test;
-import samples._PersonEntity;
-import samples._RGB;
-import samples._Vector;
 
 
 public class BundleNGTest
@@ -371,7 +368,7 @@ public class BundleNGTest
 	@Test
 	public void testJavaObjectSerializationOutput() throws IOException, ClassNotFoundException
 	{
-		_PersonEntity outEntity = new _PersonEntity("Adam", new Date(1965,10,7), 180, 90);
+		_Person outEntity = new _Person("Adam", new Date(1965,10,7), 180, 90);
 
 		Bundle out = new Bundle();
 		out.putSerializable("object", outEntity);
@@ -390,9 +387,44 @@ public class BundleNGTest
 
 			assertEquals(in, out);
 
-			_PersonEntity inEntity = in.getSerializable("object", _PersonEntity.class);
+			_Person inEntity = in.getSerializable("object", _Person.class);
 
 			assertEquals(inEntity, outEntity);
 		}
+	}
+
+
+	@Test
+	public void testBundlable()
+	{
+		_Color colIn = new _Color(1,2,3);
+		_Vector vecIn = new _Vector(1,2,3);
+		_Triangle triIn = new _Triangle(new _Vector[]{new _Vector(1,2,3), new _Vector(4,5,6), new _Vector(7,8,9)}, new _Color[]{new _Color(11, 12, 13), new _Color(14, 15, 16), new _Color(17, 18, 19)});
+
+		Bundle bundle = new Bundle();
+		bundle.putBundlable("#col", colIn);
+		bundle.putBundlable("#vec", vecIn);
+		bundle.putBundlable("#tri", triIn);
+
+		Array array = Array.of(colIn, vecIn, triIn);
+
+		_Color colOut = bundle.getBundlable("#col", _Color.class);
+		_Vector vecOut = bundle.getBundlable("#vec", _Vector.class);
+		_Triangle triOut = bundle.getBundlable("#tri", _Triangle.class);
+
+		assertEquals(colOut.toString(), colIn.toString());
+		assertEquals(vecOut.toString(), vecIn.toString());
+		assertEquals(triOut.toString(), triIn.toString());
+
+		assertEquals(bundle.toString(), "{\"#col\":{\"r\":1,\"g\":2,\"b\":3},\"#vec\":[1,2,3],\"#tri\":[[[1,2,3],[4,5,6],[7,8,9]],[{\"r\":11,\"g\":12,\"b\":13},{\"r\":14,\"g\":15,\"b\":16},{\"r\":17,\"g\":18,\"b\":19}]]}");
+		assertEquals(array.toString(), "[{\"r\":1,\"g\":2,\"b\":3},[1,2,3],[[[1,2,3],[4,5,6],[7,8,9]],[{\"r\":11,\"g\":12,\"b\":13},{\"r\":14,\"g\":15,\"b\":16},{\"r\":17,\"g\":18,\"b\":19}]]]");
+
+		colOut = array.getBundlable(0, _Color.class);
+		vecOut = array.getBundlable(1, _Vector.class);
+		triOut = array.getBundlable(2, _Triangle.class);
+
+		assertEquals(colOut.toString(), colIn.toString());
+		assertEquals(vecOut.toString(), vecIn.toString());
+		assertEquals(triOut.toString(), triIn.toString());
 	}
 }

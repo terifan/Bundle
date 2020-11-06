@@ -1,16 +1,16 @@
-package samples;
+package org.terifan.bundle;
 
 import java.util.Arrays;
 import org.terifan.bundle.Array;
 import org.terifan.bundle.Bundlable;
-import org.terifan.bundle.BundleInput;
-import org.terifan.bundle.BundleOutput;
+import org.terifan.bundle.BundlableInput;
+import org.terifan.bundle.BundlableOutput;
 
 
 class _Triangle implements Bundlable
 {
 	private _Vector[] mVerticies;
-	private _RGB[] mColors;
+	private _Color[] mColors;
 
 
 	public _Triangle()
@@ -18,7 +18,7 @@ class _Triangle implements Bundlable
 	}
 
 
-	public _Triangle(_Vector[] aVerticies, _RGB[] aColors)
+	public _Triangle(_Vector[] aVerticies, _Color[] aColors)
 	{
 		mVerticies = aVerticies;
 		mColors = aColors;
@@ -26,15 +26,15 @@ class _Triangle implements Bundlable
 
 
 	@Override
-	public void readExternal(BundleInput aIn)
+	public void readExternal(BundlableInput aIn)
 	{
 		mVerticies = aIn.array().getBundlableArray(0, _Vector.class);
-		mColors = aIn.array().getBundlableArray(1, _RGB.class);
+		mColors = aIn.array().getBundlableArray(1, _Color.class);
 	}
 
 
 	@Override
-	public void writeExternal(BundleOutput aOut)
+	public void writeExternal(BundlableOutput aOut)
 	{
 		aOut.array(mVerticies, mColors);
 	}

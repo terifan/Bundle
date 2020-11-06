@@ -1,11 +1,11 @@
-package samples;
+package org.terifan.bundle;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
 
-public class _PersonEntity implements Serializable
+public class _Person implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 
@@ -15,7 +15,7 @@ public class _PersonEntity implements Serializable
 	private double mWeight;
 
 
-	public _PersonEntity(String aName, Date aBirthdate, int aLength, double aWeight)
+	public _Person(String aName, Date aBirthdate, int aLength, double aWeight)
 	{
 		this.mName = aName;
 		this.mBirthdate = aBirthdate;
@@ -99,7 +99,7 @@ public class _PersonEntity implements Serializable
 		{
 			return false;
 		}
-		final _PersonEntity other = (_PersonEntity)obj;
+		final _Person other = (_Person)obj;
 		if (this.mLength != other.mLength)
 		{
 			return false;

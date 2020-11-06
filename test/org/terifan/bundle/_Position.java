@@ -1,4 +1,4 @@
-package samples;
+package org.terifan.bundle;
 
 import java.io.Serializable;
 import java.util.Arrays;

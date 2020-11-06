@@ -215,7 +215,7 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 			Constructor<T> declaredConstructor = aType.getDeclaredConstructor();
 			declaredConstructor.setAccessible(true);
 
-			BundleInput in = new BundleInput(this);
+			BundlableInput in = new BundlableInput(this);
 
 			T instance = declaredConstructor.newInstance();
 			instance.readExternal(in);
@@ -331,7 +331,7 @@ public class Bundle extends Container<String,Bundle> implements Serializable, Ex
 	 */
 	public static Bundle of(Bundlable aBundlable)
 	{
-		BundleOutput bundle = new BundleOutput();
+		BundlableOutput bundle = new BundlableOutput();
 		aBundlable.writeExternal(bundle);
 		return (Bundle)bundle.getContainer();
 	}

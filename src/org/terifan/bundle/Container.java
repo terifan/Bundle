@@ -306,7 +306,7 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 			declaredConstructor.setAccessible(true);
 
 			Bundlable instance = declaredConstructor.newInstance();
-			instance.readExternal(new BundleInput((Container)get(aKey)));
+			instance.readExternal(new BundlableInput((Container)get(aKey)));
 
 			return (T)instance;
 		}
@@ -333,7 +333,7 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 
 	public R putBundlable(K aKey, Bundlable aValue)
 	{
-		BundleOutput out = new BundleOutput();
+		BundlableOutput out = new BundlableOutput();
 		aValue.writeExternal(out);
 		set(aKey, out.getContainer());
 
