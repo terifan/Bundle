@@ -11,14 +11,10 @@ class JSONDecoder
 	private PushbackReader mReader;
 
 
-	public JSONDecoder(Reader aReader)
+	public Container unmarshal(Reader aReader, Container aContainer) throws IOException
 	{
 		mReader = new PushbackReader(aReader, 1);
-	}
 
-
-	public Container unmarshal(Container aContainer) throws IOException
-	{
 		switch (mReader.read())
 		{
 			case '{':

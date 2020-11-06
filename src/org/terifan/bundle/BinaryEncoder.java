@@ -35,11 +35,6 @@ import static org.terifan.bundle.BinaryConstants.*;
  */
 class BinaryEncoder
 {
-	public BinaryEncoder()
-	{
-	}
-
-
 	public byte[] marshal(Container aContainer) throws IOException
 	{
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();

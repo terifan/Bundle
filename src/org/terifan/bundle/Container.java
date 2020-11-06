@@ -546,7 +546,7 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 	{
 		try
 		{
-			new JSONEncoder().marshal(new JSONEncoder.Printer(aJSONOutput, aCompact), this);
+			new JSONEncoder().marshal(new JSONTextWriter(aJSONOutput, aCompact), this);
 		}
 		catch (IOException e)
 		{
@@ -567,7 +567,7 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 	{
 		try (Reader r = aJSONData)
 		{
-			return (R)new JSONDecoder(r).unmarshal(this);
+			return (R)new JSONDecoder().unmarshal(r, this);
 		}
 		catch (IOException e)
 		{
