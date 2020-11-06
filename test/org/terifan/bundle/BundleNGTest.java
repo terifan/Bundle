@@ -368,7 +368,7 @@ public class BundleNGTest
 	@Test
 	public void testJavaObjectSerializationOutput() throws IOException, ClassNotFoundException
 	{
-		_Person outEntity = new _Person("Adam", new Date(1965,10,7), 180, 90);
+		Date outEntity = new Date();
 
 		Bundle out = new Bundle();
 		out.putSerializable("object", outEntity);
@@ -387,7 +387,7 @@ public class BundleNGTest
 
 			assertEquals(in, out);
 
-			_Person inEntity = in.getSerializable("object", _Person.class);
+			Date inEntity = in.getSerializable("object", Date.class);
 
 			assertEquals(inEntity, outEntity);
 		}

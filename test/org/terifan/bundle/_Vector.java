@@ -1,17 +1,8 @@
 package org.terifan.bundle;
 
-import java.io.IOException;
-import org.terifan.bundle.Array;
-import org.terifan.bundle.Bundlable;
-import org.terifan.bundle.Bundle;
-import org.terifan.bundle.BundlableInput;
-import org.terifan.bundle.BundlableOutput;
-
 
 public class _Vector implements Bundlable
 {
-	private static final long serialVersionUID = 1L;
-
 	private double x, y, z;
 
 

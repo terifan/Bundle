@@ -1,7 +1,6 @@
 package org.terifan.bundle;
 
 import java.io.Serializable;
-import org.terifan.bundle.*;
 
 
 public class _Color implements Bundlable, Serializable

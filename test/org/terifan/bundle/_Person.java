@@ -1,26 +1,23 @@
 package org.terifan.bundle;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
 
-public class _Person implements Serializable
+public class _Person implements Bundlable
 {
-	private static final long serialVersionUID = 1L;
-
 	private String mName;
 	private Date mBirthdate;
-	private int mLength;
+	private int mHeight;
 	private double mWeight;
 
 
-	public _Person(String aName, Date aBirthdate, int aLength, double aWeight)
+	public _Person(String aName, Date aBirthdate, int aHeight, double aWeight)
 	{
-		this.mName = aName;
-		this.mBirthdate = aBirthdate;
-		this.mLength = aLength;
-		this.mWeight = aWeight;
+		mName = aName;
+		mBirthdate = aBirthdate;
+		mHeight = aHeight;
+		mWeight = aWeight;
 	}
 
 
@@ -32,7 +29,7 @@ public class _Person implements Serializable
 
 	public void setName(String aName)
 	{
-		this.mName = aName;
+		mName = aName;
 	}
 
 
@@ -44,19 +41,19 @@ public class _Person implements Serializable
 
 	public void setBirthdate(Date aBirthdate)
 	{
-		this.mBirthdate = aBirthdate;
+		mBirthdate = aBirthdate;
 	}
 
 
-	public int getLength()
+	public int getHeight()
 	{
-		return mLength;
+		return mHeight;
 	}
 
 
-	public void setLength(int aLength)
+	public void setHeight(int aHeight)
 	{
-		this.mLength = aLength;
+		mHeight = aHeight;
 	}
 
 
@@ -68,7 +65,30 @@ public class _Person implements Serializable
 
 	public void setWeight(double aWeight)
 	{
-		this.mWeight = aWeight;
+		mWeight = aWeight;
+	}
+
+
+	@Override
+	public void readExternal(BundlableInput aInput)
+	{
+		Bundle in = aInput.bundle();
+		mName = in.getString("name");
+		mHeight = in.getInt("height");
+		mWeight = in.getDouble("weight");
+		mBirthdate = in.getSerializable("birtdate", Date.class);
+	}
+
+
+	@Override
+	public void writeExternal(BundlableOutput aOutput)
+	{
+		aOutput.bundle()
+			.putString("name", mName)
+			.putNumber("height", mHeight)
+			.putNumber("weight", mWeight)
+			.putSerializable("birthdate", mBirthdate)
+			;
 	}
 
 
@@ -76,10 +96,10 @@ public class _Person implements Serializable
 	public int hashCode()
 	{
 		int hash = 5;
-		hash = 23 * hash + Objects.hashCode(this.mName);
-		hash = 23 * hash + Objects.hashCode(this.mBirthdate);
-		hash = 23 * hash + this.mLength;
-		hash = 23 * hash + (int)(Double.doubleToLongBits(this.mWeight) ^ (Double.doubleToLongBits(this.mWeight) >>> 32));
+		hash = 23 * hash + Objects.hashCode(mName);
+		hash = 23 * hash + Objects.hashCode(mBirthdate);
+		hash = 23 * hash + mHeight;
+		hash = 23 * hash + (int)(Double.doubleToLongBits(mWeight) ^ (Double.doubleToLongBits(mWeight) >>> 32));
 		return hash;
 	}
 
@@ -100,19 +120,19 @@ public class _Person implements Serializable
 			return false;
 		}
 		final _Person other = (_Person)obj;
-		if (this.mLength != other.mLength)
+		if (mHeight != other.mHeight)
 		{
 			return false;
 		}
-		if (Double.doubleToLongBits(this.mWeight) != Double.doubleToLongBits(other.mWeight))
+		if (Double.doubleToLongBits(mWeight) != Double.doubleToLongBits(other.mWeight))
 		{
 			return false;
 		}
-		if (!Objects.equals(this.mName, other.mName))
+		if (!Objects.equals(mName, other.mName))
 		{
 			return false;
 		}
-		if (!Objects.equals(this.mBirthdate, other.mBirthdate))
+		if (!Objects.equals(mBirthdate, other.mBirthdate))
 		{
 			return false;
 		}

@@ -339,7 +339,7 @@ public class Array extends Container<Integer, Array> implements Serializable, It
 	}
 
 
-	private void addImpl(Object aValue)
+	void addImpl(Object aValue)
 	{
 		mValues.add(aValue);
 	}

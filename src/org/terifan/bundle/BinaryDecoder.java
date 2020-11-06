@@ -2,6 +2,7 @@ package org.terifan.bundle;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.concurrent.atomic.AtomicInteger;
 import static org.terifan.bundle.BinaryConstants.*;
 
 
@@ -42,6 +43,7 @@ class BinaryDecoder
 	private Bundle readBundle(PathEvaluation aPathEvaluation, Bundle bundle) throws IOException
 	{
 		int keyCount = mInput.readVar32();
+		AtomicInteger valueType = new AtomicInteger();
 
 		for (int i = 0; i < keyCount; i++)
 		{
@@ -49,7 +51,7 @@ class BinaryDecoder
 
 			boolean valid = aPathEvaluation.valid(key);
 
-			Object value = readValue(aPathEvaluation.next(key), null, valid);
+			Object value = readValue(aPathEvaluation.next(key), null, valid, valueType);
 
 			if (valid)
 			{
@@ -64,10 +66,10 @@ class BinaryDecoder
 	private Array readArray(PathEvaluation aPathEvaluation, Array aArray) throws IOException
 	{
 		int header = mInput.readVar32();
-		boolean singleType = (header & 0x01) != 0;
+		boolean hasSingleType = (header & 0x01) != 0;
 		boolean hasNull = (header & 0x02) != 0;
-		Integer type = singleType ? (header >> 2) & 0x1f : null;
-		int elementCount = header >> (singleType ? 2 + 5 : 2);
+		Integer singleType = hasSingleType ? (header >> 2) & 0x1f : null;
+		int elementCount = header >> (hasSingleType ? 2 + 5 : 2);
 
 		for (int i = 0; i < elementCount; i+=8)
 		{
@@ -78,6 +80,8 @@ class BinaryDecoder
 				nullBits = mInput.readInt8();
 			}
 
+			AtomicInteger valueType = new AtomicInteger();
+
 			for (int j = 0; j < 8 && i+j < elementCount; j++)
 			{
 				boolean valid = aPathEvaluation.valid(i+j);
@@ -85,12 +89,19 @@ class BinaryDecoder
 
 				if (!hasNull || (nullBits & (1 << j)) == 0)
 				{
-					value = readValue(aPathEvaluation.next(i), type, valid);
+					value = readValue(aPathEvaluation.next(i), singleType, valid, valueType);
 				}
 
 				if (valid)
 				{
-					aArray.add(value);
+					if (valueType.get() == BINARY)
+					{
+						aArray.addImpl(value);
+					}
+					else
+					{
+						aArray.add(value);
+					}
 				}
 			}
 		}
@@ -99,12 +110,14 @@ class BinaryDecoder
 	}
 
 
-	private Object readValue(PathEvaluation aPathEvaluation, Integer aType, boolean aValid) throws IOException
+	private Object readValue(PathEvaluation aPathEvaluation, Integer aType, boolean aValid, AtomicInteger oValueType) throws IOException
 	{
 		if (aType == null)
 		{
 			aType = mInput.readInt8();
 		}
+
+		oValueType.set(aType);
 
 		switch (aType)
 		{
