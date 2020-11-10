@@ -18,8 +18,10 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Supplier;
 import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterInputStream;
@@ -318,6 +320,15 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 	}
 
 
+	public <T extends Bundlable> T getBundlable(K aKey, Supplier<T> aSupplier)
+	{
+		Bundlable instance = aSupplier.get();
+		instance.readExternal(new BundlableInput((Container)get(aKey)));
+
+		return (T)instance;
+	}
+
+
 	public <T extends Bundlable> T[] getBundlableArray(K aKey, Class<T> aType)
 	{
 		Array tmp = getArray(aKey);
@@ -326,6 +337,20 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 		for (int i = 0; i < tmp.size(); i++)
 		{
 			java.lang.reflect.Array.set(array, i, tmp.getBundlable(i, aType));
+		}
+
+		return (T[])array;
+	}
+
+
+	public <T extends Bundlable> T[] getBundlableArray(K aKey, Supplier<T> aSupplier)
+	{
+		Array tmp = getArray(aKey);
+
+		Object array = java.lang.reflect.Array.newInstance(aSupplier.get().getClass(), tmp.size());
+		for (int i = 0; i < tmp.size(); i++)
+		{
+			java.lang.reflect.Array.set(array, i, tmp.getBundlable(i, aSupplier));
 		}
 
 		return (T[])array;
@@ -346,11 +371,40 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 	}
 
 
+	public <T extends Bundlable> ArrayList<T> getBundlableArrayList(K aKey, Supplier<T> aSupplier)
+	{
+		Array tmp = getArray(aKey);
+
+		ArrayList<T> list = new ArrayList<>();
+		for (int i = 0; i < tmp.size(); i++)
+		{
+			list.add(tmp.getBundlable(i, aSupplier));
+		}
+
+		return list;
+	}
+
+
 	public R putBundlable(K aKey, Bundlable aValue)
 	{
 		BundlableOutput out = new BundlableOutput();
 		aValue.writeExternal(out);
 		set(aKey, out.getContainer());
+
+		return (R)this;
+	}
+
+
+	public <T extends Bundlable> R putBundlableArrayList(K aKey, List<T> aIn)
+	{
+		Array array = new Array();
+		for (T item : aIn)
+		{
+			BundlableOutput out = new BundlableOutput();
+			item.writeExternal(out);
+			array.add(out.getContainer());
+		}
+		putArray(aKey, array);
 
 		return (R)this;
 	}

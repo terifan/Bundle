@@ -9,6 +9,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 import static org.testng.Assert.*;
 import org.testng.annotations.Test;
@@ -442,5 +443,33 @@ public class BundleNGTest
 		_Model modOut = bundle.getBundlable("model", _Model.class);
 
 		assertEquals(modOut.toString(), modIn.toString());
+	}
+
+
+	@Test
+	public void testBundlableSupplier()
+	{
+		_Vector in = new _Vector(0.1,0.2,0.3);
+
+		Bundle bundle = new Bundle();
+		bundle.putBundlable("v", in);
+
+		_Vector out = bundle.getBundlable("v", _Vector::new);
+
+		assertEquals(out.toString(), in.toString());
+	}
+
+
+	@Test
+	public void testBundlableArrayListSupplier()
+	{
+		List<_Vector> in = Arrays.asList(new _Vector(0.1,0.2,0.3), new _Vector(0.4,0.5,0.6));
+
+		Bundle bundle = new Bundle();
+		bundle.putBundlableArrayList("v", in);
+
+		ArrayList<_Vector> out = bundle.getBundlableArrayList("v", _Vector::new);
+
+		assertEquals(out.toString(), in.toString());
 	}
 }
