@@ -77,7 +77,7 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 		}
 		if (v instanceof Number)
 		{
-			return ((Number)v).doubleValue() != 0;
+			return ((Number)v).longValue() != 0;
 		}
 		throw new IllegalArgumentException("Value of key " + aKey + " cannot be cast on a Boolean");
 	}
@@ -410,6 +410,21 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 	}
 
 
+	public <T extends Bundlable> R putBundlableArray(K aKey, T[] aIn)
+	{
+		Array array = new Array();
+		for (T item : aIn)
+		{
+			BundlableOutput out = new BundlableOutput();
+			item.writeExternal(out);
+			array.add(out.getContainer());
+		}
+		putArray(aKey, array);
+
+		return (R)this;
+	}
+
+
 	public <T extends Serializable> T getSerializable(K aKey, Class<T> aType)
 	{
 		byte[] value = getBinary(aKey);
@@ -514,6 +529,14 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 		{
 			putString(aKey, (String)aValue);
 		}
+		else if (aValue instanceof Bundle)
+		{
+			putBundle(aKey, (Bundle)aValue);
+		}
+		else if (aValue instanceof Array)
+		{
+			putArray(aKey, (Array)aValue);
+		}
 		else if (aValue instanceof Bundlable)
 		{
 			putBundlable(aKey, (Bundlable)aValue);
@@ -525,14 +548,6 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 		else if (aValue instanceof byte[])
 		{
 			putBinary(aKey, (byte[])aValue);
-		}
-		else if (aValue instanceof Bundle)
-		{
-			putBundle(aKey, (Bundle)aValue);
-		}
-		else if (aValue instanceof Array)
-		{
-			putArray(aKey, (Array)aValue);
 		}
 		else if (aValue instanceof Serializable)
 		{
@@ -573,15 +588,14 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 		{
 			aHash.update((byte[])aValue);
 		}
-		else if (aValue instanceof int[])
-		{
-			aHash.update((int[])aValue);
-		}
 		else
 		{
 			aHash.update(Objects.hashCode(aValue));
 		}
 	}
+
+
+	abstract MurmurHash32 hashCode(MurmurHash32 aHash);
 
 
 	public abstract R remove(K aKey);
@@ -591,9 +605,6 @@ public abstract class Container<K, R> implements Serializable, Externalizable
 
 
 	public abstract R clear();
-
-
-	abstract MurmurHash32 hashCode(MurmurHash32 aHash);
 
 
 	public String marshalJSON(boolean aCompact)

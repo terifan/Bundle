@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -20,19 +21,34 @@ public class BundleNGTest
 	@Test
 	public void testBoolean() throws IOException
 	{
-		for (Boolean value : new Boolean[]{null, true, false})
-		{
-			Bundle out = new Bundle()
-				.putBoolean("value", value);
+		Bundle out = new Bundle()
+			.putBoolean("a", true)
+			.putBoolean("b", false)
+			.putBoolean("c", null)
+			.putString("d", "true")
+			.putString("e", "false")
+			.putNumber("f", 1)
+			.putNumber("g", 0);
 
-			Bundle in = new Bundle().unmarshal(out.marshal());
+		Bundle in = new Bundle().unmarshal(out.marshal());
 
-			assertEquals(in.getBoolean("value"), value);
+		assertEquals(in.getBoolean("a"), Boolean.TRUE);
+		assertEquals(in.getBoolean("b"), Boolean.FALSE);
+		assertEquals(in.getBoolean("c"), null);
+		assertEquals(in.getBoolean("d"), Boolean.TRUE);
+		assertEquals(in.getBoolean("e"), Boolean.FALSE);
+		assertEquals(in.getBoolean("f"), Boolean.TRUE);
+		assertEquals(in.getBoolean("g"), Boolean.FALSE);
 
-			in = new Bundle().unmarshalJSON(out.marshalJSON(true));
+		in = new Bundle().unmarshalJSON(out.marshalJSON(true));
 
-			assertEquals(in.getBoolean("value"), value);
-		}
+		assertEquals(in.getBoolean("a"), Boolean.TRUE);
+		assertEquals(in.getBoolean("b"), Boolean.FALSE);
+		assertEquals(in.getBoolean("c"), null);
+		assertEquals(in.getBoolean("d"), Boolean.TRUE);
+		assertEquals(in.getBoolean("e"), Boolean.FALSE);
+		assertEquals(in.getBoolean("f"), Boolean.TRUE);
+		assertEquals(in.getBoolean("g"), Boolean.FALSE);
 	}
 
 
@@ -259,7 +275,22 @@ public class BundleNGTest
 
 
 	@Test
-	public void testMarshalSerializable2() throws IOException
+	public void testSerializable1() throws IOException
+	{
+		Point point = new Point(0,0);
+
+		Bundle out = new Bundle().putSerializable("point", point);
+
+		assertEquals(out.getBinary("point"), Base64.getDecoder().decode("AA5qYXZhLmF3dC5Qb2ludAAAADR4AVvzloG1uIiBLyuxLFEvsbxELyA/M69k25GuIpO6E2pMDEyeDIwVQFxZUcAABQDIbA5ttsw6+g=="));
+
+		Point in = out.getSerializable("point", Point.class);
+
+		assertEquals(point, in);
+	}
+
+
+	@Test
+	public void testSerializable2() throws IOException
 	{
 		_Block block = new _Block();
 		block.data = new byte[1000000];
@@ -273,19 +304,6 @@ public class BundleNGTest
 
 		assertEquals(out, in);
 		assertEquals(out.getSerializable("block", _Block.class), in.getSerializable("block", _Block.class));
-	}
-
-
-	@Test
-	public void testSerializable() throws IOException
-	{
-		Point point = new Point(0,0);
-
-		Bundle out = new Bundle().putSerializable("point", point);
-
-		Point in = out.getSerializable("point", Point.class);
-
-		assertEquals(point, in);
 	}
 
 
@@ -447,6 +465,23 @@ public class BundleNGTest
 
 
 	@Test
+	public void testBundlableArray()
+	{
+		_Triangle triIn1 = new _Triangle(new _Vector[]{new _Vector(0.1,0.2,0.3), new _Vector(0.4,0.5,0.6), new _Vector(0.7,0.8,0.9)}, new _Color[]{new _Color(11, 12, 13), new _Color(14, 15, 16), new _Color(17, 18, 19)});
+		_Triangle triIn2 = new _Triangle(new _Vector[]{new _Vector(1.1,1.2,1.3), new _Vector(1.4,1.5,1.6), new _Vector(1.7,1.8,1.9)}, new _Color[]{new _Color(21, 22, 23), new _Color(24, 25, 26), new _Color(27, 28, 29)});
+
+		Bundlable[] modIn = new Bundlable[]{triIn1,triIn2};
+
+		Bundle bundle = new Bundle();
+		bundle.putBundlableArray("model", modIn);
+
+		_Triangle[] modOut = bundle.getBundlableArray("model", _Triangle.class);
+
+		assertEquals(modOut, modIn);
+	}
+
+
+	@Test
 	public void testBundlableSupplier()
 	{
 		_Vector in = new _Vector(0.1,0.2,0.3);
@@ -471,5 +506,22 @@ public class BundleNGTest
 		ArrayList<_Vector> out = bundle.getBundlableArrayList("v", _Vector::new);
 
 		assertEquals(out.toString(), in.toString());
+	}
+
+
+	@Test
+	public void testHashCode()
+	{
+		Bundle bundle1 = new Bundle();
+		Bundle bundle2 = new Bundle().putString("s", "S");
+		Bundle bundle3 = new Bundle().putString("s", "S").putNumber("i", 7);
+		Bundle bundle4 = new Bundle().putString("s", "S").putNumber("i", 7).putArray("array", Array.of(1, 2, 3));
+		Bundle bundle5 = new Bundle().putString("s", "S").putNumber("i", 7).putArray("array", Array.of(1, 2, 3, new Bundle().putBinary("bin", "abc".getBytes())));
+
+		assertEquals(bundle1.hashCode(), 0);
+		assertEquals(bundle2.hashCode(), -14916542);
+		assertEquals(bundle3.hashCode(), 49386623);
+		assertEquals(bundle4.hashCode(), -1994757361);
+		assertEquals(bundle5.hashCode(), 1751130713);
 	}
 }
